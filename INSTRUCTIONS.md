@@ -1302,22 +1302,22 @@ Store URL in database
 
 ### Environment Variables (.env)
 ```bash
-# Database (Neon PostgreSQL)
-DATABASE_URL="postgresql://..."
-DIRECT_URL="postgresql://..."
+# .env
+# Healthcare Sandbox - Production Configuration
 
-# JWT Secret (generate random string)
-JWT_SECRET="your-256-bit-secret-key"
+# Database Configuration (Neon)
+DATABASE_URL="postgresql://neondb_owner:npg_ze4U3qbFtmCN@ep-gentle-silence-a1uh7c1j-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DIRECT_URL="postgresql://neondb_owner:npg_ze4U3qbFtmCN@ep-gentle-silence-a1uh7c1j-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
-# File Storage (Vercel Blob)
-BLOB_READ_WRITE_TOKEN="your-blob-token"
+# JWT Configuration
+JWT_SECRET="733b42354071ceb8afd17126e0dc70c42687afd070f6fdf08e09e2b895dd5ccd"
 
 # Security (Arcjet)
-ARCJET_KEY="your-arcjet-key"
+ARCJET_KEY="ajkey_01kdj38f12fz6sfza98ry92bm3"
 
-# Application
-NEXT_PUBLIC_APP_URL="https://your-domain.com"
-NODE_ENV="production"
+# Application Configuration
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NODE_ENV="development"
 ```
 
 ### Vercel Configuration Pattern
