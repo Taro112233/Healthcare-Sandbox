@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2025-12-28T17:18:19.603Z
+// Last generated: 2025-12-28T18:07:04.609Z
 // InvenStock - Multi-Tenant Inventory Management System V1.0
 
 generator client {
@@ -20,124 +20,202 @@ datasource db {
 // ==========================================
 
 // prisma/schemas/base.prisma
-// ===== MINIMAL CORE ENUMS - Invite Code Only System =====
+// ===== HEALTHTECH SANDBOX - BASE ENUMS =====
 
-// ===== USER & ORGANIZATION ENUMS =====
+// ===== USER ROLE (Simplified - No Multi-tenant) =====
+enum UserRole {
+  USER      // Submit requests + view own requests + comment on own
+  ADMIN     // Full access + status management + comment anywhere
+}
+
+// ===== USER STATUS =====
 enum UserStatus {
-  PENDING    // รอการยืนยัน email
+  PENDING    // รอการยืนยัน
   ACTIVE     // ใช้งานได้
   SUSPENDED  // ระงับการใช้งาน
   INACTIVE   // ไม่ใช้งาน
 }
-
-enum OrganizationStatus {
-  ACTIVE     // ใช้งานได้
-  SUSPENDED  // ระงับ
-  TRIAL      // ทดลองใช้
-}
-
-// ===== SIMPLIFIED ROLE SYSTEM =====
-enum OrganizationRole {
-  MEMBER  // ทำงานทั่วไป เบิก จ่าย แก้สต็อก ดูทุกหน่วยงาน
-  ADMIN   // Member + CRUD สินค้า/หน่วยงาน + เชิญผู้ใช้ 
-  OWNER   // Admin + จัดการองค์กร + ตั้งค่าระบบ
-}
-
-// ===== UI ENUMS FOR COLORS & ICONS =====
-enum ColorTheme {
-  BLUE         // #3B82F6 - สีน้ำเงิน
-  GREEN        // #10B981 - สีเขียว
-  RED          // #EF4444 - สีแดง
-  YELLOW       // #F59E0B - สีเหลือง
-  PURPLE       // #8B5CF6 - สีม่วง
-  PINK         // #EC4899 - สีชมพู
-  INDIGO       // #6366F1 - สีน้ำเงินเข้ม
-  TEAL         // #14B8A6 - สีเขียวฟ้า
-  ORANGE       // #F97316 - สีส้ม
-  GRAY         // #6B7280 - สีเทา
-  SLATE        // #475569 - สีเทาเข้ม
-  EMERALD      // #059669 - สีเขียวมรกต
-}
-
-enum IconType {
-  // Department Icons
-  BUILDING     // 🏢 สำนักงาน
-  HOSPITAL     // 🏥 โรงพยาบาล
-  PHARMACY     // 💊 ร้านยา
-  WAREHOUSE    // 📦 คลังสินค้า
-  LABORATORY   // 🧪 ห้องแล็บ
-  
-  // Product Category Icons
-  PILL         // 💊 ยาเม็ด
-  BOTTLE       // 🍼 ยาน้ำ
-  SYRINGE      // 💉 ยาฉีด
-  BANDAGE      // 🩹 อุปกรณ์การแพทย์
-  STETHOSCOPE  // 🩺 เครื่องมือแพทย์
-  
-  // Role Icons
-  CROWN        // 👑 เจ้าของ
-  SHIELD       // 🛡์ ผู้จัดการ
-  PERSON       // 👤 พนักงาน
-  EYE          // 👁️ ผู้ตรวจสอบ
-  GEAR         // ⚙️ ระบบ
-  
-  // General Icons
-  BOX          // 📦 กล่อง
-  FOLDER       // 📁 โฟลเดอร์
-  TAG          // 🏷️ ป้ายกำกับ
-  STAR         // ⭐ ดาว
-  HEART        // ❤️ หัวใจ
-  CIRCLE       // ⚪ วงกลม
-  SQUARE       // ⬜ สี่เหลี่ยม
-  TRIANGLE     // 🔺 สามเหลี่ยม
-}
-
-// ===== ✅ NEW: USER SNAPSHOT TYPE =====
-// ใช้ใน Audit Logs และ Records ต่างๆ เพื่อเก็บข้อมูล user ณ ขณะนั้น
-// Structure:
-// {
-//   "userId": "clxxx",
-//   "username": "admin01",
-//   "fullName": "สมชาย ใจดี",
-//   "email": "somchai@hospital.com",
-//   "role": "ADMIN" // Role ณ ขณะนั้น (ถ้ามี context)
-// }
 
 // ==========================================
 // USER SCHEMA - V1.0
 // ==========================================
 
 // prisma/schemas/user.prisma
-// ===== USER MANAGEMENT SCHEMA - Clean & Simple =====
+// ===== HEALTHTECH SANDBOX - USER SCHEMA (Simplified - No Multi-tenant) =====
 
 model User {
-  id          String     @id @default(cuid())
-  email       String?    // Optional for notifications/recovery
-  username    String     @unique  // Primary login credential
-  password    String     // bcrypt hashed
+  id            String      @id @default(cuid())
+  email         String?     // Optional for notifications/recovery
+  username      String      @unique  // Primary login credential
+  password      String      // bcrypt hashed
   
   // Personal Information
-  firstName   String
-  lastName    String
-  phone       String?
+  firstName     String
+  lastName      String
+  phone         String?
+  
+  // Role (Simple - USER or ADMIN only)
+  role          UserRole    @default(USER)
   
   // Account Status
-  status      UserStatus @default(PENDING)
-  isActive    Boolean    @default(true)
-  emailVerified Boolean  @default(false)
+  status        UserStatus  @default(ACTIVE)
+  isActive      Boolean     @default(true)
+  emailVerified Boolean     @default(false)
   
   // Security
-  lastLogin   DateTime?
+  lastLogin     DateTime?
   
   // Timestamps
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   
   // Relations
+  requests      Request[]
+  comments      Comment[]
+  statusChanges StatusHistory[]
   
   @@index([email])
   @@index([username])
-  @@index([status])
+  @@index([role])
   @@index([isActive])
   @@map("users")
+}
+
+// ==========================================
+// ATTACHMENT SCHEMA - ADDITIONAL
+// ==========================================
+
+// prisma/schemas/attachment.prisma
+// ===== ATTACHMENT SYSTEM SCHEMA - HealthTech Sandbox =====
+
+model Attachment {
+  id          String   @id @default(cuid())
+  
+  // Request relation
+  requestId   String
+  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  // File info
+  filename    String
+  fileType    String   // MIME type
+  fileSize    Int      // bytes
+  fileUrl     String   // CDN URL (Vercel Blob)
+  
+  // Timestamp
+  uploadedAt  DateTime @default(now())
+  
+  @@index([requestId])
+  @@map("attachments")
+}
+
+// ==========================================
+// COMMENT SCHEMA - ADDITIONAL
+// ==========================================
+
+// prisma/schemas/comment.prisma
+// ===== COMMENT SYSTEM SCHEMA - HealthTech Sandbox =====
+
+model Comment {
+  id          String   @id @default(cuid())
+  
+  // Relations
+  requestId   String
+  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Content
+  content     String   @db.Text
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([requestId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("comments")
+}
+
+// ==========================================
+// REQUEST SCHEMA - ADDITIONAL
+// ==========================================
+
+// prisma/schemas/request.prisma
+// ===== REQUEST SYSTEM SCHEMA - HealthTech Sandbox =====
+
+model Request {
+  id                String        @id @default(cuid())
+  
+  // Requester
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Request Content
+  painPoint         String        @db.Text
+  currentWorkflow   String        @db.Text
+  expectedTechHelp  String        @db.Text
+  requestType       RequestType
+  
+  // Status
+  status            RequestStatus @default(PENDING_REVIEW)
+  
+  // Timestamps
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  // Relations
+  attachments       Attachment[]
+  comments          Comment[]
+  statusHistory     StatusHistory[]
+  
+  @@index([userId])
+  @@index([status])
+  @@index([requestType])
+  @@index([createdAt])
+  @@map("requests")
+}
+
+model StatusHistory {
+  id          String        @id @default(cuid())
+  
+  // Request relation
+  requestId   String
+  request     Request       @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  // Status transition
+  fromStatus  RequestStatus
+  toStatus    RequestStatus
+  
+  // Changed by (Admin)
+  changedBy   String
+  user        User          @relation(fields: [changedBy], references: [id], onDelete: Cascade)
+  
+  // Optional note
+  note        String?       @db.Text
+  
+  // Timestamp
+  changedAt   DateTime      @default(now())
+  
+  @@index([requestId])
+  @@index([changedAt])
+  @@map("status_history")
+}
+
+enum RequestType {
+  CALCULATOR
+  FORM
+  WORKFLOW
+  DECISION_AID
+  OTHER
+}
+
+enum RequestStatus {
+  PENDING_REVIEW
+  UNDER_CONSIDERATION
+  IN_DEVELOPMENT
+  IN_TESTING
+  COMPLETED
+  BEYOND_CAPACITY
 }

@@ -1,0 +1,25 @@
+// prisma/schemas/comment.prisma
+// ===== COMMENT SYSTEM SCHEMA - HealthTech Sandbox =====
+
+model Comment {
+  id          String   @id @default(cuid())
+  
+  // Relations
+  requestId   String
+  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Content
+  content     String   @db.Text
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([requestId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("comments")
+}

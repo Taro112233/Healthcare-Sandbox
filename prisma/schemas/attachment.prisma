@@ -1,0 +1,22 @@
+// prisma/schemas/attachment.prisma
+// ===== ATTACHMENT SYSTEM SCHEMA - HealthTech Sandbox =====
+
+model Attachment {
+  id          String   @id @default(cuid())
+  
+  // Request relation
+  requestId   String
+  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  
+  // File info
+  filename    String
+  fileType    String   // MIME type
+  fileSize    Int      // bytes
+  fileUrl     String   // CDN URL (Vercel Blob)
+  
+  // Timestamp
+  uploadedAt  DateTime @default(now())
+  
+  @@index([requestId])
+  @@map("attachments")
+}

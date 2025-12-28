@@ -1,13 +1,16 @@
-// types/auth.d.ts - SIMPLIFIED TYPES (NO ORGANIZATION IN JWT)
-// InvenStock - Authentication Type Definitions
+// types/auth.d.ts
+// HealthTech Sandbox - Authentication Type Definitions (Simplified - No Multi-tenant)
+
+// ===== USER TYPES =====
 
 export interface User {
   id: string;
-  email?: string;             // Optional
-  username: string;           // Primary credential
+  email?: string;
+  username: string;
   firstName: string;
   lastName: string;
   phone?: string;
+  role: UserRole;
   status: UserStatus;
   isActive: boolean;
   emailVerified: boolean;
@@ -16,47 +19,52 @@ export interface User {
   updatedAt: Date;
   
   // Computed fields
-  fullName?: string;          // firstName + lastName
-  avatar?: string;            // For UI display
+  fullName?: string;
+  avatar?: string;
 }
 
-export interface Organization {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  email?: string;
-  phone?: string;
-  status: OrganizationStatus;
-  timezone: string;
-  createdAt: Date;
-  updatedAt: Date;
-  
-  // Join by Code fields
-  inviteCode?: string;
-  inviteEnabled?: boolean;
-  
-  // Stats for API response
-  memberCount?: number;
-  departmentCount?: number;
+export enum UserRole {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
 }
 
-export interface OrganizationUser {
-  id: string;
-  organizationId: string;
+export enum UserStatus {
+  PENDING = 'PENDING',
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  INACTIVE = 'INACTIVE',
+}
+
+// ===== JWT INTERFACES =====
+
+export interface JWTPayload {
   userId: string;
-  role: OrganizationRole;
-  isOwner: boolean;
-  joinedAt: Date;
-  lastActiveAt?: Date;
-  isActive: boolean;
-  organization: Organization;
-  user: User;
+  email?: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  role: UserRole;
+  iat?: number;
+  exp?: number;
 }
 
-// ===== AUTHENTICATION INTERFACES =====
+export interface JWTUser {
+  userId: string;
+  email?: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  role: UserRole;
+  iat?: number;
+  exp?: number;
+}
+
+// ===== AUTH REQUEST/RESPONSE =====
+
 export interface LoginRequest {
-  username: string;           // Primary credential
+  username: string;
   password: string;
 }
 
@@ -64,7 +72,6 @@ export interface LoginResponse {
   success: boolean;
   user: User;
   token: string;
-  organizations: OrganizationUser[];
   message?: string;
 }
 
@@ -75,157 +82,44 @@ export interface RegisterRequest {
   lastName: string;
   email?: string;
   phone?: string;
-  organizationName?: string;
 }
 
 export interface RegisterResponse {
   success: boolean;
   user: User;
   token?: string;
-  organization?: Organization;
-  requiresApproval: boolean;
   message?: string;
 }
 
-// ===== JWT INTERFACES (SIMPLIFIED) =====
-export interface JWTPayload {
-  userId: string;
-  email?: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  phone?: string;
-  iat?: number;
-  exp?: number;
-  // ❌ REMOVED: organizationId, role (checked dynamically)
-}
+// ===== AUTH CONTEXT =====
 
-export interface JWTUser {
-  userId: string;
-  email?: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  phone?: string;
-  iat?: number;
-  exp?: number;
-  // ❌ REMOVED: organizationId, role (checked dynamically)
-}
-
-// ===== CONTEXT INTERFACES =====
 export interface AuthContextType {
   user: User | null;
-  currentOrganization: Organization | null;
-  organizations: OrganizationUser[];
-  userRole: OrganizationRole | null;
   loading: boolean;
   error: string | null;
   
   // Actions
   login: (data: LoginRequest) => Promise<void>;
-  register: (data: RegisterRequest) => Promise<{ requiresApproval: boolean }>;
+  register: (data: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
-  switchOrganization: (orgSlug: string) => Promise<void>;
-  refreshUser: (orgSlug?: string) => Promise<void>;
+  refreshUser: () => Promise<void>;
   clearError: () => void;
   
   // Permission helpers
-  hasPermission: (permission: string) => boolean;
-  hasMinimumRole: (minimumRole: OrganizationRole) => boolean;
-  
-  // Join by code
-  joinOrganization: (code: string) => Promise<any>;
+  isAdmin: boolean;
+  isAuthenticated: boolean;
 }
 
-// ===== ENUMS =====
-export enum OrganizationRole {
-  MEMBER = 'MEMBER',  // Basic access to all departments
-  ADMIN = 'ADMIN',    // MEMBER + manage products/departments + generate join codes
-  OWNER = 'OWNER'     // ADMIN + organization settings + manage users
-}
+// ===== API RESPONSE =====
 
-export enum UserStatus {
-  PENDING = 'PENDING',
-  ACTIVE = 'ACTIVE',
-  SUSPENDED = 'SUSPENDED',
-  INACTIVE = 'INACTIVE'
-}
-
-export enum OrganizationStatus {
-  ACTIVE = 'ACTIVE',
-  SUSPENDED = 'SUSPENDED',
-  TRIAL = 'TRIAL'
-}
-
-// ===== API RESPONSE INTERFACES =====
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
   code?: string;
-  timestamp?: string;
   message?: string;
 }
 
-export interface CompleteUserData {
-  user: {
-    id: string;
-    username: string;
-    email: string | null;
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    phone: string | null;
-    status: string;
-    isActive: boolean;
-    emailVerified: boolean;
-    lastLogin: Date | null;
-    avatar: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-  currentOrganization: {
-    id: string;
-    name: string;
-    slug: string;
-    description: string | null;
-    status: string;
-    timezone: string;
-    memberCount: number;
-    departmentCount: number;
-    inviteCode?: string | null;      // Only for ADMIN/OWNER
-    inviteEnabled?: boolean;         // Only for ADMIN/OWNER
-  } | null;
-  organizations: Array<{
-    id: string;
-    organizationId: string;
-    role: string;
-    isOwner: boolean;
-    joinedAt: Date;
-    organization: {
-      id: string;
-      name: string;
-      slug: string;
-      memberCount: number;
-      departmentCount: number;
-    };
-  }>;
-  permissions: {
-    currentRole: string | null;
-    canManageOrganization: boolean;
-    canManageDepartments: boolean;
-    canCreateProducts: boolean;
-    canGenerateJoinCode: boolean;
-    organizationPermissions: string[];
-  };
-  session: {
-    isTokenExpiringSoon: boolean;
-    timezone: string;
-    language: string;
-  };
-}
-
-// ===== ERROR TYPES =====
 export interface ValidationError {
   field: string;
   message: string;
@@ -235,4 +129,26 @@ export interface AuthError {
   code: string;
   message: string;
   details?: ValidationError[];
+}
+
+// ===== MIDDLEWARE TYPES =====
+
+export interface RequestWithUser extends Request {
+  user?: JWTUser;
+}
+
+// ===== HELPER FUNCTIONS =====
+
+export function isAdmin(user: User | JWTUser | null): boolean {
+  return user?.role === UserRole.ADMIN;
+}
+
+export function getUserFullName(user: User | JWTUser | null): string {
+  if (!user) return 'Unknown';
+  return `${user.firstName} ${user.lastName}`;
+}
+
+export function getUserInitials(user: User | JWTUser | null): string {
+  if (!user) return 'U';
+  return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
 }

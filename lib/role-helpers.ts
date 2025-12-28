@@ -1,112 +1,183 @@
 // lib/role-helpers.ts
-// Role Management Helper Functions - Centralized Role Validation
+// HealthTech Sandbox - Role Management Helper Functions (Simplified)
 // ============================================
 
-export const VALID_ROLES = ['MEMBER', 'ADMIN', 'OWNER'] as const;
-export type OrganizationRole = typeof VALID_ROLES[number];
+// ===== ROLE DEFINITIONS (Simplified - No Multi-tenant) =====
+export const VALID_ROLES = ['USER', 'ADMIN'] as const;
+export type UserRole = typeof VALID_ROLES[number];
 
-// Configuration
-export const MAX_ADMINS = 10; // จำกัดจำนวน ADMIN สูงสุดต่อองค์กร
+// ===== VALIDATION =====
 
 /**
  * Validate if role is valid
  */
-export function isValidRole(role: string): role is OrganizationRole {
-  return VALID_ROLES.includes(role as OrganizationRole);
+export function isValidRole(role: string): role is UserRole {
+  return VALID_ROLES.includes(role as UserRole);
 }
 
 /**
  * Get role hierarchy level (higher = more power)
  */
-export function getRoleHierarchy(role: OrganizationRole): number {
-  const hierarchy = { 
-    MEMBER: 1, 
+export function getRoleHierarchy(role: UserRole): number {
+  const hierarchy: Record<UserRole, number> = { 
+    USER: 1, 
     ADMIN: 2, 
-    OWNER: 3 
   };
   return hierarchy[role];
 }
 
 /**
- * Check if manager can manage target role
- * Rule: Can only manage roles below their level
+ * Check if user is admin
  */
-export function canManageRole(
-  managerRole: OrganizationRole, 
-  targetRole: OrganizationRole
-): boolean {
-  return getRoleHierarchy(managerRole) > getRoleHierarchy(targetRole);
+export function isAdmin(role: UserRole | string): boolean {
+  return role === 'ADMIN';
 }
 
 /**
- * Check if role change is allowed
- * OWNER can manage anyone (including promoting to OWNER and demoting other OWNERs)
- * ADMIN can manage MEMBER and other ADMINs (but cannot promote to OWNER or touch OWNERs)
+ * Check if user is regular user
  */
-export function canChangeRole(
-  managerRole: OrganizationRole,
-  targetCurrentRole: OrganizationRole,
-  targetNewRole: OrganizationRole
+export function isUser(role: UserRole | string): boolean {
+  return role === 'USER';
+}
+
+// ===== PERMISSION CHECKING =====
+
+/**
+ * Check if user has permission for action
+ */
+export function hasPermission(
+  userRole: UserRole,
+  action: string
 ): boolean {
-  // OWNER has full control
-  // ✅ Can promote anyone to OWNER (create co-owners)
-  // ✅ Can demote OWNER → ADMIN or OWNER → MEMBER
-  // ✅ Can promote/demote ADMIN ↔ MEMBER
-  if (managerRole === 'OWNER') {
-    return true; // ✅ Allow all changes
-  }
+  // Admin permissions
+  const adminOnlyActions = [
+    'request.view_all',
+    'request.change_status',
+    'request.delete',
+    'comment.view_all',
+    'comment.delete_any',
+    'user.manage',
+    'admin.dashboard',
+  ];
   
-  // ADMIN can manage MEMBERs and other ADMINs
-  // ✅ Can promote MEMBER → ADMIN
-  // ✅ Can demote ADMIN → MEMBER
-  // ❌ Cannot touch OWNER
-  // ❌ Cannot promote anyone to OWNER
-  if (managerRole === 'ADMIN') {
-    // Cannot touch OWNER
-    if (targetCurrentRole === 'OWNER') {
-      return false;
-    }
-    
-    // Cannot promote to OWNER
-    if (targetNewRole === 'OWNER') {
-      return false;
-    }
-    
-    // ✅ Allow ADMIN to manage MEMBER and other ADMINs
+  // User permissions (also available to admin)
+  const userActions = [
+    'request.create',
+    'request.view_own',
+    'request.edit_own',
+    'comment.create_own',
+    'comment.view_own',
+    'profile.view',
+    'profile.edit',
+  ];
+  
+  // Admin can do everything
+  if (userRole === 'ADMIN') {
     return true;
   }
   
-  // MEMBER cannot manage anyone
+  // User can only do user-level actions
+  if (userRole === 'USER') {
+    return userActions.includes(action);
+  }
+  
   return false;
 }
 
 /**
+ * Check if user can access request
+ * USER: only own requests
+ * ADMIN: all requests
+ */
+export function canAccessRequest(
+  userRole: UserRole,
+  requestOwnerId: string,
+  currentUserId: string
+): boolean {
+  if (userRole === 'ADMIN') return true;
+  return requestOwnerId === currentUserId;
+}
+
+/**
+ * Check if user can comment on request
+ * USER: only own requests
+ * ADMIN: all requests
+ */
+export function canCommentOnRequest(
+  userRole: UserRole,
+  requestOwnerId: string,
+  currentUserId: string
+): boolean {
+  if (userRole === 'ADMIN') return true;
+  return requestOwnerId === currentUserId;
+}
+
+/**
+ * Check if user can change request status
+ * Only ADMIN can change status
+ */
+export function canChangeStatus(userRole: UserRole): boolean {
+  return userRole === 'ADMIN';
+}
+
+// ===== DISPLAY HELPERS =====
+
+/**
  * Get role display information
  */
-export function getRoleInfo(role: OrganizationRole) {
-  const roleInfo = {
-    OWNER: {
-      label: 'OWNER',
-      color: 'bg-purple-500 hover:bg-purple-600',
-      textColor: 'text-purple-600',
-      icon: 'Crown',
-      description: 'เจ้าขององค์กร - สิทธิ์สูงสุด'
+export function getRoleInfo(role: UserRole) {
+  const roleInfo: Record<UserRole, {
+    label: string;
+    labelTh: string;
+    color: string;
+    bgColor: string;
+    textColor: string;
+    icon: string;
+    description: string;
+  }> = {
+    USER: {
+      label: 'USER',
+      labelTh: 'ผู้ใช้',
+      color: 'gray',
+      bgColor: 'bg-gray-100',
+      textColor: 'text-gray-700',
+      icon: 'User',
+      description: 'ส่ง Request และดู Request ของตัวเอง',
     },
     ADMIN: {
       label: 'ADMIN',
-      color: 'bg-blue-500 hover:bg-blue-600',
-      textColor: 'text-blue-600',
+      labelTh: 'ผู้ดูแลระบบ',
+      color: 'blue',
+      bgColor: 'bg-blue-100',
+      textColor: 'text-blue-700',
       icon: 'Shield',
-      description: 'ผู้ดูแลระบบ - จัดการสมาชิกและหน่วยงาน'
+      description: 'จัดการทุก Request และเปลี่ยนสถานะได้',
     },
-    MEMBER: {
-      label: 'MEMBER',
-      color: 'bg-gray-500 hover:bg-gray-600',
-      textColor: 'text-gray-600',
-      icon: 'UserCircle',
-      description: 'สมาชิกทั่วไป - เข้าถึงข้อมูลพื้นฐาน'
-    }
   };
   
   return roleInfo[role];
+}
+
+/**
+ * Get role badge classes for UI
+ */
+export function getRoleBadgeClasses(role: UserRole): string {
+  const classes: Record<UserRole, string> = {
+    USER: 'bg-gray-100 text-gray-700 border-gray-300',
+    ADMIN: 'bg-blue-100 text-blue-700 border-blue-300',
+  };
+  
+  return classes[role];
+}
+
+/**
+ * Get Thai label for role
+ */
+export function getRoleLabel(role: UserRole, locale: 'en' | 'th' = 'th'): string {
+  const labels: Record<UserRole, { en: string; th: string }> = {
+    USER: { en: 'User', th: 'ผู้ใช้' },
+    ADMIN: { en: 'Admin', th: 'ผู้ดูแลระบบ' },
+  };
+  
+  return labels[role][locale];
 }
