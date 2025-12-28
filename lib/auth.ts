@@ -1,5 +1,5 @@
-// lib/auth.ts - SIMPLIFIED JWT (USER IDENTITY ONLY)
-// InvenStock - Server-side Authentication Utilities
+// lib/auth.ts
+// HealthTech Sandbox - Server-side Authentication Utilities (Simplified - Includes Role)
 
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
@@ -13,15 +13,16 @@ const JWT_EXPIRES_IN = '7d';
 
 // ===== TYPE DEFINITIONS =====
 
-// ✅ Simplified - Only user identity, no organization context
+export type UserRole = 'USER' | 'ADMIN';
+
 export interface UserPayload {
   userId: string;
-  email?: string;             // Optional
-  username: string;           // Primary credential
+  email?: string;
+  username: string;
   firstName: string;
   lastName: string;
   phone?: string;
-  // ❌ REMOVED: organizationId, role (will be checked dynamically)
+  role: UserRole;
 }
 
 export interface JWTUser extends UserPayload {
@@ -29,7 +30,6 @@ export interface JWTUser extends UserPayload {
   exp?: number;
 }
 
-// Define proper type for user data
 interface UserData {
   id: string;
   email?: string | null;
@@ -37,6 +37,7 @@ interface UserData {
   firstName: string;
   lastName: string;
   phone?: string | null;
+  role: UserRole;
   status: string;
   isActive: boolean;
 }
@@ -44,7 +45,7 @@ interface UserData {
 // ===== JWT FUNCTIONS =====
 
 /**
- * ✅ Create lightweight JWT - only user identity
+ * Create JWT token with user identity and role
  */
 export async function createToken(user: UserPayload): Promise<string> {
   return await new SignJWT({
@@ -54,6 +55,7 @@ export async function createToken(user: UserPayload): Promise<string> {
     firstName: user.firstName,
     lastName: user.lastName,
     phone: user.phone || null,
+    role: user.role,
   })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime(JWT_EXPIRES_IN)
@@ -62,7 +64,7 @@ export async function createToken(user: UserPayload): Promise<string> {
 }
 
 /**
- * ✅ Verify JWT Token - returns user identity only
+ * Verify JWT Token
  */
 export async function verifyToken(token: string): Promise<JWTUser | null> {
   try {
@@ -75,6 +77,7 @@ export async function verifyToken(token: string): Promise<JWTUser | null> {
       firstName: payload.firstName as string,
       lastName: payload.lastName as string,
       phone: payload.phone as string || undefined,
+      role: (payload.role as UserRole) || 'USER',
       iat: payload.iat,
       exp: payload.exp
     };
@@ -110,7 +113,7 @@ export function getCookieOptions() {
 }
 
 /**
- * ✅ Convert user object to JWT payload - no organization context
+ * Convert user object to JWT payload
  */
 export function userToPayload(user: UserData): UserPayload {
   return {
@@ -120,6 +123,7 @@ export function userToPayload(user: UserData): UserPayload {
     firstName: user.firstName,
     lastName: user.lastName,
     phone: user.phone || undefined,
+    role: user.role,
   };
 }
 
@@ -134,6 +138,22 @@ export function shouldRefreshToken(user: JWTUser): boolean {
   return timeToExpiry < 24 * 60 * 60; // Refresh if expires within 24 hours
 }
 
+// ===== ROLE HELPERS =====
+
+export function isAdmin(user: JWTUser | null): boolean {
+  return user?.role === 'ADMIN';
+}
+
+export function getUserFullName(user: JWTUser | null): string {
+  if (!user) return 'Unknown';
+  return `${user.firstName} ${user.lastName}`;
+}
+
+export function getUserInitials(user: JWTUser | null): string {
+  if (!user) return 'U';
+  return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+}
+
 // ===== VALIDATION FUNCTIONS =====
 
 export function validatePasswordStrength(password: string): {
@@ -142,16 +162,16 @@ export function validatePasswordStrength(password: string): {
 } {
   const errors: string[] = [];
   
-  if (password.length < 6) {
-    errors.push('Password must be at least 6 characters');
+  if (password.length < 8) {
+    errors.push('รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
   }
   
   if (!/[A-Za-z]/.test(password)) {
-    errors.push('Password must contain at least one letter');
+    errors.push('รหัสผ่านต้องมีตัวอักษรอย่างน้อย 1 ตัว');
   }
   
   if (!/[0-9]/.test(password)) {
-    errors.push('Password must contain at least one number');
+    errors.push('รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว');
   }
   
   return {

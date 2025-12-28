@@ -1,11 +1,13 @@
-// app/api/auth/register/route.ts - FULLY FIXED VERSION
+// app/api/auth/register/route.ts
+// HealthTech Sandbox - Register API (Simplified - No Multi-tenant)
+
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, createToken, getCookieOptions, userToPayload } from '@/lib/auth';
-import { createAuditLog, getRequestMetadata } from '@/lib/audit-logger';
 import { z } from 'zod';
 import arcjet, { shield, tokenBucket, slidingWindow } from "@arcjet/next";
 
+// ===== ARCJET CONFIGURATION =====
 const aj = arcjet({
   key: process.env.ARCJET_KEY!,
   rules: [
@@ -26,14 +28,32 @@ const aj = arcjet({
   ],
 });
 
+// ===== VALIDATION SCHEMA =====
 const RegisterSchema = z.object({
-  username: z.string().min(3).max(50).regex(/^[a-zA-Z0-9._-]+$/),
-  password: z.string().min(6).max(100),
-  firstName: z.string().min(1).max(100).trim(),
-  lastName: z.string().min(1).max(100).trim(),
-  email: z.string().email().max(255).optional().or(z.literal('')),
-  phone: z.string().max(20).optional().or(z.literal('')),
-  organizationName: z.string().max(100).optional().or(z.literal('')),
+  username: z.string()
+    .min(3, 'Username ต้องมีอย่างน้อย 3 ตัวอักษร')
+    .max(50, 'Username ต้องไม่เกิน 50 ตัวอักษร')
+    .regex(/^[a-zA-Z0-9._-]+$/, 'Username ใช้ได้เฉพาะ a-z, 0-9, ., _, -'),
+  password: z.string()
+    .min(8, 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร')
+    .max(100, 'รหัสผ่านต้องไม่เกิน 100 ตัวอักษร'),
+  firstName: z.string()
+    .min(1, 'กรุณากรอกชื่อ')
+    .max(100, 'ชื่อต้องไม่เกิน 100 ตัวอักษร')
+    .trim(),
+  lastName: z.string()
+    .min(1, 'กรุณากรอกนามสกุล')
+    .max(100, 'นามสกุลต้องไม่เกิน 100 ตัวอักษร')
+    .trim(),
+  email: z.string()
+    .email('รูปแบบอีเมลไม่ถูกต้อง')
+    .max(255)
+    .optional()
+    .or(z.literal('')),
+  phone: z.string()
+    .max(20)
+    .optional()
+    .or(z.literal('')),
 });
 
 interface ValidationError {
@@ -50,6 +70,7 @@ interface PrismaError {
 
 export async function POST(request: NextRequest) {
   try {
+    // ===== ARCJET PROTECTION =====
     const decision = await aj.protect(request, { requested: 1 });
     const clientIp = request.headers.get('x-forwarded-for') || 
                     request.headers.get('x-real-ip') || 
@@ -62,7 +83,7 @@ export async function POST(request: NextRequest) {
           { 
             success: false,
             error: "Too many registration attempts", 
-            message: "Please wait 10 minutes before trying again",
+            message: "กรุณารอ 10 นาทีก่อนลองใหม่",
             retryAfter: 600
           },
           { 
@@ -86,6 +107,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // ===== VALIDATE INPUT =====
     const body = await request.json();
     const validation = RegisterSchema.safeParse(body);
     
@@ -105,147 +127,100 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { username, password, firstName, lastName, email, phone, organizationName } = validation.data;
+    const { username, password, firstName, lastName, email, phone } = validation.data;
     const cleanEmail = email?.trim() || null;
     const cleanPhone = phone?.trim() || null;
-    const cleanOrgName = organizationName?.trim() || null;
 
     console.log(`📝 Registration attempt: ${username} from IP: ${clientIp}`);
 
+    // ===== CHECK EXISTING USERNAME =====
     const existingUser = await prisma.user.findUnique({
       where: { username: username.toLowerCase() }
     });
 
     if (existingUser) {
       console.log(`❌ Registration failed - username exists: ${username} from IP: ${clientIp}`);
-      return NextResponse.json({ success: false, error: 'Username already exists' }, { status: 409 });
+      return NextResponse.json(
+        { success: false, error: 'Username นี้มีผู้ใช้งานแล้ว' }, 
+        { status: 409 }
+      );
     }
 
+    // ===== CHECK EXISTING EMAIL (if provided) =====
     if (cleanEmail) {
       const existingEmailUser = await prisma.user.findFirst({
         where: { email: cleanEmail.toLowerCase() }
       });
       if (existingEmailUser) {
         console.log(`❌ Registration failed - email exists: ${cleanEmail} from IP: ${clientIp}`);
-        return NextResponse.json({ success: false, error: 'Email already exists' }, { status: 409 });
+        return NextResponse.json(
+          { success: false, error: 'อีเมลนี้มีผู้ใช้งานแล้ว' }, 
+          { status: 409 }
+        );
       }
     }
 
+    // ===== HASH PASSWORD =====
     const hashedPassword = await hashPassword(password);
 
-    const result = await prisma.$transaction(async (tx) => {
-      const newUser = await tx.user.create({
-        data: {
-          username: username.toLowerCase(), 
-          password: hashedPassword,
-          firstName: firstName.trim(), 
-          lastName: lastName.trim(),
-          email: cleanEmail?.toLowerCase(), 
-          phone: cleanPhone,
-          status: 'ACTIVE', 
-          isActive: true, 
-          emailVerified: false,
-        },
-        select: {
-          id: true, username: true, email: true, firstName: true, lastName: true,
-          phone: true, status: true, isActive: true, emailVerified: true,
-          createdAt: true, updatedAt: true,
-        }
-      });
-
-      let organization = null;
-
-      if (cleanOrgName) {
-        const baseSlug = cleanOrgName.toLowerCase()
-          .replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-        
-        let slug = baseSlug, counter = 1;
-        while (await tx.organization.findUnique({ where: { slug } })) {
-          slug = `${baseSlug}-${counter}`;
-          counter++;
-        }
-
-        organization = await tx.organization.create({
-          data: {
-            name: cleanOrgName, 
-            slug, 
-            description: `Organization created by ${newUser.firstName} ${newUser.lastName}`,
-            status: 'ACTIVE', 
-            timezone: 'Asia/Bangkok',
-            email: cleanEmail?.toLowerCase(),
-            phone: cleanPhone,
-          },
-          select: {
-            id: true, name: true, slug: true, description: true,
-            status: true, timezone: true, email: true, phone: true,
-          }
-        });
-
-        await tx.organizationUser.create({
-          data: {
-            organizationId: organization.id, 
-            userId: newUser.id,
-            roles: 'OWNER', 
-            isOwner: true, 
-            isActive: true, 
-            joinedAt: new Date(),
-          }
-        });
-
-        // ✅ FIXED: Use createAuditLog helper with all required fields
-        const { ipAddress, userAgent } = getRequestMetadata(request);
-        
-        await createAuditLog({
-          organizationId: organization.id,
-          userId: newUser.id,
-          action: 'organization.create',
-          category: 'ORGANIZATION',
-          severity: 'INFO',
-          description: `${newUser.firstName} ${newUser.lastName} สร้างองค์กร ${organization.name}`,
-          resourceId: organization.id,
-          resourceType: 'Organization',
-          payload: {
-            username: newUser.username,
-            organizationName: organization.name,
-            organizationSlug: organization.slug,
-            timestamp: new Date().toISOString(),
-          },
-          ipAddress,
-          userAgent,
-        });
+    // ===== CREATE USER =====
+    const newUser = await prisma.user.create({
+      data: {
+        username: username.toLowerCase(), 
+        password: hashedPassword,
+        firstName: firstName.trim(), 
+        lastName: lastName.trim(),
+        email: cleanEmail?.toLowerCase(), 
+        phone: cleanPhone,
+        role: 'USER',  // Default role
+        status: 'ACTIVE', 
+        isActive: true, 
+        emailVerified: false,
+      },
+      select: {
+        id: true, 
+        username: true, 
+        email: true, 
+        firstName: true, 
+        lastName: true,
+        phone: true, 
+        role: true,
+        status: true, 
+        isActive: true, 
+        emailVerified: true,
+        createdAt: true, 
+        updatedAt: true,
       }
-
-      return { newUser, organization };
     });
 
-    console.log(`✅ Registration successful: ${username} from IP: ${clientIp}`);
+    console.log(`✅ Registration successful: ${username} (role: ${newUser.role}) from IP: ${clientIp}`);
 
-    // ✅ FIXED: Create lightweight JWT (no organizationId)
-    const userPayload = userToPayload(result.newUser);
+    // ===== CREATE JWT TOKEN =====
+    const userPayload = userToPayload(newUser);
     const token = await createToken(userPayload);
 
+    // ===== BUILD RESPONSE =====
     const userResponse = {
-      id: result.newUser.id, 
-      username: result.newUser.username, 
-      email: result.newUser.email,
-      firstName: result.newUser.firstName, 
-      lastName: result.newUser.lastName,
-      fullName: `${result.newUser.firstName} ${result.newUser.lastName}`,
-      phone: result.newUser.phone, 
-      status: result.newUser.status, 
-      isActive: result.newUser.isActive,
-      emailVerified: result.newUser.emailVerified, 
-      createdAt: result.newUser.createdAt, 
-      updatedAt: result.newUser.updatedAt,
+      id: newUser.id, 
+      username: newUser.username, 
+      email: newUser.email,
+      firstName: newUser.firstName, 
+      lastName: newUser.lastName,
+      fullName: `${newUser.firstName} ${newUser.lastName}`,
+      phone: newUser.phone, 
+      role: newUser.role,
+      status: newUser.status, 
+      isActive: newUser.isActive,
+      emailVerified: newUser.emailVerified, 
+      createdAt: newUser.createdAt, 
+      updatedAt: newUser.updatedAt,
     };
 
     const response = NextResponse.json({
       success: true, 
-      message: 'Registration successful', 
+      message: 'สมัครสมาชิกสำเร็จ', 
       user: userResponse,
-      token, 
-      organization: result.organization, 
-      requiresApproval: false,
+      token,
     });
 
     response.cookies.set('auth-token', token, getCookieOptions());
@@ -261,13 +236,13 @@ export async function POST(request: NextRequest) {
       if (target?.includes('username')) {
         return NextResponse.json({ 
           success: false, 
-          error: 'Username already exists' 
+          error: 'Username นี้มีผู้ใช้งานแล้ว' 
         }, { status: 409 });
       }
       if (target?.includes('email')) {
         return NextResponse.json({ 
           success: false, 
-          error: 'Email already exists' 
+          error: 'อีเมลนี้มีผู้ใช้งานแล้ว' 
         }, { status: 409 });
       }
     }

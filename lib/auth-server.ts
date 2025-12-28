@@ -1,14 +1,12 @@
-// lib/auth-server.ts - FIXED: Handle null email/phone in headers
-// InvenStock - Server-side User Verification Utilities (Next.js 15 Compatible)
+// lib/auth-server.ts
+// HealthTech Sandbox - Server-side User Verification Utilities (Simplified)
 
 import { cookies } from 'next/headers';
-import { verifyToken, JWTUser } from './auth';
+import { verifyToken, JWTUser, UserRole } from './auth';
 import { prisma } from './prisma';
 
-type OrganizationRole = 'MEMBER' | 'ADMIN' | 'OWNER';
-
 /**
- * ✅ Get current user from server-side (JWT only - no org context)
+ * Get current user from server-side (JWT with role)
  */
 export async function getServerUser(): Promise<JWTUser | null> {
   try {
@@ -34,6 +32,7 @@ export async function getServerUser(): Promise<JWTUser | null> {
         username: true,
         firstName: true,
         lastName: true,
+        role: true,
         status: true,
         isActive: true,
       },
@@ -49,6 +48,7 @@ export async function getServerUser(): Promise<JWTUser | null> {
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role as UserRole,
     };
   } catch (error) {
     console.error('Server user verification failed:', error);
@@ -57,294 +57,169 @@ export async function getServerUser(): Promise<JWTUser | null> {
 }
 
 /**
- * ✅ FIXED: Get user from request headers (handle null values)
+ * Get user from request headers (injected by middleware)
  */
 export function getUserFromHeaders(headers: Headers): {
   userId: string;
   email: string;
   username: string;
+  role: UserRole;
 } | null {
   const userId = headers.get('x-user-id');
   const email = headers.get('x-user-email');
   const username = headers.get('x-username');
+  const role = headers.get('x-user-role') as UserRole;
 
-  // ✅ CRITICAL FIX: Only userId and username are required
-  // email can be empty string (converted from null)
   if (!userId || !username) {
-    console.log('❌ Missing required headers:', { userId: !!userId, username: !!username });
     return null;
   }
 
   return { 
     userId, 
-    email: email || '',  // ✅ Default to empty string if null
-    username 
+    email: email || '',
+    username,
+    role: role || 'USER',
   };
 }
 
 /**
- * ✅ Check user's role in specific organization (real-time database check)
+ * Check if user is admin (from headers or DB)
  */
-export async function getUserOrgRole(
-  userId: string, 
-  orgSlug: string
-): Promise<{ role: OrganizationRole; organizationId: string } | null> {
+export async function isUserAdmin(userId: string): Promise<boolean> {
   try {
-    const orgUser = await prisma.organizationUser.findFirst({
-      where: {
-        userId,
-        isActive: true,
-        organization: {
-          slug: orgSlug,
-          status: 'ACTIVE'
-        }
-      },
-      include: {
-        organization: {
-          select: { id: true }
-        }
-      }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { role: true },
     });
-
-    if (!orgUser) return null;
-
-    return {
-      role: orgUser.roles as OrganizationRole,
-      organizationId: orgUser.organization.id
-    };
+    
+    return user?.role === 'ADMIN';
   } catch (error) {
-    console.error('Failed to get user org role:', error);
-    return null;
-  }
-}
-
-/**
- * ✅ Validate user has access to organization (for middleware use)
- */
-export async function validateOrgAccess(
-  userId: string,
-  orgSlug: string
-): Promise<boolean> {
-  try {
-    const access = await getUserOrgRole(userId, orgSlug);
-    return access !== null;
-  } catch (error) {
-    console.error('Organization access validation failed:', error);
+    console.error('Admin check failed:', error);
     return false;
   }
 }
 
 /**
- * ✅ Check if user has specific permission in organization
+ * Require authentication - throws if not authenticated
  */
-export async function hasOrgPermission(
-  userId: string,
-  orgSlug: string,
-  permission: string
-): Promise<boolean> {
-  try {
-    const access = await getUserOrgRole(userId, orgSlug);
-    if (!access) return false;
-
-    const userRole = access.role;
-
-    // Simple role-based permission checking
-    switch (permission) {
-      // MEMBER permissions - all org members
-      case 'stocks.read':
-      case 'stocks.adjust':
-      case 'products.read':
-      case 'departments.read':
-      case 'transfers.create':
-      case 'transfers.receive':
-        return ['MEMBER', 'ADMIN', 'OWNER'].includes(userRole);
-      
-      // ADMIN permissions
-      case 'products.create':
-      case 'products.update':
-      case 'products.delete':
-      case 'categories.create':
-      case 'departments.create':
-      case 'departments.update':
-      case 'users.invite':
-      case 'transfers.approve':
-      case 'join_code.generate':
-        return ['ADMIN', 'OWNER'].includes(userRole);
-      
-      // OWNER permissions
-      case 'departments.delete':
-      case 'organization.settings':
-      case 'users.manage':
-        return userRole === 'OWNER';
-      
-      default:
-        return false;
-    }
-  } catch (error) {
-    console.error('Permission check failed:', error);
-    return false;
-  }
-}
-
-/**
- * ✅ Require specific permission (throws if not authorized)
- */
-export async function requireOrgPermission(
-  userId: string,
-  orgSlug: string,
-  permission: string
-): Promise<{ role: OrganizationRole; organizationId: string }> {
-  const access = await getUserOrgRole(userId, orgSlug);
+export async function requireAuth(): Promise<JWTUser> {
+  const user = await getServerUser();
   
-  if (!access) {
-    throw new Error(`No access to organization: ${orgSlug}`);
+  if (!user) {
+    throw new Error('Authentication required');
   }
-
-  const hasAccess = await hasOrgPermission(userId, orgSlug, permission);
   
-  if (!hasAccess) {
-    throw new Error(`Permission denied: ${permission}`);
-  }
-
-  return access;
+  return user;
 }
 
 /**
- * ✅ Check if user has minimum role in organization
+ * Require admin role - throws if not admin
  */
-export async function hasMinimumOrgRole(
-  userId: string,
-  orgSlug: string,
-  minimumRole: OrganizationRole
-): Promise<boolean> {
-  try {
-    const access = await getUserOrgRole(userId, orgSlug);
-    if (!access) return false;
-
-    const roleHierarchy = {
-      MEMBER: 1,
-      ADMIN: 2,
-      OWNER: 3
-    };
-
-    return roleHierarchy[access.role] >= roleHierarchy[minimumRole];
-  } catch (error) {
-    console.error('Role check failed:', error);
-    return false;
+export async function requireAdmin(): Promise<JWTUser> {
+  const user = await requireAuth();
+  
+  if (user.role !== 'ADMIN') {
+    throw new Error('Admin access required');
   }
+  
+  return user;
 }
 
 /**
- * ✅ Get organization data by slug
+ * API route helper - check auth from headers
  */
-export async function getOrganizationBySlug(orgSlug: string) {
-  try {
-    return await prisma.organization.findUnique({
-      where: { 
-        slug: orgSlug,
-        status: 'ACTIVE'
-      },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        status: true,
-        timezone: true,
-        email: true,
-        phone: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-  } catch (error) {
-    console.error('Failed to get organization:', error);
-    return null;
-  }
-}
-
-/**
- * ✅ Get user's organizations list
- */
-export async function getUserOrganizations(userId: string) {
-  try {
-    const organizationUsers = await prisma.organizationUser.findMany({
-      where: {
-        userId,
-        isActive: true,
-      },
-      include: {
-        organization: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            description: true,
-            status: true,
-            email: true,
-            phone: true,
-          },
-        },
-      },
-      orderBy: {
-        joinedAt: 'asc',
-      },
-    });
-
-    return organizationUsers.map(orgUser => ({
-      ...orgUser.organization,
-      role: orgUser.roles,
-      isOwner: orgUser.isOwner,
-      joinedAt: orgUser.joinedAt
-    }));
-  } catch (error) {
-    console.error('Failed to get user organizations:', error);
-    return [];
-  }
-}
-
-/**
- * ✅ API route helper - extract org context and validate access
- */
-export async function withOrgContext(
-  request: Request,
-  handler: (userId: string, orgId: string, role: OrganizationRole) => Promise<Response>
+export function withAuth(
+  handler: (userId: string, role: UserRole) => Promise<Response>
 ) {
-  try {
-    // Get user from headers
-    const user = getUserFromHeaders(new Headers(request.headers));
-    if (!user) {
+  return async (request: Request) => {
+    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    
+    if (!userInfo) {
       return new Response(
-        JSON.stringify({ error: 'Authentication required' }),
+        JSON.stringify({ success: false, error: 'Authentication required' }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
+    
+    return await handler(userInfo.userId, userInfo.role);
+  };
+}
 
-    // Get org slug from headers
-    const orgSlug = new Headers(request.headers).get('x-current-org');
-    if (!orgSlug) {
+/**
+ * API route helper - check admin from headers
+ */
+export function withAdmin(
+  handler: (userId: string) => Promise<Response>
+) {
+  return async (request: Request) => {
+    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    
+    if (!userInfo) {
       return new Response(
-        JSON.stringify({ error: 'Organization context required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ success: false, error: 'Authentication required' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
-
-    // Validate access and get role
-    const access = await getUserOrgRole(user.userId, orgSlug);
-    if (!access) {
+    
+    if (userInfo.role !== 'ADMIN') {
       return new Response(
-        JSON.stringify({ error: 'No access to organization' }),
+        JSON.stringify({ success: false, error: 'Admin access required' }),
         { status: 403, headers: { 'Content-Type': 'application/json' } }
       );
     }
+    
+    return await handler(userInfo.userId);
+  };
+}
 
-    return await handler(user.userId, access.organizationId, access.role);
-
+/**
+ * Check request ownership (user owns the request or is admin)
+ */
+export async function checkRequestOwnership(
+  userId: string,
+  role: UserRole,
+  requestId: string
+): Promise<{ hasAccess: boolean; isOwner: boolean; request: any | null }> {
+  try {
+    const request = await prisma.request.findUnique({
+      where: { id: requestId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    });
+    
+    if (!request) {
+      return { hasAccess: false, isOwner: false, request: null };
+    }
+    
+    const isOwner = request.userId === userId;
+    const hasAccess = isOwner || role === 'ADMIN';
+    
+    return { hasAccess, isOwner, request };
   } catch (error) {
-    console.error('Organization context error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    console.error('Ownership check failed:', error);
+    return { hasAccess: false, isOwner: false, request: null };
   }
+}
+
+/**
+ * Check comment permission (user owns the request or is admin)
+ */
+export async function canCommentOnRequest(
+  userId: string,
+  role: UserRole,
+  requestId: string
+): Promise<boolean> {
+  // Admins can comment anywhere
+  if (role === 'ADMIN') return true;
+  
+  // Users can only comment on their own requests
+  const result = await checkRequestOwnership(userId, role, requestId);
+  return result.isOwner;
 }

@@ -1,4 +1,6 @@
-// app/api/auth/login/route.ts - SIMPLIFIED (NO ORG CONTEXT IN JWT)
+// app/api/auth/login/route.ts
+// HealthTech Sandbox - Login API (Simplified - Includes Role)
+
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyPassword, createToken, getCookieOptions, userToPayload } from '@/lib/auth';
@@ -48,7 +50,7 @@ export async function POST(request: NextRequest) {
           { 
             success: false,
             error: "Too many login attempts", 
-            message: "Please wait 5 minutes before trying again",
+            message: "กรุณารอ 5 นาทีก่อนลองใหม่",
             retryAfter: 300
           },
           { 
@@ -88,56 +90,42 @@ export async function POST(request: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { username: username.toLowerCase() },
       select: {
-        id: true, username: true, email: true, password: true,
-        firstName: true, lastName: true, phone: true,
-        status: true, isActive: true, emailVerified: true, 
-        lastLogin: true, createdAt: true, updatedAt: true,
+        id: true, 
+        username: true, 
+        email: true, 
+        password: true,
+        firstName: true, 
+        lastName: true, 
+        phone: true,
+        role: true,
+        status: true, 
+        isActive: true, 
+        emailVerified: true, 
+        lastLogin: true, 
+        createdAt: true, 
+        updatedAt: true,
       }
     });
 
     if (!user) {
       console.log(`❌ Login failed - user not found: ${username} from IP: ${clientIp}`);
-      return NextResponse.json({ success: false, error: 'Username not found' }, { status: 401 });
+      return NextResponse.json({ success: false, error: 'Username ไม่พบในระบบ' }, { status: 401 });
     }
 
     const isPasswordValid = await verifyPassword(password, user.password);
     if (!isPasswordValid) {
       console.log(`❌ Login failed - invalid password: ${username} from IP: ${clientIp}`);
-      return NextResponse.json({ success: false, error: 'Invalid password' }, { status: 401 });
+      return NextResponse.json({ success: false, error: 'รหัสผ่านไม่ถูกต้อง' }, { status: 401 });
     }
 
     if (user.status !== 'ACTIVE' || !user.isActive) {
       console.log(`❌ Login failed - inactive account: ${username} from IP: ${clientIp}`);
-      return NextResponse.json({ success: false, error: 'User account not active' }, { status: 403 });
+      return NextResponse.json({ success: false, error: 'บัญชีถูกระงับการใช้งาน' }, { status: 403 });
     }
 
-    console.log(`✅ Login successful: ${username} from IP: ${clientIp}`);
+    console.log(`✅ Login successful: ${username} (role: ${user.role}) from IP: ${clientIp}`);
 
-    // ✅ Get user's organizations (no org context in JWT)
-    const userOrganizations = await prisma.organizationUser.findMany({
-      where: { userId: user.id, isActive: true },
-      include: {
-        organization: {
-          select: {
-            id: true, 
-            name: true, 
-            slug: true, 
-            description: true,
-            status: true, 
-            timezone: true, 
-            email: true,
-            phone: true,
-            inviteCode: true,
-            inviteEnabled: true,
-            createdAt: true,
-            updatedAt: true
-          }
-        }
-      },
-      orderBy: { joinedAt: 'asc' }
-    });
-
-    // ✅ Create lightweight JWT (no organization context)
+    // Create JWT with role
     const userPayload = userToPayload(user);
     const token = await createToken(userPayload);
 
@@ -155,6 +143,7 @@ export async function POST(request: NextRequest) {
       lastName: user.lastName,
       phone: user.phone,
       fullName: `${user.firstName} ${user.lastName}`,
+      role: user.role,
       status: user.status, 
       isActive: user.isActive,
       emailVerified: user.emailVerified, 
@@ -164,10 +153,9 @@ export async function POST(request: NextRequest) {
 
     const response = NextResponse.json({
       success: true, 
-      message: 'Login successful',
+      message: 'เข้าสู่ระบบสำเร็จ',
       user: userResponse, 
-      token: token, 
-      organizations: userOrganizations // User can choose organization later
+      token: token,
     });
 
     response.cookies.set('auth-token', token, getCookieOptions());
