@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { DashboardHeader } from '@/components/OrganizationList/DashboardHeader';
+import { DashboardHeader } from '@/components/DashboardLayout/DashboardHeader';
 import { toast } from 'sonner';
 
 interface Organization {
