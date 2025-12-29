@@ -1,0 +1,363 @@
+// components/RequestForm/index.tsx
+// HealthTech Sandbox - Main Request Form Component
+
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { FileUploadSection } from './FileUploadSection';
+import { 
+  RequestType, 
+  REQUEST_TYPE_INFO,
+} from '@/types/request';
+import { 
+  Send, 
+  Loader2, 
+  AlertTriangle,
+  Info,
+  Calculator,
+  FileText,
+  GitBranch,
+  Brain,
+  HelpCircle,
+} from 'lucide-react';
+import { toast } from 'sonner';
+
+interface UploadedFile {
+  filename: string;
+  originalFilename: string;
+  fileType: string;
+  fileSize: number;
+  fileSizeFormatted: string;
+  fileUrl: string;
+}
+
+interface FormData {
+  painPoint: string;
+  currentWorkflow: string;
+  expectedTechHelp: string;
+  requestType: RequestType | '';
+}
+
+interface FormErrors {
+  painPoint?: string;
+  currentWorkflow?: string;
+  expectedTechHelp?: string;
+  requestType?: string;
+}
+
+const typeIcons: Record<RequestType, React.ReactNode> = {
+  [RequestType.CALCULATOR]: <Calculator className="w-4 h-4" />,
+  [RequestType.FORM]: <FileText className="w-4 h-4" />,
+  [RequestType.WORKFLOW]: <GitBranch className="w-4 h-4" />,
+  [RequestType.DECISION_AID]: <Brain className="w-4 h-4" />,
+  [RequestType.OTHER]: <HelpCircle className="w-4 h-4" />,
+};
+
+export function RequestForm() {
+  const router = useRouter();
+  const [formData, setFormData] = useState<FormData>({
+    painPoint: '',
+    currentWorkflow: '',
+    expectedTechHelp: '',
+    requestType: '',
+  });
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.painPoint || formData.painPoint.length < 10) {
+      newErrors.painPoint = 'กรุณาอธิบาย Pain Point อย่างน้อย 10 ตัวอักษร';
+    }
+
+    if (!formData.currentWorkflow || formData.currentWorkflow.length < 10) {
+      newErrors.currentWorkflow = 'กรุณาอธิบายขั้นตอนการทำงานอย่างน้อย 10 ตัวอักษร';
+    }
+
+    if (!formData.expectedTechHelp || formData.expectedTechHelp.length < 10) {
+      newErrors.expectedTechHelp = 'กรุณาอธิบายสิ่งที่ต้องการอย่างน้อย 10 ตัวอักษร';
+    }
+
+    if (!formData.requestType) {
+      newErrors.requestType = 'กรุณาเลือกประเภทคำขอ';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleFilesUploaded = (files: UploadedFile[]) => {
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
+  const handleFileRemove = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      toast.error('กรุณากรอกข้อมูลให้ครบถ้วน');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const payload = {
+        painPoint: formData.painPoint.trim(),
+        currentWorkflow: formData.currentWorkflow.trim(),
+        expectedTechHelp: formData.expectedTechHelp.trim(),
+        requestType: formData.requestType,
+        attachmentUrls: uploadedFiles.map(file => ({
+          filename: file.filename,
+          fileType: file.fileType,
+          fileSize: file.fileSize,
+          fileUrl: file.fileUrl,
+        })),
+      };
+
+      const response = await fetch('/api/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'ส่งคำขอไม่สำเร็จ');
+      }
+
+      if (data.success) {
+        toast.success('ส่งคำขอสำเร็จ!', {
+          description: 'คำขอของคุณถูกส่งเรียบร้อยแล้ว',
+        });
+        
+        // Navigate to the new request detail page
+        router.push(`/requests/${data.data.id}`);
+      } else {
+        throw new Error(data.error || 'ส่งคำขอไม่สำเร็จ');
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'เกิดข้อผิดพลาด';
+      setSubmitError(errorMsg);
+      toast.error('เกิดข้อผิดพลาด', {
+        description: errorMsg,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Info Banner */}
+      <Alert className="bg-teal-50 border-teal-200">
+        <Info className="h-4 w-4 text-teal-600" />
+        <AlertDescription className="text-teal-800">
+          กรุณาอธิบาย Pain Point และความต้องการให้ชัดเจน เพื่อให้ทีมพัฒนาเข้าใจปัญหาและสามารถช่วยเหลือได้ดียิ่งขึ้น
+        </AlertDescription>
+      </Alert>
+
+      {/* Request Type Selection */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">ประเภทคำขอ</CardTitle>
+          <CardDescription>
+            เลือกประเภทเครื่องมือที่คุณต้องการ
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Select
+            value={formData.requestType}
+            onValueChange={(value) => handleInputChange('requestType', value)}
+          >
+            <SelectTrigger className={errors.requestType ? 'border-red-500' : ''}>
+              <SelectValue placeholder="เลือกประเภทคำขอ" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(REQUEST_TYPE_INFO).map(([key, info]) => (
+                <SelectItem key={key} value={key}>
+                  <div className="flex items-center gap-2">
+                    {typeIcons[key as RequestType]}
+                    <span>{info.labelTh}</span>
+                    <span className="text-gray-500 text-xs">- {info.description}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.requestType && (
+            <p className="text-sm text-red-500 mt-1">{errors.requestType}</p>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Pain Point */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Pain Point หน้างาน</CardTitle>
+          <CardDescription>
+            อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Textarea
+            placeholder="เช่น ต้องคำนวณ dose ยาด้วยมือทุกครั้ง ซึ่งใช้เวลานานและเสี่ยงต่อการผิดพลาด..."
+            value={formData.painPoint}
+            onChange={(e) => handleInputChange('painPoint', e.target.value)}
+            rows={4}
+            className={errors.painPoint ? 'border-red-500' : ''}
+          />
+          <div className="flex justify-between mt-1">
+            {errors.painPoint && (
+              <p className="text-sm text-red-500">{errors.painPoint}</p>
+            )}
+            <p className="text-xs text-gray-500 ml-auto">
+              {formData.painPoint.length} / 5000
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Current Workflow */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">ขั้นตอนการทำงานปัจจุบัน</CardTitle>
+          <CardDescription>
+            อธิบายว่าปัจจุบันคุณทำงานอย่างไร (Step by step)
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Textarea
+            placeholder="เช่น 1. ดูน้ำหนักผู้ป่วยจาก chart 2. หาสูตรคำนวณจากหนังสือ 3. คำนวณด้วยเครื่องคิดเลข 4. จดบันทึกลงกระดาษ..."
+            value={formData.currentWorkflow}
+            onChange={(e) => handleInputChange('currentWorkflow', e.target.value)}
+            rows={4}
+            className={errors.currentWorkflow ? 'border-red-500' : ''}
+          />
+          <div className="flex justify-between mt-1">
+            {errors.currentWorkflow && (
+              <p className="text-sm text-red-500">{errors.currentWorkflow}</p>
+            )}
+            <p className="text-xs text-gray-500 ml-auto">
+              {formData.currentWorkflow.length} / 5000
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Expected Tech Help */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">สิ่งที่ต้องการให้ Tech ช่วย</CardTitle>
+          <CardDescription>
+            อธิบายว่าคุณอยากได้เครื่องมืออะไร หรืออยากให้ช่วยอะไร
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Textarea
+            placeholder="เช่น อยากได้เครื่องคำนวณที่ใส่น้ำหนักแล้วแสดง dose ทันที รองรับยาหลายชนิด และแสดง warning ถ้า dose ผิดปกติ..."
+            value={formData.expectedTechHelp}
+            onChange={(e) => handleInputChange('expectedTechHelp', e.target.value)}
+            rows={4}
+            className={errors.expectedTechHelp ? 'border-red-500' : ''}
+          />
+          <div className="flex justify-between mt-1">
+            {errors.expectedTechHelp && (
+              <p className="text-sm text-red-500">{errors.expectedTechHelp}</p>
+            )}
+            <p className="text-xs text-gray-500 ml-auto">
+              {formData.expectedTechHelp.length} / 5000
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* File Upload */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">ไฟล์แนบ (ไม่บังคับ)</CardTitle>
+          <CardDescription>
+            แนบรูปภาพหรือเอกสารเพิ่มเติมเพื่ออธิบายปัญหาให้ชัดเจนขึ้น
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <FileUploadSection
+            uploadedFiles={uploadedFiles}
+            onFilesUploaded={handleFilesUploaded}
+            onFileRemove={handleFileRemove}
+            disabled={isSubmitting}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Submit Error */}
+      {submitError && (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>{submitError}</AlertDescription>
+        </Alert>
+      )}
+
+      {/* Submit Button */}
+      <div className="flex justify-end gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.back()}
+          disabled={isSubmitting}
+        >
+          ยกเลิก
+        </Button>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-teal-600 hover:bg-teal-700"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              กำลังส่ง...
+            </>
+          ) : (
+            <>
+              <Send className="w-4 h-4 mr-2" />
+              ส่งคำขอ
+            </>
+          )}
+        </Button>
+      </div>
+    </form>
+  );
+}

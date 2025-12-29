@@ -1,117 +1,99 @@
-// FILE: app/dashboard/page.tsx - UPDATED to use layout
+// app/dashboard/page.tsx
+// HealthTech Sandbox - User Dashboard Page (My Requests)
+
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertTriangle } from 'lucide-react';
-import { toast } from 'sonner';
-import { AddOrganizationCard } from '@/components/OrganizationList/AddOrganizationCard';
-import { OrganizationGrid } from '@/components/OrganizationList/OrganizationGrid';
+import React, { useState } from 'react';
+import { RequestList } from '@/components/RequestList';
+import { AppHeader } from '@/components/shared/AppHeader';
+import { LoadingState } from '@/components/shared/LoadingState';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useRequests } from '@/hooks/useRequests';
+import { RequestStatus, RequestType } from '@/types/request';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-interface Organization {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  logo: string;
-  color: string;
-  icon: string;
-  userRole: 'OWNER' | 'ADMIN' | 'MEMBER';
-  isOwner: boolean;
-  joinedAt: string;
-  lastActivity: string;
-  stats: {
-    departments: number;
-    products: number;
-    lowStock: number;
-    activeUsers: number;
-    pendingTransfers?: number;
-  };
-  notifications: number;
-  isActive: boolean;
-  status?: string;
-}
+export default function DashboardPage() {
+  const router = useRouter();
+  const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
+  
+  const [statusFilter, setStatusFilter] = useState<RequestStatus | 'ALL'>('ALL');
+  const [typeFilter, setTypeFilter] = useState<RequestType | 'ALL'>('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 9;
 
-const OrganizationSelector = () => {
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  // Fetch user's own requests
+  const { 
+    requests, 
+    total, 
+    loading: requestsLoading,
+    error,
+    refetch 
+  } = useRequests({
+    status: statusFilter,
+    type: typeFilter,
+    page: currentPage,
+    pageSize,
+  });
 
+  const totalPages = Math.ceil(total / pageSize);
+
+  // Redirect if not authenticated
   useEffect(() => {
-    fetchOrganizations();
-  }, []);
-
-  const fetchOrganizations = async () => {
-    try {
-      setIsLoading(true);
-      setError('');
-
-      const response = await fetch('/api/dashboard', {
-        credentials: 'include',
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch organizations');
-      }
-
-      if (data.success) {
-        setOrganizations(data.organizations);
-      } else {
-        throw new Error(data.error || 'Failed to load organizations');
-      }
-
-    } catch (error) {
-      console.error('Fetch organizations error:', error);
-      const errorMsg = error instanceof Error ? error.message : 'Failed to load organizations';
-      setError(errorMsg);
-      toast.error('ไม่สามารถโหลดข้อมูลองค์กรได้', {
-        description: errorMsg
-      });
-    } finally {
-      setIsLoading(false);
+    if (!userLoading && !isAuthenticated) {
+      router.push('/login');
     }
+  }, [userLoading, isAuthenticated, router]);
+
+  // Handle filter changes
+  const handleStatusChange = (status: RequestStatus | 'ALL') => {
+    setStatusFilter(status);
+    setCurrentPage(1);
   };
 
-  const handleOrganizationClick = (slug: string) => {
-    window.location.href = `/${slug}`;
+  const handleTypeChange = (type: RequestType | 'ALL') => {
+    setTypeFilter(type);
+    setCurrentPage(1);
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-500" />
-          <p className="text-gray-600">กำลังโหลดองค์กร...</p>
-        </div>
-      </div>
-    );
+  // Loading state
+  if (userLoading) {
+    return <LoadingState message="กำลังโหลด..." fullScreen />;
+  }
+
+  // Not authenticated
+  if (!isAuthenticated || !user) {
+    return null; // Will redirect
   }
 
   return (
-    <>
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">เลือกองค์กรที่ต้องการจัดการ</h2>
-        <p className="text-gray-600">คลิกที่การ์ดองค์กรเพื่อเข้าสู่ระบบจัดการ</p>
-      </div>
-
-      {error && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <OrganizationGrid 
-          organizations={organizations}
-          onOrganizationClick={handleOrganizationClick}
+    <div className="min-h-screen bg-gray-50">
+      <AppHeader user={user} />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <RequestList
+          title="คำขอของฉัน"
+          requests={requests}
+          loading={requestsLoading}
+          error={error}
+          showFilters
+          showUser={false}
+          emptyTitle="ยังไม่มีคำขอ"
+          emptyDescription="เริ่มต้นส่งคำขอพัฒนาเครื่องมือดิจิทัลของคุณ"
+          emptyActionLabel="ส่งคำขอใหม่"
+          emptyActionHref="/requests/new"
+          statusFilter={statusFilter}
+          typeFilter={typeFilter}
+          onStatusChange={handleStatusChange}
+          onTypeChange={handleTypeChange}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={total}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onRefresh={refetch}
         />
-        <AddOrganizationCard />
-      </div>
-    </>
+      </main>
+    </div>
   );
-};
-
-export default OrganizationSelector;
+}
