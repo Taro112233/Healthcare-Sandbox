@@ -1318,6 +1318,9 @@ ARCJET_KEY="ajkey_01kdj38f12fz6sfza98ry92bm3"
 # Application Configuration
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 NODE_ENV="development"
+
+# Vercel Blob Storage Token
+BLOB_READ_WRITE_TOKEN="vercel_blob_rw_LCtA4ZJciPr6IlhT_qNJZIzvmKD1ARk6bGHZ62UiC6dR5vu"
 ```
 
 ### Vercel Configuration Pattern
