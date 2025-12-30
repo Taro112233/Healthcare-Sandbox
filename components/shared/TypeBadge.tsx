@@ -5,7 +5,8 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { 
   RequestType, 
-  REQUEST_TYPE_INFO 
+  REQUEST_TYPE_INFO,
+  REQUEST_TYPE_VALUES,  // ✅ เพิ่ม import
 } from '@/types/request';
 import {
   Calculator,
@@ -23,19 +24,19 @@ interface TypeBadgeProps {
 }
 
 const typeIcons: Record<RequestType, React.ReactNode> = {
-  [RequestType.CALCULATOR]: <Calculator className="w-3 h-3" />,
-  [RequestType.FORM]: <FileText className="w-3 h-3" />,
-  [RequestType.WORKFLOW]: <GitBranch className="w-3 h-3" />,
-  [RequestType.DECISION_AID]: <Brain className="w-3 h-3" />,
-  [RequestType.OTHER]: <HelpCircle className="w-3 h-3" />,
+  CALCULATOR: <Calculator className="w-3 h-3" />,
+  FORM: <FileText className="w-3 h-3" />,
+  WORKFLOW: <GitBranch className="w-3 h-3" />,
+  DECISION_AID: <Brain className="w-3 h-3" />,
+  OTHER: <HelpCircle className="w-3 h-3" />,
 };
 
 const typeColors: Record<RequestType, string> = {
-  [RequestType.CALCULATOR]: 'bg-violet-100 text-violet-700 border-violet-200',
-  [RequestType.FORM]: 'bg-sky-100 text-sky-700 border-sky-200',
-  [RequestType.WORKFLOW]: 'bg-amber-100 text-amber-700 border-amber-200',
-  [RequestType.DECISION_AID]: 'bg-rose-100 text-rose-700 border-rose-200',
-  [RequestType.OTHER]: 'bg-slate-100 text-slate-700 border-slate-200',
+  CALCULATOR: 'bg-violet-100 text-violet-700 border-violet-200',
+  FORM: 'bg-sky-100 text-sky-700 border-sky-200',
+  WORKFLOW: 'bg-amber-100 text-amber-700 border-amber-200',
+  DECISION_AID: 'bg-rose-100 text-rose-700 border-rose-200',
+  OTHER: 'bg-slate-100 text-slate-700 border-slate-200',
 };
 
 export function TypeBadge({ type, size = 'md', showIcon = true, variant = 'default' }: TypeBadgeProps) {

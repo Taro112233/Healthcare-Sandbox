@@ -1,6 +1,4 @@
 // app/requests/[id]/page.tsx
-// HealthTech Sandbox - Request Detail Page
-
 'use client';
 
 import React, { useEffect, use } from 'react';
@@ -25,28 +23,24 @@ export default function RequestDetailPage({ params }: PageProps) {
   const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
   const { request, loading: requestLoading, error, refetch } = useRequest(id);
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!userLoading && !isAuthenticated) {
       router.push('/login');
     }
   }, [userLoading, isAuthenticated, router]);
 
-  // Loading state
   if (userLoading || requestLoading) {
     return <LoadingState message="กำลังโหลดข้อมูล..." fullScreen />;
   }
 
-  // Not authenticated
   if (!isAuthenticated || !user) {
-    return null; // Will redirect
+    return null;
   }
 
-  // Error state
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AppHeader user={user} />
+        <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <Link href="/dashboard">
@@ -68,11 +62,10 @@ export default function RequestDetailPage({ params }: PageProps) {
     );
   }
 
-  // Not found
   if (!request) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AppHeader user={user} />
+        <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <Link href="/dashboard">
@@ -96,7 +89,7 @@ export default function RequestDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AppHeader user={user} />
+      <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <RequestDetail 

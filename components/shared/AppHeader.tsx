@@ -1,6 +1,4 @@
 // components/shared/AppHeader.tsx
-// HealthTech Sandbox - Main App Header
-
 'use client';
 
 import React from 'react';
@@ -24,17 +22,12 @@ import {
   User,
   Shield,
   LayoutDashboard,
-  Menu,
 } from 'lucide-react';
-import { CurrentUser } from '@/hooks/useCurrentUser';
+import { useCurrentUser, type CurrentUser } from '@/hooks/useCurrentUser';
 
-interface AppHeaderProps {
-  user: CurrentUser | null;
-  onLogout: () => Promise<void>;
-}
-
-export function AppHeader({ user, onLogout }: AppHeaderProps) {
+export function AppHeader() {
   const router = useRouter();
+  const { user, logout } = useCurrentUser();
 
   const getUserInitials = () => {
     if (!user) return 'U';
@@ -42,7 +35,7 @@ export function AppHeader({ user, onLogout }: AppHeaderProps) {
   };
 
   const handleLogout = async () => {
-    await onLogout();
+    await logout();
   };
 
   return (

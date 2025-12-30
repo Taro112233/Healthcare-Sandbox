@@ -21,6 +21,7 @@ import { FileUploadSection } from './FileUploadSection';
 import { 
   RequestType, 
   REQUEST_TYPE_INFO,
+  REQUEST_TYPE_VALUES,  // ✅ เพิ่ม import
 } from '@/types/request';
 import { 
   Send, 
@@ -59,11 +60,11 @@ interface FormErrors {
 }
 
 const typeIcons: Record<RequestType, React.ReactNode> = {
-  [RequestType.CALCULATOR]: <Calculator className="w-4 h-4" />,
-  [RequestType.FORM]: <FileText className="w-4 h-4" />,
-  [RequestType.WORKFLOW]: <GitBranch className="w-4 h-4" />,
-  [RequestType.DECISION_AID]: <Brain className="w-4 h-4" />,
-  [RequestType.OTHER]: <HelpCircle className="w-4 h-4" />,
+  CALCULATOR: <Calculator className="w-4 h-4" />,
+  FORM: <FileText className="w-4 h-4" />,
+  WORKFLOW: <GitBranch className="w-4 h-4" />,
+  DECISION_AID: <Brain className="w-4 h-4" />,
+  OTHER: <HelpCircle className="w-4 h-4" />,
 };
 
 export function RequestForm() {
@@ -104,7 +105,6 @@ export function RequestForm() {
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
     }
@@ -163,7 +163,6 @@ export function RequestForm() {
           description: 'คำขอของคุณถูกส่งเรียบร้อยแล้ว',
         });
         
-        // Navigate to the new request detail page
         router.push(`/requests/${data.data.id}`);
       } else {
         throw new Error(data.error || 'ส่งคำขอไม่สำเร็จ');
@@ -206,12 +205,13 @@ export function RequestForm() {
               <SelectValue placeholder="เลือกประเภทคำขอ" />
             </SelectTrigger>
             <SelectContent>
-              {Object.entries(REQUEST_TYPE_INFO).map(([key, info]) => (
-                <SelectItem key={key} value={key}>
+              {/* ✅ ใช้ Object.entries กับ REQUEST_TYPE_VALUES */}
+              {Object.entries(REQUEST_TYPE_VALUES).map(([key, value]) => (
+                <SelectItem key={key} value={value}>
                   <div className="flex items-center gap-2">
-                    {typeIcons[key as RequestType]}
-                    <span>{info.labelTh}</span>
-                    <span className="text-gray-500 text-xs">- {info.description}</span>
+                    {typeIcons[value]}
+                    <span>{REQUEST_TYPE_INFO[value].labelTh}</span>
+                    <span className="text-gray-500 text-xs">- {REQUEST_TYPE_INFO[value].description}</span>
                   </div>
                 </SelectItem>
               ))}

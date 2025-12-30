@@ -1,6 +1,4 @@
 // hooks/useRequests.ts
-// HealthTech Sandbox - Custom hook for requests data fetching
-
 import { useState, useEffect, useCallback } from 'react';
 import { 
   Request, 
@@ -18,6 +16,7 @@ interface UseRequestsOptions {
 
 interface UseRequestsReturn {
   requests: Request[];
+  total: number;  // ✅ เพิ่ม total
   loading: boolean;
   error: string | null;
   meta: {
@@ -100,11 +99,12 @@ export function useRequests(options: UseRequestsOptions = {}): UseRequestsReturn
 
   const setFilters = (newFilters: { status?: RequestStatus | 'ALL'; type?: RequestType | 'ALL' }) => {
     setFiltersState(prev => ({ ...prev, ...newFilters }));
-    setMeta(prev => ({ ...prev, page: 1 })); // Reset to page 1 when filters change
+    setMeta(prev => ({ ...prev, page: 1 }));
   };
 
   return {
     requests,
+    total: meta.total,  // ✅ เพิ่ม total
     loading,
     error,
     meta,
@@ -115,7 +115,6 @@ export function useRequests(options: UseRequestsOptions = {}): UseRequestsReturn
 }
 
 // ===== Single Request Hook =====
-
 interface UseRequestReturn {
   request: Request | null;
   loading: boolean;
@@ -184,7 +183,6 @@ export function useRequest(requestId: string): UseRequestReturn {
 }
 
 // ===== Admin Stats Hook =====
-
 interface AdminStats {
   requests: {
     total: number;

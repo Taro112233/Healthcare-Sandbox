@@ -1,9 +1,5 @@
 // hooks/useCurrentUser.ts
-// HealthTech Sandbox - Custom hook for current user data
-
 import { useState, useEffect, useCallback } from 'react';
-
-export type UserRole = 'USER' | 'ADMIN';
 
 export interface CurrentUser {
   id: string;
@@ -13,7 +9,7 @@ export interface CurrentUser {
   lastName: string;
   fullName: string;
   phone: string | null;
-  role: UserRole;
+  role: 'USER' | 'ADMIN';
   status: string;
   isActive: boolean;
   emailVerified: boolean;

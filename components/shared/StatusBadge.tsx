@@ -5,7 +5,8 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { 
   RequestStatus, 
-  REQUEST_STATUS_INFO 
+  REQUEST_STATUS_INFO,
+  REQUEST_STATUS_VALUES,  // ✅ เพิ่ม import
 } from '@/types/request';
 import {
   Clock,
@@ -23,12 +24,12 @@ interface StatusBadgeProps {
 }
 
 const statusIcons: Record<RequestStatus, React.ReactNode> = {
-  [RequestStatus.PENDING_REVIEW]: <Clock className="w-3 h-3" />,
-  [RequestStatus.UNDER_CONSIDERATION]: <Eye className="w-3 h-3" />,
-  [RequestStatus.IN_DEVELOPMENT]: <Code className="w-3 h-3" />,
-  [RequestStatus.IN_TESTING]: <TestTube className="w-3 h-3" />,
-  [RequestStatus.COMPLETED]: <CheckCircle className="w-3 h-3" />,
-  [RequestStatus.BEYOND_CAPACITY]: <XCircle className="w-3 h-3" />,
+  PENDING_REVIEW: <Clock className="w-3 h-3" />,
+  UNDER_CONSIDERATION: <Eye className="w-3 h-3" />,
+  IN_DEVELOPMENT: <Code className="w-3 h-3" />,
+  IN_TESTING: <TestTube className="w-3 h-3" />,
+  COMPLETED: <CheckCircle className="w-3 h-3" />,
+  BEYOND_CAPACITY: <XCircle className="w-3 h-3" />,
 };
 
 export function StatusBadge({ status, size = 'md', showIcon = true }: StatusBadgeProps) {

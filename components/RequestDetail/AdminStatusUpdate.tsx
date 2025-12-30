@@ -1,6 +1,4 @@
 // components/RequestDetail/AdminStatusUpdate.tsx
-// HealthTech Sandbox - Admin Status Update Component
-
 'use client';
 
 import React, { useState } from 'react';
@@ -79,7 +77,6 @@ export function AdminStatusUpdate({
     }
   };
 
-  // All available statuses
   const allStatuses: RequestStatus[] = [
     'PENDING_REVIEW',
     'UNDER_CONSIDERATION',
@@ -100,7 +97,6 @@ export function AdminStatusUpdate({
       
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Current Status Display */}
           <div>
             <Label className="text-sm text-gray-600">สถานะปัจจุบัน</Label>
             <div className={`mt-1 inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium ${REQUEST_STATUS_INFO[currentStatus].bgColor} ${REQUEST_STATUS_INFO[currentStatus].textColor}`}>
@@ -108,7 +104,6 @@ export function AdminStatusUpdate({
             </div>
           </div>
 
-          {/* New Status Selection */}
           <div className="space-y-2">
             <Label htmlFor="new-status">เปลี่ยนเป็น</Label>
             <Select 
@@ -134,7 +129,6 @@ export function AdminStatusUpdate({
             </Select>
           </div>
 
-          {/* Note (Optional) */}
           <div className="space-y-2">
             <Label htmlFor="status-note">
               บันทึก <span className="text-gray-400">(ไม่บังคับ)</span>
@@ -152,7 +146,6 @@ export function AdminStatusUpdate({
             </p>
           </div>
 
-          {/* Status Change Preview */}
           {hasChanged && (
             <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm">
               <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
@@ -163,7 +156,6 @@ export function AdminStatusUpdate({
             </div>
           )}
 
-          {/* Submit Button */}
           <Button 
             type="submit" 
             className="w-full"

@@ -1,6 +1,4 @@
 // app/requests/new/page.tsx
-// HealthTech Sandbox - Submit New Request Page
-
 'use client';
 
 import React, { useEffect } from 'react';
@@ -17,26 +15,23 @@ export default function NewRequestPage() {
   const router = useRouter();
   const { user, loading, isAuthenticated } = useCurrentUser();
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.push('/login');
     }
   }, [loading, isAuthenticated, router]);
 
-  // Loading state
   if (loading) {
     return <LoadingState message="กำลังโหลด..." fullScreen />;
   }
 
-  // Not authenticated
   if (!isAuthenticated || !user) {
-    return null; // Will redirect
+    return null;
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AppHeader user={user} />
+      <AppHeader />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}

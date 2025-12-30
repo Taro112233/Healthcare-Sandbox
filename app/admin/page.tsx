@@ -1,6 +1,4 @@
 // app/admin/page.tsx
-// HealthTech Sandbox - Admin Dashboard Page
-
 'use client';
 
 import React, { useEffect } from 'react';
@@ -16,28 +14,24 @@ export default function AdminPage() {
   const router = useRouter();
   const { user, loading, isAuthenticated, isAdmin } = useCurrentUser();
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.push('/login');
     }
   }, [loading, isAuthenticated, router]);
 
-  // Loading state
   if (loading) {
     return <LoadingState message="กำลังโหลด..." fullScreen />;
   }
 
-  // Not authenticated
   if (!isAuthenticated || !user) {
-    return null; // Will redirect
+    return null;
   }
 
-  // Not admin - show access denied
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <AppHeader user={user} />
+        <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <EmptyState
             icon={<ShieldAlert className="w-16 h-16 text-red-400" />}
@@ -53,7 +47,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <AppHeader user={user} />
+      <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <AdminDashboard />

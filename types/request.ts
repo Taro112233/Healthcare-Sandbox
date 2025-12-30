@@ -1,27 +1,35 @@
 // types/request.ts
 // HealthTech Sandbox - Request Type Definitions
 
-// ===== ENUMS =====
+// ✅ Import Prisma enums
+import type { 
+  RequestType as PrismaRequestType,
+  RequestStatus as PrismaRequestStatus 
+} from '@prisma/client';
 
-export enum RequestType {
-  CALCULATOR = 'CALCULATOR',
-  FORM = 'FORM',
-  WORKFLOW = 'WORKFLOW',
-  DECISION_AID = 'DECISION_AID',
-  OTHER = 'OTHER',
-}
+// Re-export as types
+export type RequestType = PrismaRequestType;
+export type RequestStatus = PrismaRequestStatus;
 
-export enum RequestStatus {
-  PENDING_REVIEW = 'PENDING_REVIEW',
-  UNDER_CONSIDERATION = 'UNDER_CONSIDERATION',
-  IN_DEVELOPMENT = 'IN_DEVELOPMENT',
-  IN_TESTING = 'IN_TESTING',
-  COMPLETED = 'COMPLETED',
-  BEYOND_CAPACITY = 'BEYOND_CAPACITY',
-}
+// ✅ สร้าง runtime values สำหรับใช้ใน components
+export const REQUEST_TYPE_VALUES: Record<RequestType, RequestType> = {
+  CALCULATOR: 'CALCULATOR',
+  FORM: 'FORM',
+  WORKFLOW: 'WORKFLOW',
+  DECISION_AID: 'DECISION_AID',
+  OTHER: 'OTHER',
+};
+
+export const REQUEST_STATUS_VALUES: Record<RequestStatus, RequestStatus> = {
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  UNDER_CONSIDERATION: 'UNDER_CONSIDERATION',
+  IN_DEVELOPMENT: 'IN_DEVELOPMENT',
+  IN_TESTING: 'IN_TESTING',
+  COMPLETED: 'COMPLETED',
+  BEYOND_CAPACITY: 'BEYOND_CAPACITY',
+};
 
 // ===== STATUS DISPLAY INFO =====
-
 export const REQUEST_STATUS_INFO: Record<RequestStatus, {
   label: string;
   labelTh: string;
@@ -29,42 +37,42 @@ export const REQUEST_STATUS_INFO: Record<RequestStatus, {
   bgColor: string;
   textColor: string;
 }> = {
-  [RequestStatus.PENDING_REVIEW]: {
+  PENDING_REVIEW: {
     label: 'Pending Review',
     labelTh: 'รอตรวจสอบ',
     color: 'bg-yellow-500',
     bgColor: 'bg-yellow-100',
     textColor: 'text-yellow-800',
   },
-  [RequestStatus.UNDER_CONSIDERATION]: {
+  UNDER_CONSIDERATION: {
     label: 'Under Consideration',
     labelTh: 'อยู่ในการพิจารณา',
     color: 'bg-blue-500',
     bgColor: 'bg-blue-100',
     textColor: 'text-blue-800',
   },
-  [RequestStatus.IN_DEVELOPMENT]: {
+  IN_DEVELOPMENT: {
     label: 'In Development',
     labelTh: 'อยู่ในการพัฒนา',
     color: 'bg-purple-500',
     bgColor: 'bg-purple-100',
     textColor: 'text-purple-800',
   },
-  [RequestStatus.IN_TESTING]: {
+  IN_TESTING: {
     label: 'In Testing',
     labelTh: 'อยู่ในการทดสอบ',
     color: 'bg-orange-500',
     bgColor: 'bg-orange-100',
     textColor: 'text-orange-800',
   },
-  [RequestStatus.COMPLETED]: {
+  COMPLETED: {
     label: 'Completed',
     labelTh: 'สำเร็จ',
     color: 'bg-green-500',
     bgColor: 'bg-green-100',
     textColor: 'text-green-800',
   },
-  [RequestStatus.BEYOND_CAPACITY]: {
+  BEYOND_CAPACITY: {
     label: 'Beyond Capacity',
     labelTh: 'เกินความสามารถ',
     color: 'bg-gray-500',
@@ -79,31 +87,31 @@ export const REQUEST_TYPE_INFO: Record<RequestType, {
   icon: string;
   description: string;
 }> = {
-  [RequestType.CALCULATOR]: {
+  CALCULATOR: {
     label: 'Calculator',
     labelTh: 'เครื่องคำนวณ',
     icon: 'Calculator',
     description: 'เครื่องคำนวณทางการแพทย์ เช่น BMI, Drug Dosing, Risk Score',
   },
-  [RequestType.FORM]: {
+  FORM: {
     label: 'Form',
     labelTh: 'แบบฟอร์ม',
     icon: 'FileText',
     description: 'แบบฟอร์มบันทึกข้อมูล, Checklist, Assessment Form',
   },
-  [RequestType.WORKFLOW]: {
+  WORKFLOW: {
     label: 'Workflow',
     labelTh: 'ระบบจัดการงาน',
     icon: 'GitBranch',
     description: 'ระบบจัดการขั้นตอนการทำงาน, Process Automation',
   },
-  [RequestType.DECISION_AID]: {
+  DECISION_AID: {
     label: 'Decision Aid',
     labelTh: 'ช่วยตัดสินใจ',
     icon: 'Brain',
     description: 'เครื่องมือช่วยตัดสินใจทางคลินิก, Clinical Decision Support',
   },
-  [RequestType.OTHER]: {
+  OTHER: {
     label: 'Other',
     labelTh: 'อื่นๆ',
     icon: 'HelpCircle',
@@ -112,7 +120,6 @@ export const REQUEST_TYPE_INFO: Record<RequestType, {
 };
 
 // ===== INTERFACES =====
-
 export interface Attachment {
   id: string;
   requestId: string;
@@ -149,7 +156,6 @@ export interface Request {
   createdAt: Date;
   updatedAt: Date;
   
-  // Relations (optional - populated when needed)
   user?: {
     id: string;
     firstName: string;
@@ -166,7 +172,6 @@ export interface Request {
 }
 
 // ===== FORM INTERFACES =====
-
 export interface CreateRequestFormData {
   painPoint: string;
   currentWorkflow: string;
@@ -181,7 +186,6 @@ export interface UpdateStatusFormData {
 }
 
 // ===== API RESPONSE INTERFACES =====
-
 export interface RequestListResponse {
   success: boolean;
   data: Request[];
@@ -205,7 +209,6 @@ export interface CreateRequestResponse {
 }
 
 // ===== STATS INTERFACE =====
-
 export interface RequestStats {
   total: number;
   pending: number;
@@ -216,13 +219,12 @@ export interface RequestStats {
 }
 
 // ===== HELPER FUNCTIONS =====
-
 export function getStatusInfo(status: RequestStatus) {
-  return REQUEST_STATUS_INFO[status] || REQUEST_STATUS_INFO[RequestStatus.PENDING_REVIEW];
+  return REQUEST_STATUS_INFO[status] || REQUEST_STATUS_INFO.PENDING_REVIEW;
 }
 
 export function getTypeInfo(type: RequestType) {
-  return REQUEST_TYPE_INFO[type] || REQUEST_TYPE_INFO[RequestType.OTHER];
+  return REQUEST_TYPE_INFO[type] || REQUEST_TYPE_INFO.OTHER;
 }
 
 export function truncateText(text: string, maxLength: number = 100): string {
