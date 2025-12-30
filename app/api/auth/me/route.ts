@@ -1,10 +1,13 @@
 // app/api/auth/me/route.ts
+// HealthTech Sandbox - Get Current User API
+
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerUser } from '@/lib/auth-server';
 import { prisma } from '@/lib/prisma';
 import type { JWTUser } from '@/lib/auth';
 
-interface CompleteUserData {
+// ===== RESPONSE INTERFACE =====
+interface UserDataResponse {
   user: {
     id: string;
     username: string;
@@ -13,7 +16,7 @@ interface CompleteUserData {
     lastName: string;
     fullName: string;
     phone: string | null;
-    role: string;
+    role: 'USER' | 'ADMIN';
     status: string;
     isActive: boolean;
     emailVerified: boolean;
@@ -29,18 +32,23 @@ interface CompleteUserData {
   };
 }
 
+// ===== GET CURRENT USER =====
 export async function GET(request: NextRequest) {
   try {
+    // Verify JWT from cookie
     const user: JWTUser | null = await getServerUser();
     
     if (!user) {
+      console.log('❌ No valid auth token found');
       return NextResponse.json({ 
         success: false, 
         error: 'Authentication required',
+        message: 'กรุณาเข้าสู่ระบบ',
         code: 'AUTH_REQUIRED' 
       }, { status: 401 });
     }
 
+    // Fetch complete user data from database
     const userData = await prisma.user.findUnique({
       where: { id: user.userId },
       select: {
@@ -60,15 +68,30 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    if (!userData || !userData.isActive || userData.status !== 'ACTIVE') {
+    // User not found in database (deleted or invalid)
+    if (!userData) {
+      console.log(`❌ User not found: ${user.userId}`);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'User not found',
+        message: 'ไม่พบข้อมูลผู้ใช้',
+        code: 'USER_NOT_FOUND' 
+      }, { status: 404 });
+    }
+
+    // User account inactive
+    if (!userData.isActive || userData.status !== 'ACTIVE') {
+      console.log(`❌ Inactive account: ${user.userId}`);
       return NextResponse.json({ 
         success: false, 
         error: 'User account not active',
+        message: 'บัญชีถูกระงับการใช้งาน',
         code: 'ACCOUNT_INACTIVE' 
       }, { status: 403 });
     }
 
-    const response: CompleteUserData = {
+    // Build response
+    const response: UserDataResponse = {
       user: {
         id: userData.id,
         username: userData.username,
@@ -77,7 +100,7 @@ export async function GET(request: NextRequest) {
         lastName: userData.lastName,
         fullName: `${userData.firstName} ${userData.lastName}`,
         phone: userData.phone,
-        role: userData.role,
+        role: userData.role as 'USER' | 'ADMIN',
         status: userData.status,
         isActive: userData.isActive,
         emailVerified: userData.emailVerified,
@@ -93,6 +116,8 @@ export async function GET(request: NextRequest) {
       },
     };
 
+    console.log(`✅ User data fetched: ${userData.username}`);
+
     return NextResponse.json({
       success: true,
       data: response,
@@ -104,20 +129,30 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ 
       success: false, 
       error: 'Internal server error',
+      message: 'เกิดข้อผิดพลาดในการดึงข้อมูลผู้ใช้',
       code: 'INTERNAL_ERROR'
     }, { status: 500 });
   }
 }
 
+// ===== HELPER FUNCTIONS =====
+
+/**
+ * Generate avatar URL using UI Avatars service
+ */
 function generateAvatarUrl(firstName: string, lastName: string): string {
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   return `https://ui-avatars.com/api/?name=${initials}&background=3B82F6&color=ffffff&size=128&rounded=true`;
 }
 
+/**
+ * Check if JWT token is expiring soon (within 24 hours)
+ */
 function checkTokenExpiry(user: JWTUser): boolean {
   if (user.exp) {
     const now = Math.floor(Date.now() / 1000);
     const timeToExpiry = user.exp - now;
+    // Warn if token expires in less than 24 hours
     return timeToExpiry < 24 * 60 * 60;
   }
   return false;

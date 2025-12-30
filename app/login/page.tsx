@@ -1,4 +1,4 @@
-// app/login/page.tsx - FIXED NAVIGATION ISSUE
+// app/login/page.tsx - CONSISTENT WITH HEALTHTECH SANDBOX STYLE
 
 "use client";
 
@@ -22,7 +22,7 @@ import {
   EyeOff,
   XCircle,
   AlertTriangle,
-  Building2,
+  Stethoscope,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -42,9 +42,6 @@ export default function LoginPage() {
 
   const { login, loading } = useAuth();
   const router = useRouter();
-
-  // ✅ FIXED: ลบ useEffect ที่ทำ auth check ออก (ไม่จำเป็น)
-  // ✅ FIXED: ลบ loginSuccess state ออก (ไม่จำเป็น)
 
   const validateForm = (): boolean => {
     if (!formData.username?.trim()) {
@@ -85,7 +82,7 @@ export default function LoginPage() {
     });
 
     try {
-      // ✅ FIXED: รอให้ login เสร็จก่อน แล้ว redirect ทันที
+      // ✅ Wait for login to complete
       await login({
         username: formData.username.trim(),
         password: formData.password,
@@ -94,12 +91,11 @@ export default function LoginPage() {
       toast.dismiss(loadingToast);
 
       toast.success("เข้าสู่ระบบสำเร็จ!", {
-        description: `ยินดีต้อนรับเข้าสู่ระบบจัดการสต็อก`,
+        description: "ยินดีต้อนรับเข้าสู่ HealthTech Sandbox",
         duration: 2000,
       });
 
-      // ✅ FIXED: ใช้ window.location.href แทน router.push 
-      // เพื่อให้แน่ใจว่า full page reload และ auth state update ถูกต้อง
+      // ✅ Full page reload to ensure auth state is properly updated
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 500);
@@ -111,6 +107,7 @@ export default function LoginPage() {
       const errorMsg = error instanceof Error ? error.message : "เข้าสู่ระบบไม่สำเร็จ";
       setError(errorMsg);
       
+      // ✅ User-friendly error messages
       if (errorMsg.includes("Username") || errorMsg.includes("username")) {
         toast.error("Username ไม่ถูกต้อง", {
           description: "ไม่พบ Username นี้ในระบบ กรุณาตรวจสอบอีกครั้ง",
@@ -123,9 +120,9 @@ export default function LoginPage() {
           icon: <XCircle className="w-4 h-4" />,
           duration: 5000,
         });
-      } else if (errorMsg.includes("PENDING") || errorMsg.includes("รออนุมัติ")) {
-        toast.error("บัญชียังไม่ได้รับการอนุมัติ", {
-          description: "กรุณาติดต่อผู้ดูแลระบบเพื่อขออนุมัติการใช้งาน",
+      } else if (errorMsg.includes("ระงับ") || errorMsg.includes("inactive")) {
+        toast.error("บัญชีถูกระงับการใช้งาน", {
+          description: "กรุณาติดต่อผู้ดูแลระบบเพื่อขอเปิดใช้งาน",
           icon: <AlertTriangle className="w-4 h-4" />,
           duration: 6000,
         });
@@ -161,9 +158,9 @@ export default function LoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 to-emerald-100">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
           <p className="text-gray-600 text-sm">กำลังตรวจสอบสิทธิ์...</p>
         </div>
       </div>
@@ -171,20 +168,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-              <Building2 className="w-7 h-7 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-gray-900">
-                InvenStock
+                HealthTech Sandbox
               </h1>
               <p className="text-sm text-gray-600">
-                Multi-Tenant Inventory System V1.0
+                Technology Request Platform
               </p>
             </div>
           </div>
@@ -256,10 +253,9 @@ export default function LoginPage() {
                 </Alert>
               )}
 
-              {/* ✅ FIXED: ปุ่ม login เดียว ไม่มี conditional rendering */}
               <Button
                 type="submit"
-                className="w-full h-11 text-base bg-blue-500 hover:bg-blue-600"
+                className="w-full h-11 text-base bg-teal-600 hover:bg-teal-700"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -279,7 +275,7 @@ export default function LoginPage() {
                 ยังไม่มีบัญชี?{" "}
                 <Button
                   variant="link"
-                  className="p-0 h-auto text-blue-600 hover:text-blue-800"
+                  className="p-0 h-auto text-teal-600 hover:text-teal-800"
                   onClick={handleRegisterClick}
                   disabled={isLoading}
                 >
@@ -292,8 +288,8 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-gray-500">
-          <p>InvenStock - Multi-Tenant Inventory Management</p>
-          <p>© 2025 - Enterprise Grade Solution</p>
+          <p>HealthTech Sandbox - Technology Request Platform</p>
+          <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>
     </div>

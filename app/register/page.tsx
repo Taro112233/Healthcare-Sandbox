@@ -1,4 +1,4 @@
-// app/register/page.tsx - FIXED AUTO REDIRECT
+// app/register/page.tsx - HEALTHTECH SANDBOX STYLE
 
 'use client';
 
@@ -13,7 +13,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Checkbox } from '@/components/ui/checkbox';
 import { 
   Loader2, 
-  Building2, 
+  Stethoscope, 
   Eye, 
   EyeOff, 
   CheckCircle2, 
@@ -84,8 +84,8 @@ export default function RegisterPage() {
     }
 
     // Password validation
-    if (!formData.password || formData.password.length < 6) {
-      const errorMsg = 'รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+    if (!formData.password || formData.password.length < 8) {
+      const errorMsg = 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';
       setError(errorMsg);
       toast.error('รหัสผ่านไม่ถูกต้อง', {
         description: errorMsg,
@@ -163,30 +163,44 @@ export default function RegisterPage() {
     });
 
     try {
-      // ✅ ส่งข้อมูลตรงกับ useAuth register function
-      const registerData = {
+      // ✅ FIXED: ส่งข้อมูลโดยไม่รวม empty string
+      const registerData: {
+        username: string;
+        password: string;
+        firstName: string;
+        lastName: string;
+        email?: string;
+        phone?: string;
+      } = {
         username: formData.username.trim().toLowerCase(),
         password: formData.password,
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
-        // ส่งเฉพาะ fields ที่มีข้อมูล (Optional fields)
-        ...(formData.email?.trim() && { email: formData.email.trim().toLowerCase() }),
-        ...(formData.phone?.trim() && { phone: formData.phone.trim() }),
       };
+
+      // ✅ เพิ่ม email เฉพาะเมื่อมีค่าจริง (ไม่ใช่ empty string)
+      if (formData.email?.trim()) {
+        registerData.email = formData.email.trim().toLowerCase();
+      }
+
+      // ✅ เพิ่ม phone เฉพาะเมื่อมีค่าจริง
+      if (formData.phone?.trim()) {
+        registerData.phone = formData.phone.trim();
+      }
 
       // ✅ ใช้ register function จาก useAuth hook
       await register(registerData);
       
       toast.dismiss(loadingToast);
       
-      // ✅ FIXED: สมัครสำเร็จ - แสดง toast แล้ว redirect ทันที (เหมือน login)
+      // ✅ สมัครสำเร็จ - แสดง toast แล้ว redirect ทันที
       toast.success('สมัครสมาชิกสำเร็จ!', {
-        description: 'บัญชีของคุณพร้อมใช้งานแล้ว',
+        description: 'ยินดีต้อนรับเข้าสู่ HealthTech Sandbox',
         icon: <UserPlus className="w-4 h-4" />,
         duration: 2000,
       });
       
-      // ✅ FIXED: ใช้ window.location.href แทน router.push เหมือน login
+      // ✅ Full page reload to ensure auth state is updated
       setTimeout(() => {
         window.location.href = '/dashboard';
       }, 500);
@@ -250,9 +264,9 @@ export default function RegisterPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 to-emerald-100">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
           <p className="text-gray-600 text-sm">กำลังตรวจสอบสิทธิ์...</p>
         </div>
       </div>
@@ -260,17 +274,17 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 p-4">
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-              <Building2 className="w-7 h-7 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-gray-900">InvenStock</h1>
-              <p className="text-sm text-gray-600">Multi-Tenant Inventory System V1.0</p>
+              <h1 className="text-2xl font-bold text-gray-900">HealthTech Sandbox</h1>
+              <p className="text-sm text-gray-600">Technology Request Platform</p>
             </div>
           </div>
         </div>
@@ -280,7 +294,7 @@ export default function RegisterPage() {
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">สมัครสมาชิก</CardTitle>
             <CardDescription className="text-center">
-              กรอกข้อมูลเพื่อสร้างบัญชีผู้ใช้ใหม่
+              กรอกข้อมูลเพื่อเริ่มใช้งาน Sandbox
             </CardDescription>
           </CardHeader>
           
@@ -353,13 +367,13 @@ export default function RegisterPage() {
                   type="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="your@email.com (สำหรับการแจ้งเตือน)"
+                  placeholder="your@email.com"
                   disabled={isLoading}
                   className="h-11"
                   autoComplete="email"
                 />
                 <p className="text-xs text-gray-500">
-                  ใช้สำหรับการแจ้งเตือนและกู้คืนรหัสผ่าน (ไม่บังคับ)
+                  สำหรับรับการแจ้งเตือนเมื่อมี update
                 </p>
               </div>
 
@@ -392,7 +406,7 @@ export default function RegisterPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleInputChange}
-                    placeholder="รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)"
+                    placeholder="รหัสผ่าน (อย่างน้อย 8 ตัวอักษร)"
                     disabled={isLoading}
                     className="h-11 pr-10"
                     autoComplete="new-password"
@@ -477,14 +491,21 @@ export default function RegisterPage() {
                       htmlFor="terms" 
                       className="text-sm text-gray-700 leading-relaxed cursor-pointer"
                     >
-                      ข้าพเจ้าได้อ่านและยอมรับเงื่อนไขการใช้งาน *
+                      ข้าพเจ้ายอมรับเงื่อนไขการใช้งาน Sandbox *
                     </Label>
                   </div>
                   
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                    <p className="text-xs text-green-700 leading-relaxed">
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                    <p className="text-xs text-amber-800 leading-relaxed">
+                      <AlertTriangle className="w-3 h-3 inline mr-1" />
+                      <strong>ข้อควรระวัง:</strong> ห้ามใช้ข้อมูลผู้ป่วยจริง - Sandbox นี้สำหรับทดสอบเท่านั้น
+                    </p>
+                  </div>
+
+                  <div className="bg-teal-50 border border-teal-200 rounded-lg p-3">
+                    <p className="text-xs text-teal-700 leading-relaxed">
                       <CheckCircle2 className="w-3 h-3 inline mr-1" />
-                      บัญชีที่สร้างใหม่จะพร้อมใช้งานทันที ไม่ต้องรออนุมัติ
+                      บัญชีพร้อมใช้งานทันที - เริ่มส่ง Request ได้เลย
                     </p>
                   </div>
                 </div>
@@ -495,7 +516,7 @@ export default function RegisterPage() {
                 type="submit" 
                 className={`w-full h-11 text-base transition-colors duration-200 ${
                   acceptedTerms 
-                    ? 'bg-blue-500 hover:bg-blue-600' 
+                    ? 'bg-teal-600 hover:bg-teal-700' 
                     : 'bg-gray-400 hover:bg-gray-500'
                 }`}
                 disabled={isLoading || !acceptedTerms}
@@ -520,7 +541,7 @@ export default function RegisterPage() {
                 มีบัญชีอยู่แล้ว?{' '}
                 <Button
                   variant="link"
-                  className="p-0 h-auto text-blue-600 hover:text-blue-800"
+                  className="p-0 h-auto text-teal-600 hover:text-teal-800"
                   onClick={handleLoginClick}
                   disabled={isLoading}
                 >
@@ -533,8 +554,8 @@ export default function RegisterPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-gray-500">
-          <p>InvenStock - Multi-Tenant Inventory Management</p>
-          <p>© 2025 - Enterprise Grade Solution</p>
+          <p>HealthTech Sandbox - Technology Request Platform</p>
+          <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>
     </div>
