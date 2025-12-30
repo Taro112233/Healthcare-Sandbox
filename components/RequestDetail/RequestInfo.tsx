@@ -1,6 +1,4 @@
 // components/RequestDetail/RequestInfo.tsx
-// HealthTech Sandbox - Request Information Display Component
-
 'use client';
 
 import React from 'react';
@@ -35,7 +33,6 @@ export function RequestInfo({ request }: RequestInfoProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header Info */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
@@ -43,11 +40,11 @@ export function RequestInfo({ request }: RequestInfoProps) {
             <TypeBadge type={request.requestType} />
           </div>
           
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             {request.user && (
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                  <AvatarFallback className="text-xs bg-gray-200">
+                  <AvatarFallback className="text-xs bg-muted">
                     {getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
@@ -76,39 +73,36 @@ export function RequestInfo({ request }: RequestInfoProps) {
         </div>
       </div>
 
-      {/* Pain Point */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-gray-700">
+          <CardTitle className="text-base font-medium text-foreground">
             Pain Point หน้างาน
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-900 whitespace-pre-wrap">{request.painPoint}</p>
+          <p className="text-foreground whitespace-pre-wrap">{request.painPoint}</p>
         </CardContent>
       </Card>
 
-      {/* Current Workflow */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-gray-700">
+          <CardTitle className="text-base font-medium text-foreground">
             ขั้นตอนการทำงานปัจจุบัน
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-900 whitespace-pre-wrap">{request.currentWorkflow}</p>
+          <p className="text-foreground whitespace-pre-wrap">{request.currentWorkflow}</p>
         </CardContent>
       </Card>
 
-      {/* Expected Tech Help */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-gray-700">
+          <CardTitle className="text-base font-medium text-foreground">
             สิ่งที่ต้องการให้ Tech ช่วย
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-900 whitespace-pre-wrap">{request.expectedTechHelp}</p>
+          <p className="text-foreground whitespace-pre-wrap">{request.expectedTechHelp}</p>
         </CardContent>
       </Card>
     </div>

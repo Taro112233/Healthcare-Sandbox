@@ -1,5 +1,4 @@
-// app/login/page.tsx - CONSISTENT WITH HEALTHTECH SANDBOX STYLE
-
+// app/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -82,7 +81,6 @@ export default function LoginPage() {
     });
 
     try {
-      // ✅ Wait for login to complete
       await login({
         username: formData.username.trim(),
         password: formData.password,
@@ -95,7 +93,6 @@ export default function LoginPage() {
         duration: 2000,
       });
 
-      // ✅ Full page reload to ensure auth state is properly updated
       setTimeout(() => {
         window.location.href = "/dashboard";
       }, 500);
@@ -107,7 +104,6 @@ export default function LoginPage() {
       const errorMsg = error instanceof Error ? error.message : "เข้าสู่ระบบไม่สำเร็จ";
       setError(errorMsg);
       
-      // ✅ User-friendly error messages
       if (errorMsg.includes("Username") || errorMsg.includes("username")) {
         toast.error("Username ไม่ถูกต้อง", {
           description: "ไม่พบ Username นี้ในระบบ กรุณาตรวจสอบอีกครั้ง",
@@ -158,17 +154,17 @@ export default function LoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 to-emerald-500/10">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
-          <p className="text-gray-600 text-sm">กำลังตรวจสอบสิทธิ์...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="text-muted-foreground text-sm">กำลังตรวจสอบสิทธิ์...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -177,10 +173,10 @@ export default function LoginPage() {
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-foreground">
                 HealthTech Sandbox
               </h1>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 Technology Request Platform
               </p>
             </div>
@@ -188,7 +184,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Form */}
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">เข้าสู่ระบบ</CardTitle>
             <CardDescription className="text-center">
@@ -238,9 +234,9 @@ export default function LoginPage() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4 text-gray-400" />
+                      <EyeOff className="w-4 h-4 text-muted-foreground" />
                     ) : (
-                      <Eye className="w-4 h-4 text-gray-400" />
+                      <Eye className="w-4 h-4 text-muted-foreground" />
                     )}
                   </Button>
                 </div>
@@ -271,7 +267,7 @@ export default function LoginPage() {
 
             {/* Registration link */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 ยังไม่มีบัญชี?{" "}
                 <Button
                   variant="link"
@@ -287,7 +283,7 @@ export default function LoginPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-500">
+        <div className="text-center mt-8 text-sm text-muted-foreground">
           <p>HealthTech Sandbox - Technology Request Platform</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>

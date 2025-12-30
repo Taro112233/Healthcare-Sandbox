@@ -1,6 +1,4 @@
 // components/RequestList/RequestFilters.tsx
-// HealthTech Sandbox - Request Filters Component
-
 'use client';
 
 import React from 'react';
@@ -33,7 +31,6 @@ export function RequestFilters({
 }: RequestFiltersProps) {
   return (
     <div className="flex flex-wrap gap-3">
-      {/* Status Filter */}
       <Select 
         value={status} 
         onValueChange={(value) => onStatusChange(value as RequestStatus | 'ALL')}
@@ -51,7 +48,6 @@ export function RequestFilters({
         </SelectContent>
       </Select>
 
-      {/* Type Filter */}
       <Select 
         value={type} 
         onValueChange={(value) => onTypeChange(value as RequestType | 'ALL')}

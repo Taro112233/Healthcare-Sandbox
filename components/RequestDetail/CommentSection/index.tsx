@@ -1,6 +1,4 @@
 // components/RequestDetail/CommentSection/index.tsx
-// HealthTech Sandbox - Comment Section Container Component
-
 'use client';
 
 import React from 'react';
@@ -44,16 +42,15 @@ export function CommentSection({ requestId, user, canComment }: CommentSectionPr
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium text-gray-700 flex items-center gap-2">
+        <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
           ความคิดเห็น {comments.length > 0 && `(${comments.length})`}
         </CardTitle>
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* Comment Input - Only if user can comment */}
         {canComment && (
-          <div className="pb-4 border-b border-gray-100">
+          <div className="pb-4 border-b border-border">
             <CommentInput
               user={user}
               onSubmit={handleAddComment}
@@ -62,14 +59,12 @@ export function CommentSection({ requestId, user, canComment }: CommentSectionPr
           </div>
         )}
 
-        {/* Error Message */}
         {error && (
           <div className="text-center py-4 text-red-500 text-sm">
             {error}
           </div>
         )}
 
-        {/* Comment List */}
         <CommentList 
           comments={comments} 
           isLoading={loading} 

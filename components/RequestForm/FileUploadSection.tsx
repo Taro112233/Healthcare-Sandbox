@@ -1,6 +1,4 @@
 // components/RequestForm/FileUploadSection.tsx
-// HealthTech Sandbox - File Upload Section Component
-
 'use client';
 
 import React, { useCallback, useState } from 'react';
@@ -40,7 +38,7 @@ export function FileUploadSection({
   onFilesUploaded,
   onFileRemove,
   maxFiles = 5,
-  maxSize = 10 * 1024 * 1024, // 10MB
+  maxSize = 10 * 1024 * 1024,
   disabled = false,
 }: FileUploadSectionProps) {
   const [isDragging, setIsDragging] = useState(false);
@@ -123,7 +121,6 @@ export function FileUploadSection({
       await uploadFiles(valid);
     }
 
-    // Reset input
     e.target.value = '';
   };
 
@@ -166,12 +163,11 @@ export function FileUploadSection({
 
   return (
     <div className="space-y-4">
-      {/* Upload Area */}
       {canAddMore && (
         <Card
           className={`
             border-2 border-dashed transition-colors cursor-pointer
-            ${isDragging ? 'border-teal-500 bg-teal-50' : 'border-gray-300 hover:border-gray-400'}
+            ${isDragging ? 'border-teal-500 bg-teal-500/10' : 'border-border hover:border-muted-foreground/50'}
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
           onDrop={handleDrop}
@@ -196,13 +192,13 @@ export function FileUploadSection({
               {isUploading ? (
                 <Loader2 className="w-10 h-10 mx-auto mb-3 text-teal-600 animate-spin" />
               ) : (
-                <Upload className="w-10 h-10 mx-auto mb-3 text-gray-400" />
+                <Upload className="w-10 h-10 mx-auto mb-3 text-muted-foreground" />
               )}
               
-              <p className="text-sm font-medium text-gray-700 mb-1">
+              <p className="text-sm font-medium text-foreground mb-1">
                 {isUploading ? 'กำลังอัปโหลด...' : 'ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือก'}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 รูปภาพ (JPEG, PNG, GIF, WebP) หรือ PDF - สูงสุด {maxFiles} ไฟล์, แต่ละไฟล์ไม่เกิน {formatFileSize(maxSize)}
               </p>
             </label>
@@ -210,7 +206,6 @@ export function FileUploadSection({
         </Card>
       )}
 
-      {/* Error Message */}
       {error && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
@@ -218,25 +213,24 @@ export function FileUploadSection({
         </Alert>
       )}
 
-      {/* Uploaded Files List */}
       {uploadedFiles.length > 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-700">
+          <p className="text-sm font-medium text-foreground">
             ไฟล์ที่อัปโหลด ({uploadedFiles.length}/{maxFiles})
           </p>
           
           <div className="space-y-2">
             {uploadedFiles.map((file, index) => (
-              <Card key={index} className="bg-gray-50">
+              <Card key={index} className="bg-muted/50">
                 <CardContent className="py-3 px-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
                       {getFileIcon(file.fileType)}
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                        <p className="text-sm font-medium text-foreground truncate">
                           {file.originalFilename}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                           {file.fileSizeFormatted}
                         </p>
                       </div>
@@ -248,7 +242,7 @@ export function FileUploadSection({
                       size="sm"
                       onClick={() => onFileRemove(index)}
                       disabled={disabled}
-                      className="text-gray-500 hover:text-red-600"
+                      className="text-muted-foreground hover:text-red-600"
                     >
                       <X className="w-4 h-4" />
                     </Button>

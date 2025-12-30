@@ -1,12 +1,9 @@
 // components/shared/StatusBadge.tsx
-// HealthTech Sandbox - Status Badge Component
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { 
   RequestStatus, 
   REQUEST_STATUS_INFO,
-  REQUEST_STATUS_VALUES,  // ✅ เพิ่ม import
 } from '@/types/request';
 import {
   Clock,

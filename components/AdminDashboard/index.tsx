@@ -1,6 +1,4 @@
 // components/AdminDashboard/index.tsx
-// HealthTech Sandbox - Admin Dashboard Container
-
 'use client';
 
 import React, { useState } from 'react';
@@ -19,14 +17,12 @@ export function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
-  // Fetch admin stats
   const { 
     stats, 
     loading: statsLoading, 
     refetch: refetchStats 
   } = useAdminStats();
 
-  // Fetch all requests (admin sees all)
   const { 
     requests, 
     total, 
@@ -49,7 +45,7 @@ export function AdminDashboard() {
   const handleFilterChange = (status: RequestStatus | 'ALL', type: RequestType | 'ALL') => {
     setStatusFilter(status);
     setTypeFilter(type);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
 
   return (
@@ -57,11 +53,11 @@ export function AdminDashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Shield className="w-6 h-6 text-blue-600" />
             Admin Dashboard
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-muted-foreground mt-1">
             จัดการคำขอทั้งหมดในระบบ
           </p>
         </div>
@@ -77,7 +73,7 @@ export function AdminDashboard() {
       {/* Request Management Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-foreground">
             รายการคำขอ ({total})
           </h2>
           <RequestFilters
@@ -88,13 +84,11 @@ export function AdminDashboard() {
           />
         </div>
 
-        {/* Request Table */}
         <RequestTable 
           requests={requests} 
           isLoading={requestsLoading} 
         />
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <RequestPagination
             currentPage={currentPage}

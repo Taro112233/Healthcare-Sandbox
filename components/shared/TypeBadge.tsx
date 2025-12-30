@@ -1,12 +1,9 @@
 // components/shared/TypeBadge.tsx
-// HealthTech Sandbox - Request Type Badge Component
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { 
   RequestType, 
   REQUEST_TYPE_INFO,
-  REQUEST_TYPE_VALUES,  // ✅ เพิ่ม import
 } from '@/types/request';
 import {
   Calculator,
@@ -32,11 +29,11 @@ const typeIcons: Record<RequestType, React.ReactNode> = {
 };
 
 const typeColors: Record<RequestType, string> = {
-  CALCULATOR: 'bg-violet-100 text-violet-700 border-violet-200',
-  FORM: 'bg-sky-100 text-sky-700 border-sky-200',
-  WORKFLOW: 'bg-amber-100 text-amber-700 border-amber-200',
-  DECISION_AID: 'bg-rose-100 text-rose-700 border-rose-200',
-  OTHER: 'bg-slate-100 text-slate-700 border-slate-200',
+  CALCULATOR: 'bg-violet-100 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800',
+  FORM: 'bg-sky-100 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800',
+  WORKFLOW: 'bg-amber-100 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+  DECISION_AID: 'bg-rose-100 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800',
+  OTHER: 'bg-slate-100 dark:bg-slate-950/30 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800',
 };
 
 export function TypeBadge({ type, size = 'md', showIcon = true, variant = 'default' }: TypeBadgeProps) {
@@ -49,7 +46,7 @@ export function TypeBadge({ type, size = 'md', showIcon = true, variant = 'defau
   };
 
   const colorClass = variant === 'outline' 
-    ? 'bg-transparent border ' + typeColors[type].replace('bg-', 'border-').split(' ')[2] + ' ' + typeColors[type].split(' ')[1]
+    ? 'bg-transparent border ' + typeColors[type]
     : typeColors[type];
 
   return (

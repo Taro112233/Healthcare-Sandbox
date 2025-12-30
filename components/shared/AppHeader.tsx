@@ -23,7 +23,8 @@ import {
   Shield,
   LayoutDashboard,
 } from 'lucide-react';
-import { useCurrentUser, type CurrentUser } from '@/hooks/useCurrentUser';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export function AppHeader() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export function AppHeader() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Title */}
@@ -48,13 +49,16 @@ export function AppHeader() {
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-900">HealthTech Sandbox</h1>
-              <p className="text-xs text-gray-500">Technology Request Platform</p>
+              <h1 className="text-xl font-bold text-foreground">HealthTech Sandbox</h1>
+              <p className="text-xs text-muted-foreground">Technology Request Platform</p>
             </div>
           </Link>
 
           {/* Navigation */}
           <div className="flex items-center gap-3">
+            {/* Theme Toggle - Always visible */}
+            <ThemeToggle />
+
             {user && (
               <>
                 {/* New Request Button */}
@@ -78,17 +82,17 @@ export function AppHeader() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="hidden md:flex flex-col items-start">
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-foreground">
                           {user.fullName}
                         </span>
                         <div className="flex items-center gap-1">
                           {user.role === 'ADMIN' ? (
-                            <Badge variant="outline" className="text-xs px-1.5 py-0 border-blue-300 text-blue-700">
+                            <Badge variant="outline" className="text-xs px-1.5 py-0 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300">
                               <Shield className="w-3 h-3 mr-1" />
                               Admin
                             </Badge>
                           ) : (
-                            <span className="text-xs text-gray-500">@{user.username}</span>
+                            <span className="text-xs text-muted-foreground">@{user.username}</span>
                           )}
                         </div>
                       </div>
@@ -98,7 +102,7 @@ export function AppHeader() {
                     <DropdownMenuLabel>
                       <div className="flex flex-col">
                         <span className="font-medium">{user.fullName}</span>
-                        <span className="text-xs text-gray-500 font-normal">@{user.username}</span>
+                        <span className="text-xs text-muted-foreground font-normal">@{user.username}</span>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -124,7 +128,7 @@ export function AppHeader() {
                     
                     <DropdownMenuItem 
                       onClick={handleLogout}
-                      className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                      className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-50 dark:focus:bg-red-950/20"
                     >
                       <LogOut className="w-4 h-4 mr-2" />
                       ออกจากระบบ

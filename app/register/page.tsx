@@ -1,5 +1,4 @@
-// app/register/page.tsx - HEALTHTECH SANDBOX STYLE
-
+// app/register/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -26,7 +25,6 @@ import {
 import { toast } from 'sonner';
 import { Separator } from '@/components/ui/separator';
 
-// ✅ Interface ตรงกับ Prisma Schema
 interface RegisterFormData {
   username: string;
   password: string;
@@ -58,7 +56,6 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const validateForm = (): boolean => {
-    // Username validation
     if (!formData.username?.trim() || formData.username.length < 3) {
       const errorMsg = 'Username ต้องมีอย่างน้อย 3 ตัวอักษร';
       setError(errorMsg);
@@ -70,7 +67,6 @@ export default function RegisterPage() {
       return false;
     }
 
-    // Username pattern validation
     const usernamePattern = /^[a-zA-Z0-9._-]+$/;
     if (!usernamePattern.test(formData.username)) {
       const errorMsg = 'Username ใช้ได้เฉพาะ a-z, 0-9, ., _, -';
@@ -83,7 +79,6 @@ export default function RegisterPage() {
       return false;
     }
 
-    // Password validation
     if (!formData.password || formData.password.length < 8) {
       const errorMsg = 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร';
       setError(errorMsg);
@@ -106,7 +101,6 @@ export default function RegisterPage() {
       return false;
     }
 
-    // Name validation
     if (!formData.firstName?.trim() || !formData.lastName?.trim()) {
       const errorMsg = 'กรุณากรอกชื่อ-นามสกุล';
       setError(errorMsg);
@@ -118,7 +112,6 @@ export default function RegisterPage() {
       return false;
     }
 
-    // Email validation (Optional แต่ต้องถูกรูปแบบถ้ากรอก)
     if (formData.email?.trim()) {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(formData.email)) {
@@ -133,7 +126,6 @@ export default function RegisterPage() {
       }
     }
 
-    // Terms validation
     if (!acceptedTerms) {
       const errorMsg = 'กรุณายอมรับเงื่อนไขการใช้งาน';
       setError(errorMsg);
@@ -163,7 +155,6 @@ export default function RegisterPage() {
     });
 
     try {
-      // ✅ FIXED: ส่งข้อมูลโดยไม่รวม empty string
       const registerData: {
         username: string;
         password: string;
@@ -178,29 +169,24 @@ export default function RegisterPage() {
         lastName: formData.lastName.trim(),
       };
 
-      // ✅ เพิ่ม email เฉพาะเมื่อมีค่าจริง (ไม่ใช่ empty string)
       if (formData.email?.trim()) {
         registerData.email = formData.email.trim().toLowerCase();
       }
 
-      // ✅ เพิ่ม phone เฉพาะเมื่อมีค่าจริง
       if (formData.phone?.trim()) {
         registerData.phone = formData.phone.trim();
       }
 
-      // ✅ ใช้ register function จาก useAuth hook
       await register(registerData);
       
       toast.dismiss(loadingToast);
       
-      // ✅ สมัครสำเร็จ - แสดง toast แล้ว redirect ทันที
       toast.success('สมัครสมาชิกสำเร็จ!', {
         description: 'ยินดีต้อนรับเข้าสู่ HealthTech Sandbox',
         icon: <UserPlus className="w-4 h-4" />,
         duration: 2000,
       });
       
-      // ✅ Full page reload to ensure auth state is updated
       setTimeout(() => {
         window.location.href = '/dashboard';
       }, 500);
@@ -212,7 +198,6 @@ export default function RegisterPage() {
       const errorMsg = error instanceof Error ? error.message : 'สมัครสมาชิกไม่สำเร็จ';
       setError(errorMsg);
       
-      // ✅ แสดง error message ที่เฉพาะเจาะจง
       if (errorMsg.includes('username') || errorMsg.includes('Username')) {
         toast.error('Username นี้มีคนใช้แล้ว', {
           description: 'กรุณาเลือก Username อื่น',
@@ -264,17 +249,17 @@ export default function RegisterPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 to-emerald-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 to-emerald-500/10">
         <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
-          <p className="text-gray-600 text-sm">กำลังตรวจสอบสิทธิ์...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="text-muted-foreground text-sm">กำลังตรวจสอบสิทธิ์...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
@@ -283,14 +268,14 @@ export default function RegisterPage() {
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-gray-900">HealthTech Sandbox</h1>
-              <p className="text-sm text-gray-600">Technology Request Platform</p>
+              <h1 className="text-2xl font-bold text-foreground">HealthTech Sandbox</h1>
+              <p className="text-sm text-muted-foreground">Technology Request Platform</p>
             </div>
           </div>
         </div>
 
         {/* Register Form */}
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">สมัครสมาชิก</CardTitle>
             <CardDescription className="text-center">
@@ -316,7 +301,7 @@ export default function RegisterPage() {
                   autoComplete="username"
                   required
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   ต้องมีอย่างน้อย 3 ตัวอักษร ใช้ได้เฉพาะ a-z, 0-9, ., _, -
                 </p>
               </div>
@@ -372,7 +357,7 @@ export default function RegisterPage() {
                   className="h-11"
                   autoComplete="email"
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   สำหรับรับการแจ้งเตือนเมื่อมี update
                 </p>
               </div>
@@ -421,9 +406,9 @@ export default function RegisterPage() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4 text-gray-400" />
+                      <EyeOff className="w-4 h-4 text-muted-foreground" />
                     ) : (
-                      <Eye className="w-4 h-4 text-gray-400" />
+                      <Eye className="w-4 h-4 text-muted-foreground" />
                     )}
                   </Button>
                 </div>
@@ -454,9 +439,9 @@ export default function RegisterPage() {
                     disabled={isLoading}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="w-4 h-4 text-gray-400" />
+                      <EyeOff className="w-4 h-4 text-muted-foreground" />
                     ) : (
-                      <Eye className="w-4 h-4 text-gray-400" />
+                      <Eye className="w-4 h-4 text-muted-foreground" />
                     )}
                   </Button>
                 </div>
@@ -489,21 +474,21 @@ export default function RegisterPage() {
                     />
                     <Label 
                       htmlFor="terms" 
-                      className="text-sm text-gray-700 leading-relaxed cursor-pointer"
+                      className="text-sm text-foreground leading-relaxed cursor-pointer"
                     >
                       ข้าพเจ้ายอมรับเงื่อนไขการใช้งาน Sandbox *
                     </Label>
                   </div>
                   
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                    <p className="text-xs text-amber-800 leading-relaxed">
+                  <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
+                    <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
                       <AlertTriangle className="w-3 h-3 inline mr-1" />
                       <strong>ข้อควรระวัง:</strong> ห้ามใช้ข้อมูลผู้ป่วยจริง - Sandbox นี้สำหรับทดสอบเท่านั้น
                     </p>
                   </div>
 
-                  <div className="bg-teal-50 border border-teal-200 rounded-lg p-3">
-                    <p className="text-xs text-teal-700 leading-relaxed">
+                  <div className="bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800 rounded-lg p-3">
+                    <p className="text-xs text-teal-700 dark:text-teal-300 leading-relaxed">
                       <CheckCircle2 className="w-3 h-3 inline mr-1" />
                       บัญชีพร้อมใช้งานทันที - เริ่มส่ง Request ได้เลย
                     </p>
@@ -517,7 +502,7 @@ export default function RegisterPage() {
                 className={`w-full h-11 text-base transition-colors duration-200 ${
                   acceptedTerms 
                     ? 'bg-teal-600 hover:bg-teal-700' 
-                    : 'bg-gray-400 hover:bg-gray-500'
+                    : 'bg-muted hover:bg-muted'
                 }`}
                 disabled={isLoading || !acceptedTerms}
               >
@@ -537,7 +522,7 @@ export default function RegisterPage() {
 
             {/* Login link */}
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 มีบัญชีอยู่แล้ว?{' '}
                 <Button
                   variant="link"
@@ -553,7 +538,7 @@ export default function RegisterPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-500">
+        <div className="text-center mt-8 text-sm text-muted-foreground">
           <p>HealthTech Sandbox - Technology Request Platform</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>

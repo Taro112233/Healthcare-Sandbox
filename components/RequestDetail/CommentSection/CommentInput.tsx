@@ -1,6 +1,4 @@
 // components/RequestDetail/CommentSection/CommentInput.tsx
-// HealthTech Sandbox - Comment Input Component
-
 'use client';
 
 import React, { useState } from 'react';
@@ -40,7 +38,6 @@ export function CommentInput({ user, onSubmit, isSubmitting }: CommentInputProps
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Submit on Ctrl+Enter or Cmd+Enter
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
       handleSubmit(e as unknown as React.FormEvent);
@@ -49,14 +46,12 @@ export function CommentInput({ user, onSubmit, isSubmitting }: CommentInputProps
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-3">
-      {/* User Avatar */}
       <Avatar className="h-10 w-10 flex-shrink-0">
-        <AvatarFallback className="bg-teal-100 text-teal-700 text-sm font-medium">
+        <AvatarFallback className="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 text-sm font-medium">
           {getUserInitials()}
         </AvatarFallback>
       </Avatar>
 
-      {/* Input Area */}
       <div className="flex-1 space-y-2">
         <Textarea
           value={content}
@@ -68,7 +63,7 @@ export function CommentInput({ user, onSubmit, isSubmitting }: CommentInputProps
         />
         
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-muted-foreground">
             กด Ctrl+Enter เพื่อส่ง
           </span>
           

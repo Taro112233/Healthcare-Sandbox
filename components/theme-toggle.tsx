@@ -3,11 +3,11 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
+import { useThemeTransition } from "@/hooks/use-theme-transition"
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, toggleTheme } = useThemeTransition()
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
@@ -27,7 +27,7 @@ export function ThemeToggle() {
       variant="outline"
       size="icon"
       className="h-9 w-9"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
     >
       {theme === "dark" ? (
         <Sun className="h-4 w-4" />

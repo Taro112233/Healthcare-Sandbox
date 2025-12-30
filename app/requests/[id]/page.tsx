@@ -39,12 +39,12 @@ export default function RequestDetailPage({ params }: PageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 กลับไปหน้ารายการ
               </Button>
@@ -64,19 +64,19 @@ export default function RequestDetailPage({ params }: PageProps) {
 
   if (!request) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
             <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 กลับไปหน้ารายการ
               </Button>
             </Link>
           </div>
           <EmptyState
-            icon={<AlertCircle className="w-16 h-16 text-gray-400" />}
+            icon={<AlertCircle className="w-16 h-16 text-muted-foreground" />}
             title="ไม่พบคำขอ"
             description="คำขอที่คุณต้องการอาจถูกลบหรือคุณไม่มีสิทธิ์เข้าถึง"
             actionLabel="กลับหน้าหลัก"
@@ -88,7 +88,7 @@ export default function RequestDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

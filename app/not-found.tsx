@@ -1,6 +1,4 @@
 // app/not-found.tsx
-// InvenStock - Not Found Page
-
 'use client';
 
 import Link from 'next/link';
@@ -10,7 +8,7 @@ import { AlertTriangle, Home, ArrowLeft, Building2 } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         
         {/* Header */}
@@ -20,37 +18,37 @@ export default function NotFound() {
               <Building2 className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-gray-900">InvenStock</h1>
-              <p className="text-sm text-gray-600">Multi-Tenant Inventory System</p>
+              <h1 className="text-2xl font-bold text-foreground">InvenStock</h1>
+              <p className="text-sm text-muted-foreground">Multi-Tenant Inventory System</p>
             </div>
           </div>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
           <CardContent className="pt-6">
             <div className="text-center space-y-6">
               
               {/* Icon */}
               <div className="flex justify-center">
-                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-red-100 dark:bg-red-950/20 rounded-full flex items-center justify-center">
                   <AlertTriangle className="w-12 h-12 text-red-500" />
                 </div>
               </div>
               
               {/* Title & Message */}
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-foreground">
                   ไม่พบหน้าที่ต้องการ
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   หน้าที่คุณต้องการอาจไม่มีอยู่ หรือคุณไม่มีสิทธิ์เข้าถึงองค์กรนี้
                 </p>
               </div>
               
               {/* Possible Reasons */}
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-left">
-                <h3 className="font-semibold text-amber-800 mb-2">สาเหตุที่เป็นไปได้:</h3>
-                <ul className="text-sm text-amber-700 space-y-1">
+              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 text-left">
+                <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">สาเหตุที่เป็นไปได้:</h3>
+                <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
                   <li>• URL ไม่ถูกต้องหรือพิมพ์ผิด</li>
                   <li>• คุณไม่ได้เป็นสมาชิกขององค์กรนี้</li>
                   <li>• องค์กรถูกลบหรือระงับการใช้งาน</li>
@@ -85,7 +83,7 @@ export default function NotFound() {
               </div>
               
               {/* Help Text */}
-              <div className="text-sm text-gray-500 pt-4 border-t border-gray-200">
+              <div className="text-sm text-muted-foreground pt-4 border-t border-border">
                 <p>
                   หากคุณคิดว่านี่เป็นข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ
                   <br />
@@ -97,7 +95,7 @@ export default function NotFound() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-500">
+        <div className="text-center mt-8 text-sm text-muted-foreground">
           <p>InvenStock - Multi-Tenant Inventory Management</p>
           <p>© 2025 - Enterprise Grade Solution</p>
         </div>

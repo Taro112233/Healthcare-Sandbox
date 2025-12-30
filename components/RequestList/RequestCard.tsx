@@ -1,6 +1,4 @@
 // components/RequestList/RequestCard.tsx
-// HealthTech Sandbox - Request Card Component
-
 'use client';
 
 import React from 'react';
@@ -26,34 +24,28 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
 
   return (
     <Link href={`/requests/${request.id}`}>
-      <Card className="hover:shadow-md hover:border-teal-200 transition-all duration-200 cursor-pointer group">
+      <Card className="hover:shadow-md hover:border-teal-200 dark:hover:border-teal-800 transition-all duration-200 cursor-pointer group">
         <CardContent className="p-5">
           <div className="flex items-start justify-between gap-4">
-            {/* Main Content */}
             <div className="flex-1 min-w-0">
-              {/* Header with badges */}
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <StatusBadge status={request.status} size="sm" />
                 <TypeBadge type={request.requestType} size="sm" />
               </div>
 
-              {/* Pain Point (Title) */}
-              <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-teal-700 transition-colors">
+              <h3 className="font-semibold text-foreground mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-300 transition-colors">
                 {truncateText(request.painPoint, 120)}
               </h3>
 
-              {/* Expected Help (Subtitle) */}
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-muted-foreground mb-3">
                 {truncateText(request.expectedTechHelp, 100)}
               </p>
 
-              {/* Footer Meta */}
-              <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
-                {/* User Info */}
+              <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
                 {showUser && request.user && (
                   <div className="flex items-center gap-2">
                     <Avatar className="h-5 w-5">
-                      <AvatarFallback className="text-xs bg-gray-200">
+                      <AvatarFallback className="text-xs bg-muted">
                         {getUserInitials()}
                       </AvatarFallback>
                     </Avatar>
@@ -61,10 +53,8 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
                   </div>
                 )}
 
-                {/* Date */}
                 <span>{getRelativeTime(request.createdAt)}</span>
 
-                {/* Comments Count */}
                 {request._count && request._count.comments > 0 && (
                   <div className="flex items-center gap-1">
                     <MessageSquare className="w-3.5 h-3.5" />
@@ -72,7 +62,6 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
                   </div>
                 )}
 
-                {/* Attachments Count */}
                 {request._count && request._count.attachments > 0 && (
                   <div className="flex items-center gap-1">
                     <Paperclip className="w-3.5 h-3.5" />
@@ -82,9 +71,8 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
               </div>
             </div>
 
-            {/* Arrow */}
             <div className="flex-shrink-0 self-center">
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-teal-600 transition-colors" />
+              <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
             </div>
           </div>
         </CardContent>

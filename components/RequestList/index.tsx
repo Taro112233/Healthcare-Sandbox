@@ -1,6 +1,4 @@
 // components/RequestList/index.tsx
-// HealthTech Sandbox - Main Request List Component
-
 'use client';
 
 import React from 'react';
@@ -26,12 +24,10 @@ interface RequestListProps {
   emptyDescription?: string;
   emptyActionLabel?: string;
   emptyActionHref?: string;
-  // Filter props
   statusFilter?: RequestStatus | 'ALL';
   typeFilter?: RequestType | 'ALL';
   onStatusChange?: (status: RequestStatus | 'ALL') => void;
   onTypeChange?: (type: RequestType | 'ALL') => void;
-  // Pagination props
   currentPage?: number;
   totalPages?: number;
   totalItems?: number;
@@ -86,9 +82,8 @@ export function RequestList({
 
   return (
     <div className="space-y-4">
-      {/* Header with Filters */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <h2 className="text-xl font-semibold text-foreground">{title}</h2>
         
         {showFilters && onStatusChange && onTypeChange && (
           <RequestFilters
@@ -100,12 +95,11 @@ export function RequestList({
         )}
       </div>
 
-      {/* Request Cards */}
       {requests.length === 0 ? (
         <Card>
           <CardContent className="py-8">
             <EmptyState
-              icon={<FileText className="w-16 h-16 text-gray-400" />}
+              icon={<FileText className="w-16 h-16 text-muted-foreground" />}
               title={emptyTitle}
               description={emptyDescription}
               actionLabel={emptyActionLabel}
@@ -125,7 +119,6 @@ export function RequestList({
         </div>
       )}
 
-      {/* Pagination */}
       {requests.length > 0 && totalPages > 1 && onPageChange && (
         <RequestPagination
           currentPage={currentPage}

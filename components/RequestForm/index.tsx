@@ -1,6 +1,4 @@
 // components/RequestForm/index.tsx
-// HealthTech Sandbox - Main Request Form Component
-
 'use client';
 
 import React, { useState } from 'react';
@@ -21,7 +19,7 @@ import { FileUploadSection } from './FileUploadSection';
 import { 
   RequestType, 
   REQUEST_TYPE_INFO,
-  REQUEST_TYPE_VALUES,  // ✅ เพิ่ม import
+  REQUEST_TYPE_VALUES,
 } from '@/types/request';
 import { 
   Send, 
@@ -180,15 +178,13 @@ export function RequestForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Info Banner */}
-      <Alert className="bg-teal-50 border-teal-200">
-        <Info className="h-4 w-4 text-teal-600" />
-        <AlertDescription className="text-teal-800">
+      <Alert className="bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-800">
+        <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+        <AlertDescription className="text-teal-800 dark:text-teal-200">
           กรุณาอธิบาย Pain Point และความต้องการให้ชัดเจน เพื่อให้ทีมพัฒนาเข้าใจปัญหาและสามารถช่วยเหลือได้ดียิ่งขึ้น
         </AlertDescription>
       </Alert>
 
-      {/* Request Type Selection */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ประเภทคำขอ</CardTitle>
@@ -205,13 +201,12 @@ export function RequestForm() {
               <SelectValue placeholder="เลือกประเภทคำขอ" />
             </SelectTrigger>
             <SelectContent>
-              {/* ✅ ใช้ Object.entries กับ REQUEST_TYPE_VALUES */}
               {Object.entries(REQUEST_TYPE_VALUES).map(([key, value]) => (
                 <SelectItem key={key} value={value}>
                   <div className="flex items-center gap-2">
                     {typeIcons[value]}
                     <span>{REQUEST_TYPE_INFO[value].labelTh}</span>
-                    <span className="text-gray-500 text-xs">- {REQUEST_TYPE_INFO[value].description}</span>
+                    <span className="text-muted-foreground text-xs">- {REQUEST_TYPE_INFO[value].description}</span>
                   </div>
                 </SelectItem>
               ))}
@@ -223,7 +218,6 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Pain Point */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Pain Point หน้างาน</CardTitle>
@@ -243,14 +237,13 @@ export function RequestForm() {
             {errors.painPoint && (
               <p className="text-sm text-red-500">{errors.painPoint}</p>
             )}
-            <p className="text-xs text-gray-500 ml-auto">
+            <p className="text-xs text-muted-foreground ml-auto">
               {formData.painPoint.length} / 5000
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Current Workflow */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ขั้นตอนการทำงานปัจจุบัน</CardTitle>
@@ -270,14 +263,13 @@ export function RequestForm() {
             {errors.currentWorkflow && (
               <p className="text-sm text-red-500">{errors.currentWorkflow}</p>
             )}
-            <p className="text-xs text-gray-500 ml-auto">
+            <p className="text-xs text-muted-foreground ml-auto">
               {formData.currentWorkflow.length} / 5000
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Expected Tech Help */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">สิ่งที่ต้องการให้ Tech ช่วย</CardTitle>
@@ -297,14 +289,13 @@ export function RequestForm() {
             {errors.expectedTechHelp && (
               <p className="text-sm text-red-500">{errors.expectedTechHelp}</p>
             )}
-            <p className="text-xs text-gray-500 ml-auto">
+            <p className="text-xs text-muted-foreground ml-auto">
               {formData.expectedTechHelp.length} / 5000
             </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* File Upload */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ไฟล์แนบ (ไม่บังคับ)</CardTitle>
@@ -322,7 +313,6 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Submit Error */}
       {submitError && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
@@ -330,7 +320,6 @@ export function RequestForm() {
         </Alert>
       )}
 
-      {/* Submit Button */}
       <div className="flex justify-end gap-3">
         <Button
           type="button"

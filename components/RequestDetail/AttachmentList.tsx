@@ -1,6 +1,4 @@
 // components/RequestDetail/AttachmentList.tsx
-// HealthTech Sandbox - Attachments List Component
-
 'use client';
 
 import React from 'react';
@@ -44,7 +42,7 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium text-gray-700 flex items-center gap-2">
+        <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
           <Paperclip className="w-4 h-4" />
           ไฟล์แนบ ({attachments.length})
         </CardTitle>
@@ -54,9 +52,8 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
           {attachments.map((attachment) => (
             <div 
               key={attachment.id}
-              className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg"
+              className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg"
             >
-              {/* Image Preview or Icon */}
               {isImage(attachment.fileType) ? (
                 <a 
                   href={attachment.fileUrl} 
@@ -67,26 +64,24 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
                   <img
                     src={attachment.fileUrl}
                     alt={attachment.filename}
-                    className="w-16 h-16 object-cover rounded border border-gray-200 hover:opacity-80 transition-opacity"
+                    className="w-16 h-16 object-cover rounded border border-border hover:opacity-80 transition-opacity"
                   />
                 </a>
               ) : (
-                <div className="w-16 h-16 flex items-center justify-center bg-white rounded border border-gray-200">
+                <div className="w-16 h-16 flex items-center justify-center bg-card rounded border border-border">
                   {getFileIcon(attachment.fileType)}
                 </div>
               )}
 
-              {/* File Info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-foreground truncate">
                   {attachment.filename}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {formatFileSize(attachment.fileSize)}
                 </p>
               </div>
 
-              {/* Actions */}
               <div className="flex-shrink-0 flex items-center gap-2">
                 <Button
                   variant="ghost"

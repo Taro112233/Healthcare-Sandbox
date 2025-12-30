@@ -1,6 +1,4 @@
 // components/RequestList/RequestPagination.tsx
-// HealthTech Sandbox - Pagination Component
-
 'use client';
 
 import React from 'react';
@@ -28,8 +26,8 @@ export function RequestPagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-between pt-4 border-t">
-      <p className="text-sm text-gray-600">
+    <div className="flex items-center justify-between pt-4 border-t border-border">
+      <p className="text-sm text-muted-foreground">
         แสดง {start}-{end} จาก {totalItems} รายการ
       </p>
       

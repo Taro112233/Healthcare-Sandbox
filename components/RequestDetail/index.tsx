@@ -1,6 +1,4 @@
 // components/RequestDetail/index.tsx
-// HealthTech Sandbox - Request Detail Container Component
-
 'use client';
 
 import React from 'react';
@@ -34,29 +32,23 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
 
   return (
     <div className="space-y-6">
-      {/* Back Button */}
       <div>
         <Link href="/dashboard">
-          <Button variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             <ArrowLeft className="w-4 h-4 mr-2" />
             กลับไปหน้ารายการ
           </Button>
         </Link>
       </div>
 
-      {/* Main Content - Two Column Layout on Desktop */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Left Column - Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Request Information */}
           <RequestInfo request={request} />
 
-          {/* Attachments */}
           {request.attachments && request.attachments.length > 0 && (
             <AttachmentList attachments={request.attachments} />
           )}
 
-          {/* Comments */}
           <CommentSection 
             requestId={request.id}
             user={user}
@@ -64,9 +56,7 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
           />
         </div>
 
-        {/* Right Column - Sidebar */}
         <div className="space-y-6">
-          {/* Admin Status Update */}
           {isAdmin && (
             <AdminStatusUpdate
               requestId={request.id}
@@ -75,7 +65,6 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
             />
           )}
 
-          {/* Status History */}
           <StatusHistory history={request.statusHistory || []} />
         </div>
       </div>

@@ -30,14 +30,14 @@ export default function NewRequestPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <AppHeader />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <div className="mb-6">
           <Link href="/dashboard">
-            <Button variant="ghost" size="sm" className="text-gray-600 hover:text-gray-900">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
               <ArrowLeft className="w-4 h-4 mr-2" />
               กลับไปหน้ารายการ
             </Button>
@@ -46,18 +46,18 @@ export default function NewRequestPage() {
 
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-foreground">
             ส่งคำขอพัฒนาเครื่องมือ
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-muted-foreground mt-2">
             อธิบาย pain point และสิ่งที่ต้องการให้ทีมเทคโนโลยีช่วยพัฒนา
           </p>
         </div>
 
         {/* Info Box */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <h3 className="font-medium text-blue-800 mb-2">ข้อแนะนำ</h3>
-          <ul className="text-sm text-blue-700 space-y-1">
+        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+          <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">ข้อแนะนำ</h3>
+          <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
             <li>• อธิบาย pain point ให้ชัดเจน เพื่อให้เข้าใจปัญหาที่แท้จริง</li>
             <li>• อธิบายขั้นตอนการทำงานปัจจุบัน เพื่อให้เห็นภาพรวม</li>
             <li>• ระบุสิ่งที่คาดหวังจากเทคโนโลยี เพื่อพัฒนาตรงความต้องการ</li>

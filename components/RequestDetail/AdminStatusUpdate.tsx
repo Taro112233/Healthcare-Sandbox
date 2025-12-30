@@ -87,9 +87,9 @@ export function AdminStatusUpdate({
   ];
 
   return (
-    <Card className="border-blue-200 bg-blue-50/50">
+    <Card className="border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium text-blue-700 flex items-center gap-2">
+        <CardTitle className="text-base font-medium text-blue-700 dark:text-blue-300 flex items-center gap-2">
           <Shield className="w-4 h-4" />
           Admin: เปลี่ยนสถานะ
         </CardTitle>
@@ -98,7 +98,7 @@ export function AdminStatusUpdate({
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label className="text-sm text-gray-600">สถานะปัจจุบัน</Label>
+            <Label className="text-sm text-muted-foreground">สถานะปัจจุบัน</Label>
             <div className={`mt-1 inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium ${REQUEST_STATUS_INFO[currentStatus].bgColor} ${REQUEST_STATUS_INFO[currentStatus].textColor}`}>
               {REQUEST_STATUS_INFO[currentStatus].labelTh}
             </div>
@@ -120,7 +120,7 @@ export function AdminStatusUpdate({
                       <div className={`w-2 h-2 rounded-full ${REQUEST_STATUS_INFO[status].color}`} />
                       {REQUEST_STATUS_INFO[status].labelTh}
                       {status === currentStatus && (
-                        <span className="text-xs text-gray-400">(ปัจจุบัน)</span>
+                        <span className="text-xs text-muted-foreground">(ปัจจุบัน)</span>
                       )}
                     </div>
                   </SelectItem>
@@ -131,25 +131,25 @@ export function AdminStatusUpdate({
 
           <div className="space-y-2">
             <Label htmlFor="status-note">
-              บันทึก <span className="text-gray-400">(ไม่บังคับ)</span>
+              บันทึก <span className="text-muted-foreground">(ไม่บังคับ)</span>
             </Label>
             <Textarea
               id="status-note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="เพิ่มบันทึกเกี่ยวกับการเปลี่ยนสถานะ..."
-              className="min-h-[80px] resize-none bg-white"
+              className="min-h-[80px] resize-none bg-card"
               maxLength={1000}
             />
-            <p className="text-xs text-gray-500 text-right">
+            <p className="text-xs text-muted-foreground text-right">
               {note.length} / 1000
             </p>
           </div>
 
           {hasChanged && (
-            <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm">
-              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
-              <span className="text-amber-700">
+            <div className="flex items-center gap-2 p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg text-sm">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+              <span className="text-amber-700 dark:text-amber-300">
                 จะเปลี่ยนจาก "{REQUEST_STATUS_INFO[currentStatus].labelTh}" 
                 → "{REQUEST_STATUS_INFO[newStatus].labelTh}"
               </span>

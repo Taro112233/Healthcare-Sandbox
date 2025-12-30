@@ -1,6 +1,4 @@
 // components/AdminDashboard/RequestTable.tsx
-// HealthTech Sandbox - Admin Request Management Table
-
 'use client';
 
 import React from 'react';
@@ -30,25 +28,25 @@ function TableRowSkeleton() {
   return (
     <TableRow className="animate-pulse">
       <TableCell>
-        <div className="h-4 w-20 bg-gray-200 rounded" />
+        <div className="h-4 w-20 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-4 w-48 bg-gray-200 rounded" />
+        <div className="h-4 w-48 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-6 w-20 bg-gray-200 rounded" />
+        <div className="h-6 w-20 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-6 w-24 bg-gray-200 rounded" />
+        <div className="h-6 w-24 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-4 w-28 bg-gray-200 rounded" />
+        <div className="h-4 w-28 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-4 w-20 bg-gray-200 rounded" />
+        <div className="h-4 w-20 bg-muted rounded" />
       </TableCell>
       <TableCell>
-        <div className="h-8 w-16 bg-gray-200 rounded" />
+        <div className="h-8 w-16 bg-muted rounded" />
       </TableCell>
     </TableRow>
   );
@@ -62,10 +60,10 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
 
   if (isLoading) {
     return (
-      <div className="border rounded-lg overflow-hidden">
+      <div className="border border-border rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-50">
+            <TableRow className="bg-muted/50">
               <TableHead className="font-semibold">ID</TableHead>
               <TableHead className="font-semibold">Pain Point</TableHead>
               <TableHead className="font-semibold">ประเภท</TableHead>
@@ -87,18 +85,18 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
 
   if (requests.length === 0) {
     return (
-      <div className="border rounded-lg p-8 text-center text-gray-500">
+      <div className="border border-border rounded-lg p-8 text-center text-muted-foreground">
         <p>ไม่พบคำขอที่ตรงกับเงื่อนไข</p>
       </div>
     );
   }
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border border-border rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-50">
+            <TableRow className="bg-muted/50">
               <TableHead className="font-semibold w-24">ID</TableHead>
               <TableHead className="font-semibold min-w-[200px]">Pain Point</TableHead>
               <TableHead className="font-semibold w-28">ประเภท</TableHead>
@@ -112,71 +110,61 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
             {requests.map((request) => (
               <TableRow 
                 key={request.id}
-                className="hover:bg-gray-50 cursor-pointer"
+                className="hover:bg-muted/50 cursor-pointer"
               >
-                {/* ID */}
-                <TableCell className="font-mono text-xs text-gray-500">
+                <TableCell className="font-mono text-xs text-muted-foreground">
                   {request.id.slice(0, 8)}...
                 </TableCell>
 
-                {/* Pain Point */}
                 <TableCell>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-900 line-clamp-2">
+                    <p className="text-sm font-medium text-foreground line-clamp-2">
                       {truncateText(request.painPoint, 80)}
                     </p>
-                    {/* Counts */}
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-                      {request._count && (
-                        <>
-                          <span className="flex items-center gap-1">
-                            <MessageSquare className="w-3 h-3" />
-                            {request._count.comments}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Paperclip className="w-3 h-3" />
-                            {request._count.attachments}
-                          </span>
-                        </>
-                      )}
-                    </div>
+                    {request._count && (
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <MessageSquare className="w-3 h-3" />
+                          {request._count.comments}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Paperclip className="w-3 h-3" />
+                          {request._count.attachments}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </TableCell>
 
-                {/* Type */}
                 <TableCell>
                   <TypeBadge type={request.requestType} size="sm" />
                 </TableCell>
 
-                {/* Status */}
                 <TableCell>
                   <StatusBadge status={request.status} size="sm" />
                 </TableCell>
 
-                {/* User */}
                 <TableCell>
                   {request.user ? (
                     <div className="text-sm">
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-foreground">
                         {request.user.firstName} {request.user.lastName?.charAt(0)}.
                       </p>
                       {request.user.email && (
-                        <p className="text-xs text-gray-500 truncate max-w-[120px]">
+                        <p className="text-xs text-muted-foreground truncate max-w-[120px]">
                           {request.user.email}
                         </p>
                       )}
                     </div>
                   ) : (
-                    <span className="text-gray-400">-</span>
+                    <span className="text-muted-foreground">-</span>
                   )}
                 </TableCell>
 
-                {/* Date */}
-                <TableCell className="text-sm text-gray-600">
+                <TableCell className="text-sm text-muted-foreground">
                   {formatDate(request.createdAt)}
                 </TableCell>
 
-                {/* Actions */}
                 <TableCell className="text-right">
                   <Link href={`/requests/${request.id}`}>
                     <Button size="sm" variant="outline">
