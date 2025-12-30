@@ -1,6 +1,5 @@
 // lib/security-logger.ts
-// InvenStock - Centralized Security Event Management
-// UPDATED: Enhanced for CVE-2025-55182 & CVE-2025-66478 monitoring
+// HealthTech Sandbox - Centralized Security Event Management
 
 interface SecurityEventBase {
   timestamp: Date;
@@ -26,7 +25,6 @@ interface HostingIPEvent extends SecurityEventBase {
   type: 'hosting_ip';
 }
 
-// ===== NEW: Security events for RCE attack detection =====
 interface SuspiciousPayloadEvent extends SecurityEventBase {
   type: 'suspicious_payload';
 }
@@ -67,7 +65,7 @@ export function logSecurityEvent(event: Omit<SecurityEvent, 'timestamp'>): void 
     securityEvents.splice(0, securityEvents.length - 1000);
   }
   
-  // ===== NEW: Log critical events to console for immediate visibility =====
+  // Log critical events to console for immediate visibility
   if (event.type === 'rce_attempt' || event.type === 'suspicious_payload') {
     console.error('🚨 [SECURITY ALERT]', {
       type: event.type,
@@ -130,7 +128,6 @@ export function getSecurityStats(timeRange: { start: Date; end: Date }) {
     return acc;
   }, {} as Record<string, number>);
 
-  // ===== NEW: Critical events summary =====
   const criticalEvents = eventsInRange.filter(e => 
     e.type === 'rce_attempt' || 
     e.type === 'suspicious_payload' ||
@@ -155,7 +152,7 @@ export function getSecurityStats(timeRange: { start: Date; end: Date }) {
 }
 
 /**
- * ===== NEW: Get real-time threat level =====
+ * Get real-time threat level
  */
 export function getThreatLevel(minutes = 5): 'low' | 'medium' | 'high' | 'critical' {
   const startTime = new Date(Date.now() - minutes * 60 * 1000);
@@ -173,30 +170,6 @@ export function getThreatLevel(minutes = 5): 'low' | 'medium' | 'high' | 'critic
   if (criticalCount >= 1 || suspiciousCount >= 10) return 'high';
   if (suspiciousCount >= 5) return 'medium';
   return 'low';
-}
-
-// Production-ready functions for Redis/Database integration
-
-/**
- * Log security event to persistent storage
- */
-export async function logSecurityEventPersistent(event: Omit<SecurityEvent, 'timestamp'>): Promise<void> {
-  // TODO: Implement Redis/Database logging
-  // await redis.lpush('security:events', JSON.stringify({ ...event, timestamp: new Date() }));
-  // await redis.ltrim('security:events', 0, 999);
-  
-  logSecurityEvent(event);
-}
-
-/**
- * Get security events from persistent storage
- */
-export async function getSecurityEventsPersistent(limit = 100): Promise<SecurityEvent[]> {
-  // TODO: Implement Redis/Database retrieval
-  // const events = await redis.lrange('security:events', 0, limit - 1);
-  // return events.map(e => JSON.parse(e));
-  
-  return getSecurityEvents().slice(0, limit);
 }
 
 export type {
