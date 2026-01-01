@@ -1,13 +1,13 @@
 // app/dashboard/page.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { RequestList } from '@/components/RequestList';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { LoadingState } from '@/components/shared/LoadingState';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequests } from '@/hooks/useRequests';
-import { RequestStatus, RequestType } from '@/types/request';
+import { RequestStatus, RequestType, Request } from '@/types/request';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -20,20 +20,17 @@ export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
 
+  // ✅ ดึงข้อมูลทั้งหมดมาครั้งเดียว (ไม่มี filter)
   const { 
-    requests, 
-    total,
+    requests: allRequests, 
+    total: totalRequests,
     loading: requestsLoading,
     error,
     refetch 
   } = useRequests({
-    status: statusFilter,
-    type: typeFilter,
-    page: currentPage,
-    pageSize,
+    page: 1,
+    pageSize: 1000, // ดึงมาเยอะๆ เพื่อกรองเอง
   });
-
-  const totalPages = Math.ceil(total / pageSize);
 
   useEffect(() => {
     if (!userLoading && !isAuthenticated) {
@@ -41,14 +38,41 @@ export default function DashboardPage() {
     }
   }, [userLoading, isAuthenticated, router]);
 
+  // ✅ กรองข้อมูลฝั่ง client
+  const filteredRequests = useMemo(() => {
+    let filtered = [...allRequests];
+
+    // Filter by status
+    if (statusFilter !== 'ALL') {
+      filtered = filtered.filter(req => req.status === statusFilter);
+    }
+
+    // Filter by type
+    if (typeFilter !== 'ALL') {
+      filtered = filtered.filter(req => req.requestType === typeFilter);
+    }
+
+    return filtered;
+  }, [allRequests, statusFilter, typeFilter]);
+
+  // ✅ Pagination ฝั่ง client
+  const paginatedRequests = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return filteredRequests.slice(startIndex, endIndex);
+  }, [filteredRequests, currentPage, pageSize]);
+
+  const totalPages = Math.ceil(filteredRequests.length / pageSize);
+  const total = filteredRequests.length;
+
   const handleStatusChange = (status: RequestStatus | 'ALL') => {
     setStatusFilter(status);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page
   };
 
   const handleTypeChange = (type: RequestType | 'ALL') => {
     setTypeFilter(type);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page
   };
 
   if (userLoading) {
@@ -66,7 +90,7 @@ export default function DashboardPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <RequestList
           title="คำขอของฉัน"
-          requests={requests}
+          requests={paginatedRequests}
           loading={requestsLoading}
           error={error}
           showFilters

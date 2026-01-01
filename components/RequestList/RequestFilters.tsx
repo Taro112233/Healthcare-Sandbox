@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { 
   RequestStatus, 
   RequestType,
@@ -30,40 +31,55 @@ export function RequestFilters({
   onTypeChange,
 }: RequestFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-3">
-      <Select 
-        value={status} 
-        onValueChange={(value) => onStatusChange(value as RequestStatus | 'ALL')}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="สถานะ" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="ALL">ทุกสถานะ</SelectItem>
-          {Object.entries(REQUEST_STATUS_INFO).map(([key, info]) => (
-            <SelectItem key={key} value={key}>
-              {info.labelTh}
+    <div className="flex flex-col sm:flex-row gap-3">
+      {/* Status Filter */}
+      <div className="space-y-1.5">
+        <Label className="text-xs text-muted-foreground">สถานะ</Label>
+        <Select 
+          value={status} 
+          onValueChange={(value) => onStatusChange(value as RequestStatus | 'ALL')}
+        >
+          <SelectTrigger className="w-[180px] bg-background">
+            <SelectValue placeholder="เลือกสถานะ" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="ALL">
+              <span className="font-medium">ทุกสถานะ</span>
             </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+            {Object.entries(REQUEST_STATUS_INFO).map(([key, info]) => (
+              <SelectItem key={key} value={key}>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${info.color}`} />
+                  <span>{info.labelTh}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <Select 
-        value={type} 
-        onValueChange={(value) => onTypeChange(value as RequestType | 'ALL')}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="ประเภท" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="ALL">ทุกประเภท</SelectItem>
-          {Object.entries(REQUEST_TYPE_INFO).map(([key, info]) => (
-            <SelectItem key={key} value={key}>
-              {info.labelTh}
+      {/* Type Filter */}
+      <div className="space-y-1.5">
+        <Label className="text-xs text-muted-foreground">ประเภท</Label>
+        <Select 
+          value={type} 
+          onValueChange={(value) => onTypeChange(value as RequestType | 'ALL')}
+        >
+          <SelectTrigger className="w-[180px] bg-background">
+            <SelectValue placeholder="เลือกประเภท" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="ALL">
+              <span className="font-medium">ทุกประเภท</span>
             </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+            {Object.entries(REQUEST_TYPE_INFO).map(([key, info]) => (
+              <SelectItem key={key} value={key}>
+                <span>{info.labelTh}</span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
