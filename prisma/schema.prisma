@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2025-12-31T07:50:38.642Z
+// Last generated: 2026-01-01T05:08:19.063Z
 // InvenStock - Multi-Tenant Inventory Management System V1.0
 
 generator client {
@@ -153,6 +153,7 @@ model Request {
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   // Request Content
+  department        String        // หน่วยงานที่ขอ (เช่น "ห้องฉุกเฉิน", "OPD อายุรกรรม")
   painPoint         String        @db.Text
   currentWorkflow   String        @db.Text
   expectedTechHelp  String        @db.Text
@@ -171,6 +172,7 @@ model Request {
   statusHistory     StatusHistory[]
   
   @@index([userId])
+  @@index([department])
   @@index([status])
   @@index([requestType])
   @@index([createdAt])

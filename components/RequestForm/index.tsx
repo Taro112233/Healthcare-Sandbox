@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
@@ -31,6 +32,7 @@ import {
   GitBranch,
   Brain,
   HelpCircle,
+  Building2,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -44,6 +46,7 @@ interface UploadedFile {
 }
 
 interface FormData {
+  department: string;
   painPoint: string;
   currentWorkflow: string;
   expectedTechHelp: string;
@@ -51,6 +54,7 @@ interface FormData {
 }
 
 interface FormErrors {
+  department?: string;
   painPoint?: string;
   currentWorkflow?: string;
   expectedTechHelp?: string;
@@ -68,6 +72,7 @@ const typeIcons: Record<RequestType, React.ReactNode> = {
 export function RequestForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
+    department: '',
     painPoint: '',
     currentWorkflow: '',
     expectedTechHelp: '',
@@ -80,6 +85,10 @@ export function RequestForm() {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
+
+    if (!formData.department || formData.department.trim().length < 1) {
+      newErrors.department = 'กรุณาระบุหน่วยงานที่ขอ';
+    }
 
     if (!formData.painPoint || formData.painPoint.length < 10) {
       newErrors.painPoint = 'กรุณาอธิบาย Pain Point อย่างน้อย 10 ตัวอักษร';
@@ -129,6 +138,7 @@ export function RequestForm() {
 
     try {
       const payload = {
+        department: formData.department.trim(),
         painPoint: formData.painPoint.trim(),
         currentWorkflow: formData.currentWorkflow.trim(),
         expectedTechHelp: formData.expectedTechHelp.trim(),
@@ -181,10 +191,41 @@ export function RequestForm() {
       <Alert className="bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-800">
         <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
         <AlertDescription className="text-teal-800 dark:text-teal-200">
-          กรุณาอธิบาย Pain Point และความต้องการให้ชัดเจน เพื่อให้ทีมพัฒนาเข้าใจปัญหาและสามารถช่วยเหลือได้ดียิ่งขึ้น
+          กรุณาระบุหน่วยงาน และอธิบาย Pain Point ให้ชัดเจน เพื่อให้ทีมพัฒนาเข้าใจปัญหาและช่วยเหลือได้ดียิ่งขึ้น
         </AlertDescription>
       </Alert>
 
+      {/* Department Input */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Building2 className="w-5 h-5" />
+            หน่วยงานที่ขอ
+          </CardTitle>
+          <CardDescription>
+            ระบุชื่อหน่วยงาน/แผนก ที่ต้องการเครื่องมือนี้
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Input
+            placeholder="เช่น ห้องฉุกเฉิน, OPD อายุรกรรม, หอผู้ป่วยศัลยกรรม, ห้องยา"
+            value={formData.department}
+            onChange={(e) => handleInputChange('department', e.target.value)}
+            className={errors.department ? 'border-red-500' : ''}
+            maxLength={200}
+          />
+          <div className="flex justify-between mt-1">
+            {errors.department && (
+              <p className="text-sm text-red-500">{errors.department}</p>
+            )}
+            <p className="text-xs text-muted-foreground ml-auto">
+              {formData.department.length} / 200
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Request Type */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ประเภทคำขอ</CardTitle>
@@ -218,6 +259,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
+      {/* Pain Point */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Pain Point หน้างาน</CardTitle>
@@ -244,6 +286,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
+      {/* Current Workflow */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ขั้นตอนการทำงานปัจจุบัน</CardTitle>
@@ -270,6 +313,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
+      {/* Expected Tech Help */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">สิ่งที่ต้องการให้ Tech ช่วย</CardTitle>
@@ -296,6 +340,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
+      {/* File Upload */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ไฟล์แนบ (ไม่บังคับ)</CardTitle>
@@ -320,6 +365,7 @@ export function RequestForm() {
         </Alert>
       )}
 
+      {/* Submit Buttons */}
       <div className="flex justify-end gap-3">
         <Button
           type="button"

@@ -5,11 +5,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TypeBadge } from '@/components/shared/TypeBadge';
 import { Request, truncateText } from '@/types/request';
 import { getRelativeTime } from '@/types/comment';
-import { MessageSquare, Paperclip, ChevronRight } from 'lucide-react';
+import { MessageSquare, Paperclip, ChevronRight, Building2 } from 'lucide-react';
 
 interface RequestCardProps {
   request: Request;
@@ -31,6 +32,10 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <StatusBadge status={request.status} size="sm" />
                 <TypeBadge type={request.requestType} size="sm" />
+                <Badge variant="outline" className="text-xs bg-slate-100 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800">
+                  <Building2 className="w-3 h-3 mr-1" />
+                  {request.department}
+                </Badge>
               </div>
 
               <h3 className="font-semibold text-foreground mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-300 transition-colors">

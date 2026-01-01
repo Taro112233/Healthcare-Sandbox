@@ -9,6 +9,10 @@ import { z } from 'zod';
 // ===== VALIDATION SCHEMA =====
 
 const CreateRequestSchema = z.object({
+  department: z.string()
+    .min(1, 'กรุณาระบุหน่วยงาน')
+    .max(200, 'ชื่อหน่วยงานต้องไม่เกิน 200 ตัวอักษร')
+    .trim(),
   painPoint: z.string().min(10, 'กรุณาอธิบาย Pain Point อย่างน้อย 10 ตัวอักษร').max(5000),
   currentWorkflow: z.string().min(10, 'กรุณาอธิบายขั้นตอนการทำงานอย่างน้อย 10 ตัวอักษร').max(5000),
   expectedTechHelp: z.string().min(10, 'กรุณาอธิบายสิ่งที่ต้องการอย่างน้อย 10 ตัวอักษร').max(5000),
@@ -133,7 +137,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const { painPoint, currentWorkflow, expectedTechHelp, requestType, attachmentUrls } = validation.data;
+    const { department, painPoint, currentWorkflow, expectedTechHelp, requestType, attachmentUrls } = validation.data;
     
     // Create request with attachments in transaction
     const newRequest = await prisma.$transaction(async (tx) => {
@@ -141,6 +145,7 @@ export async function POST(request: NextRequest) {
       const created = await tx.request.create({
         data: {
           userId: userInfo.userId,
+          department,
           painPoint,
           currentWorkflow,
           expectedTechHelp,

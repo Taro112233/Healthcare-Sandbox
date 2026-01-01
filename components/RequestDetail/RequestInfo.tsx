@@ -4,6 +4,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TypeBadge } from '@/components/shared/TypeBadge';
 import { Request } from '@/types/request';
@@ -14,6 +15,7 @@ import {
   Calendar, 
   MessageSquare, 
   Paperclip,
+  Building2,
 } from 'lucide-react';
 
 interface RequestInfoProps {
@@ -38,6 +40,10 @@ export function RequestInfo({ request }: RequestInfoProps) {
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={request.status} />
             <TypeBadge type={request.requestType} />
+            <Badge variant="outline" className="bg-slate-100 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800">
+              <Building2 className="w-3 h-3 mr-1" />
+              {request.department}
+            </Badge>
           </div>
           
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">

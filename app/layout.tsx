@@ -6,8 +6,8 @@ import { AuthProvider } from "@/app/utils/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "InvenStock - Multi-Tenant Inventory System",
-  description: "ระบบจัดการสต็อกสินค้าแบบ Multi-Tenant",
+  title: "HealthTech Sandbox",
+  description: "Technology Request Platform",
 }
 
 export default function RootLayout({

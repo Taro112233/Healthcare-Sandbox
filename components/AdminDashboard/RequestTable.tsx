@@ -12,12 +12,13 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TypeBadge } from '@/components/shared/TypeBadge';
 import { Request, truncateText } from '@/types/request';
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
-import { Eye, MessageSquare, Paperclip } from 'lucide-react';
+import { Eye, MessageSquare, Paperclip, Building2 } from 'lucide-react';
 
 interface RequestTableProps {
   requests: Request[];
@@ -29,6 +30,9 @@ function TableRowSkeleton() {
     <TableRow className="animate-pulse">
       <TableCell>
         <div className="h-4 w-20 bg-muted rounded" />
+      </TableCell>
+      <TableCell>
+        <div className="h-4 w-24 bg-muted rounded" />
       </TableCell>
       <TableCell>
         <div className="h-4 w-48 bg-muted rounded" />
@@ -65,6 +69,7 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
           <TableHeader>
             <TableRow className="bg-muted/50">
               <TableHead className="font-semibold">ID</TableHead>
+              <TableHead className="font-semibold">หน่วยงาน</TableHead>
               <TableHead className="font-semibold">Pain Point</TableHead>
               <TableHead className="font-semibold">ประเภท</TableHead>
               <TableHead className="font-semibold">สถานะ</TableHead>
@@ -98,6 +103,7 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
           <TableHeader>
             <TableRow className="bg-muted/50">
               <TableHead className="font-semibold w-24">ID</TableHead>
+              <TableHead className="font-semibold w-32">หน่วยงาน</TableHead>
               <TableHead className="font-semibold min-w-[200px]">Pain Point</TableHead>
               <TableHead className="font-semibold w-28">ประเภท</TableHead>
               <TableHead className="font-semibold w-36">สถานะ</TableHead>
@@ -114,6 +120,13 @@ export function RequestTable({ requests, isLoading }: RequestTableProps) {
               >
                 <TableCell className="font-mono text-xs text-muted-foreground">
                   {request.id.slice(0, 8)}...
+                </TableCell>
+
+                <TableCell>
+                  <Badge variant="outline" className="text-xs bg-slate-100 dark:bg-slate-900/30 text-slate-700 dark:text-slate-300">
+                    <Building2 className="w-3 h-3 mr-1" />
+                    {truncateText(request.department, 20)}
+                  </Badge>
                 </TableCell>
 
                 <TableCell>

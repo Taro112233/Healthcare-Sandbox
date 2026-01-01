@@ -148,6 +148,7 @@ export interface StatusHistory {
 export interface Request {
   id: string;
   userId: string;
+  department: string;
   painPoint: string;
   currentWorkflow: string;
   expectedTechHelp: string;
@@ -173,6 +174,7 @@ export interface Request {
 
 // ===== FORM INTERFACES =====
 export interface CreateRequestFormData {
+  department: string;
   painPoint: string;
   currentWorkflow: string;
   expectedTechHelp: string;

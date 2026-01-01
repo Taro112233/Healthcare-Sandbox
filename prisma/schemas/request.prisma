@@ -9,6 +9,7 @@ model Request {
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   // Request Content
+  department        String        // หน่วยงานที่ขอ (เช่น "ห้องฉุกเฉิน", "OPD อายุรกรรม")
   painPoint         String        @db.Text
   currentWorkflow   String        @db.Text
   expectedTechHelp  String        @db.Text
@@ -27,6 +28,7 @@ model Request {
   statusHistory     StatusHistory[]
   
   @@index([userId])
+  @@index([department])
   @@index([status])
   @@index([requestType])
   @@index([createdAt])
