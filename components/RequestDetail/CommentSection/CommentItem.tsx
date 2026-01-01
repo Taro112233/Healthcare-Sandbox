@@ -3,9 +3,8 @@
 
 import React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Comment, getRelativeTime } from '@/types/comment';
-import { Shield } from 'lucide-react';
+import { BadgeCheck } from 'lucide-react';
 
 interface CommentItemProps {
   comment: Comment;
@@ -25,10 +24,10 @@ export function CommentItem({ comment }: CommentItemProps) {
   const isAdmin = comment.user?.role === 'ADMIN';
 
   return (
-    <div className="flex gap-3 p-4 hover:bg-muted/50 rounded-lg transition-colors">
-      <Avatar className="h-10 w-10 flex-shrink-0">
+    <div className="flex gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
+      <Avatar className="h-8 w-8 flex-shrink-0">
         <AvatarFallback 
-          className={`text-sm font-medium ${
+          className={`text-xs font-medium ${
             isAdmin 
               ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
               : 'bg-muted text-muted-foreground'
@@ -45,10 +44,7 @@ export function CommentItem({ comment }: CommentItemProps) {
           </span>
           
           {isAdmin && (
-            <Badge variant="secondary" className="h-5 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-0">
-              <Shield className="w-3 h-3 mr-1" />
-              Admin
-            </Badge>
+            <BadgeCheck className="w-4 h-4 text-blue-500 dark:text-blue-400" />
           )}
           
           <span className="text-xs text-muted-foreground">

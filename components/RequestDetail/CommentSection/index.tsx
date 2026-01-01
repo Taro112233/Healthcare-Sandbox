@@ -7,6 +7,7 @@ import { CommentInput } from './CommentInput';
 import { CommentList } from './CommentList';
 import { useComments } from '@/hooks/useComments';
 import { MessageSquare } from 'lucide-react';
+import { StatusHistory } from '@/types/request';
 
 interface CommentSectionUser {
   id: string;
@@ -19,9 +20,15 @@ interface CommentSectionProps {
   requestId: string;
   user: CommentSectionUser;
   canComment: boolean;
+  statusHistory: StatusHistory[];
 }
 
-export function CommentSection({ requestId, user, canComment }: CommentSectionProps) {
+export function CommentSection({ 
+  requestId, 
+  user, 
+  canComment,
+  statusHistory 
+}: CommentSectionProps) {
   const { 
     comments, 
     loading, 
@@ -44,11 +51,12 @@ export function CommentSection({ requestId, user, canComment }: CommentSectionPr
       <CardHeader className="pb-3">
         <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
-          ความคิดเห็น {comments.length > 0 && `(${comments.length})`}
+          ความคิดเห็น
         </CardTitle>
       </CardHeader>
       
       <CardContent className="space-y-4">
+        {/* Comment Input - ด้านบน */}
         {canComment && (
           <div className="pb-4 border-b border-border">
             <CommentInput
@@ -59,14 +67,17 @@ export function CommentSection({ requestId, user, canComment }: CommentSectionPr
           </div>
         )}
 
+        {/* Error Display */}
         {error && (
           <div className="text-center py-4 text-red-500 text-sm">
             {error}
           </div>
         )}
 
+        {/* Timeline: Status History + Comments */}
         <CommentList 
-          comments={comments} 
+          comments={comments}
+          statusHistory={statusHistory}
           isLoading={loading} 
         />
       </CardContent>

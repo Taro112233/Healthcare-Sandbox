@@ -4,7 +4,6 @@
 import React from 'react';
 import { RequestInfo } from './RequestInfo';
 import { AttachmentList } from './AttachmentList';
-import { StatusHistory } from './StatusHistory';
 import { CommentSection } from './CommentSection';
 import { AdminStatusUpdate } from './AdminStatusUpdate';
 import { Request } from '@/types/request';
@@ -42,21 +41,18 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
+        {/* Main Content - Left Side */}
         <div className="lg:col-span-2 space-y-6">
           <RequestInfo request={request} />
 
           {request.attachments && request.attachments.length > 0 && (
             <AttachmentList attachments={request.attachments} />
           )}
-
-          <CommentSection 
-            requestId={request.id}
-            user={user}
-            canComment={canComment}
-          />
         </div>
 
+        {/* Sidebar - Right Side */}
         <div className="space-y-6">
+          {/* Admin Status Update - Only for Admin */}
           {isAdmin && (
             <AdminStatusUpdate
               requestId={request.id}
@@ -65,7 +61,13 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
             />
           )}
 
-          <StatusHistory history={request.statusHistory || []} />
+          {/* Comment Section - Always Show */}
+          <CommentSection 
+            requestId={request.id}
+            user={user}
+            canComment={canComment}
+            statusHistory={request.statusHistory || []}
+          />
         </div>
       </div>
     </div>

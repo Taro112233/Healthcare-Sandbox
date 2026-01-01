@@ -33,6 +33,9 @@ export function RequestInfo({ request }: RequestInfoProps) {
     return format(d, 'dd MMMM yyyy, HH:mm', { locale: th });
   };
 
+  // ✅ นับ comments + status changes รวมกัน
+  const totalComments = (request._count?.comments || 0) + (request.statusHistory?.length || 0);
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -63,17 +66,17 @@ export function RequestInfo({ request }: RequestInfoProps) {
               <span>{formatDate(request.createdAt)}</span>
             </div>
 
+            {/* ✅ แสดงจำนวนรวม comments + status changes */}
+            <div className="flex items-center gap-1">
+              <MessageSquare className="w-4 h-4" />
+              <span>{totalComments} ความคิดเห็น</span>
+            </div>
+
             {request._count && (
-              <>
-                <div className="flex items-center gap-1">
-                  <MessageSquare className="w-4 h-4" />
-                  <span>{request._count.comments} ความคิดเห็น</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Paperclip className="w-4 h-4" />
-                  <span>{request._count.attachments} ไฟล์แนบ</span>
-                </div>
-              </>
+              <div className="flex items-center gap-1">
+                <Paperclip className="w-4 h-4" />
+                <span>{request._count.attachments} ไฟล์แนบ</span>
+              </div>
             )}
           </div>
         </div>
