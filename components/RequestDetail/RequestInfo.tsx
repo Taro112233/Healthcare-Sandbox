@@ -7,11 +7,11 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TypeBadge } from '@/components/shared/TypeBadge';
+import { RichTextViewer } from '@/components/RichTextEditor';
 import { Request } from '@/types/request';
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
 import { 
-  User, 
   Calendar, 
   MessageSquare, 
   Paperclip,
@@ -33,7 +33,6 @@ export function RequestInfo({ request }: RequestInfoProps) {
     return format(d, 'dd MMMM yyyy, HH:mm', { locale: th });
   };
 
-  // ✅ นับ comments + status changes รวมกัน
   const totalComments = (request._count?.comments || 0) + (request.statusHistory?.length || 0);
 
   return (
@@ -66,7 +65,6 @@ export function RequestInfo({ request }: RequestInfoProps) {
               <span>{formatDate(request.createdAt)}</span>
             </div>
 
-            {/* ✅ แสดงจำนวนรวม comments + status changes */}
             <div className="flex items-center gap-1">
               <MessageSquare className="w-4 h-4" />
               <span>{totalComments} ความคิดเห็น</span>
@@ -89,7 +87,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-foreground whitespace-pre-wrap">{request.painPoint}</p>
+          <RichTextViewer content={request.painPoint} />
         </CardContent>
       </Card>
 
@@ -100,7 +98,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-foreground whitespace-pre-wrap">{request.currentWorkflow}</p>
+          <RichTextViewer content={request.currentWorkflow} />
         </CardContent>
       </Card>
 
@@ -111,7 +109,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-foreground whitespace-pre-wrap">{request.expectedTechHelp}</p>
+          <RichTextViewer content={request.expectedTechHelp} />
         </CardContent>
       </Card>
     </div>

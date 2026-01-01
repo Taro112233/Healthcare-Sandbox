@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Select,
@@ -17,6 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { FileUploadSection } from './FileUploadSection';
+import { RichTextEditor } from '@/components/RichTextEditor';
 import { 
   RequestType, 
   REQUEST_TYPE_INFO,
@@ -259,34 +259,28 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Pain Point */}
+      {/* Pain Point - Rich Text */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Pain Point หน้างาน</CardTitle>
           <CardDescription>
-            อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน
+            อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน (รองรับการจัดรูปแบบข้อความ)
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Textarea
+        <CardContent className="space-y-2">
+          <RichTextEditor
+            content={formData.painPoint}
+            onChange={(content) => handleInputChange('painPoint', content)}
             placeholder="เช่น ต้องคำนวณ dose ยาด้วยมือทุกครั้ง ซึ่งใช้เวลานานและเสี่ยงต่อการผิดพลาด..."
-            value={formData.painPoint}
-            onChange={(e) => handleInputChange('painPoint', e.target.value)}
-            rows={4}
-            className={errors.painPoint ? 'border-red-500' : ''}
+            disabled={isSubmitting}
           />
-          <div className="flex justify-between mt-1">
-            {errors.painPoint && (
-              <p className="text-sm text-red-500">{errors.painPoint}</p>
-            )}
-            <p className="text-xs text-muted-foreground ml-auto">
-              {formData.painPoint.length} / 5000
-            </p>
-          </div>
+          {errors.painPoint && (
+            <p className="text-sm text-red-500">{errors.painPoint}</p>
+          )}
         </CardContent>
       </Card>
 
-      {/* Current Workflow */}
+      {/* Current Workflow - Rich Text */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">ขั้นตอนการทำงานปัจจุบัน</CardTitle>
@@ -294,26 +288,20 @@ export function RequestForm() {
             อธิบายว่าปัจจุบันคุณทำงานอย่างไร (Step by step)
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Textarea
-            placeholder="เช่น 1. ดูน้ำหนักผู้ป่วยจาก chart 2. หาสูตรคำนวณจากหนังสือ 3. คำนวณด้วยเครื่องคิดเลข 4. จดบันทึกลงกระดาษ..."
-            value={formData.currentWorkflow}
-            onChange={(e) => handleInputChange('currentWorkflow', e.target.value)}
-            rows={4}
-            className={errors.currentWorkflow ? 'border-red-500' : ''}
+        <CardContent className="space-y-2">
+          <RichTextEditor
+            content={formData.currentWorkflow}
+            onChange={(content) => handleInputChange('currentWorkflow', content)}
+            placeholder="เช่น 1. ดูน้ำหนักผู้ป่วยจาก chart 2. หาสูตรคำนวณจากหนังสือ 3. คำนวณด้วยเครื่องคิดเลข..."
+            disabled={isSubmitting}
           />
-          <div className="flex justify-between mt-1">
-            {errors.currentWorkflow && (
-              <p className="text-sm text-red-500">{errors.currentWorkflow}</p>
-            )}
-            <p className="text-xs text-muted-foreground ml-auto">
-              {formData.currentWorkflow.length} / 5000
-            </p>
-          </div>
+          {errors.currentWorkflow && (
+            <p className="text-sm text-red-500">{errors.currentWorkflow}</p>
+          )}
         </CardContent>
       </Card>
 
-      {/* Expected Tech Help */}
+      {/* Expected Tech Help - Rich Text */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">สิ่งที่ต้องการให้ Tech ช่วย</CardTitle>
@@ -321,22 +309,16 @@ export function RequestForm() {
             อธิบายว่าคุณอยากได้เครื่องมืออะไร หรืออยากให้ช่วยอะไร
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Textarea
-            placeholder="เช่น อยากได้เครื่องคำนวณที่ใส่น้ำหนักแล้วแสดง dose ทันที รองรับยาหลายชนิด และแสดง warning ถ้า dose ผิดปกติ..."
-            value={formData.expectedTechHelp}
-            onChange={(e) => handleInputChange('expectedTechHelp', e.target.value)}
-            rows={4}
-            className={errors.expectedTechHelp ? 'border-red-500' : ''}
+        <CardContent className="space-y-2">
+          <RichTextEditor
+            content={formData.expectedTechHelp}
+            onChange={(content) => handleInputChange('expectedTechHelp', content)}
+            placeholder="เช่น อยากได้เครื่องคำนวณที่ใส่น้ำหนักแล้วแสดง dose ทันที รองรับยาหลายชนิด..."
+            disabled={isSubmitting}
           />
-          <div className="flex justify-between mt-1">
-            {errors.expectedTechHelp && (
-              <p className="text-sm text-red-500">{errors.expectedTechHelp}</p>
-            )}
-            <p className="text-xs text-muted-foreground ml-auto">
-              {formData.expectedTechHelp.length} / 5000
-            </p>
-          </div>
+          {errors.expectedTechHelp && (
+            <p className="text-sm text-red-500">{errors.expectedTechHelp}</p>
+          )}
         </CardContent>
       </Card>
 
