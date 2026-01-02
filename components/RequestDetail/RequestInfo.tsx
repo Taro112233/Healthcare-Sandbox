@@ -16,6 +16,9 @@ import {
   MessageSquare, 
   Paperclip,
   Building2,
+  AlertCircle,
+  Workflow,
+  Lightbulb,
 } from 'lucide-react';
 
 interface RequestInfoProps {
@@ -80,35 +83,41 @@ export function RequestInfo({ request }: RequestInfoProps) {
         </div>
       </div>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-foreground">
+      {/* Pain Point Card - สีแดง */}
+      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
+            <AlertCircle className="w-5 h-5" />
             Pain Point หน้างาน
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <RichTextViewer content={request.painPoint} />
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-foreground">
+      {/* Current Workflow Card - สีน้ำเงิน */}
+      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2">
+            <Workflow className="w-5 h-5" />
             ขั้นตอนการทำงานปัจจุบัน
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <RichTextViewer content={request.currentWorkflow} />
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-medium text-foreground">
+      {/* Expected Tech Help Card - สีเขียว */}
+      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5" />
             สิ่งที่ต้องการให้ Tech ช่วย
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           <RichTextViewer content={request.expectedTechHelp} />
         </CardContent>
       </Card>

@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { StatusHistory } from '@/types/request';
 import { REQUEST_STATUS_INFO } from '@/types/request';
 import { getRelativeTime } from '@/types/comment';
-import { ArrowRight, BadgeCheck } from 'lucide-react';
+import { BadgeCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface StatusChangeItemProps {
@@ -14,7 +14,6 @@ interface StatusChangeItemProps {
 }
 
 export function StatusChangeItem({ statusChange }: StatusChangeItemProps) {
-  const fromInfo = REQUEST_STATUS_INFO[statusChange.fromStatus];
   const toInfo = REQUEST_STATUS_INFO[statusChange.toStatus];
 
   const getUserInitials = () => {
@@ -24,7 +23,8 @@ export function StatusChangeItem({ statusChange }: StatusChangeItemProps) {
 
   const getUserName = () => {
     if (!statusChange.user) return 'Admin';
-    return `${statusChange.user.firstName} ${statusChange.user.lastName}`;
+    // ✅ เปลี่ยนเป็น "FirstName L."
+    return `${statusChange.user.firstName} ${statusChange.user.lastName.charAt(0)}.`;
   };
 
   return (

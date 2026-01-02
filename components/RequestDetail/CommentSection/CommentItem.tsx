@@ -18,7 +18,8 @@ export function CommentItem({ comment }: CommentItemProps) {
 
   const getUserName = () => {
     if (!comment.user) return 'Unknown User';
-    return `${comment.user.firstName} ${comment.user.lastName}`;
+    // ✅ เปลี่ยนเป็น "FirstName L."
+    return `${comment.user.firstName} ${comment.user.lastName.charAt(0)}.`;
   };
 
   const isAdmin = comment.user?.role === 'ADMIN';
