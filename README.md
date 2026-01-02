@@ -281,27 +281,19 @@ Directory structure:
     │   ├── file-validation.ts
     │   ├── prisma.ts
     │   ├── reserved-routes.ts
+    │   ├── rich-text-utils.ts
     │   ├── role-helpers.ts
     │   ├── security-logger.ts
     │   └── utils.ts
     ├── prisma/
     │   ├── schema.prisma
     │   ├── seed.ts
-    │   ├── schemas/
-    │   │   ├── attachment.prisma
-    │   │   ├── base.prisma
-    │   │   ├── comment.prisma
-    │   │   ├── request.prisma
-    │   │   └── user.prisma
-    │   └── seeds/
-    │       ├── audit-logs.seed.ts
-    │       ├── departments.seed.ts
-    │       ├── organizations.seed.ts
-    │       ├── product-categories.seed.ts
-    │       ├── product-units.seed.ts
-    │       ├── products.seed.ts
-    │       ├── stocks.seed.ts
-    │       └── users.seed.ts
+    │   └── schemas/
+    │       ├── attachment.prisma
+    │       ├── base.prisma
+    │       ├── comment.prisma
+    │       ├── request.prisma
+    │       └── user.prisma
     ├── scripts/
     │   ├── merge-schemas.js
     │   └── merge-seeds.js
