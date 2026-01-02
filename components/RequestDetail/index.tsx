@@ -5,7 +5,6 @@ import React from 'react';
 import { RequestInfo } from './RequestInfo';
 import { AttachmentList } from './AttachmentList';
 import { CommentSection } from './CommentSection';
-import { AdminStatusUpdate } from './AdminStatusUpdate';
 import { Request } from '@/types/request';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -41,7 +40,7 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Main Content - Left Side */}
+        {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           <RequestInfo request={request} />
 
@@ -50,23 +49,14 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
           )}
         </div>
 
-        {/* Sidebar - Right Side */}
+        {/* Sidebar - Comment Section Only */}
         <div className="space-y-6">
-          {/* Admin Status Update - Only for Admin */}
-          {isAdmin && (
-            <AdminStatusUpdate
-              requestId={request.id}
-              currentStatus={request.status}
-              onStatusUpdated={onRefresh}
-            />
-          )}
-
-          {/* Comment Section - Always Show */}
           <CommentSection 
             requestId={request.id}
             user={user}
             canComment={canComment}
-            statusHistory={request.statusHistory || []}
+            currentStatus={request.status}
+            onRefresh={onRefresh}
           />
         </div>
       </div>

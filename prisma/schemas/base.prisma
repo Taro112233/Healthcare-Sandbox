@@ -1,16 +1,16 @@
 // prisma/schemas/base.prisma
 // ===== HEALTHTECH SANDBOX - BASE ENUMS =====
 
-// ===== USER ROLE (Simplified - No Multi-tenant) =====
+// ===== USER ROLE =====
 enum UserRole {
-  USER      // Submit requests + view own requests + comment on own
-  ADMIN     // Full access + status management + comment anywhere
+  USER
+  ADMIN
 }
 
 // ===== USER STATUS =====
 enum UserStatus {
-  PENDING    // รอการยืนยัน
-  ACTIVE     // ใช้งานได้
-  SUSPENDED  // ระงับการใช้งาน
-  INACTIVE   // ไม่ใช้งาน
+  PENDING
+  ACTIVE
+  SUSPENDED
+  INACTIVE
 }

@@ -7,7 +7,7 @@ import { CommentInput } from './CommentInput';
 import { CommentList } from './CommentList';
 import { useComments } from '@/hooks/useComments';
 import { MessageSquare } from 'lucide-react';
-import { StatusHistory } from '@/types/request';
+import { RequestStatus } from '@/types/request';
 
 interface CommentSectionUser {
   id: string;
@@ -20,14 +20,16 @@ interface CommentSectionProps {
   requestId: string;
   user: CommentSectionUser;
   canComment: boolean;
-  statusHistory: StatusHistory[];
+  currentStatus: RequestStatus;
+  onRefresh: () => void;
 }
 
 export function CommentSection({ 
   requestId, 
   user, 
   canComment,
-  statusHistory 
+  currentStatus,
+  onRefresh
 }: CommentSectionProps) {
   const { 
     comments, 
@@ -37,9 +39,18 @@ export function CommentSection({
     isSubmitting 
   } = useComments(requestId);
 
-  const handleAddComment = async (content: string): Promise<boolean> => {
+  const handleAddComment = async (
+    content: string, 
+    toStatus?: RequestStatus
+  ): Promise<boolean> => {
     try {
-      await addComment(content);
+      await addComment(content, currentStatus, toStatus);
+      
+      // ถ้ามีการเปลี่ยนสถานะ - refresh ข้อมูล request
+      if (toStatus) {
+        onRefresh();
+      }
+      
       return true;
     } catch {
       return false;
@@ -61,6 +72,7 @@ export function CommentSection({
           <div className="pb-4 border-b border-border">
             <CommentInput
               user={user}
+              currentStatus={currentStatus}
               onSubmit={handleAddComment}
               isSubmitting={isSubmitting}
             />
@@ -74,10 +86,9 @@ export function CommentSection({
           </div>
         )}
 
-        {/* Timeline: Status History + Comments */}
+        {/* Comment List */}
         <CommentList 
           comments={comments}
-          statusHistory={statusHistory}
           isLoading={loading} 
         />
       </CardContent>

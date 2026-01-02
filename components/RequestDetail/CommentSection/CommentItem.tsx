@@ -3,8 +3,10 @@
 
 import React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Comment, getRelativeTime } from '@/types/comment';
-import { BadgeCheck } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Comment, CommentType, getRelativeTime } from '@/types/comment';
+import { REQUEST_STATUS_INFO } from '@/types/request';
+import { BadgeCheck, RefreshCw } from 'lucide-react';
 
 interface CommentItemProps {
   comment: Comment;
@@ -18,11 +20,11 @@ export function CommentItem({ comment }: CommentItemProps) {
 
   const getUserName = () => {
     if (!comment.user) return 'Unknown User';
-    // ✅ เปลี่ยนเป็น "FirstName L."
     return `${comment.user.firstName} ${comment.user.lastName.charAt(0)}.`;
   };
 
   const isAdmin = comment.user?.role === 'ADMIN';
+  const isStatusChange = comment.type === 'STATUS_CHANGE';
 
   return (
     <div className="flex gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
@@ -52,6 +54,20 @@ export function CommentItem({ comment }: CommentItemProps) {
             {getRelativeTime(comment.createdAt)}
           </span>
         </div>
+
+        {/* ✅ ถ้าเป็น STATUS_CHANGE - แสดงการเปลี่ยนสถานะ */}
+        {isStatusChange && comment.toStatus && (
+          <div className="flex items-center gap-2 mb-2">
+            <RefreshCw className="w-3 h-3 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">เปลี่ยนสถานะเป็น</span>
+            <Badge 
+              variant="outline" 
+              className={`text-xs ${REQUEST_STATUS_INFO[comment.toStatus].bgColor} ${REQUEST_STATUS_INFO[comment.toStatus].textColor} border-0`}
+            >
+              {REQUEST_STATUS_INFO[comment.toStatus].labelTh}
+            </Badge>
+          </div>
+        )}
 
         <div className="text-sm text-foreground whitespace-pre-wrap break-words">
           {comment.content}

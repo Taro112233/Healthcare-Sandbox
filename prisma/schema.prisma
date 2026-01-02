@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-02T12:40:06.384Z
+// Last generated: 2026-01-02T15:28:10.703Z
 // InvenStock - Multi-Tenant Inventory Management System V1.0
 
 generator client {
@@ -22,18 +22,18 @@ datasource db {
 // prisma/schemas/base.prisma
 // ===== HEALTHTECH SANDBOX - BASE ENUMS =====
 
-// ===== USER ROLE (Simplified - No Multi-tenant) =====
+// ===== USER ROLE =====
 enum UserRole {
-  USER      // Submit requests + view own requests + comment on own
-  ADMIN     // Full access + status management + comment anywhere
+  USER
+  ADMIN
 }
 
 // ===== USER STATUS =====
 enum UserStatus {
-  PENDING    // รอการยืนยัน
-  ACTIVE     // ใช้งานได้
-  SUSPENDED  // ระงับการใช้งาน
-  INACTIVE   // ไม่ใช้งาน
+  PENDING
+  ACTIVE
+  SUSPENDED
+  INACTIVE
 }
 
 // ==========================================
@@ -113,29 +113,38 @@ model Attachment {
 // ==========================================
 
 // prisma/schemas/comment.prisma
-// ===== COMMENT SYSTEM SCHEMA - HealthTech Sandbox =====
-
 model Comment {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   
   // Relations
   requestId   String
-  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  request     Request     @relation(fields: [requestId], references: [id], onDelete: Cascade)
   
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   // Content
-  content     String   @db.Text
+  content     String      @db.Text
+  type        CommentType @default(COMMENT)
+  
+  // For STATUS_CHANGE type only
+  fromStatus  RequestStatus?
+  toStatus    RequestStatus?
   
   // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   
   @@index([requestId])
   @@index([userId])
   @@index([createdAt])
+  @@index([type])
   @@map("comments")
+}
+
+enum CommentType {
+  COMMENT
+  STATUS_CHANGE
 }
 
 // ==========================================

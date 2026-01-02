@@ -1,14 +1,13 @@
 // hooks/useComments.ts
-// HealthTech Sandbox - Custom hook for comments data fetching
-
 import { useState, useEffect, useCallback } from 'react';
-import { Comment } from '@/types/comment';
+import { Comment, CommentType } from '@/types/comment';
+import { RequestStatus } from '@/types/request';
 
 interface UseCommentsReturn {
   comments: Comment[];
   loading: boolean;
   error: string | null;
-  addComment: (content: string) => Promise<Comment | null>;
+  addComment: (content: string, fromStatus: RequestStatus, toStatus?: RequestStatus) => Promise<Comment | null>;
   refetch: () => Promise<void>;
   isSubmitting: boolean;
 }
@@ -63,7 +62,11 @@ export function useComments(requestId: string): UseCommentsReturn {
     fetchComments();
   }, [fetchComments]);
 
-  const addComment = async (content: string): Promise<Comment | null> => {
+  const addComment = async (
+    content: string,
+    fromStatus: RequestStatus,
+    toStatus?: RequestStatus
+  ): Promise<Comment | null> => {
     if (!requestId || !content.trim()) {
       return null;
     }
@@ -72,13 +75,21 @@ export function useComments(requestId: string): UseCommentsReturn {
       setIsSubmitting(true);
       setError(null);
 
+      // ✅ แก้ไข: ใช้ CommentType enum
+      const type: CommentType = toStatus ? CommentType.STATUS_CHANGE : CommentType.COMMENT;
+
       const response = await fetch(`/api/requests/${requestId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ content: content.trim() }),
+        body: JSON.stringify({ 
+          content: content.trim(),
+          type,
+          fromStatus: toStatus ? fromStatus : undefined,
+          toStatus: toStatus,
+        }),
       });
 
       if (!response.ok) {
@@ -94,7 +105,6 @@ export function useComments(requestId: string): UseCommentsReturn {
       const data = await response.json();
 
       if (data.success) {
-        // Prepend new comment to the list
         setComments(prev => [data.data, ...prev]);
         return data.data;
       } else {
