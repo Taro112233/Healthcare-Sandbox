@@ -8,8 +8,9 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { TypeBadge } from '@/components/shared/TypeBadge';
-import { Request, truncateText } from '@/types/request';
+import { Request } from '@/types/request';
 import { getRelativeTime } from '@/types/comment';
+import { truncateRichText } from '@/lib/rich-text-utils'; // ✅ เพิ่ม import
 import { MessageSquare, Paperclip, Building2 } from 'lucide-react';
 
 interface RequestCardProps {
@@ -41,9 +42,9 @@ export function RequestCard({ request, showUser = false }: RequestCardProps) {
             </p>
           </div>
 
-          {/* สิ่งที่ต้องการให้ Tech ช่วย - แสดง 3 บรรทัด */}
+          {/* ✅ แก้ไขส่วนนี้ - ใช้ truncateRichText แทน */}
           <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-            {request.expectedTechHelp}
+            {truncateRichText(request.expectedTechHelp, 120)}
           </p>
 
           {/* Footer Info */}

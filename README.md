@@ -18,67 +18,16 @@ Directory structure:
     │   ├── layout.tsx
     │   ├── not-found.tsx
     │   ├── page.tsx
+    │   ├── admin/
+    │   │   └── page.tsx
     │   ├── api/
-    │   │   ├── [orgSlug]/
-    │   │   │   ├── route.ts
-    │   │   │   ├── [deptSlug]/
-    │   │   │   │   ├── stocks/
-    │   │   │   │   │   ├── route.ts
-    │   │   │   │   │   └── [stockId]/
-    │   │   │   │   │       ├── route.ts
-    │   │   │   │   │       └── batches/
-    │   │   │   │   │           ├── route.ts
-    │   │   │   │   │           └── [batchId]/
-    │   │   │   │   │               └── route.ts
-    │   │   │   │   └── transfers/
-    │   │   │   │       ├── incoming/
-    │   │   │   │       │   └── route.ts
-    │   │   │   │       ├── outgoing/
-    │   │   │   │       │   └── route.ts
-    │   │   │   │       └── products/
+    │   │   ├── admin/
+    │   │   │   ├── requests/
+    │   │   │   │   └── [id]/
+    │   │   │   │       └── status/
     │   │   │   │           └── route.ts
-    │   │   │   ├── audit-logs/
-    │   │   │   │   └── route.ts
-    │   │   │   ├── departments/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   └── [deptId]/
-    │   │   │   │       └── route.ts
-    │   │   │   ├── members/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   └── [userId]/
-    │   │   │   │       ├── route.ts
-    │   │   │   │       └── role/
-    │   │   │   │           └── route.ts
-    │   │   │   ├── product-categories/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   └── [categoryId]/
-    │   │   │   │       └── route.ts
-    │   │   │   ├── product-units/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   └── [unitId]/
-    │   │   │   │       └── route.ts
-    │   │   │   ├── products/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   ├── [id]/
-    │   │   │   │   │   ├── route.ts
-    │   │   │   │   │   └── stocks/
-    │   │   │   │   │       └── route.ts
-    │   │   │   │   └── batch-update-status/
-    │   │   │   │       └── route.ts
-    │   │   │   ├── settings/
-    │   │   │   │   └── route.ts
-    │   │   │   └── transfers/
-    │   │   │       ├── route.ts
-    │   │   │       └── [transferId]/
-    │   │   │           ├── route.ts
-    │   │   │           ├── approve-item/
-    │   │   │           │   └── route.ts
-    │   │   │           ├── cancel-item/
-    │   │   │           │   └── route.ts
-    │   │   │           ├── deliver-item/
-    │   │   │           │   └── route.ts
-    │   │   │           └── prepare-item/
-    │   │   │               └── route.ts
+    │   │   │   └── stats/
+    │   │   │       └── route.ts
     │   │   ├── arcjet/
     │   │   │   └── route.ts
     │   │   ├── auth/
@@ -92,28 +41,28 @@ Directory structure:
     │   │   │       └── route.ts
     │   │   ├── dashboard/
     │   │   │   └── route.ts
-    │   │   ├── organizations/
+    │   │   ├── requests/
     │   │   │   ├── route.ts
-    │   │   │   └── join-by-code/
+    │   │   │   ├── [id]/
+    │   │   │   │   ├── route.ts
+    │   │   │   │   └── comments/
+    │   │   │   │       └── route.ts
+    │   │   │   └── upload/
     │   │   │       └── route.ts
-    │   │   ├── security/
-    │   │   │   └── monitoring/
-    │   │   │       └── route.ts
-    │   │   └── user/
-    │   │       ├── change-password/
-    │   │       │   └── route.ts
-    │   │       └── profile/
+    │   │   └── security/
+    │   │       └── monitoring/
     │   │           └── route.ts
     │   ├── dashboard/
-    │   │   ├── layout.tsx
-    │   │   ├── page.tsx
-    │   │   └── settings/
-    │   │       └── profile/
-    │   │           └── page.tsx
+    │   │   └── page.tsx
     │   ├── login/
     │   │   └── page.tsx
     │   ├── register/
     │   │   └── page.tsx
+    │   ├── requests/
+    │   │   ├── [id]/
+    │   │   │   └── page.tsx
+    │   │   └── new/
+    │   │       └── page.tsx
     │   ├── showcase/
     │   │   └── page.tsx
     │   └── utils/
@@ -122,98 +71,41 @@ Directory structure:
     ├── components/
     │   ├── theme-provider.tsx
     │   ├── theme-toggle.tsx
-    │   ├── DepartmentDashboard/
-    │   │   ├── DepartmentActions.tsx
-    │   │   ├── DepartmentInfo.tsx
-    │   │   ├── DepartmentStats.tsx
+    │   ├── AdminDashboard/
+    │   │   ├── index.tsx
+    │   │   ├── RequestTable.tsx
+    │   │   └── StatsCards.tsx
+    │   ├── RequestDetail/
+    │   │   ├── AdminStatusUpdate.tsx
+    │   │   ├── AttachmentList.tsx
+    │   │   ├── index.tsx
+    │   │   ├── RequestInfo.tsx
+    │   │   ├── StatusHistory.tsx
+    │   │   └── CommentSection/
+    │   │       ├── CommentInput.tsx
+    │   │       ├── CommentItem.tsx
+    │   │       ├── CommentList.tsx
+    │   │       ├── index.tsx
+    │   │       └── StatusChangeItem.tsx
+    │   ├── RequestForm/
+    │   │   ├── FileUploadSection.tsx
     │   │   └── index.tsx
-    │   ├── DepartmentStocksManagement/
-    │   │   ├── AddStockDialog.tsx
+    │   ├── RequestList/
     │   │   ├── index.tsx
-    │   │   ├── StockDetailDialog.tsx
-    │   │   ├── StocksFilters.tsx
-    │   │   ├── StocksHeader.tsx
-    │   │   ├── StocksTable.tsx
-    │   │   ├── StocksTableHeader.tsx
-    │   │   ├── StocksTableRow.tsx
-    │   │   └── StockDetailDialog/
-    │   │       ├── BatchFormModal.tsx
-    │   │       ├── BatchManagementTab.tsx
-    │   │       └── ProductInfoTab.tsx
-    │   ├── OrganizationDashboard/
-    │   │   ├── DepartmentOverview.tsx
-    │   │   ├── index.tsx
-    │   │   ├── OrganizationPerformance.tsx
-    │   │   ├── OrganizationStats.tsx
-    │   │   ├── QuickActions.tsx
-    │   │   └── RecentActivity.tsx
-    │   ├── OrganizationLayout/
-    │   │   ├── DepartmentList.tsx
-    │   │   ├── index.tsx
-    │   │   ├── OrganizationHeader.tsx
-    │   │   ├── SidebarFooter.tsx
-    │   │   ├── SidebarHeader.tsx
-    │   │   └── SidebarNavigation.tsx
-    │   ├── OrganizationList/
-    │   │   ├── AddOrganizationCard.tsx
-    │   │   ├── CreateOrganizationModal.tsx
-    │   │   ├── DashboardHeader.tsx
-    │   │   ├── JoinOrganizationModal.tsx
-    │   │   ├── OrganizationCard.tsx
-    │   │   └── OrganizationGrid.tsx
-    │   ├── ProductsManagement/
-    │   │   ├── DeleteProductDialog.tsx
-    │   │   ├── index.tsx
-    │   │   ├── ProductDetailDialog.tsx
-    │   │   ├── ProductForm.tsx
-    │   │   ├── ProductsFilters.tsx
-    │   │   ├── ProductsHeader.tsx
-    │   │   ├── ProductsTable.tsx
-    │   │   ├── ProductsTableHeader.tsx
-    │   │   ├── ProductsTableRow.tsx
-    │   │   └── ProductDetailDialog/
-    │   │       ├── ProductInfoTab.tsx
-    │   │       └── StockSummaryTab.tsx
-    │   ├── ProfileSettings/
-    │   │   ├── index.tsx
-    │   │   ├── PasswordChange.tsx
-    │   │   ├── ProfileForm.tsx
-    │   │   └── ProfileInfo.tsx
-    │   ├── SettingsManagement/
-    │   │   ├── index.tsx
-    │   │   ├── DepartmentSettings/
-    │   │   │   ├── DepartmentCard.tsx
-    │   │   │   ├── DepartmentFormFields.tsx
-    │   │   │   ├── DepartmentFormModal.tsx
-    │   │   │   ├── DepartmentList.tsx
-    │   │   │   └── index.tsx
-    │   │   ├── MembersSettings/
-    │   │   │   ├── index.tsx
-    │   │   │   ├── InviteCodeEditModal.tsx
-    │   │   │   ├── InviteCodeSection.tsx
-    │   │   │   ├── MemberCard.tsx
-    │   │   │   ├── MembersList.tsx
-    │   │   │   └── RoleManager.tsx
-    │   │   ├── OrganizationSettings/
-    │   │   │   ├── index.tsx
-    │   │   │   ├── OrganizationForm.tsx
-    │   │   │   └── OrganizationInfo.tsx
-    │   │   ├── ProductCategorySettings/
-    │   │   │   ├── CategoryCard.tsx
-    │   │   │   ├── CategoryFormFields.tsx
-    │   │   │   ├── CategoryFormModal.tsx
-    │   │   │   ├── CategoryList.tsx
-    │   │   │   └── index.tsx
-    │   │   ├── ProductUnitSettings/
-    │   │   │   ├── index.tsx
-    │   │   │   ├── UnitCard.tsx
-    │   │   │   ├── UnitFormFields.tsx
-    │   │   │   ├── UnitFormModal.tsx
-    │   │   │   └── UnitList.tsx
-    │   │   └── shared/
-    │   │       ├── ConfirmDialog.tsx
-    │   │       ├── SettingsCard.tsx
-    │   │       └── SettingsSection.tsx
+    │   │   ├── RequestCard.tsx
+    │   │   ├── RequestFilters.tsx
+    │   │   └── RequestPagination.tsx
+    │   ├── RichTextEditor/
+    │   │   ├── index.ts
+    │   │   ├── MenuBar.tsx
+    │   │   ├── RichTextEditor.tsx
+    │   │   └── RichTextViewer.tsx
+    │   ├── shared/
+    │   │   ├── AppHeader.tsx
+    │   │   ├── EmptyState.tsx
+    │   │   ├── LoadingState.tsx
+    │   │   ├── StatusBadge.tsx
+    │   │   └── TypeBadge.tsx
     │   ├── ShowcaseComponent/
     │   │   ├── index.ts
     │   │   ├── AccordionShowcase/
@@ -318,48 +210,6 @@ Directory structure:
     │   │   │   └── index.tsx
     │   │   └── TooltipShowcase/
     │   │       └── index.tsx
-    │   ├── TransferManagement/
-    │   │   ├── index.tsx
-    │   │   ├── CreateTransfer/
-    │   │   │   ├── CreateTransferForm.tsx
-    │   │   │   ├── ProductSelectionTable.tsx
-    │   │   │   ├── SelectedItemsSummary.tsx
-    │   │   │   ├── Step1BasicInfo.tsx
-    │   │   │   ├── Step2ProductSelection.tsx
-    │   │   │   └── Step3ReviewSubmit.tsx
-    │   │   ├── ItemActions/
-    │   │   │   ├── ApproveItemDialog.tsx
-    │   │   │   ├── BatchInfoDisplay.tsx
-    │   │   │   ├── BatchSelectionTable.tsx
-    │   │   │   ├── CancelItemDialog.tsx
-    │   │   │   ├── DeliverItemDialog.tsx
-    │   │   │   └── PrepareItemDialog.tsx
-    │   │   ├── shared/
-    │   │   │   ├── DepartmentBadge.tsx
-    │   │   │   ├── DepartmentSelectionDialog.tsx
-    │   │   │   ├── QuantityDisplay.tsx
-    │   │   │   ├── TransferCodeDisplay.tsx
-    │   │   │   ├── TransferPriorityBadge.tsx
-    │   │   │   └── TransferStatusBadge.tsx
-    │   │   ├── TransferDetail/
-    │   │   │   ├── BatchDetailsRow.tsx
-    │   │   │   ├── TransferActivityLog.tsx
-    │   │   │   ├── TransferDetailView.tsx
-    │   │   │   ├── TransferHeader.tsx
-    │   │   │   ├── TransferItemsTable.tsx
-    │   │   │   └── TransferTimeline.tsx
-    │   │   ├── TransferList/
-    │   │   │   ├── DepartmentTransfersView.tsx
-    │   │   │   ├── TransferEmptyState.tsx
-    │   │   │   ├── TransferFilters.tsx
-    │   │   │   ├── TransferListTabs.tsx
-    │   │   │   ├── TransferTable.tsx
-    │   │   │   ├── TransferTableHeader.tsx
-    │   │   │   └── TransferTableRow.tsx
-    │   │   └── TransferOverview/
-    │   │       ├── OrganizationTransfersView.tsx
-    │   │       ├── OverviewFilters.tsx
-    │   │       └── OverviewStats.tsx
     │   └── ui/
     │       ├── accordion.tsx
     │       ├── alert-dialog.tsx
@@ -419,37 +269,29 @@ Directory structure:
     │       └── tooltip.tsx
     ├── hooks/
     │   ├── use-mobile.ts
-    │   ├── use-org-access.ts
-    │   └── use-sidebar-state.ts
+    │   ├── use-theme-transition.ts
+    │   ├── useComments.ts
+    │   ├── useCurrentUser.ts
+    │   └── useRequests.ts
     ├── lib/
-    │   ├── audit-helpers.ts
-    │   ├── audit-logger.ts
     │   ├── auth-server.ts
     │   ├── auth.ts
-    │   ├── category-helpers.ts
     │   ├── config.ts
-    │   ├── department-helpers.ts
+    │   ├── file-upload.ts
+    │   ├── file-validation.ts
     │   ├── prisma.ts
-    │   ├── product-helpers.ts
     │   ├── reserved-routes.ts
     │   ├── role-helpers.ts
     │   ├── security-logger.ts
-    │   ├── slug-validator.ts
-    │   ├── stock-helpers.ts
-    │   ├── transfer-helpers.ts
-    │   ├── unit-helpers.ts
-    │   ├── user-snapshot.ts
     │   └── utils.ts
     ├── prisma/
     │   ├── schema.prisma
     │   ├── seed.ts
     │   ├── schemas/
-    │   │   ├── audit.prisma
+    │   │   ├── attachment.prisma
     │   │   ├── base.prisma
-    │   │   ├── organization.prisma
-    │   │   ├── product.prisma
-    │   │   ├── stock.prisma
-    │   │   ├── transfer.prisma
+    │   │   ├── comment.prisma
+    │   │   ├── request.prisma
     │   │   └── user.prisma
     │   └── seeds/
     │       ├── audit-logs.seed.ts
@@ -465,9 +307,6 @@ Directory structure:
     │   └── merge-seeds.js
     └── types/
         ├── auth.d.ts
+        ├── comment.ts
         ├── cookie.d.ts
-        ├── product-category.ts
-        ├── product-unit.ts
-        ├── product.ts
-        ├── stock.ts
-        └── transfer.ts
+        └── request.ts
