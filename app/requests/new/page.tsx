@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RequestForm } from '@/components/RequestForm';
 import { AppHeader } from '@/components/shared/AppHeader';
-import { LoadingState } from '@/components/shared/LoadingState';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -20,11 +19,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { 
-  ArrowLeft, 
   Lightbulb, 
   ListChecks,
 } from 'lucide-react';
-import Link from 'next/link';
 
 // Skeleton Component for New Request Page
 function NewRequestSkeleton() {
@@ -32,10 +29,6 @@ function NewRequestSkeleton() {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <Skeleton className="h-9 w-32" />
-        </div>
-
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Header Card Skeleton */}
           <Card className="border-l-4">
@@ -115,21 +108,6 @@ export default function NewRequestPage() {
       <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="mb-6"
-        >
-          <Link href="/dashboard">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              กลับไปหน้ารายการ
-            </Button>
-          </Link>
-        </motion.div>
-
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Page Header Card with Modal Buttons */}
           <motion.div
@@ -169,7 +147,6 @@ export default function NewRequestPage() {
                             วิธีการเขียนคำขอที่ดีเพื่อให้ทีมพัฒนาเข้าใจและช่วยเหลือได้อย่างมีประสิทธิภาพ
                           </DialogDescription>
                         </DialogHeader>
-                        {/* Dialog content remains the same */}
                       </DialogContent>
                     </Dialog>
 
@@ -191,7 +168,6 @@ export default function NewRequestPage() {
                             กระบวนการพิจารณาและพัฒนาเครื่องมือตามคำขอของคุณ
                           </DialogDescription>
                         </DialogHeader>
-                        {/* Dialog content remains the same */}
                       </DialogContent>
                     </Dialog>
                   </div>

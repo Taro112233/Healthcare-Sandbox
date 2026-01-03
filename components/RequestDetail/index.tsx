@@ -6,9 +6,6 @@ import { RequestInfo } from './RequestInfo';
 import { AttachmentList } from './AttachmentList';
 import { CommentSection } from './CommentSection';
 import { Request } from '@/types/request';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
 
 interface CurrentUser {
   id: string;
@@ -30,16 +27,6 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
 
   return (
     <div className="space-y-6">
-      {/* Back Button */}
-      <div>
-        <Link href="/dashboard">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            กลับไปหน้ารายการ
-          </Button>
-        </Link>
-      </div>
-
       {/* Main Layout - Responsive Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content - Takes 2 columns on large screens */}

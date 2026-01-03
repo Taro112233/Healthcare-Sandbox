@@ -5,16 +5,13 @@ import React, { useEffect, use } from 'react';
 import { motion } from 'framer-motion';
 import { RequestDetail } from '@/components/RequestDetail';
 import { AppHeader } from '@/components/shared/AppHeader';
-import { LoadingState } from '@/components/shared/LoadingState';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequest } from '@/hooks/useRequests';
 import { useRouter } from 'next/navigation';
-import { AlertCircle, ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { AlertCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -26,10 +23,6 @@ function RequestDetailSkeleton() {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <Skeleton className="h-9 w-32" />
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content Skeleton */}
           <div className="lg:col-span-2 space-y-6">
@@ -143,14 +136,6 @@ export default function RequestDetailPage({ params }: PageProps) {
       >
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-6">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                กลับไปหน้ารายการ
-              </Button>
-            </Link>
-          </div>
           <EmptyState
             icon={<AlertCircle className="w-16 h-16 text-red-400" />}
             title="เกิดข้อผิดพลาด"
@@ -173,14 +158,6 @@ export default function RequestDetailPage({ params }: PageProps) {
       >
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-6">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                กลับไปหน้ารายการ
-              </Button>
-            </Link>
-          </div>
           <EmptyState
             icon={<AlertCircle className="w-16 h-16 text-muted-foreground" />}
             title="ไม่พบคำขอ"
