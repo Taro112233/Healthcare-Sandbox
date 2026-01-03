@@ -25,7 +25,6 @@ export function useComments(requestId: string): UseCommentsReturn {
     }
 
     try {
-      setLoading(true);
       setError(null);
 
       const response = await fetch(`/api/requests/${requestId}/comments`, {
@@ -75,8 +74,22 @@ export function useComments(requestId: string): UseCommentsReturn {
       setIsSubmitting(true);
       setError(null);
 
-      // ✅ แก้ไข: ใช้ CommentType enum
       const type: CommentType = toStatus ? CommentType.STATUS_CHANGE : CommentType.COMMENT;
+
+      // ✅ Optimistic Update - แสดงผลทันที
+      const tempComment: Comment = {
+        id: `temp-${Date.now()}`,
+        requestId,
+        userId: 'current-user', // จะถูกแทนที่ด้วยข้อมูลจริง
+        content: content.trim(),
+        type,
+        fromStatus: toStatus ? fromStatus : null,
+        toStatus: toStatus || null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      setComments(prev => [...prev, tempComment]);
 
       const response = await fetch(`/api/requests/${requestId}/comments`, {
         method: 'POST',
@@ -93,6 +106,9 @@ export function useComments(requestId: string): UseCommentsReturn {
       });
 
       if (!response.ok) {
+        // ✅ ถ้าไม่สำเร็จ - ลบ optimistic comment
+        setComments(prev => prev.filter(c => c.id !== tempComment.id));
+        
         if (response.status === 401) {
           throw new Error('กรุณาเข้าสู่ระบบ');
         }
@@ -105,9 +121,13 @@ export function useComments(requestId: string): UseCommentsReturn {
       const data = await response.json();
 
       if (data.success) {
-        setComments(prev => [data.data, ...prev]);
+        // ✅ แทนที่ temp comment ด้วย real comment
+        setComments(prev => 
+          prev.map(c => c.id === tempComment.id ? data.data : c)
+        );
         return data.data;
       } else {
+        setComments(prev => prev.filter(c => c.id !== tempComment.id));
         throw new Error(data.error || 'Failed to add comment');
       }
     } catch (err) {

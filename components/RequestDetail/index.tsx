@@ -49,8 +49,8 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
           )}
         </div>
 
-        {/* Sidebar - Comment Section Only */}
-        <div className="space-y-6">
+        {/* Sidebar - Comment Section (Sticky) */}
+        <div className="lg:sticky lg:top-6 lg:self-start">
           <CommentSection 
             requestId={request.id}
             user={user}

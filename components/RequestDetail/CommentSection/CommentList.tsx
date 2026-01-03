@@ -1,10 +1,10 @@
 // components/RequestDetail/CommentSection/CommentList.tsx
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Comment } from '@/types/comment';
 import { CommentItem } from './CommentItem';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Loader2 } from 'lucide-react';
 
 interface CommentListProps {
   comments: Comment[];
@@ -15,19 +15,10 @@ export function CommentList({
   comments, 
   isLoading 
 }: CommentListProps) {
-  if (isLoading) {
+  if (isLoading && comments.length === 0) {
     return (
-      <div className="space-y-4 animate-pulse">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="flex gap-3 p-4">
-            <div className="w-10 h-10 rounded-full bg-muted" />
-            <div className="flex-1 space-y-2">
-              <div className="h-4 w-32 bg-muted rounded" />
-              <div className="h-3 w-full bg-muted rounded" />
-              <div className="h-3 w-2/3 bg-muted rounded" />
-            </div>
-          </div>
-        ))}
+      <div className="flex items-center justify-center py-8">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -44,9 +35,14 @@ export function CommentList({
     );
   }
 
+  // ✅ เรียงจากเก่า → ใหม่ (ล่างสุดคือล่าสุด)
+  const sortedComments = [...comments].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+
   return (
     <div className="space-y-3">
-      {comments.map((comment) => (
+      {sortedComments.map((comment) => (
         <CommentItem key={comment.id} comment={comment} />
       ))}
     </div>

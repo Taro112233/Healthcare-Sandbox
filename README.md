@@ -22,10 +22,6 @@ Directory structure:
     │   │   └── page.tsx
     │   ├── api/
     │   │   ├── admin/
-    │   │   │   ├── requests/
-    │   │   │   │   └── [id]/
-    │   │   │   │       └── status/
-    │   │   │   │           └── route.ts
     │   │   │   └── stats/
     │   │   │       └── route.ts
     │   │   ├── arcjet/
@@ -76,17 +72,14 @@ Directory structure:
     │   │   ├── RequestTable.tsx
     │   │   └── StatsCards.tsx
     │   ├── RequestDetail/
-    │   │   ├── AdminStatusUpdate.tsx
     │   │   ├── AttachmentList.tsx
     │   │   ├── index.tsx
     │   │   ├── RequestInfo.tsx
-    │   │   ├── StatusHistory.tsx
     │   │   └── CommentSection/
     │   │       ├── CommentInput.tsx
     │   │       ├── CommentItem.tsx
     │   │       ├── CommentList.tsx
-    │   │       ├── index.tsx
-    │   │       └── StatusChangeItem.tsx
+    │   │       └── index.tsx
     │   ├── RequestForm/
     │   │   ├── FileUploadSection.tsx
     │   │   └── index.tsx
@@ -281,27 +274,19 @@ Directory structure:
     │   ├── file-validation.ts
     │   ├── prisma.ts
     │   ├── reserved-routes.ts
+    │   ├── rich-text-utils.ts
     │   ├── role-helpers.ts
     │   ├── security-logger.ts
     │   └── utils.ts
     ├── prisma/
     │   ├── schema.prisma
     │   ├── seed.ts
-    │   ├── schemas/
-    │   │   ├── attachment.prisma
-    │   │   ├── base.prisma
-    │   │   ├── comment.prisma
-    │   │   ├── request.prisma
-    │   │   └── user.prisma
-    │   └── seeds/
-    │       ├── audit-logs.seed.ts
-    │       ├── departments.seed.ts
-    │       ├── organizations.seed.ts
-    │       ├── product-categories.seed.ts
-    │       ├── product-units.seed.ts
-    │       ├── products.seed.ts
-    │       ├── stocks.seed.ts
-    │       └── users.seed.ts
+    │   └── schemas/
+    │       ├── attachment.prisma
+    │       ├── base.prisma
+    │       ├── comment.prisma
+    │       ├── request.prisma
+    │       └── user.prisma
     ├── scripts/
     │   ├── merge-schemas.js
     │   └── merge-seeds.js
