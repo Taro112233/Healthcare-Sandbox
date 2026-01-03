@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect, use } from 'react';
+import { motion } from 'framer-motion';
 import { RequestDetail } from '@/components/RequestDetail';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { LoadingState } from '@/components/shared/LoadingState';
@@ -11,10 +12,104 @@ import { useRequest } from '@/hooks/useRequests';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Link from 'next/link';
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+// Skeleton Component for Request Detail
+function RequestDetailSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      <AppHeader />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6">
+          <Skeleton className="h-9 w-32" />
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Main Content Skeleton */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Header Skeleton */}
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <Skeleton className="h-6 w-28" />
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="h-6 w-36" />
+              </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <Skeleton className="h-6 w-40" />
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-20" />
+              </div>
+            </div>
+
+            {/* Content Cards Skeleton */}
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="border-l-4">
+                <CardHeader className="pb-4">
+                  <Skeleton className="h-6 w-48" />
+                </CardHeader>
+                <CardContent className="pt-0 space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                </CardContent>
+              </Card>
+            ))}
+
+            {/* Attachments Skeleton */}
+            <Card>
+              <CardHeader className="pb-3">
+                <Skeleton className="h-5 w-32" />
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {[1, 2].map((i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+                    <Skeleton className="w-16 h-16 rounded" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 w-48" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Skeleton className="h-8 w-8" />
+                      <Skeleton className="h-8 w-8" />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar Skeleton */}
+          <div className="lg:sticky lg:top-6 lg:self-start">
+            <Card className="h-[600px]">
+              <CardHeader className="pb-3 border-b">
+                <Skeleton className="h-5 w-32" />
+              </CardHeader>
+              <CardContent className="p-4 space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex gap-3">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-12 w-full" />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default function RequestDetailPage({ params }: PageProps) {
@@ -29,8 +124,9 @@ export default function RequestDetailPage({ params }: PageProps) {
     }
   }, [userLoading, isAuthenticated, router]);
 
+  // Show skeleton during initial load
   if (userLoading || requestLoading) {
-    return <LoadingState message="กำลังโหลดข้อมูล..." fullScreen />;
+    return <RequestDetailSkeleton />;
   }
 
   if (!isAuthenticated || !user) {
@@ -39,7 +135,12 @@ export default function RequestDetailPage({ params }: PageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="min-h-screen bg-background"
+      >
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
@@ -58,13 +159,18 @@ export default function RequestDetailPage({ params }: PageProps) {
             actionHref="/dashboard"
           />
         </main>
-      </div>
+      </motion.div>
     );
   }
 
   if (!request) {
     return (
-      <div className="min-h-screen bg-background">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="min-h-screen bg-background"
+      >
         <AppHeader />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-6">
@@ -83,12 +189,17 @@ export default function RequestDetailPage({ params }: PageProps) {
             actionHref="/dashboard"
           />
         </main>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-background"
+    >
       <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -103,6 +214,6 @@ export default function RequestDetailPage({ params }: PageProps) {
           onRefresh={refetch}
         />
       </main>
-    </div>
+    </motion.div>
   );
 }

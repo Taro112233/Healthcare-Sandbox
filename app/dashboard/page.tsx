@@ -2,14 +2,76 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { RequestList } from '@/components/RequestList';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { LoadingState } from '@/components/shared/LoadingState';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequests } from '@/hooks/useRequests';
-import { RequestStatus, RequestType, Request } from '@/types/request';
+import { RequestStatus, RequestType } from '@/types/request';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent } from '@/components/ui/card';
+
+// Skeleton Component for Dashboard
+function DashboardSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      <AppHeader />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-4">
+          {/* Header Skeleton */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <Skeleton className="h-8 w-48" />
+            <div className="flex gap-3">
+              <Skeleton className="h-10 w-[180px]" />
+              <Skeleton className="h-10 w-[180px]" />
+            </div>
+          </div>
+
+          {/* Request Cards Skeleton */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Card key={i}>
+                <CardContent className="p-5">
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <Skeleton className="h-6 w-24" />
+                      <Skeleton className="h-6 w-28" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-4 w-4" />
+                      <Skeleton className="h-4 w-full" />
+                    </div>
+                    <Skeleton className="h-16 w-full" />
+                    <div className="flex flex-wrap items-center gap-4">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-4 w-16" />
+                      <Skeleton className="h-4 w-12" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Pagination Skeleton */}
+          <div className="flex items-center justify-between pt-4 border-t border-border">
+            <Skeleton className="h-4 w-32" />
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-9 w-24" />
+              <Skeleton className="h-9 w-9" />
+              <Skeleton className="h-9 w-9" />
+              <Skeleton className="h-9 w-9" />
+              <Skeleton className="h-9 w-24" />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -20,7 +82,6 @@ export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
 
-  // ✅ ดึงข้อมูลทั้งหมดมาครั้งเดียว (ไม่มี filter)
   const { 
     requests: allRequests, 
     total: totalRequests,
@@ -29,7 +90,7 @@ export default function DashboardPage() {
     refetch 
   } = useRequests({
     page: 1,
-    pageSize: 1000, // ดึงมาเยอะๆ เพื่อกรองเอง
+    pageSize: 1000,
   });
 
   useEffect(() => {
@@ -38,16 +99,13 @@ export default function DashboardPage() {
     }
   }, [userLoading, isAuthenticated, router]);
 
-  // ✅ กรองข้อมูลฝั่ง client
   const filteredRequests = useMemo(() => {
     let filtered = [...allRequests];
 
-    // Filter by status
     if (statusFilter !== 'ALL') {
       filtered = filtered.filter(req => req.status === statusFilter);
     }
 
-    // Filter by type
     if (typeFilter !== 'ALL') {
       filtered = filtered.filter(req => req.requestType === typeFilter);
     }
@@ -55,7 +113,6 @@ export default function DashboardPage() {
     return filtered;
   }, [allRequests, statusFilter, typeFilter]);
 
-  // ✅ Pagination ฝั่ง client
   const paginatedRequests = useMemo(() => {
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -67,16 +124,17 @@ export default function DashboardPage() {
 
   const handleStatusChange = (status: RequestStatus | 'ALL') => {
     setStatusFilter(status);
-    setCurrentPage(1); // Reset to first page
+    setCurrentPage(1);
   };
 
   const handleTypeChange = (type: RequestType | 'ALL') => {
     setTypeFilter(type);
-    setCurrentPage(1); // Reset to first page
+    setCurrentPage(1);
   };
 
-  if (userLoading) {
-    return <LoadingState message="กำลังโหลด..." fullScreen />;
+  // Show skeleton during initial load
+  if (userLoading || (requestsLoading && allRequests.length === 0)) {
+    return <DashboardSkeleton />;
   }
 
   if (!isAuthenticated || !user) {
@@ -84,14 +142,19 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-background"
+    >
       <AppHeader />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <RequestList
           title="คำขอของฉัน"
           requests={paginatedRequests}
-          loading={requestsLoading}
+          loading={requestsLoading && allRequests.length > 0}
           error={error}
           showFilters
           showUser={false}
@@ -111,6 +174,6 @@ export default function DashboardPage() {
           onRefresh={refetch}
         />
       </main>
-    </div>
+    </motion.div>
   );
 }
