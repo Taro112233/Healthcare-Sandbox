@@ -30,7 +30,7 @@ function RequestDetailSkeleton() {
           <Skeleton className="h-9 w-32" />
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content Skeleton */}
           <div className="lg:col-span-2 space-y-6">
             {/* Header Skeleton */}
@@ -40,7 +40,7 @@ function RequestDetailSkeleton() {
                 <Skeleton className="h-6 w-32" />
                 <Skeleton className="h-6 w-36" />
               </div>
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4">
                 <Skeleton className="h-6 w-40" />
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-4 w-24" />
@@ -50,7 +50,7 @@ function RequestDetailSkeleton() {
 
             {/* Content Cards Skeleton */}
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="border-l-4">
+              <Card key={i} className="border-l-4 bg-card">
                 <CardHeader className="pb-4">
                   <Skeleton className="h-6 w-48" />
                 </CardHeader>
@@ -65,7 +65,7 @@ function RequestDetailSkeleton() {
             ))}
 
             {/* Attachments Skeleton */}
-            <Card>
+            <Card className="bg-card">
               <CardHeader className="pb-3">
                 <Skeleton className="h-5 w-32" />
               </CardHeader>
@@ -89,8 +89,8 @@ function RequestDetailSkeleton() {
 
           {/* Sidebar Skeleton */}
           <div className="lg:sticky lg:top-6 lg:self-start">
-            <Card className="h-[600px]">
-              <CardHeader className="pb-3 border-b">
+            <Card className="h-[600px] bg-card">
+              <CardHeader className="pb-3 border-b border-border">
                 <Skeleton className="h-5 w-32" />
               </CardHeader>
               <CardContent className="p-4 space-y-3">
