@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/item"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { MoreHorizontal, Star, Folder, File, Trash2 } from "lucide-react"
 
 export function ItemShowcase() {

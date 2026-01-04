@@ -2,7 +2,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Mail, Loader2, ChevronRight, Plus, Download } from "lucide-react"
+import { Mail, ChevronRight, Plus, Download } from "lucide-react"
 
 export function ButtonShowcase() {
   return (

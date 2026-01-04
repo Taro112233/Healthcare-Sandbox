@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 } from "@/components/ui/breadcrumb"
-import { ChevronRight, Slash } from "lucide-react"
+import { Slash } from "lucide-react"
 
 export function BreadcrumbShowcase() {
   return (
