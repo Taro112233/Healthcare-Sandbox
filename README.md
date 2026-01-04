@@ -22,10 +22,6 @@ Directory structure:
     │   │   └── page.tsx
     │   ├── api/
     │   │   ├── admin/
-    │   │   │   ├── requests/
-    │   │   │   │   └── [id]/
-    │   │   │   │       └── status/
-    │   │   │   │           └── route.ts
     │   │   │   └── stats/
     │   │   │       └── route.ts
     │   │   ├── arcjet/
@@ -76,17 +72,14 @@ Directory structure:
     │   │   ├── RequestTable.tsx
     │   │   └── StatsCards.tsx
     │   ├── RequestDetail/
-    │   │   ├── AdminStatusUpdate.tsx
     │   │   ├── AttachmentList.tsx
     │   │   ├── index.tsx
     │   │   ├── RequestInfo.tsx
-    │   │   ├── StatusHistory.tsx
     │   │   └── CommentSection/
     │   │       ├── CommentInput.tsx
     │   │       ├── CommentItem.tsx
     │   │       ├── CommentList.tsx
-    │   │       ├── index.tsx
-    │   │       └── StatusChangeItem.tsx
+    │   │       └── index.tsx
     │   ├── RequestForm/
     │   │   ├── FileUploadSection.tsx
     │   │   └── index.tsx

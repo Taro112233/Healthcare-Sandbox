@@ -1,11 +1,27 @@
 // types/comment.ts
 // HealthTech Sandbox - Comment Type Definitions
 
+import type { RequestStatus } from './request';
+
+// ===== COMMENT TYPE ENUM =====
+export enum CommentType {
+  COMMENT = 'COMMENT',           // ความคิดเห็นทั่วไป
+  STATUS_CHANGE = 'STATUS_CHANGE', // การเปลี่ยนสถานะ
+}
+
+// ===== INTERFACES =====
+
 export interface Comment {
   id: string;
   requestId: string;
   userId: string;
   content: string;
+  type: CommentType; // ✅ NEW
+  
+  // For STATUS_CHANGE type only
+  fromStatus?: RequestStatus | null; // ✅ NEW
+  toStatus?: RequestStatus | null;   // ✅ NEW
+  
   createdAt: Date;
   updatedAt: Date;
   
@@ -20,6 +36,9 @@ export interface Comment {
 
 export interface CreateCommentFormData {
   content: string;
+  type?: CommentType;           // ✅ NEW - optional, default COMMENT
+  fromStatus?: RequestStatus;   // ✅ NEW - required if type = STATUS_CHANGE
+  toStatus?: RequestStatus;     // ✅ NEW - required if type = STATUS_CHANGE
 }
 
 export interface CommentListResponse {
@@ -78,4 +97,14 @@ export function getRelativeTime(date: Date | string): string {
   
   const diffInYears = Math.floor(diffInDays / 365);
   return `${diffInYears} ปีที่แล้ว`;
+}
+
+// ===== TYPE GUARDS =====
+
+export function isStatusChangeComment(comment: Comment): boolean {
+  return comment.type === CommentType.STATUS_CHANGE;
+}
+
+export function isRegularComment(comment: Comment): boolean {
+  return comment.type === CommentType.COMMENT;
 }

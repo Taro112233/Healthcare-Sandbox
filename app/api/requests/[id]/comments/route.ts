@@ -1,15 +1,29 @@
 // app/api/requests/[id]/comments/route.ts
-// HealthTech Sandbox - Comments API (List & Create)
-
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getUserFromHeaders, canCommentOnRequest } from '@/lib/auth-server';
 import { z } from 'zod';
 
 // ===== VALIDATION SCHEMA =====
-
 const CreateCommentSchema = z.object({
   content: z.string().min(1, 'กรุณากรอกความคิดเห็น').max(5000, 'ความคิดเห็นยาวเกินไป'),
+  type: z.enum(['COMMENT', 'STATUS_CHANGE']).optional().default('COMMENT'),
+  fromStatus: z.enum([
+    'PENDING_REVIEW',
+    'UNDER_CONSIDERATION',
+    'IN_DEVELOPMENT',
+    'IN_TESTING',
+    'COMPLETED',
+    'BEYOND_CAPACITY',
+  ]).optional(),
+  toStatus: z.enum([
+    'PENDING_REVIEW',
+    'UNDER_CONSIDERATION',
+    'IN_DEVELOPMENT',
+    'IN_TESTING',
+    'COMPLETED',
+    'BEYOND_CAPACITY',
+  ]).optional(),
 });
 
 // ===== GET - List Comments =====
@@ -28,7 +42,6 @@ export async function GET(
       );
     }
     
-    // Check request exists and user has access
     const requestData = await prisma.request.findUnique({
       where: { id: requestId },
       select: { userId: true },
@@ -41,7 +54,6 @@ export async function GET(
       );
     }
     
-    // Check access (owner or admin)
     const isOwner = requestData.userId === userInfo.userId;
     const isAdmin = userInfo.role === 'ADMIN';
     
@@ -52,7 +64,6 @@ export async function GET(
       );
     }
     
-    // Get comments
     const comments = await prisma.comment.findMany({
       where: { requestId },
       include: {
@@ -85,7 +96,7 @@ export async function GET(
   }
 }
 
-// ===== POST - Create Comment =====
+// ===== POST - Create Comment (รวมทั้ง STATUS_CHANGE) =====
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -98,16 +109,6 @@ export async function POST(
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
-      );
-    }
-    
-    // Check if user can comment on this request
-    const canComment = await canCommentOnRequest(userInfo.userId, userInfo.role, requestId);
-    
-    if (!canComment) {
-      return NextResponse.json(
-        { success: false, error: 'คุณไม่มีสิทธิ์แสดงความคิดเห็นในคำขอนี้' },
-        { status: 403 }
       );
     }
     
@@ -128,34 +129,78 @@ export async function POST(
       );
     }
     
-    const { content } = validation.data;
+    const { content, type, fromStatus, toStatus } = validation.data;
     
-    // Create comment
-    const comment = await prisma.comment.create({
-      data: {
-        requestId,
-        userId: userInfo.userId,
-        content,
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            role: true,
+    // ✅ ตรวจสอบสิทธิ์
+    if (type === 'STATUS_CHANGE') {
+      // เฉพาะ Admin เท่านั้นที่เปลี่ยนสถานะได้
+      if (userInfo.role !== 'ADMIN') {
+        return NextResponse.json(
+          { success: false, error: 'เฉพาะ Admin เท่านั้นที่เปลี่ยนสถานะได้' },
+          { status: 403 }
+        );
+      }
+      
+      if (!fromStatus || !toStatus) {
+        return NextResponse.json(
+          { success: false, error: 'ต้องระบุ fromStatus และ toStatus' },
+          { status: 400 }
+        );
+      }
+    } else {
+      // ความคิดเห็นทั่วไป - ต้องมีสิทธิ์ comment
+      const canComment = await canCommentOnRequest(userInfo.userId, userInfo.role, requestId);
+      
+      if (!canComment) {
+        return NextResponse.json(
+          { success: false, error: 'คุณไม่มีสิทธิ์แสดงความคิดเห็นในคำขอนี้' },
+          { status: 403 }
+        );
+      }
+    }
+    
+    // ✅ ถ้าเป็น STATUS_CHANGE - อัปเดตสถานะ Request ด้วย
+    const comment = await prisma.$transaction(async (tx) => {
+      // 1. Create comment
+      const newComment = await tx.comment.create({
+        data: {
+          requestId,
+          userId: userInfo.userId,
+          content,
+          type,
+          fromStatus: type === 'STATUS_CHANGE' ? fromStatus : null,
+          toStatus: type === 'STATUS_CHANGE' ? toStatus : null,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              role: true,
+            },
           },
         },
-      },
+      });
+      
+      // 2. ถ้าเป็น STATUS_CHANGE - อัปเดตสถานะ Request
+      if (type === 'STATUS_CHANGE' && toStatus) {
+        await tx.request.update({
+          where: { id: requestId },
+          data: { status: toStatus },
+        });
+      }
+      
+      return newComment;
     });
     
-    console.log(`✅ Comment created on request ${requestId} by user: ${userInfo.userId}`);
+    console.log(`✅ Comment created (type: ${type}) on request ${requestId} by user: ${userInfo.userId}`);
     
     return NextResponse.json(
       {
         success: true,
         data: comment,
-        message: 'เพิ่มความคิดเห็นสำเร็จ',
+        message: type === 'STATUS_CHANGE' ? 'อัปเดทสถานะสำเร็จ' : 'เพิ่มความคิดเห็นสำเร็จ',
       },
       { status: 201 }
     );

@@ -1,10 +1,17 @@
 // lib/rich-text-utils.ts
+
+interface TiptapNode {
+  type: string;
+  content?: TiptapNode[];
+  text?: string;
+}
+
 export function extractTextFromRichText(content: string): string {
   try {
-    const json = JSON.parse(content);
+    const json: TiptapNode = JSON.parse(content);
     
     // Recursive function to extract text from Tiptap JSON
-    function extractText(node: any): string {
+    function extractText(node: TiptapNode): string {
       if (!node) return '';
       
       if (node.type === 'text') {
@@ -12,7 +19,7 @@ export function extractTextFromRichText(content: string): string {
       }
       
       if (node.content) {
-        return node.content.map((child: any) => extractText(child)).join('');
+        return node.content.map((child: TiptapNode) => extractText(child)).join('');
       }
       
       return '';

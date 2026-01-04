@@ -1,7 +1,7 @@
 // app/api/auth/me/route.ts
 // HealthTech Sandbox - Get Current User API
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getServerUser } from '@/lib/auth-server';
 import { prisma } from '@/lib/prisma';
 import type { JWTUser } from '@/lib/auth';
@@ -33,7 +33,7 @@ interface UserDataResponse {
 }
 
 // ===== GET CURRENT USER =====
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Verify JWT from cookie
     const user: JWTUser | null = await getServerUser();

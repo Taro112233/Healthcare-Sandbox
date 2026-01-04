@@ -5,11 +5,7 @@ import React from 'react';
 import { RequestInfo } from './RequestInfo';
 import { AttachmentList } from './AttachmentList';
 import { CommentSection } from './CommentSection';
-import { AdminStatusUpdate } from './AdminStatusUpdate';
 import { Request } from '@/types/request';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
 
 interface CurrentUser {
   id: string;
@@ -31,17 +27,9 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
 
   return (
     <div className="space-y-6">
-      <div>
-        <Link href="/dashboard">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            กลับไปหน้ารายการ
-          </Button>
-        </Link>
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Main Content - Left Side */}
+      {/* Main Layout - Responsive Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content - Takes 2 columns on large screens */}
         <div className="lg:col-span-2 space-y-6">
           <RequestInfo request={request} />
 
@@ -50,23 +38,14 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
           )}
         </div>
 
-        {/* Sidebar - Right Side */}
-        <div className="space-y-6">
-          {/* Admin Status Update - Only for Admin */}
-          {isAdmin && (
-            <AdminStatusUpdate
-              requestId={request.id}
-              currentStatus={request.status}
-              onStatusUpdated={onRefresh}
-            />
-          )}
-
-          {/* Comment Section - Always Show */}
+        {/* Sidebar - Comment Section (Sticky on large screens) */}
+        <div className="lg:sticky lg:top-6 lg:self-start">
           <CommentSection 
             requestId={request.id}
             user={user}
             canComment={canComment}
-            statusHistory={request.statusHistory || []}
+            currentStatus={request.status}
+            onRefresh={onRefresh}
           />
         </div>
       </div>

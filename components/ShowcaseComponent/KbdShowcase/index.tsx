@@ -2,7 +2,6 @@
 "use client"
 
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
-import { Command } from "lucide-react"
 
 export function KbdShowcase() {
   return (

@@ -179,7 +179,7 @@ export async function checkRequestOwnership(
   userId: string,
   role: UserRole,
   requestId: string
-): Promise<{ hasAccess: boolean; isOwner: boolean; request: any | null }> {
+): Promise<{ hasAccess: boolean; isOwner: boolean; request: unknown | null }> {
   try {
     const request = await prisma.request.findUnique({
       where: { id: requestId },

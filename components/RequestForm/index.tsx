@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
@@ -33,6 +32,9 @@ import {
   Brain,
   HelpCircle,
   Building2,
+  AlertCircle,
+  Workflow,
+  Lightbulb,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -188,12 +190,7 @@ export function RequestForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <Alert className="bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-800">
-        <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
-        <AlertDescription className="text-teal-800 dark:text-teal-200">
-          กรุณาระบุหน่วยงาน และอธิบาย Pain Point ให้ชัดเจน เพื่อให้ทีมพัฒนาเข้าใจปัญหาและช่วยเหลือได้ดียิ่งขึ้น
-        </AlertDescription>
-      </Alert>
+      
 
       {/* Department Input */}
       <Card>
@@ -259,15 +256,18 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Pain Point - Rich Text */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Pain Point หน้างาน</CardTitle>
+      {/* Pain Point Card - สีแดง */}
+      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
+            <AlertCircle className="w-5 h-5" />
+            Pain Point หน้างาน
+          </CardTitle>
           <CardDescription>
             อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน (รองรับการจัดรูปแบบข้อความ)
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 pt-0">
           <RichTextEditor
             content={formData.painPoint}
             onChange={(content) => handleInputChange('painPoint', content)}
@@ -280,15 +280,18 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Current Workflow - Rich Text */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">ขั้นตอนการทำงานปัจจุบัน</CardTitle>
+      {/* Current Workflow Card - สีน้ำเงิน */}
+      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2">
+            <Workflow className="w-5 h-5" />
+            ขั้นตอนการทำงานปัจจุบัน
+          </CardTitle>
           <CardDescription>
             อธิบายว่าปัจจุบันคุณทำงานอย่างไร (Step by step)
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 pt-0">
           <RichTextEditor
             content={formData.currentWorkflow}
             onChange={(content) => handleInputChange('currentWorkflow', content)}
@@ -301,15 +304,18 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Expected Tech Help - Rich Text */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">สิ่งที่ต้องการให้ Tech ช่วย</CardTitle>
+      {/* Expected Tech Help Card - สีเขียว */}
+      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5" />
+            สิ่งที่ต้องการให้ Tech ช่วย
+          </CardTitle>
           <CardDescription>
             อธิบายว่าคุณอยากได้เครื่องมืออะไร หรืออยากให้ช่วยอะไร
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 pt-0">
           <RichTextEditor
             content={formData.expectedTechHelp}
             onChange={(content) => handleInputChange('expectedTechHelp', content)}
@@ -346,7 +352,13 @@ export function RequestForm() {
           <AlertDescription>{submitError}</AlertDescription>
         </Alert>
       )}
-
+      
+        <Alert className="bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-800">
+          <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+          <AlertDescription className="text-teal-800 dark:text-teal-200">
+            ยิ่งให้ข้อมูลที่ละเอียดและชัดเจน ทีมพัฒนาจะเข้าใจปัญหาและช่วยเหลือได้ดียิ่งขึ้น
+          </AlertDescription>
+        </Alert>    
       {/* Submit Buttons */}
       <div className="flex justify-end gap-3">
         <Button

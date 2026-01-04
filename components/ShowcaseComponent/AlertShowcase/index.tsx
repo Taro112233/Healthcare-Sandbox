@@ -2,7 +2,7 @@
 "use client"
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { Terminal, AlertCircle, CheckCircle, Info, XCircle } from "lucide-react"
+import { Terminal } from "lucide-react"
 
 export function AlertShowcase() {
   return (

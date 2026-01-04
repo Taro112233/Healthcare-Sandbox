@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Attachment } from '@/types/request';
@@ -61,9 +62,11 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
                   rel="noopener noreferrer"
                   className="flex-shrink-0"
                 >
-                  <img
+                  <Image
                     src={attachment.fileUrl}
                     alt={attachment.filename}
+                    width={64}
+                    height={64}
                     className="w-16 h-16 object-cover rounded border border-border hover:opacity-80 transition-opacity"
                   />
                 </a>

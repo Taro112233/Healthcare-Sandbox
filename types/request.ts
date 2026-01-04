@@ -162,6 +162,7 @@ export interface Request {
     firstName: string;
     lastName: string;
     email?: string | null;
+    phone?: string | null;
   };
   attachments?: Attachment[];
   comments?: Comment[];
