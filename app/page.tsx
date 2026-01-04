@@ -1,630 +1,786 @@
 // app/page.tsx
-// InvenStock Multi-Tenant Inventory Management System V2.0 - Enhanced Landing Page
-
-'use client'
+'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { AppHeader } from '@/components/shared/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { 
-  Building2, 
-  Users, 
-  Shield,  
-  Activity,
-  CheckCircle,
-  LogIn,
-  BookIcon,
-  ArrowRight,
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Stethoscope,
   Zap,
-  Globe,
-  BarChart3,
-  RefreshCw,
-  Database,
-  Network,
-  Workflow,
-  Crown,
-  UserCheck,
-  Layers,
-  Target,
-  TrendingUp,
-  FileText,
   MessageSquare,
+  FileText,
+  ArrowRight,
+  CheckCircle2,
+  Calculator,
+  GitBranch,
+  Brain,
+  Users,
+  Shield,
+  Activity,
+  TrendingUp,
+  Clock,
+  Eye,
+  Code,
+  TestTube,
+  Lightbulb,
+  Target,
+  Workflow,
+  AlertCircle,
   Star,
-  CheckCircle2
+  BookOpen,
+  Sparkles,
 } from 'lucide-react';
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 export default function LandingPage() {
   const [showManual, setShowManual] = useState(false);
 
-  const handleManualClick = async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      })
-      
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      sessionStorage.clear()
-      
-      document.cookie.split(";").forEach((c) => {
-        const eqPos = c.indexOf("=");
-        const name = eqPos > -1 ? c.substr(0, eqPos) : c;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" + window.location.hostname;
-      });
-      
-      console.log('All cookies and storage cleared for manual access')
-      
-    } catch (error) {
-      console.error('Error clearing cookies:', error)
-      
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      sessionStorage.clear()
-      
-      document.cookie.split(";").forEach((c) => {
-        const eqPos = c.indexOf("=");
-        const name = eqPos > -1 ? c.substr(0, eqPos) : c;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" + window.location.hostname;
-      });
-    }
-    
+  const handleManualClick = () => {
     setShowManual(true);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
-                <Building2 className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">InvenStock</h1>
-                <p className="text-sm text-gray-600">Multi-Tenant Inventory System V2.0</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <Button variant="outline" onClick={handleManualClick}>
-                <BookIcon className="w-4 h-4 mr-2" />
-                คู่มือ
-              </Button>
-              <Link href="/dashboard">
-                <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700">
-                  <LogIn className="w-4 h-4" />
-                  เข้าสู่ระบบ
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background">
+      <AppHeader />
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Crown className="w-4 h-4" />
-            Enterprise-Grade Multi-Tenant Architecture
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-            ระบบจัดการสต็อก
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 block">
-              แบบองค์กร
-            </span>
-          </h1>
-          
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Multi-Tenant Inventory Management พร้อม Department-Centric Stock Management, 
-            Custom Role System และ Real-time Analytics สำหรับองค์กรขนาดใหญ่
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link href="/dashboard">
-              <Button size="lg" className="text-lg px-8 py-4 w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 h-14">
-                <Zap className="w-5 h-5 mr-2" />
-                เริ่มใช้งานระบบ
-              </Button>
-            </Link>
-            
-            <Button size="lg" variant="outline" className="text-lg px-8 py-4 w-full sm:w-auto border-blue-200 hover:bg-blue-50 h-14" onClick={handleManualClick}>
-              <FileText className="w-5 h-5 mr-2" />
-              ดูเอกสารระบบ
-            </Button>
-          </div>
+      <section className="relative overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="text-center"
+          >
+            {/* Badge */}
+            <motion.div variants={fadeIn} className="inline-flex mb-6">
+              <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-medium">
+                <Sparkles className="w-4 h-4" />
+                Technology Request Platform
+              </div>
+            </motion.div>
 
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-3xl font-bold text-blue-600 mb-2">Multi-Tenant</div>
-              <div className="text-sm text-gray-600">หลายองค์กรในระบบเดียว</div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-3xl font-bold text-green-600 mb-2">Real-time</div>
-              <div className="text-sm text-gray-600">อัปเดตสต็อกแบบเรียลไทม์</div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-3xl font-bold text-purple-600 mb-2">Department</div>
-              <div className="text-sm text-gray-600">จัดการแยกตามหน่วยงาน</div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-3xl font-bold text-orange-600 mb-2">Enterprise</div>
-              <div className="text-sm text-gray-600">ระดับองค์กรขนาดใหญ่</div>
-            </div>
-          </div>
+            {/* Main Title */}
+            <motion.h1
+              variants={fadeIn}
+              className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
+            >
+              HealthTech Sandbox
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
+                แพลตฟอร์มส่งคำขอ
+              </span>
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              variants={fadeIn}
+              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              แพลตฟอร์มสำหรับบุคลากรทางการแพทย์ในการส่งคำขอพัฒนาเครื่องมือดิจิทัล 
+              ตั้งแต่เครื่องคำนวณยา ไปจนถึงระบบช่วยตัดสินใจทางคลินิก
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              variants={fadeIn}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            >
+              <Link href="/requests/new">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 w-full sm:w-auto bg-teal-600 hover:bg-teal-700"
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  ส่งคำขอใหม่
+                </Button>
+              </Link>
+
+              <Link href="/dashboard">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-lg px-8 py-6 w-full sm:w-auto"
+                >
+                  <Activity className="w-5 h-5 mr-2" />
+                  ดูคำขอของฉัน
+                </Button>
+              </Link>
+            </motion.div>
+
+            {/* Key Metrics */}
+            <motion.div
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16"
+            >
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-teal-600 dark:text-teal-400 mb-2">
+                  Real-time
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  อัปเดตสถานะทันที
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                  Collaborative
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  ทำงานร่วมกันได้
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                  Transparent
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  ติดตามได้ทุกขั้นตอน
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                  Efficient
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  ประหยัดเวลา
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Core Architecture Features */}
-      <section className="py-16 px-4 bg-white/50">
+      {/* Request Types Section */}
+      <section className="py-16 px-4 bg-muted/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              สถาปัตยกรรมระดับองค์กร
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              ออกแบบมาเพื่อรองรับองค์กรขนาดใหญ่ด้วย Multi-Tenant Architecture และ Department-Centric Management
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 group">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Network className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold">Multi-Tenant Architecture</div>
-                    <div className="text-sm text-gray-500">องค์กรหลายองค์กร</div>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  แยกข้อมูลองค์กรอย่างสมบูรณ์ ผู้ใช้สามารถเป็นสมาชิกหลายองค์กรได้
-                </p>
-                <ul className="space-y-2 text-sm text-gray-500">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Data Isolation ระดับองค์กร
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Multi-Organization Context
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Organization Switching
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-12"
+          >
+            <motion.h2
+              variants={fadeIn}
+              className="text-4xl font-bold text-foreground mb-4"
+            >
+              ประเภทเครื่องมือที่รองรับ
+            </motion.h2>
+            <motion.p
+              variants={fadeIn}
+              className="text-muted-foreground max-w-3xl mx-auto text-lg"
+            >
+              เลือกประเภทเครื่องมือที่ต้องการให้ทีมพัฒนา
+            </motion.p>
+          </motion.div>
 
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 group">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Layers className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold">Department-Centric</div>
-                    <div className="text-sm text-gray-500">จัดการแยกตามหน่วยงาน</div>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  จัดการสต็อกแยกตามหน่วยงาน พร้อมโครงสร้างหน่วยงานแบบ Hierarchical
-                </p>
-                <ul className="space-y-2 text-sm text-gray-500">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Hierarchical Departments
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Department Stock Tracking
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Inter-Department Transfers
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            <motion.div variants={fadeIn}>
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-violet-100 dark:bg-violet-950/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Calculator className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">เครื่องคำนวณ</div>
+                      <div className="text-sm text-muted-foreground">
+                        Calculator
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">
+                    เครื่องคำนวณทางการแพทย์ เช่น BMI, Drug Dosing, Risk Score
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 group">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <UserCheck className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-lg font-bold">Custom Role System</div>
-                    <div className="text-sm text-gray-500">สิทธิ์แบบ Granular</div>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  ระบบสิทธิ์แบบ 3-Tier: Member → Admin → Owner พร้อม Department Permissions
-                </p>
-                <ul className="space-y-2 text-sm text-gray-500">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Granular Permissions
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Department-Level Access
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Role Hierarchy System
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div variants={fadeIn}>
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-sky-100 dark:bg-sky-950/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <FileText className="w-6 h-6 text-sky-600 dark:text-sky-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">แบบฟอร์ม</div>
+                      <div className="text-sm text-muted-foreground">Form</div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">
+                    แบบฟอร์มบันทึกข้อมูล, Checklist, Assessment Form
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeIn}>
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <GitBranch className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">ระบบจัดการงาน</div>
+                      <div className="text-sm text-muted-foreground">
+                        Workflow
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">
+                    ระบบจัดการขั้นตอนการทำงาน, Process Automation
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeIn}>
+              <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-rose-100 dark:bg-rose-950/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Brain className="w-6 h-6 text-rose-600 dark:text-rose-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">ช่วยตัดสินใจ</div>
+                      <div className="text-sm text-muted-foreground">
+                        Decision Aid
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground text-sm">
+                    เครื่องมือช่วยตัดสินใจทางคลินิก, Clinical Decision Support
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Business Flow Section */}
+      {/* Development Process */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Business Flow & Navigation
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              ออกแบบ User Experience ให้เหมาะสมกับการทำงานแบบองค์กร
-            </p>
-          </div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-12"
+          >
+            <motion.h2
+              variants={fadeIn}
+              className="text-4xl font-bold text-foreground mb-4"
+            >
+              กระบวนการพัฒนา
+            </motion.h2>
+            <motion.p
+              variants={fadeIn}
+              className="text-muted-foreground max-w-3xl mx-auto text-lg"
+            >
+              จากคำขอของคุณสู่เครื่องมือที่ใช้งานได้จริง
+            </motion.p>
+          </motion.div>
 
-          <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-8 mb-12">
-            <h3 className="text-2xl font-bold text-center mb-8">User Journey</h3>
-            
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex flex-col items-center text-center flex-1">
-                <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
-                  <LogIn className="w-8 h-8 text-white" />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="relative"
+          >
+            {/* Timeline connector - hide on mobile */}
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-200 via-blue-200 via-purple-200 via-orange-200 to-green-200 dark:from-yellow-900 dark:via-blue-900 dark:via-purple-900 dark:via-orange-900 dark:to-green-900 -translate-y-1/2" />
+
+            <div className="grid md:grid-cols-5 gap-8 relative">
+              <motion.div variants={fadeIn} className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-950/30 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 border-4 border-background">
+                  <Clock className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
-                <h4 className="font-bold mb-2">1. Login</h4>
-                <p className="text-sm text-gray-600">เข้าสู่ระบบด้วย Username</p>
-              </div>
-              
-              <ArrowRight className="w-6 h-6 text-gray-400 hidden md:block" />
-              
-              <div className="flex flex-col items-center text-center flex-1">
-                <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mb-4">
-                  <Building2 className="w-8 h-8 text-white" />
+                <h3 className="font-bold mb-2">รอตรวจสอบ</h3>
+                <p className="text-sm text-muted-foreground">
+                  ทีมตรวจสอบความเป็นไปได้
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="text-center">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-950/30 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 border-4 border-background">
+                  <Eye className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h4 className="font-bold mb-2">2. Select Organization</h4>
-                <p className="text-sm text-gray-600">เลือกองค์กรที่ต้องการ</p>
-              </div>
-              
-              <ArrowRight className="w-6 h-6 text-gray-400 hidden md:block" />
-              
-              <div className="flex flex-col items-center text-center flex-1">
-                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4">
-                  <Layers className="w-8 h-8 text-white" />
+                <h3 className="font-bold mb-2">อยู่ในการพิจารณา</h3>
+                <p className="text-sm text-muted-foreground">
+                  วิเคราะห์ความต้องการ
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="text-center">
+                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-950/30 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 border-4 border-background">
+                  <Code className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                 </div>
-                <h4 className="font-bold mb-2">3. Department Context</h4>
-                <p className="text-sm text-gray-600">เข้าสู่งานในหน่วยงาน</p>
-              </div>
-              
-              <ArrowRight className="w-6 h-6 text-gray-400 hidden md:block" />
-              
-              <div className="flex flex-col items-center text-center flex-1">
-                <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-4">
-                  <Activity className="w-8 h-8 text-white" />
+                <h3 className="font-bold mb-2">อยู่ในการพัฒนา</h3>
+                <p className="text-sm text-muted-foreground">
+                  ทีมพัฒนาสร้างเครื่องมือ
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="text-center">
+                <div className="w-16 h-16 bg-orange-100 dark:bg-orange-950/30 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 border-4 border-background">
+                  <TestTube className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                 </div>
-                <h4 className="font-bold mb-2">4. Work & Collaborate</h4>
-                <p className="text-sm text-gray-600">จัดการสต็อกและการเบิกจ่าย</p>
-              </div>
+                <h3 className="font-bold mb-2">อยู่ในการทดสอบ</h3>
+                <p className="text-sm text-muted-foreground">
+                  ทดลองใช้และปรับปรุง
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="text-center">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-950/30 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10 border-4 border-background">
+                  <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-bold mb-2">สำเร็จ</h3>
+                <p className="text-sm text-muted-foreground">
+                  พร้อมใช้งานจริง
+                </p>
+              </motion.div>
             </div>
-          </div>
-
-          {/* Navigation Structure */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-0">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-blue-600" />
-                  Organization Level
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <Target className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <p className="font-medium">/org/{'{slug}'} - Organization Dashboard</p>
-                    <p className="text-sm text-gray-600">ภาพรวมองค์กร และสถิติหลัก</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <Database className="w-5 h-5 text-purple-600" />
-                  <div>
-                    <p className="font-medium">/org/{'{slug}'}/products - Product Catalog</p>
-                    <p className="text-sm text-gray-600">จัดการสินค้าทั้งองค์กร</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <Workflow className="w-5 h-5 text-green-600" />
-                  <div>
-                    <p className="font-medium">/org/{'{slug}'}/transfers - Organization Transfers</p>
-                    <p className="text-sm text-gray-600">การเบิกจ่ายระหว่างหน่วยงาน</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-0">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-green-600" />
-                  Department Level
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <Activity className="w-5 h-5 text-green-600" />
-                  <div>
-                    <p className="font-medium">/departments/{'{id}'}/stocks - Department Stocks</p>
-                    <p className="text-sm text-gray-600">สต็อกเฉพาะหน่วยงาน</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <RefreshCw className="w-5 h-5 text-blue-600" />
-                  <div>
-                    <p className="font-medium">/departments/{'{id}'}/transfers - Dept Transfers</p>
-                    <p className="text-sm text-gray-600">การเบิกจ่ายของหน่วยงาน</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                  <BarChart3 className="w-5 h-5 text-purple-600" />
-                  <div>
-                    <p className="font-medium">/departments/{'{id}'}/reports - Dept Analytics</p>
-                    <p className="text-sm text-gray-600">รายงานประสิทธิภาพหน่วยงาน</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Technical Excellence */}
-      <section className="py-16 px-4 bg-gradient-to-r from-gray-50 to-slate-50">
+      {/* Features Section */}
+      <section className="py-16 px-4 bg-muted/30">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Technical Excellence
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              เทคโนโลยีและสถาปัตยกรรมระดับ Enterprise สำหรับระบบที่มีประสิทธิภาพสูง
-            </p>
-          </div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-12"
+          >
+            <motion.h2
+              variants={fadeIn}
+              className="text-4xl font-bold text-foreground mb-4"
+            >
+              คุณสมบัติเด่น
+            </motion.h2>
+            <motion.p
+              variants={fadeIn}
+              className="text-muted-foreground max-w-3xl mx-auto text-lg"
+            >
+              ทุกอย่างที่คุณต้องการในแพลตฟอร์มเดียว
+            </motion.p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="text-center p-6 bg-white hover:shadow-lg transition-all">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Database className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="font-bold mb-2">PostgreSQL + Prisma</h3>
-              <p className="text-sm text-gray-600">Row-level Security และ Type-safe Database Access</p>
-            </Card>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-3 gap-8"
+          >
+            <motion.div variants={fadeIn}>
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-teal-100 dark:bg-teal-950/30 rounded-lg flex items-center justify-center">
+                      <MessageSquare className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">Real-time Comments</div>
+                      <div className="text-sm text-muted-foreground">
+                        สื่อสารแบบเรียลไทม์
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    ถาม-ตอบกับทีมพัฒนาได้ทันที พร้อมระบบแจ้งเตือน
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Comment Thread
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Status Updates
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Auto-scroll
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="text-center p-6 bg-white hover:shadow-lg transition-all">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="font-bold mb-2">Arcjet Security</h3>
-              <p className="text-sm text-gray-600">Bot Detection, Rate Limiting และ Security Shield</p>
-            </Card>
+            <motion.div variants={fadeIn}>
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-950/30 rounded-lg flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">Rich Text Editor</div>
+                      <div className="text-sm text-muted-foreground">
+                        เขียนได้ครบจบ
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    เขียนคำขอพร้อมจัดรูปแบบข้อความได้อย่างสวยงาม
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Bold, Italic, Lists
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Headings, Alignment
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Code Blocks
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="text-center p-6 bg-white hover:shadow-lg transition-all">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-8 h-8 text-purple-600" />
-              </div>
-              <h3 className="font-bold mb-2">Next.js 15 + React 19</h3>
-              <p className="text-sm text-gray-600">Server Components และ Streaming Architecture</p>
-            </Card>
-
-            <Card className="text-center p-6 bg-white hover:shadow-lg transition-all">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="w-8 h-8 text-orange-600" />
-              </div>
-              <h3 className="font-bold mb-2">Real-time Updates</h3>
-              <p className="text-sm text-gray-600">Live Stock Updates และ Notification System</p>
-            </Card>
-          </div>
+            <motion.div variants={fadeIn}>
+              <Card className="h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-950/30 rounded-lg flex items-center justify-center">
+                      <Shield className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">Secure & Private</div>
+                      <div className="text-sm text-muted-foreground">
+                        ปลอดภัยทุกขั้นตอน
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">
+                    ระบบรักษาความปลอดภัยระดับ Enterprise
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      JWT Authentication
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Arcjet Security
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Rate Limiting
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Feature Comparison */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              InvenStock V2.0 vs Traditional Systems
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              เปรียบเทียบความสามารถที่โดดเด่นของระบบ
-            </p>
-          </div>
+      {/* Tips Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.div variants={fadeIn} className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-foreground mb-4">
+                เคล็ดลับการส่งคำขอที่ดี
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                ยิ่งให้รายละเอียดมาก ทีมพัฒนาจะช่วยได้ดียิ่งขึ้น
+              </p>
+            </motion.div>
 
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                  <Star className="w-6 h-6 text-yellow-500" />
-                  InvenStock V2.0
-                </h3>
-                <div className="space-y-4">
-                  {[
-                    "Multi-Tenant Architecture แยกข้อมูลองค์กร",
-                    "Department-Centric Stock Management",
-                    "Real-time Stock Updates ทุกหน่วยงาน",
-                    "Custom Role System แบบ Granular",
-                    "Organization Context Switching",
-                    "Inter-Department Transfer Workflow",
-                    "Enterprise Security (Arcjet)",
-                    "Mobile-First Responsive Design",
-                    "Advanced Analytics per Department",
-                    "Audit Trail และ Activity Logs"
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+            <motion.div variants={staggerContainer} className="space-y-6">
+              <motion.div variants={fadeIn}>
+                <Card className="border-l-4 border-l-blue-500">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold mb-2">
+                          ระบุรายละเอียดให้ชัดเจนและเฉพาะเจาะจง
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          บอกปัญหาที่พบและความถี่ในการใช้งาน
+                        </p>
+                        <div className="bg-muted/50 rounded-lg p-3 space-y-2 text-sm">
+                          <p className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                            <span>
+                              <strong>ดี:</strong> &ldquo;ต้องคำนวณ Vancomycin dose
+                              ตาม Cockcroft-Gault eGFR ทุกครั้งที่ใช้ยา ซึ่งใช้เวลา
+                              5-10 นาที/ครั้ง&rdquo;
+                            </span>
+                          </p>
+                          <p className="flex items-start gap-2">
+                            <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+                            <span>
+                              <strong>ไม่ดี:</strong> &ldquo;ต้องคำนวณยาตลอดเวลา
+                              ลำบาก&rdquo;
+                            </span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
 
-              <div>
-                <h3 className="text-2xl font-bold text-gray-500 mb-6">
-                  Traditional Inventory Systems
-                </h3>
-                <div className="space-y-4">
-                  {[
-                    "Single Organization เท่านั้น",
-                    "Global Stock Management",
-                    "Manual Stock Updates",
-                    "Fixed User Roles",
-                    "No Organization Context",
-                    "Basic Transfer Features",
-                    "Limited Security Features",
-                    "Desktop-First Design",
-                    "Basic Reporting",
-                    "Limited Activity Tracking"
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full flex-shrink-0" />
-                      <span className="text-gray-500 line-through">{feature}</span>
+              <motion.div variants={fadeIn}>
+                <Card className="border-l-4 border-l-orange-500">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 bg-orange-100 dark:bg-orange-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Workflow className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold mb-2">
+                          อธิบายขั้นตอนการทำงานแบบ Step-by-Step
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          ให้ทีมเข้าใจ workflow ปัจจุบัน
+                        </p>
+                        <div className="bg-muted/50 rounded-lg p-3 text-sm">
+                          <p className="font-medium mb-2">ตัวอย่างที่ดี:</p>
+                          <ol className="space-y-1 ml-4 list-decimal text-muted-foreground">
+                            <li>เปิด EMR ดูน้ำหนักผู้ป่วย</li>
+                            <li>เปิดหนังสือยาหา dose แนะนำ</li>
+                            <li>คำนวณ dose ด้วยเครื่องคิดเลข</li>
+                            <li>เขียน order ในกระดาษ</li>
+                            <li>พยาบาลพิมพ์ลง EMR ซ้ำอีกครั้ง</li>
+                          </ol>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeIn}>
+                <Card className="border-l-4 border-l-green-500">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 bg-green-100 dark:bg-green-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Lightbulb className="w-5 h-5 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold mb-2">
+                          อธิบายสิ่งที่ต้องการให้ชัดเจน
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          บอกว่าต้องการให้เครื่องมือช่วยอะไร
+                        </p>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                            ระบุ input/output ที่ต้องการ
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                            แนบรูปภาพตัวอย่าง (ถ้ามี)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                            บอกข้อจำกัดหรือข้อควรระวัง
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            พร้อมขยายธุรกิจด้วยระบบระดับ Enterprise?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            เริ่มต้นการจัดการสต็อกแบบมืออาชีพด้วย InvenStock V2.0 
-            ระบบที่ออกแบบมาสำหรับองค์กรที่เติบโตอย่างรวดเร็ว
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Link href="/dashboard">
-              <Button size="lg" className="text-lg px-8 py-4 w-full sm:w-auto bg-white text-blue-600 hover:bg-gray-100 h-14">
-                <Crown className="w-5 h-5 mr-2" />
-                เข้าใช้งานระบบ
+      <section className="py-20 px-4 bg-gradient-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <motion.h2 variants={fadeIn} className="text-4xl font-bold mb-6">
+            พร้อมที่จะเริ่มต้นแล้วหรือยัง?
+          </motion.h2>
+          <motion.p
+            variants={fadeIn}
+            className="text-xl mb-8 text-teal-100 dark:text-teal-200"
+          >
+            เริ่มส่งคำขอพัฒนาเครื่องมือดิจิทัลของคุณได้เลยวันนี้
+          </motion.p>
+
+          <motion.div
+            variants={fadeIn}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
+          >
+            <Link href="/requests/new">
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 w-full sm:w-auto bg-white text-teal-600 hover:bg-gray-100"
+              >
+                <Zap className="w-5 h-5 mr-2" />
+                ส่งคำขอใหม่
               </Button>
             </Link>
-            
-            <Button size="lg" variant="outline" className="text-lg px-8 py-4 w-full sm:w-auto border-white text-white hover:bg-white/10 h-14" onClick={handleManualClick}>
-              <FileText className="w-5 h-5 mr-2" />
-              ดูเอกสารเทคนิค
-            </Button>
-          </div>
 
-          <div className="text-blue-100">
-            <p>✨ ระบบพร้อมใช้งานทันที • 🔒 รักษาความปลอดภัยระดับ Enterprise • 📱 รองรับทุกอุปกรณ์</p>
-          </div>
-        </div>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6 w-full sm:w-auto border-white text-white hover:bg-white/10"
+              onClick={handleManualClick}
+            >
+              <BookOpen className="w-5 h-5 mr-2" />
+              อ่านคู่มือ
+            </Button>
+          </motion.div>
+
+          <motion.div variants={fadeIn} className="text-teal-100 dark:text-teal-200">
+            <p>
+              ✨ ระบบพร้อมใช้งานทันที • 🔒 ปลอดภัยด้วย Arcjet Security • 📱
+              รองรับทุกอุปกรณ์
+            </p>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-16 px-4">
+      <footer className="bg-card border-t border-border py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                  <Stethoscope className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <span className="font-bold text-white text-xl">InvenStock V2.0</span>
-                  <p className="text-sm text-gray-400">Multi-Tenant Inventory Management</p>
+                  <span className="font-bold text-foreground text-xl">
+                    HealthTech Sandbox
+                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    Technology Request Platform
+                  </p>
                 </div>
               </div>
-              <p className="text-gray-400 mb-4 max-w-md">
-                ระบบจัดการสต็อกสินค้าระดับองค์กรที่ออกแบบมาเพื่อรองรับการเติบโตและความซับซ้อนของธุรกิจสมัยใหม่
+              <p className="text-muted-foreground mb-4 max-w-md">
+                แพลตฟอร์มสำหรับบุคลากรทางการแพทย์ในการส่งคำขอพัฒนาเครื่องมือดิจิทัล
+                เพื่อปรับปรุงการทำงานและคุณภาพการดูแลผู้ป่วย
               </p>
-              <div className="flex gap-4">
-                <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  สนทนากับทีม
-                </Button>
-                <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                  <FileText className="w-4 h-4 mr-2" />
-                  API Docs
-                </Button>
-              </div>
             </div>
 
             <div>
-              <h4 className="font-semibold text-white mb-4">Core Features</h4>
-              <ul className="space-y-3 text-sm text-gray-400">
+              <h4 className="font-semibold text-foreground mb-4">Core Features</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Multi-Tenant Architecture
+                  <CheckCircle2 className="w-3 h-3 text-green-500" />
+                  Real-time Comments
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Department Stock Management
+                  <CheckCircle2 className="w-3 h-3 text-green-500" />
+                  Rich Text Editor
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Real-time Updates
+                  <CheckCircle2 className="w-3 h-3 text-green-500" />
+                  File Attachments
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Custom Role System
+                  <CheckCircle2 className="w-3 h-3 text-green-500" />
+                  Status Tracking
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 text-green-500" />
-                  Enterprise Security
+                  <CheckCircle2 className="w-3 h-3 text-green-500" />
+                  Dark Mode Support
                 </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
-              <ul className="space-y-3 text-sm text-gray-400">
+              <h4 className="font-semibold text-foreground mb-4">Tech Stack</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full" />
                   Next.js 15 + React 19
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full" />
-                  PostgreSQL + Prisma ORM
+                  PostgreSQL + Prisma
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                  TailwindCSS + Shadcn/UI
+                  TailwindCSS v4
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                  JWT + bcryptjs
+                  Tiptap Editor
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full" />
@@ -634,14 +790,14 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-8">
+          <div className="border-t border-border pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="text-sm text-gray-500 mb-4 md:mb-0">
-                <p>พัฒนาโดย นสภ.ธนธัช ธำรงโสตถิสกุล มหาวิทยาลัยนเรศวร</p>
-                <p className="mt-1">© 2025 InvenStock V2.0 - Enterprise Inventory Management System</p>
+              <div className="text-sm text-muted-foreground mb-4 md:mb-0">
+                <p>© 2025 HealthTech Sandbox - Technology Request Platform</p>
+                <p className="mt-1">Educational & Experimental Use Only</p>
               </div>
-              <div className="flex items-center gap-4 text-sm text-gray-500">
-                <span>Built with ❤️ for Enterprise</span>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <span>Built with ❤️ for Healthcare</span>
                 <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                   <span>System Online</span>
@@ -652,274 +808,217 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* Enhanced Manual Dialog */}
+      {/* Manual Dialog */}
       <Dialog open={showManual} onOpenChange={setShowManual}>
         <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-3 text-xl">
-              <Building2 className="w-6 h-6 text-blue-600" />
-              InvenStock V2.0 - Technical Documentation
+              <Stethoscope className="w-6 h-6 text-teal-600" />
+              HealthTech Sandbox - คู่มือการใช้งาน
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-8 text-sm">
-            {/* Architecture Overview */}
+            {/* Platform Overview */}
             <div>
-              <h3 className="font-bold text-lg mb-4 text-blue-700 flex items-center gap-2">
-                🏗️ System Architecture
+              <h3 className="font-bold text-lg mb-4 text-teal-700 dark:text-teal-400 flex items-center gap-2">
+                🏥 เกี่ยวกับแพลตฟอร์ม
               </h3>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-gray-700 mb-3">
-                  <strong>Multi-Tenant Architecture:</strong> ระบบที่ออกแบบให้รองรับหลายองค์กรในระบบเดียว 
-                  โดยแยกข้อมูลอย่างสมบูรณ์ด้วย Row-level Security
+              <div className="bg-teal-50 dark:bg-teal-950/20 p-4 rounded-lg">
+                <p className="text-foreground mb-3">
+                  <strong>HealthTech Sandbox</strong> คือแพลตฟอร์มสำหรับบุคลากรทางการแพทย์
+                  ในการส่งคำขอพัฒนาเครื่องมือดิจิทัลที่ช่วยปรับปรุงการทำงานและคุณภาพการดูแลผู้ป่วย
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-blue-800 mb-2">Frontend Architecture</h4>
-                    <ul className="text-xs space-y-1 text-gray-600">
-                      <li>• Next.js 15 with App Router</li>
-                      <li>• React 19 Server Components</li>
-                      <li>• TypeScript for Type Safety</li>
-                      <li>• TailwindCSS + Shadcn/UI</li>
-                      <li>• Responsive Mobile-First Design</li>
+                    <h4 className="font-semibold text-teal-800 dark:text-teal-300 mb-2">
+                      ประเภทเครื่องมือ
+                    </h4>
+                    <ul className="text-xs space-y-1 text-muted-foreground">
+                      <li>• เครื่องคำนวณทางการแพทย์</li>
+                      <li>• แบบฟอร์มและ Checklist</li>
+                      <li>• ระบบจัดการ Workflow</li>
+                      <li>• เครื่องมือช่วยตัดสินใจทางคลินิก</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-blue-800 mb-2">Backend Architecture</h4>
-                    <ul className="text-xs space-y-1 text-gray-600">
-                      <li>• PostgreSQL with Row-level Security</li>
-                      <li>• Prisma ORM with Multi-Schema</li>
-                      <li>• JWT Authentication</li>
-                      <li>• Arcjet Security Layer</li>
-                      <li>• RESTful API Design</li>
+                    <h4 className="font-semibold text-teal-800 dark:text-teal-300 mb-2">
+                      คุณสมบัติหลัก
+                    </h4>
+                    <ul className="text-xs space-y-1 text-muted-foreground">
+                      <li>• Real-time Comment System</li>
+                      <li>• Rich Text Editor</li>
+                      <li>• File Upload Support</li>
+                      <li>• Status Tracking</li>
+                      <li>• Mobile Responsive</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Navigation Flow */}
+            {/* Request Process */}
             <div>
-              <h3 className="font-bold text-lg mb-4 text-green-700 flex items-center gap-2">
-                🗺️ Navigation & User Flow
+              <h3 className="font-bold text-lg mb-4 text-blue-700 dark:text-blue-400 flex items-center gap-2">
+                📝 ขั้นตอนการส่งคำขอ
               </h3>
               <div className="space-y-4">
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-green-800 mb-2">Organization-Level Routes</h4>
-                  <div className="space-y-2 text-xs">
-                    <p><code>/dashboard</code> - Organization Selector (เลือกองค์กร)</p>
-                    <p><code>/org/[orgSlug]</code> - Organization Dashboard</p>
-                    <p><code>/org/[orgSlug]/products</code> - Product Management</p>
-                    <p><code>/org/[orgSlug]/transfers</code> - Organization-wide Transfers</p>
-                    <p><code>/org/[orgSlug]/reports</code> - Analytics & Reports</p>
-                    <p><code>/org/[orgSlug]/settings</code> - Organization Settings</p>
-                  </div>
+                <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
+                  <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">
+                    1. กรอกข้อมูลคำขอ
+                  </h4>
+                  <ul className="text-xs space-y-1 text-muted-foreground">
+                    <li>• ระบุหน่วยงานที่ขอ</li>
+                    <li>• เลือกประเภทเครื่องมือ</li>
+                    <li>• อธิบาย Pain Point หน้างาน</li>
+                    <li>• อธิบายขั้นตอนการทำงานปัจจุบัน</li>
+                    <li>• บอกสิ่งที่ต้องการให้ Tech ช่วย</li>
+                    <li>• แนบไฟล์เพิ่มเติม (ถ้ามี)</li>
+                  </ul>
                 </div>
-                
-                <div className="bg-purple-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-purple-800 mb-2">Department-Level Routes</h4>
-                  <div className="space-y-2 text-xs">
-                    <p><code>/org/[orgSlug]/departments/[deptId]</code> - Department Dashboard</p>
-                    <p><code>/org/[orgSlug]/departments/[deptId]/stocks</code> - Department Stock Management</p>
-                    <p><code>/org/[orgSlug]/departments/[deptId]/transfers</code> - Department Transfers</p>
-                    <p><code>/org/[orgSlug]/departments/[deptId]/reports</code> - Department Analytics</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Role System */}
-            <div>
-              <h3 className="font-bold text-lg mb-4 text-purple-700 flex items-center gap-2">
-                👥 Role & Permission System
-              </h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-1">
-                    <Users className="w-4 h-4" /> MEMBER
+                <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg">
+                  <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">
+                    2. ติดตามความคืบหน้า
                   </h4>
-                  <ul className="text-xs text-gray-600 space-y-1">
-                    <li>• ดูสต็อกสินค้า</li>
-                    <li>• ปรับสต็อกในหน่วยงานที่มีสิทธิ์</li>
-                    <li>• สร้างใบเบิกสินค้า</li>
-                    <li>• รับสินค้าที่เบิก</li>
-                    <li>• ดูรายงานพื้นฐาน</li>
+                  <ul className="text-xs space-y-1 text-muted-foreground">
+                    <li>• ดูสถานะคำขอใน Dashboard</li>
+                    <li>• รับการแจ้งเตือนเมื่อมีการอัปเดต</li>
+                    <li>• ตอบคำถามจากทีมพัฒนาผ่าน Comment</li>
+                    <li>• ติดตาม Timeline การพัฒนา</li>
                   </ul>
                 </div>
-                
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-1">
-                    <Shield className="w-4 h-4" /> ADMIN
+
+                <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg">
+                  <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-2">
+                    3. ทดสอบและรับมอบเครื่องมือ
                   </h4>
-                  <ul className="text-xs text-gray-600 space-y-1">
-                    <li>• ทุกสิทธิ์ของ Member</li>
-                    <li>• จัดการสินค้า (CRUD)</li>
-                    <li>• สร้างหมวดหมู่สินค้า</li>
-                    <li>• เชิญผู้ใช้เข้าองค์กร</li>
-                    <li>• อนุมัติการเบิกจ่าย</li>
-                    <li>• ดูรายงานขั้นสูง</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-yellow-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-yellow-800 mb-2 flex items-center gap-1">
-                    <Crown className="w-4 h-4" /> OWNER
-                  </h4>
-                  <ul className="text-xs text-gray-600 space-y-1">
-                    <li>• ทุกสิทธิ์ของ Admin</li>
-                    <li>• จัดการหน่วยงาน (CRUD)</li>
-                    <li>• ตั้งค่าองค์กร</li>
-                    <li>• จัดการสมาชิกองค์กร</li>
-                    <li>• ดูรายงานระดับองค์กร</li>
-                    <li>• กำหนดสิทธิ์ผู้ใช้</li>
+                  <ul className="text-xs space-y-1 text-muted-foreground">
+                    <li>• ได้รับลิงก์ทดลองใช้</li>
+                    <li>• ให้ Feedback ผ่าน Comment</li>
+                    <li>• รับมอบเครื่องมือเวอร์ชันสมบูรณ์</li>
+                    <li>• ได้รับ Support หลังการส่งมอบ</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* Department Transfer Workflow */}
+            {/* Status Explanation */}
             <div>
-              <h3 className="font-bold text-lg mb-4 text-orange-700 flex items-center gap-2">
-                🔄 Transfer Workflow
+              <h3 className="font-bold text-lg mb-4 text-purple-700 dark:text-purple-400 flex items-center gap-2">
+                🔄 สถานะของคำขอ
               </h3>
-              <div className="bg-orange-50 p-4 rounded-lg">
-                <p className="text-gray-700 mb-3">
-                  <strong>Department-to-Department Transfer Process:</strong> กระบวนการเบิกจ่ายสินค้าระหว่างหน่วยงานแบบมีการควบคุม
-                </p>
-                <div className="grid md:grid-cols-5 gap-3 text-xs">
-                  <div className="text-center p-3 bg-white rounded">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold">1</span>
-                    </div>
-                    <h4 className="font-semibold">REQUEST</h4>
-                    <p className="text-gray-600">หน่วยงานสร้างใบเบิก</p>
+              <div className="grid gap-3">
+                <div className="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-lg flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-1">
+                      รอตรวจสอบ (Pending Review)
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      ทีมกำลังตรวจสอบความเป็นไปได้ของคำขอ (1-3 วันทำการ)
+                    </p>
                   </div>
-                  <div className="text-center p-3 bg-white rounded">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold">2</span>
-                    </div>
-                    <h4 className="font-semibold">APPROVE</h4>
-                    <p className="text-gray-600">ผู้มีสิทธิ์อนุมัติ</p>
+                </div>
+
+                <div className="bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg flex items-start gap-3">
+                  <Eye className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-1">
+                      อยู่ในการพิจารณา (Under Consideration)
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      กำลังวิเคราะห์ความต้องการและพูดคุยรายละเอียดเพิ่มเติม
+                    </p>
                   </div>
-                  <div className="text-center p-3 bg-white rounded">
-                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold">3</span>
-                    </div>
-                    <h4 className="font-semibold">PREPARE</h4>
-                    <p className="text-gray-600">หน่วยงานต้นทางเตรียม</p>
+                </div>
+
+                <div className="bg-purple-50 dark:bg-purple-950/20 p-3 rounded-lg flex items-start gap-3">
+                  <Code className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-1">
+                      อยู่ในการพัฒนา (In Development)
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      ทีมกำลังพัฒนาเครื่องมือ (1-4 สัปดาห์)
+                    </p>
                   </div>
-                  <div className="text-center p-3 bg-white rounded">
-                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold">4</span>
-                    </div>
-                    <h4 className="font-semibold">DELIVER</h4>
-                    <p className="text-gray-600">ส่งมอบสินค้า</p>
+                </div>
+
+                <div className="bg-orange-50 dark:bg-orange-950/20 p-3 rounded-lg flex items-start gap-3">
+                  <TestTube className="w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-1">
+                      อยู่ในการทดสอบ (In Testing)
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      ทดลองใช้งานและรับ Feedback เพื่อปรับปรุง
+                    </p>
                   </div>
-                  <div className="text-center p-3 bg-white rounded">
-                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold">5</span>
-                    </div>
-                    <h4 className="font-semibold">RECEIVE</h4>
-                    <p className="text-gray-600">หน่วยงานปลายทางรับ</p>
+                </div>
+
+                <div className="bg-green-50 dark:bg-green-950/20 p-3 rounded-lg flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-green-800 dark:text-green-300 mb-1">
+                      สำเร็จ (Completed)
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      เครื่องมือพร้อมใช้งาน รับมอบลิงก์และคู่มือการใช้งาน
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Security Features */}
-            <div>
-              <h3 className="font-bold text-lg mb-4 text-red-700 flex items-center gap-2">
-                🔒 Security Features
+            {/* Tips */}
+            <div className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-950/20 dark:to-blue-950/20 p-6 rounded-lg">
+              <h3 className="font-bold text-lg mb-4 text-teal-700 dark:text-teal-400 flex items-center gap-2">
+                💡 เคล็ดลับ
               </h3>
-              <div className="bg-red-50 p-4 rounded-lg">
-                <div className="grid md:grid-cols-2 gap-4">
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start gap-3">
+                  <Star className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-800 mb-2">Authentication & Authorization</h4>
-                    <ul className="text-xs space-y-1 text-gray-600">
-                      <li>• JWT Token-based Authentication</li>
-                      <li>• bcrypt Password Hashing</li>
-                      <li>• Role-based Access Control (RBAC)</li>
-                      <li>• Organization-level Data Isolation</li>
-                      <li>• Department-level Permissions</li>
-                    </ul>
+                    <p className="font-semibold text-foreground">
+                      ให้รายละเอียดมากที่สุด
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      ยิ่งอธิบายชัดเจน ทีมจะเข้าใจและช่วยได้ดียิ่งขึ้น
+                    </p>
                   </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Target className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold text-red-800 mb-2">Arcjet Security Layer</h4>
-                    <ul className="text-xs space-y-1 text-gray-600">
-                      <li>• Bot Detection & Blocking</li>
-                      <li>• Rate Limiting (API & Login)</li>
-                      <li>• Shield Protection (SQL Injection, XSS)</li>
-                      <li>• Hosting IP Detection</li>
-                      <li>• Real-time Security Monitoring</li>
-                    </ul>
+                    <p className="font-semibold text-foreground">ใส่ตัวเลขและความถี่</p>
+                    <p className="text-muted-foreground text-xs">
+                      บอกว่าใช้บ่อยแค่ไหน ส่งผลต่อการจัดลำดับความสำคัญ
+                    </p>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Getting Started */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg">
-              <h3 className="font-bold text-lg mb-4 text-indigo-700 flex items-center gap-2">
-                🚀 Getting Started
-              </h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-white text-xs font-bold">1</span>
-                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <MessageSquare className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold">สมัครสมาชิกและสร้างองค์กร</p>
-                    <p className="text-gray-600 text-xs">ใช้ Username เป็น Primary Credential พร้อมสร้างองค์กรแรก</p>
+                    <p className="font-semibold text-foreground">ตอบ Comment ทันที</p>
+                    <p className="text-muted-foreground text-xs">
+                      การสื่อสารที่รวดเร็วช่วยให้พัฒนาเสร็จไวขึ้น
+                    </p>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-white text-xs font-bold">2</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold">ตั้งค่าหน่วยงานและสินค้า</p>
-                    <p className="text-gray-600 text-xs">สร้างโครงสร้างหน่วยงานและเพิ่มสินค้าพร้อมสต็อกเริ่มต้น</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-white text-xs font-bold">3</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold">เชิญทีมงานและกำหนดสิทธิ์</p>
-                    <p className="text-gray-600 text-xs">เพิ่มสมาชิกในองค์กรและกำหนดสิทธิ์ตามหน่วยงานและบทบาท</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-white text-xs font-bold">4</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold">เริ่มใช้งานระบบ</p>
-                    <p className="text-gray-600 text-xs">จัดการสต็อก สร้างใบเบิก และติดตามการเคลื่อนไหวสินค้า</p>
-                  </div>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
 
             {/* Contact */}
-            <div className="bg-gray-50 p-4 rounded-lg text-center">
-              <h3 className="font-semibold text-lg mb-2 text-gray-800">ต้องการความช่วยเหลือเพิ่มเติม?</h3>
-              <p className="text-sm text-gray-600 mb-3">
-                ติดต่อทีมพัฒนาสำหรับการสนับสนุนด้านเทคนิคและการปรับแต่งระบบ
+            <div className="bg-muted/50 p-4 rounded-lg text-center">
+              <h3 className="font-semibold text-lg mb-2 text-foreground">
+                ต้องการความช่วยเหลือเพิ่มเติม?
+              </h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                ติดต่อทีมพัฒนาสำหรับการสนับสนุนด้านเทคนิค
               </p>
-              <div className="flex justify-center gap-3">
-                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  สนทนากับทีม
-                </Button>
-                <Button size="sm" variant="outline">
-                  <FileText className="w-4 h-4 mr-2" />
-                  API Documentation
-                </Button>
-              </div>
-              <p className="text-xs text-gray-500 mt-3">
-                พัฒนาโดย นสภ.ธนธัช ธำรงโสตถิสกุล มหาวิทยาลัยนเรศวร
+              <p className="text-xs text-muted-foreground">
+                © 2025 HealthTech Sandbox - Educational & Experimental Use Only
               </p>
             </div>
           </div>
