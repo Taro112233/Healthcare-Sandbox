@@ -83,7 +83,6 @@ export default function DashboardPage() {
 
   const { 
     requests: allRequests, 
-    total: totalRequests,
     loading: requestsLoading,
     error,
     refetch 

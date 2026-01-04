@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getUserFromHeaders } from '@/lib/auth-server';
 import { z } from 'zod';
+import { Prisma } from '@prisma/client';
 
 // ===== VALIDATION SCHEMA =====
 
@@ -43,8 +44,8 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const type = searchParams.get('type');
     
-    // Build where clause
-    const where: any = {};
+    // Build where clause with proper Prisma types
+    const where: Prisma.RequestWhereInput = {};
     
     // Non-admin users can only see their own requests
     if (userInfo.role !== 'ADMIN') {
@@ -53,12 +54,12 @@ export async function GET(request: NextRequest) {
     
     // Filter by status
     if (status && status !== 'ALL') {
-      where.status = status;
+      where.status = status as Prisma.EnumRequestStatusFilter;
     }
     
     // Filter by type
     if (type && type !== 'ALL') {
-      where.requestType = type;
+      where.requestType = type as Prisma.EnumRequestTypeFilter;
     }
     
     // Get total count

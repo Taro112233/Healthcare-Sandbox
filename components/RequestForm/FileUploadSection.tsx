@@ -47,7 +47,7 @@ export function FileUploadSection({
 
   const canAddMore = uploadedFiles.length < maxFiles;
 
-  const validateFiles = (files: File[]): { valid: File[]; errors: string[] } => {
+  const validateFiles = useCallback((files: File[]): { valid: File[]; errors: string[] } => {
     const valid: File[] = [];
     const errors: string[] = [];
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
@@ -71,9 +71,9 @@ export function FileUploadSection({
     }
 
     return { valid, errors };
-  };
+  }, [maxFiles, maxSize, uploadedFiles.length]);
 
-  const uploadFiles = async (files: File[]) => {
+  const uploadFiles = useCallback(async (files: File[]) => {
     setIsUploading(true);
     setError(null);
 
@@ -105,7 +105,7 @@ export function FileUploadSection({
     } finally {
       setIsUploading(false);
     }
-  };
+  }, [onFilesUploaded]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -140,7 +140,7 @@ export function FileUploadSection({
     if (valid.length > 0) {
       await uploadFiles(valid);
     }
-  }, [disabled, canAddMore, uploadedFiles.length]);
+  }, [disabled, canAddMore, validateFiles, uploadFiles]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

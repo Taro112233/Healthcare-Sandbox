@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { RequestForm } from '@/components/RequestForm';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -172,11 +172,11 @@ export default function NewRequestPage() {
                                 <div className="space-y-2 text-sm text-muted-foreground">
                                   <p className="flex items-start gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                    <span><strong className="text-foreground">ดี:</strong> "ต้องคำนวณ Vancomycin dose ตาม Cockcroft-Gault eGFR ทุกครั้งที่ใช้ยา ซึ่งใช้เวลา 5-10 นาที/ครั้ง"</span>
+                                    <span><strong className="text-foreground">ดี:</strong> &ldquo;ต้องคำนวณ Vancomycin dose ตาม Cockcroft-Gault eGFR ทุกครั้งที่ใช้ยา ซึ่งใช้เวลา 5-10 นาที/ครั้ง&rdquo;</span>
                                   </p>
                                   <p className="flex items-start gap-2">
                                     <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-                                    <span><strong className="text-foreground">ไม่ดี:</strong> "ต้องคำนวณยาตลอดเวลา ลำบาก"</span>
+                                    <span><strong className="text-foreground">ไม่ดี:</strong> &ldquo;ต้องคำนวณยาตลอดเวลา ลำบาก&rdquo;</span>
                                   </p>
                                 </div>
                               </div>
@@ -203,11 +203,11 @@ export default function NewRequestPage() {
                                 <div className="space-y-2 text-sm text-muted-foreground">
                                   <p className="flex items-start gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                    <span><strong className="text-foreground">ดี:</strong> "ER รับผู้ป่วยเฉลี่ย 150 ราย/วัน ต้องคำนวณ GCS + AVPU ประมาณ 40-50 ครั้ง/วัน"</span>
+                                    <span><strong className="text-foreground">ดี:</strong> &ldquo;ER รับผู้ป่วยเฉลี่ย 150 ราย/วัน ต้องคำนวณ GCS + AVPU ประมาณ 40-50 ครั้ง/วัน&rdquo;</span>
                                   </p>
                                   <p className="flex items-start gap-2">
                                     <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-                                    <span><strong className="text-foreground">ไม่ดี:</strong> "ต้องคำนวณบ่อยมาก"</span>
+                                    <span><strong className="text-foreground">ไม่ดี:</strong> &ldquo;ต้องคำนวณบ่อยมาก&rdquo;</span>
                                   </p>
                                 </div>
                               </div>

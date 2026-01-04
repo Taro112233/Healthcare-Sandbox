@@ -49,17 +49,6 @@ export function hasPermission(
   userRole: UserRole,
   action: string
 ): boolean {
-  // Admin permissions
-  const adminOnlyActions = [
-    'request.view_all',
-    'request.change_status',
-    'request.delete',
-    'comment.view_all',
-    'comment.delete_any',
-    'user.manage',
-    'admin.dashboard',
-  ];
-  
   // User permissions (also available to admin)
   const userActions = [
     'request.create',
