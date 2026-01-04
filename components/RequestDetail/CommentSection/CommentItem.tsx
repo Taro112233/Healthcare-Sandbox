@@ -4,7 +4,7 @@
 import React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Comment, CommentType, getRelativeTime } from '@/types/comment';
+import { Comment, getRelativeTime } from '@/types/comment';
 import { REQUEST_STATUS_INFO } from '@/types/request';
 import { BadgeCheck, RefreshCw } from 'lucide-react';
 

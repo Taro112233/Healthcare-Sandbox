@@ -4,11 +4,10 @@
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
-import { Plus, Info, Settings, HelpCircle } from "lucide-react"
+import { Plus, Settings, HelpCircle } from "lucide-react"
 
 export function TooltipShowcase() {
   return (

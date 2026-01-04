@@ -5,7 +5,6 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { RequestList } from '@/components/RequestList';
 import { AppHeader } from '@/components/shared/AppHeader';
-import { LoadingState } from '@/components/shared/LoadingState';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequests } from '@/hooks/useRequests';
 import { RequestStatus, RequestType } from '@/types/request';
