@@ -18,12 +18,7 @@ Directory structure:
     │   ├── layout.tsx
     │   ├── not-found.tsx
     │   ├── page.tsx
-    │   ├── admin/
-    │   │   └── page.tsx
     │   ├── api/
-    │   │   ├── admin/
-    │   │   │   └── stats/
-    │   │   │       └── route.ts
     │   │   ├── arcjet/
     │   │   │   └── route.ts
     │   │   ├── auth/
@@ -35,8 +30,6 @@ Directory structure:
     │   │   │   │   └── route.ts
     │   │   │   └── register/
     │   │   │       └── route.ts
-    │   │   ├── dashboard/
-    │   │   │   └── route.ts
     │   │   ├── requests/
     │   │   │   ├── route.ts
     │   │   │   ├── [id]/
@@ -67,10 +60,6 @@ Directory structure:
     ├── components/
     │   ├── theme-provider.tsx
     │   ├── theme-toggle.tsx
-    │   ├── AdminDashboard/
-    │   │   ├── index.tsx
-    │   │   ├── RequestTable.tsx
-    │   │   └── StatsCards.tsx
     │   ├── RequestDetail/
     │   │   ├── AttachmentList.tsx
     │   │   ├── index.tsx
@@ -280,7 +269,6 @@ Directory structure:
     │   └── utils.ts
     ├── prisma/
     │   ├── schema.prisma
-    │   ├── seed.ts
     │   └── schemas/
     │       ├── attachment.prisma
     │       ├── base.prisma
