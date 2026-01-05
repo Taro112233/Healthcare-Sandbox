@@ -5,7 +5,7 @@
       "title": "Vancomycin Dose Calculator",
       "description": "คำนวณ Loading & Maintenance dose อัตโนมัติตาม eGFR ลดเวลาจาก 10 นาที เหลือ 30 วินาที",
       "tags": ["PRODUCT DESIGN", "CALCULATOR", "2024"],
-      "videoSrc": "/products/show1.mp4",
+      "videoSrc": "/products/video1.mp4",
       "demoUrl": "https://demo.healthtech.com/vancomycin"
     },
     {
@@ -13,7 +13,7 @@
       "title": "Glasgow Coma Scale Calculator",
       "description": "ประเมิน GCS พร้อมแสดง severity classification และ clinical recommendations ใน ER",
       "tags": ["PRODUCT DESIGN", "ASSESSMENT", "2024"],
-      "videoSrc": "/products/show2.mp4",
+      "videoSrc": "/products/video2.mp4",
       "demoUrl": "https://demo.healthtech.com/gcs"
     },
     {
@@ -21,7 +21,7 @@
       "title": "Drug Interaction Checker",
       "description": "ตรวจสอบปฏิกิริยาระหว่างยาแบบ real-time พร้อมคำแนะนำทางคลินิก",
       "tags": ["PRODUCT DESIGN", "PHARMACY", "2025"],
-      "videoSrc": "/products/show3.mp4",
+      "videoSrc": "/products/video3.mp4",
       "demoUrl": "https://demo.healthtech.com/drug-interaction"
     },
     {
@@ -29,7 +29,7 @@
       "title": "BMI & Nutrition Calculator",
       "description": "คำนวณ BMI, IBW, และแนะนำแผนโภชนาการที่เหมาะสม",
       "tags": ["CALCULATOR", "NUTRITION", "2024"],
-      "videoSrc": "/products/show4.mp4",
+      "videoSrc": "/products/video4.mp4",
       "demoUrl": "https://demo.healthtech.com/bmi"
     }
   ]

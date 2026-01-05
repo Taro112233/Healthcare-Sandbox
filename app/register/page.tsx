@@ -479,20 +479,6 @@ export default function RegisterPage() {
                       ข้าพเจ้ายอมรับเงื่อนไขการใช้งาน Sandbox *
                     </Label>
                   </div>
-                  
-                  <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-                    <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
-                      <AlertTriangle className="w-3 h-3 inline mr-1" />
-                      <strong>ข้อควรระวัง:</strong> ห้ามใช้ข้อมูลผู้ป่วยจริง - Sandbox นี้สำหรับทดสอบเท่านั้น
-                    </p>
-                  </div>
-
-                  <div className="bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800 rounded-lg p-3">
-                    <p className="text-xs text-teal-700 dark:text-teal-300 leading-relaxed">
-                      <CheckCircle2 className="w-3 h-3 inline mr-1" />
-                      บัญชีพร้อมใช้งานทันที - เริ่มส่ง Request ได้เลย
-                    </p>
-                  </div>
                 </div>
               </div>
 
