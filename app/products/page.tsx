@@ -63,7 +63,7 @@ export default function ProductsPage() {
             >
               เครื่องมือที่สร้างเสร็จแล้ว
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
-                พร้อมใช้งานจริง
+                และใช้งานจริง
               </span>
             </motion.h1>
 
@@ -75,39 +75,6 @@ export default function ProductsPage() {
               เครื่องมือดิจิทัลที่พัฒนาจากคำขอของบุคลากรทางการแพทย์ 
               ช่วยประหยัดเวลาและเพิ่มประสิทธิภาพการทำงาน
             </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 max-w-2xl mx-auto"
-            >
-              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
-                <div className="text-3xl font-bold text-teal-600 dark:text-teal-400 mb-2">
-                  {products.length}+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  เครื่องมือ
-                </div>
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                  8+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  หน่วยงาน
-                </div>
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6 col-span-2 md:col-span-1">
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                  95%
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  ประหยัดเวลา
-                </div>
-              </motion.div>
-            </motion.div>
           </motion.div>
         </div>
       </section>
