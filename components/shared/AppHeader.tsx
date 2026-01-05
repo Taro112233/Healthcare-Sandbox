@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -22,12 +22,22 @@ import {
   User,
   Shield,
   LayoutDashboard,
+  ChevronDown,
 } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { cn } from '@/lib/utils';
+
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/dashboard', label: 'Dashboard', authRequired: true },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'About us' },
+];
 
 export function AppHeader() {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, logout } = useCurrentUser();
 
   const getUserInitials = () => {
@@ -39,29 +49,88 @@ export function AppHeader() {
     await logout();
   };
 
+  const isActivePath = (path: string) => {
+    if (path === '/') return pathname === '/';
+    return pathname.startsWith(path);
+  };
+
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Title */}
-          <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          {/* Mobile Navigation Dropdown */}
+          <div className="lg:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <Stethoscope className="w-6 h-6 text-white" />
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuLabel>Navigation</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {navItems.map((item) => {
+                  if (item.authRequired && !user) return null;
+                  
+                  return (
+                    <DropdownMenuItem key={item.href} asChild>
+                      <Link 
+                        href={item.href}
+                        className={cn(
+                          "cursor-pointer",
+                          isActivePath(item.href) && "bg-accent"
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* Desktop Logo */}
+          <Link href="/" className="hidden lg:flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
-            <div className="hidden sm:block">
+            <div>
               <h1 className="text-xl font-bold text-foreground">HealthTech Sandbox</h1>
               <p className="text-xs text-muted-foreground">Technology Request Platform</p>
             </div>
           </Link>
 
-          {/* Navigation */}
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            {navItems.map((item) => {
+              if (item.authRequired && !user) return null;
+              
+              const isActive = isActivePath(item.href);
+              
+              return (
+                <Link key={item.href} href={item.href}>
+                  <Button
+                    variant={isActive ? "secondary" : "ghost"}
+                    size="sm"
+                    className={cn(isActive && "bg-accent")}
+                  >
+                    {item.label}
+                  </Button>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Right Side Actions */}
           <div className="flex items-center gap-3">
-            {/* Theme Toggle - Always visible */}
             <ThemeToggle />
 
             {user && (
               <>
-                {/* New Request Button */}
                 <Link href="/requests/new">
                   <Button className="hidden sm:flex items-center gap-2 bg-teal-600 hover:bg-teal-700">
                     <Plus className="w-4 h-4" />
@@ -72,10 +141,9 @@ export function AppHeader() {
                   </Button>
                 </Link>
 
-                {/* User Menu */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center gap-2 pl-2 pr-3">
+                    <Button variant="ghost" className="flex items-center gap-2 pl-2 pr-3 cursor-pointer">
                       <Avatar className="h-8 w-8">
                         <AvatarFallback className="bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-sm">
                           {getUserInitials()}
