@@ -16,9 +16,12 @@ import { Card, CardContent } from '@/components/ui/card';
 // Skeleton Component for Dashboard
 function DashboardSkeleton() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Background Gradient - ย้ายมาชั้นนอกสุด */}
+      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      
       <AppHeader />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-4">
           {/* Header Skeleton */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -144,11 +147,14 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-background"
+      className="min-h-screen bg-background relative"
     >
+      {/* Background Gradient - fixed position ครอบทั้งหน้า */}
+      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      
       <AppHeader />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <RequestList
           title="คำขอของฉัน"
           requests={paginatedRequests}

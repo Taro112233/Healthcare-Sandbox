@@ -351,14 +351,7 @@ export function RequestForm() {
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>{submitError}</AlertDescription>
         </Alert>
-      )}
-      
-        <Alert className="bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-800">
-          <Info className="h-4 w-4 text-teal-600 dark:text-teal-400" />
-          <AlertDescription className="text-teal-800 dark:text-teal-200">
-            ยิ่งให้ข้อมูลที่ละเอียดและชัดเจน ทีมพัฒนาจะเข้าใจปัญหาและช่วยเหลือได้ดียิ่งขึ้น
-          </AlertDescription>
-        </Alert>    
+      )} 
       {/* Submit Buttons */}
       <div className="flex justify-end gap-3">
         <Button

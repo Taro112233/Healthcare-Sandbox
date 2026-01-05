@@ -58,11 +58,11 @@ export function AppHeader() {
     <header className="bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Mobile Navigation Dropdown */}
-          <div className="lg:hidden">
+          {/* Logo with Mobile Menu (< 768px) */}
+          <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+                <button className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
                   <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
                     <Stethoscope className="w-6 h-6 text-white" />
                   </div>
@@ -93,8 +93,21 @@ export function AppHeader() {
             </DropdownMenu>
           </div>
 
-          {/* Desktop Logo */}
-          <Link href="/" className="hidden lg:flex items-center gap-3 hover:opacity-80 transition-opacity">
+          {/* Logo (768px - 1024px) */}
+          <Link 
+            href="/" 
+            className="hidden md:flex xl:hidden items-center gap-3 hover:opacity-80 transition-opacity"
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Stethoscope className="w-6 h-6 text-white" />
+            </div>
+          </Link>
+
+          {/* Logo with Platform Name (1024px+) */}
+          <Link 
+            href="/" 
+            className="hidden xl:flex items-center gap-3 hover:opacity-80 transition-opacity"
+          >
             <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
@@ -104,8 +117,8 @@ export function AppHeader() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+          {/* Desktop Navigation (768px+) - Text Only with More Spacing */}
+          <nav className="hidden md:flex items-center gap-10 flex-1 justify-center">
             {navItems.map((item) => {
               if (item.authRequired && !user) return null;
               
@@ -116,7 +129,10 @@ export function AppHeader() {
                   <Button
                     variant={isActive ? "secondary" : "ghost"}
                     size="sm"
-                    className={cn(isActive && "bg-accent")}
+                    className={cn(
+                      "px-4",
+                      isActive && "bg-accent"
+                    )}
                   >
                     {item.label}
                   </Button>
@@ -131,16 +147,20 @@ export function AppHeader() {
 
             {user && (
               <>
+                {/* New Request Button */}
                 <Link href="/requests/new">
-                  <Button className="hidden sm:flex items-center gap-2 bg-teal-600 hover:bg-teal-700">
+                  {/* Full Text (1024px+) */}
+                  <Button className="hidden lg:flex items-center gap-2 bg-teal-600 hover:bg-teal-700">
                     <Plus className="w-4 h-4" />
                     ส่งคำขอใหม่
                   </Button>
-                  <Button size="icon" className="sm:hidden bg-teal-600 hover:bg-teal-700">
+                  {/* Icon Only (< 1024px) */}
+                  <Button size="icon" className="lg:hidden bg-teal-600 hover:bg-teal-700">
                     <Plus className="w-4 h-4" />
                   </Button>
                 </Link>
 
+                {/* User Menu */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="flex items-center gap-2 pl-2 pr-3 cursor-pointer">
@@ -149,7 +169,8 @@ export function AppHeader() {
                           {getUserInitials()}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="hidden md:flex flex-col items-start">
+                      {/* User Info (1440px+) */}
+                      <div className="hidden 2xl:flex flex-col items-start">
                         <span className="text-sm font-medium text-foreground">
                           {user.fullName}
                         </span>
