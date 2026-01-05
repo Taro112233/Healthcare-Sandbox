@@ -1,0 +1,280 @@
+'use client';
+
+import { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { AppHeader } from '@/components/shared/AppHeader';
+import productsData from '@/data/products.json';
+import { ArrowRight, Sparkles } from 'lucide-react';
+
+interface Product {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  videoSrc: string;
+  demoUrl: string;
+}
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+export default function ProductsPage() {
+  const products: Product[] = productsData.products;
+  
+  return (
+    <div className="min-h-screen bg-background">
+      <AppHeader />
+      
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="text-center"
+          >
+            {/* Badge */}
+            <motion.div variants={fadeIn} className="inline-flex mb-6">
+              <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-medium">
+                <Sparkles className="w-4 h-4" />
+                Product Showcase
+              </div>
+            </motion.div>
+
+            {/* Main Title */}
+            <motion.h1
+              variants={fadeIn}
+              className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
+            >
+              เครื่องมือที่สร้างเสร็จแล้ว
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
+                พร้อมใช้งานจริง
+              </span>
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              variants={fadeIn}
+              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              เครื่องมือดิจิทัลที่พัฒนาจากคำขอของบุคลากรทางการแพทย์ 
+              ช่วยประหยัดเวลาและเพิ่มประสิทธิภาพการทำงาน
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-12 max-w-2xl mx-auto"
+            >
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-teal-600 dark:text-teal-400 mb-2">
+                  {products.length}+
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  เครื่องมือ
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6">
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                  8+
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  หน่วยงาน
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeIn} className="bg-card border border-border rounded-xl p-6 col-span-2 md:col-span-1">
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                  95%
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  ประหยัดเวลา
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Products Grid */}
+      <section className="py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-8 lg:gap-12"
+          >
+            {products.map((product, index) => (
+              <ProductCard 
+                key={product.id} 
+                product={product}
+                index={index}
+              />
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <motion.h2 variants={fadeIn} className="text-4xl font-bold mb-6">
+            มีไอเดียเครื่องมือใหม่?
+          </motion.h2>
+          <motion.p
+            variants={fadeIn}
+            className="text-xl mb-8 text-teal-100 dark:text-teal-200"
+          >
+            ส่งคำขอพัฒนาเครื่องมือของคุณได้เลย
+          </motion.p>
+
+          <motion.div variants={fadeIn}>
+            <a
+              href="/requests/new"
+              className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
+            >
+              ส่งคำขอใหม่
+              <ArrowRight className="w-5 h-5" />
+            </a>
+          </motion.div>
+
+          <motion.div variants={fadeIn} className="text-teal-100 dark:text-teal-200 mt-8">
+            <p>
+              ✨ ฟรี • 🚀 ใช้งานง่าย • 📱 รองรับทุกอุปกรณ์
+            </p>
+          </motion.div>
+        </motion.div>
+      </section>
+    </div>
+  );
+}
+
+// ==================== PRODUCT CARD ====================
+function ProductCard({ product, index }: { product: Product; index: number }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (!videoRef.current) return;
+    
+    const video = videoRef.current;
+    
+    const playVideo = () => {
+      video.play().catch(() => {
+        // Ignore autoplay errors
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playVideo();
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(video);
+    playVideo();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.25, 0.1, 0.25, 1]
+      }}
+    >
+      <a 
+        href={product.demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block"
+      >
+        {/* Video Container */}
+        <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-muted mb-4 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+          <video
+            ref={videoRef}
+            src={product.videoSrc}
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+          />
+          
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
+
+          {/* View Demo Badge */}
+          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-foreground flex items-center gap-2">
+              ดูตัวอย่าง
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="space-y-3">
+          {/* Title */}
+          <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-200 leading-tight">
+            {product.title}
+          </h2>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {product.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-muted text-muted-foreground border border-border rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Description */}
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {product.description}
+          </p>
+        </div>
+      </a>
+    </motion.div>
+  );
+}

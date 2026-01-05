@@ -334,7 +334,7 @@ export default function LandingPage() {
             className="relative"
           >
             {/* Timeline connector - hide on mobile */}
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-200 via-blue-200 via-purple-200 via-orange-200 to-green-200 dark:from-yellow-900 dark:via-blue-900 dark:via-purple-900 dark:via-orange-900 dark:to-green-900 -translate-y-1/2" />
+            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-yellow-200  to-green-200 dark:from-yellow-900  dark:to-green-900 -translate-y-1/2" />
 
             <div className="grid md:grid-cols-5 gap-8 relative">
               <motion.div variants={fadeIn} className="text-center">
