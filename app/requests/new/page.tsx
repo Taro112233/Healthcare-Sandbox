@@ -38,50 +38,78 @@ import {
 function NewRequestSkeleton() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Background Gradient - fixed position */}
+      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      
       <AppHeader />
       <main className="relative">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
-        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <Card className="border-l-4">
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 space-y-3">
-                    <Skeleton className="h-8 w-64" />
-                    <Skeleton className="h-4 w-full" />
-                  </div>
-                  <div className="flex gap-2">
-                    <Skeleton className="h-9 w-24" />
-                    <Skeleton className="h-9 w-24" />
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className={i <= 3 ? "border-l-4" : ""}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-4xl mx-auto space-y-6"
+          >
+            {/* Header Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
+              <Card className="border-l-4">
                 <CardHeader>
-                  <Skeleton className="h-6 w-48" />
-                  <Skeleton className="h-4 w-full max-w-md" />
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-3">
+                      <Skeleton className="h-8 w-64" />
+                      <Skeleton className="h-4 w-full" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Skeleton className="h-9 w-24" />
+                      <Skeleton className="h-9 w-24" />
+                    </div>
+                  </div>
                 </CardHeader>
-                <CardContent className="space-y-3 pt-0">
-                  {i === 2 ? (
-                    <Skeleton className="h-10 w-full" />
-                  ) : (
-                    <>
-                      <Skeleton className="h-32 w-full" />
-                      <Skeleton className="h-4 w-24 ml-auto" />
-                    </>
-                  )}
-                </CardContent>
               </Card>
+            </motion.div>
+
+            {/* Form Cards */}
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 + (i * 0.05) }}
+              >
+                <Card className={i <= 3 ? "border-l-4" : ""}>
+                  <CardHeader>
+                    <Skeleton className="h-6 w-48" />
+                    <Skeleton className="h-4 w-full max-w-md" />
+                  </CardHeader>
+                  <CardContent className="space-y-3 pt-0">
+                    {i === 2 ? (
+                      <Skeleton className="h-10 w-full" />
+                    ) : (
+                      <>
+                        <Skeleton className="h-32 w-full" />
+                        <Skeleton className="h-4 w-24 ml-auto" />
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-            <div className="flex justify-end gap-3">
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="flex justify-end gap-3"
+            >
               <Skeleton className="h-10 w-24" />
               <Skeleton className="h-10 w-32" />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </main>
     </div>
@@ -115,11 +143,12 @@ export default function NewRequestPage() {
       transition={{ duration: 0.3 }}
       className="min-h-screen bg-background"
     >
+      {/* Background Gradient - fixed position */}
+      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      
       <AppHeader />
       
       <main className="relative">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-4xl mx-auto space-y-6">
