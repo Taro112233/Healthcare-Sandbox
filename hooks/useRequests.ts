@@ -16,7 +16,7 @@ interface UseRequestsOptions {
 
 interface UseRequestsReturn {
   requests: Request[];
-  total: number;  // ✅ เพิ่ม total
+  total: number;
   loading: boolean;
   error: string | null;
   meta: {
@@ -104,7 +104,7 @@ export function useRequests(options: UseRequestsOptions = {}): UseRequestsReturn
 
   return {
     requests,
-    total: meta.total,  // ✅ เพิ่ม total
+    total: meta.total,
     loading,
     error,
     meta,
@@ -114,7 +114,6 @@ export function useRequests(options: UseRequestsOptions = {}): UseRequestsReturn
   };
 }
 
-// ===== Single Request Hook =====
 interface UseRequestReturn {
   request: Request | null;
   loading: boolean;
@@ -179,96 +178,5 @@ export function useRequest(requestId: string): UseRequestReturn {
     loading,
     error,
     refetch: fetchRequest,
-  };
-}
-
-// ===== Admin Stats Hook =====
-interface AdminStats {
-  requests: {
-    total: number;
-    byStatus: {
-      pendingReview: number;
-      underConsideration: number;
-      inDevelopment: number;
-      inTesting: number;
-      completed: number;
-      beyondCapacity: number;
-    };
-    byType: {
-      calculator: number;
-      form: number;
-      workflow: number;
-      decisionAid: number;
-      other: number;
-    };
-  };
-  activity: {
-    requestsLast7Days: number;
-    requestsLast30Days: number;
-    commentsLast7Days: number;
-    statusChangesLast7Days: number;
-  };
-  users: {
-    total: number;
-    active: number;
-  };
-}
-
-interface UseAdminStatsReturn {
-  stats: AdminStats | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => Promise<void>;
-}
-
-export function useAdminStats(): UseAdminStatsReturn {
-  const [stats, setStats] = useState<AdminStats | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchStats = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await fetch('/api/admin/stats', {
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('กรุณาเข้าสู่ระบบ');
-        }
-        if (response.status === 403) {
-          throw new Error('ต้องเป็น Admin เท่านั้น');
-        }
-        throw new Error('ไม่สามารถโหลดข้อมูลได้');
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        setStats(data.data);
-      } else {
-        throw new Error(data.error || 'Failed to load stats');
-      }
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'เกิดข้อผิดพลาด';
-      setError(errorMsg);
-      console.error('Fetch admin stats error:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchStats();
-  }, [fetchStats]);
-
-  return {
-    stats,
-    loading,
-    error,
-    refetch: fetchStats,
   };
 }

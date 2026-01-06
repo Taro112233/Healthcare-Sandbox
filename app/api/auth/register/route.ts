@@ -1,13 +1,10 @@
 // app/api/auth/register/route.ts
-// HealthTech Sandbox - Register API (Simplified - No Multi-tenant)
-
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, createToken, getCookieOptions, userToPayload } from '@/lib/auth';
 import { z } from 'zod';
 import arcjet, { shield, tokenBucket, slidingWindow } from "@arcjet/next";
 
-// ===== ARCJET CONFIGURATION =====
 const aj = arcjet({
   key: process.env.ARCJET_KEY!,
   rules: [
@@ -28,7 +25,6 @@ const aj = arcjet({
   ],
 });
 
-// ===== VALIDATION SCHEMA =====
 const RegisterSchema = z.object({
   username: z.string()
     .min(3, 'Username ต้องมีอย่างน้อย 3 ตัวอักษร')
@@ -56,21 +52,8 @@ const RegisterSchema = z.object({
     .or(z.literal('')),
 });
 
-interface ValidationError {
-  field: string;
-  message: string;
-}
-
-interface PrismaError {
-  code?: string;
-  meta?: {
-    target?: string[];
-  };
-}
-
 export async function POST(request: NextRequest) {
   try {
-    // ===== ARCJET PROTECTION =====
     const decision = await aj.protect(request, { requested: 1 });
     const clientIp = request.headers.get('x-forwarded-for') || 
                     request.headers.get('x-real-ip') || 
@@ -93,35 +76,24 @@ export async function POST(request: NextRequest) {
         );
       }
       
-      if (decision.reason.isShield()) {
-        console.log(`🛡️ Registration attempt blocked by shield from IP: ${clientIp}`);
-        return NextResponse.json(
-          { success: false, error: "Request blocked by security filter" },
-          { status: 403 }
-        );
-      }
-
       return NextResponse.json(
         { success: false, error: "Access denied" },
         { status: 403 }
       );
     }
 
-    // ===== VALIDATE INPUT =====
     const body = await request.json();
     const validation = RegisterSchema.safeParse(body);
     
     if (!validation.success) {
-      const details: ValidationError[] = validation.error.issues.map((err) => ({
-        field: err.path.join('.'),
-        message: err.message
-      }));
-
       return NextResponse.json(
         { 
           success: false, 
           error: 'Invalid input data',
-          details
+          details: validation.error.issues.map((err) => ({
+            field: err.path.join('.'),
+            message: err.message
+          }))
         },
         { status: 400 }
       );
@@ -133,7 +105,6 @@ export async function POST(request: NextRequest) {
 
     console.log(`📝 Registration attempt: ${username} from IP: ${clientIp}`);
 
-    // ===== CHECK EXISTING USERNAME =====
     const existingUser = await prisma.user.findUnique({
       where: { username: username.toLowerCase() }
     });
@@ -146,7 +117,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ===== CHECK EXISTING EMAIL (if provided) =====
     if (cleanEmail) {
       const existingEmailUser = await prisma.user.findFirst({
         where: { email: cleanEmail.toLowerCase() }
@@ -160,10 +130,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // ===== HASH PASSWORD =====
     const hashedPassword = await hashPassword(password);
 
-    // ===== CREATE USER =====
     const newUser = await prisma.user.create({
       data: {
         username: username.toLowerCase(), 
@@ -172,34 +140,18 @@ export async function POST(request: NextRequest) {
         lastName: lastName.trim(),
         email: cleanEmail?.toLowerCase(), 
         phone: cleanPhone,
-        role: 'USER',  // Default role
+        role: 'USER',
         status: 'ACTIVE', 
         isActive: true, 
         emailVerified: false,
       },
-      select: {
-        id: true, 
-        username: true, 
-        email: true, 
-        firstName: true, 
-        lastName: true,
-        phone: true, 
-        role: true,
-        status: true, 
-        isActive: true, 
-        emailVerified: true,
-        createdAt: true, 
-        updatedAt: true,
-      }
     });
 
     console.log(`✅ Registration successful: ${username} (role: ${newUser.role}) from IP: ${clientIp}`);
 
-    // ===== CREATE JWT TOKEN =====
     const userPayload = userToPayload(newUser);
     const token = await createToken(userPayload);
 
-    // ===== BUILD RESPONSE =====
     const userResponse = {
       id: newUser.id, 
       username: newUser.username, 
@@ -228,25 +180,6 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Registration error:', error);
-    
-    const prismaError = error as PrismaError;
-    
-    if (prismaError?.code === 'P2002') {
-      const target = prismaError?.meta?.target;
-      if (target?.includes('username')) {
-        return NextResponse.json({ 
-          success: false, 
-          error: 'Username นี้มีผู้ใช้งานแล้ว' 
-        }, { status: 409 });
-      }
-      if (target?.includes('email')) {
-        return NextResponse.json({ 
-          success: false, 
-          error: 'อีเมลนี้มีผู้ใช้งานแล้ว' 
-        }, { status: 409 });
-      }
-    }
-    
     return NextResponse.json({ 
       success: false, 
       error: 'Internal server error' 

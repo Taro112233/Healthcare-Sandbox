@@ -4,6 +4,7 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/app/utils/auth"
 import { ThemeProvider } from "@/components/theme-provider"
+import { AppHeader } from "@/components/shared/AppHeader"
 
 export const metadata: Metadata = {
   title: "HealthTech Sandbox",
@@ -25,7 +26,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            {children}
+            <div className="min-h-screen bg-background">
+              <AppHeader />
+              <main className="relative">
+                {children}
+              </main>
+            </div>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>

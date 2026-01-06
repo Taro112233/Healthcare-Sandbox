@@ -1,22 +1,15 @@
 // app/api/requests/route.ts
-// HealthTech Sandbox - Requests API (List & Create)
-
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getUserFromHeaders } from '@/lib/auth-server';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 
-// ===== VALIDATION SCHEMA =====
-
 const CreateRequestSchema = z.object({
-  department: z.string()
-    .min(1, 'กรุณาระบุหน่วยงาน')
-    .max(200, 'ชื่อหน่วยงานต้องไม่เกิน 200 ตัวอักษร')
-    .trim(),
-  painPoint: z.string().min(10, 'กรุณาอธิบาย Pain Point อย่างน้อย 10 ตัวอักษร').max(5000),
-  currentWorkflow: z.string().min(10, 'กรุณาอธิบายขั้นตอนการทำงานอย่างน้อย 10 ตัวอักษร').max(5000),
-  expectedTechHelp: z.string().min(10, 'กรุณาอธิบายสิ่งที่ต้องการอย่างน้อย 10 ตัวอักษร').max(5000),
+  department: z.string().min(1).max(200).trim(),
+  painPoint: z.string().min(10).max(5000),
+  currentWorkflow: z.string().min(10).max(5000),
+  expectedTechHelp: z.string().min(10).max(5000),
   requestType: z.enum(['CALCULATOR', 'FORM', 'WORKFLOW', 'DECISION_AID', 'OTHER']),
   attachmentUrls: z.array(z.object({
     filename: z.string(),
@@ -26,7 +19,6 @@ const CreateRequestSchema = z.object({
   })).optional(),
 });
 
-// ===== GET - List Requests =====
 export async function GET(request: NextRequest) {
   try {
     const userInfo = getUserFromHeaders(new Headers(request.headers));
@@ -44,28 +36,22 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const type = searchParams.get('type');
     
-    // Build where clause with proper Prisma types
     const where: Prisma.RequestWhereInput = {};
     
-    // Non-admin users can only see their own requests
     if (userInfo.role !== 'ADMIN') {
       where.userId = userInfo.userId;
     }
     
-    // Filter by status
     if (status && status !== 'ALL') {
       where.status = status as Prisma.EnumRequestStatusFilter;
     }
     
-    // Filter by type
     if (type && type !== 'ALL') {
       where.requestType = type as Prisma.EnumRequestTypeFilter;
     }
     
-    // Get total count
     const total = await prisma.request.count({ where });
     
-    // Get requests with pagination
     const requests = await prisma.request.findMany({
       where,
       include: {
@@ -109,7 +95,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// ===== POST - Create Request =====
 export async function POST(request: NextRequest) {
   try {
     const userInfo = getUserFromHeaders(new Headers(request.headers));
@@ -140,9 +125,7 @@ export async function POST(request: NextRequest) {
     
     const { department, painPoint, currentWorkflow, expectedTechHelp, requestType, attachmentUrls } = validation.data;
     
-    // Create request with attachments in transaction
     const newRequest = await prisma.$transaction(async (tx) => {
-      // Create request
       const created = await tx.request.create({
         data: {
           userId: userInfo.userId,
@@ -155,7 +138,6 @@ export async function POST(request: NextRequest) {
         },
       });
       
-      // Create attachments if provided
       if (attachmentUrls && attachmentUrls.length > 0) {
         await tx.attachment.createMany({
           data: attachmentUrls.map((file) => ({
@@ -168,7 +150,6 @@ export async function POST(request: NextRequest) {
         });
       }
       
-      // Fetch complete request with relations
       return await tx.request.findUnique({
         where: { id: created.id },
         include: {

@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RequestForm } from '@/components/RequestForm';
-import { AppHeader } from '@/components/shared/AppHeader';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -41,7 +40,6 @@ function NewRequestSkeleton() {
       {/* Background Gradient - fixed position */}
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
-      <AppHeader />
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -145,9 +143,7 @@ export default function NewRequestPage() {
     >
       {/* Background Gradient - fixed position */}
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
-      
-      <AppHeader />
-      
+            
       <main className="relative">
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

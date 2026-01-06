@@ -2,7 +2,6 @@
 'use client';
 
 import React from 'react';
-import { AppHeader } from '@/components/shared/AppHeader';
 import { HeroSection } from '@/components/LandingPage/HeroSection';
 import { DevelopmentProcessSection } from '@/components/LandingPage/DevelopmentProcessSection';
 import { ProductShowcaseSection } from '@/components/LandingPage/ProductShowcaseSection';
@@ -14,14 +13,13 @@ export default function LandingPage() {
   const [showManual, setShowManual] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
+    <>
       <HeroSection />
       <DevelopmentProcessSection />
       <ProductShowcaseSection />
       <CTASection onManualClick={() => setShowManual(true)} />
       <Footer />
       <ManualDialog open={showManual} onOpenChange={setShowManual} />
-    </div>
+    </>
   );
 }

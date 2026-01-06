@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { AppHeader } from '@/components/shared/AppHeader';
 import productsData from '@/data/products.json';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -34,9 +33,7 @@ export default function ProductsPage() {
   const products: Product[] = productsData.products;
   
   return (
-    <div className="min-h-screen bg-background">
-      <AppHeader />
-      
+    <>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
@@ -48,7 +45,6 @@ export default function ProductsPage() {
             variants={staggerContainer}
             className="text-center"
           >
-            {/* Badge */}
             <motion.div variants={fadeIn} className="inline-flex mb-6">
               <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-medium">
                 <Sparkles className="w-4 h-4" />
@@ -56,7 +52,6 @@ export default function ProductsPage() {
               </div>
             </motion.div>
 
-            {/* Main Title */}
             <motion.h1
               variants={fadeIn}
               className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
@@ -67,7 +62,6 @@ export default function ProductsPage() {
               </span>
             </motion.h1>
 
-            {/* Description */}
             <motion.p
               variants={fadeIn}
               className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
@@ -120,7 +114,7 @@ export default function ProductsPage() {
           </motion.p>
 
           <motion.div variants={fadeIn}>
-            <a
+            <a 
               href="/requests/new"
               className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
@@ -136,11 +130,10 @@ export default function ProductsPage() {
           </motion.div>
         </motion.div>
       </section>
-    </div>
+    </>
   );
 }
 
-// ==================== PRODUCT CARD ====================
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   
@@ -150,9 +143,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     const video = videoRef.current;
     
     const playVideo = () => {
-      video.play().catch(() => {
-        // Ignore autoplay errors
-      });
+      video.play().catch(() => {});
     };
 
     const observer = new IntersectionObserver(
@@ -193,7 +184,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         rel="noopener noreferrer"
         className="group block"
       >
-        {/* Video Container */}
         <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-muted mb-4 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
           <video
             ref={videoRef}
@@ -205,10 +195,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             className="w-full h-full object-cover"
           />
           
-          {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
 
-          {/* View Demo Badge */}
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-foreground flex items-center gap-2">
               ดูตัวอย่าง
@@ -217,14 +205,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
         </div>
 
-        {/* Content */}
         <div className="space-y-3">
-          {/* Title */}
           <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-200 leading-tight">
             {product.title}
           </h2>
 
-          {/* Tags */}
           <div className="flex flex-wrap gap-2">
             {product.tags.map((tag, i) => (
               <span
@@ -236,7 +221,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             ))}
           </div>
 
-          {/* Description */}
           <p className="text-sm text-muted-foreground leading-relaxed">
             {product.description}
           </p>

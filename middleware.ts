@@ -27,7 +27,7 @@ const ajAuth = arcjet({
 });
 
 // ===== PUBLIC ROUTES (NO AUTH REQUIRED) =====
-const PUBLIC_ROUTES = ['/', '/login', '/register', '/showcase'];
+const PUBLIC_ROUTES = ['/', '/login', '/register', '/showcase', '/products', '/about'];
 const PUBLIC_API_ROUTES = ['/api/auth/login', '/api/auth/register'];
 const AUTH_ENDPOINTS = ['/api/auth/login', '/api/auth/register'];
 

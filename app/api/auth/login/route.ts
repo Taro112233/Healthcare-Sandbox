@@ -1,13 +1,10 @@
 // app/api/auth/login/route.ts
-// HealthTech Sandbox - Login API (Simplified - Includes Role)
-
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyPassword, createToken, getCookieOptions, userToPayload } from '@/lib/auth';
 import { z } from 'zod';
 import arcjet, { shield, tokenBucket, slidingWindow } from "@arcjet/next";
 
-// ===== ARCJET CONFIGURATION =====
 const aj = arcjet({
   key: process.env.ARCJET_KEY!,
   rules: [
@@ -32,11 +29,6 @@ const LoginSchema = z.object({
   username: z.string().min(3).max(50),
   password: z.string().min(6).max(100),
 });
-
-interface ValidationError {
-  field: string;
-  message: string;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -70,16 +62,14 @@ export async function POST(request: NextRequest) {
     const validation = LoginSchema.safeParse(body);
     
     if (!validation.success) {
-      const details: ValidationError[] = validation.error.issues.map((err) => ({
-        field: err.path.join('.'),
-        message: err.message
-      }));
-
       return NextResponse.json(
         { 
           success: false,
           error: 'Invalid input data',
-          details
+          details: validation.error.issues.map((err) => ({
+            field: err.path.join('.'),
+            message: err.message
+          }))
         },
         { status: 400 }
       );
@@ -89,22 +79,6 @@ export async function POST(request: NextRequest) {
 
     const user = await prisma.user.findUnique({
       where: { username: username.toLowerCase() },
-      select: {
-        id: true, 
-        username: true, 
-        email: true, 
-        password: true,
-        firstName: true, 
-        lastName: true, 
-        phone: true,
-        role: true,
-        status: true, 
-        isActive: true, 
-        emailVerified: true, 
-        lastLogin: true, 
-        createdAt: true, 
-        updatedAt: true,
-      }
     });
 
     if (!user) {
@@ -125,11 +99,9 @@ export async function POST(request: NextRequest) {
 
     console.log(`✅ Login successful: ${username} (role: ${user.role}) from IP: ${clientIp}`);
 
-    // Create JWT with role
     const userPayload = userToPayload(user);
     const token = await createToken(userPayload);
 
-    // Update last login
     await prisma.user.update({
       where: { id: user.id },
       data: { lastLogin: new Date() }

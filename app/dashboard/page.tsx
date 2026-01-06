@@ -4,7 +4,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RequestList } from '@/components/RequestList';
-import { AppHeader } from '@/components/shared/AppHeader';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequests } from '@/hooks/useRequests';
 import { RequestStatus, RequestType } from '@/types/request';
@@ -12,22 +11,18 @@ import { useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 
-// Skeleton Component for Dashboard
 function DashboardSkeleton() {
   return (
-    <div className="min-h-screen bg-background relative">
-      {/* Background Gradient - ย้ายมาชั้นนอกสุด */}
+    <div className="relative">
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
-      <AppHeader />
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
           className="space-y-4"
         >
-          {/* Header Skeleton */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,7 +36,6 @@ function DashboardSkeleton() {
             </div>
           </motion.div>
 
-          {/* Request Cards Skeleton */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <motion.div
@@ -74,7 +68,6 @@ function DashboardSkeleton() {
             ))}
           </div>
 
-          {/* Pagination Skeleton */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -91,7 +84,7 @@ function DashboardSkeleton() {
             </div>
           </motion.div>
         </motion.div>
-      </main>
+      </div>
     </div>
   );
 }
@@ -154,7 +147,6 @@ export default function DashboardPage() {
     setCurrentPage(1);
   };
 
-  // Show skeleton during initial load
   if (userLoading || (requestsLoading && allRequests.length === 0)) {
     return <DashboardSkeleton />;
   }
@@ -168,14 +160,11 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-background relative"
+      className="relative"
     >
-      {/* Background Gradient - fixed position ครอบทั้งหน้า */}
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
-      <AppHeader />
-      
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -204,7 +193,7 @@ export default function DashboardPage() {
             onRefresh={refetch}
           />
         </motion.div>
-      </main>
+      </div>
     </motion.div>
   );
 }
