@@ -95,7 +95,6 @@ export function ProductShowcaseSection() {
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   
-  // เช็คลำดับเพื่อสลับฝั่ง (Even: Text ซ้าย Video ขวา | Odd: Video ซ้าย Text ขวา)
   const isEven = index % 2 === 0;
 
   useEffect(() => {
@@ -130,13 +129,9 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       }}
     >
       <Link href={product.demoUrl} className="group block">
-        {/* ใช้ lg:grid-cols-12 เพื่อแบ่งสัดส่วนที่ละเอียดขึ้น
-            - ฝั่ง Text ใช้ 4/12 ส่วน (สัดส่วน 1)
-            - ฝั่ง Video ใช้ 8/12 ส่วน (สัดส่วน 2)
-        */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           
-          {/* Text Content Area (1 Part) */}
+          {/* Text Content Area */}
           <div className={`space-y-6 lg:col-span-4 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
             <div className="inline-block">
               <span className="text-teal-400 text-sm font-semibold tracking-wider uppercase">
@@ -148,13 +143,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               {product.title}
             </h3>
 
-            <div className="flex items-center gap-3 text-teal-400 group-hover:gap-5 transition-all">
+            {/* CTA ที่แสดงเฉพาะตอน hover */}
+            <div className="flex items-center gap-3 text-teal-400 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <span className="text-lg font-semibold">ดูตัวอย่าง</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </div>
           </div>
 
-          {/* Video Showcase Area (2 Parts) */}
+          {/* Video Showcase Area */}
           <div className={`relative lg:col-span-8 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
             <div className="relative aspect-video lg:aspect-[16/9] rounded-[2rem] overflow-hidden bg-gray-900 shadow-2xl transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-teal-500/10">
               <video
@@ -166,7 +162,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 className="w-full h-full object-cover"
               />
               
-              {/* Overlay ไล่เฉดสีให้ดูพรีเมียม */}
               <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/5" />
             </div>
 

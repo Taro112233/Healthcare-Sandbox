@@ -4,7 +4,6 @@
 import React from 'react';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { HeroSection } from '@/components/LandingPage/HeroSection';
-import { RequestTypesSection } from '@/components/LandingPage/RequestTypesSection';
 import { DevelopmentProcessSection } from '@/components/LandingPage/DevelopmentProcessSection';
 import { ProductShowcaseSection } from '@/components/LandingPage/ProductShowcaseSection';
 import { CTASection } from '@/components/LandingPage/CTASection';
@@ -18,7 +17,6 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <HeroSection />
-      <RequestTypesSection />
       <DevelopmentProcessSection />
       <ProductShowcaseSection />
       <CTASection onManualClick={() => setShowManual(true)} />
