@@ -21,8 +21,8 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light" // บังคับให้เริ่มที่ Light Mode
+          enableSystem={false} // ปิดการตรวจจับค่าจาก OS (เลือกตามความต้องการ)
           disableTransitionOnChange
         >
           <AuthProvider>
