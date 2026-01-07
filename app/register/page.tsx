@@ -1,4 +1,3 @@
-// app/register/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -29,6 +28,16 @@ interface RegisterFormData {
   username: string;
   password: string;
   confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+}
+
+// กำหนด Interface สำหรับข้อมูลที่จะส่งไปยัง Register API
+interface RegisterPayload {
+  username: string;
+  password: string;
   firstName: string;
   lastName: string;
   email?: string;
@@ -155,7 +164,7 @@ export default function RegisterPage() {
     });
 
     try {
-      const registerData: any = {
+      const registerData: RegisterPayload = {
         username: formData.username.trim().toLowerCase(),
         password: formData.password,
         firstName: formData.firstName.trim(),
@@ -184,11 +193,12 @@ export default function RegisterPage() {
         window.location.href = '/dashboard';
       }, 500);
         
-    } catch (error: any) {
+    } catch (err: unknown) {
       toast.dismiss(loadingToast);
       
-      console.error('Registration error:', error);
-      const errorMsg = error instanceof Error ? error.message : 'สมัครสมาชิกไม่สำเร็จ';
+      console.error('Registration error:', err);
+      // จัดการ Error message จาก unknown type
+      const errorMsg = err instanceof Error ? err.message : 'สมัครสมาชิกไม่สำเร็จ';
       setError(errorMsg);
       
       if (errorMsg.includes('username') || errorMsg.includes('Username')) {

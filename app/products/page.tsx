@@ -1,7 +1,9 @@
+// app/products/page.tsx
 'use client';
 
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link'; // เพิ่มการ Import Link
 import productsData from '@/data/products.json';
 import { ArrowRight, Send, Sparkles } from 'lucide-react';
 
@@ -114,13 +116,14 @@ export default function ProductsPage() {
           </motion.p>
 
           <motion.div variants={fadeIn}>
-            <a 
+            {/* แก้ไขจาก <a> เป็น <Link> เพื่อประสิทธิภาพการนำทางที่ดีขึ้น */}
+            <Link 
               href="/requests/new"
               className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
               <Send className="w-5 h-5" />
               ส่งคำขอใหม่
-            </a>
+            </Link>
           </motion.div>
 
           <motion.div variants={fadeIn} className="text-teal-100 dark:text-teal-200 mt-8">
@@ -178,6 +181,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         ease: [0.25, 0.1, 0.25, 1]
       }}
     >
+      {/* สำหรับลิงก์ภายนอก (Demo) ยังคงใช้ <a> พร้อม target="_blank" ได้ปกติ */}
       <a 
         href={product.demoUrl}
         target="_blank"

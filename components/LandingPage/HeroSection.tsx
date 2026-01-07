@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  type CarouselApi,
 } from '@/components/ui/carousel';
 import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -66,7 +65,7 @@ const requestTypes = [
 ];
 
 export function HeroSection() {
-  const [api, setApi] = useState<CarouselApi>();
+  // นำ [api, setApi] ออกเนื่องจากไม่ได้ถูกเรียกใช้งานในฟังก์ชันอื่น
   const textRef = useRef<HTMLHeadingElement>(null);
   
   const mouseX = useMotionValue(0);
@@ -123,7 +122,7 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Title - ขนาดพอดีๆ แต่ออร่าจัดเต็ม */}
+          {/* Title */}
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 
               ref={textRef}
@@ -143,7 +142,6 @@ export function HeroSection() {
                 HealthTech Sandbox
               </motion.span>
               
-              {/* Soft glow behind text */}
               <motion.span 
                 className="absolute inset-0 blur-[60px] -z-10 opacity-40"
                 style={{ background: laserGradient }}
@@ -160,7 +158,7 @@ export function HeroSection() {
             ตั้งแต่เครื่องคำนวณยา ไปจนถึงระบบช่วยตัดสินใจทางคลินิก
           </motion.p>
 
-          {/* CTA Buttons - ขนาดตามที่คุณต้องการ */}
+          {/* CTA Buttons */}
           <motion.div
             variants={fadeIn}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
@@ -190,7 +188,6 @@ export function HeroSection() {
           {/* Request Types Carousel */}
           <motion.div variants={fadeIn}>
             <Carousel
-              setApi={setApi}
               opts={{ align: 'start', loop: true }}
               plugins={[autoplayRef.current]}
               className="w-full max-w-6xl mx-auto"

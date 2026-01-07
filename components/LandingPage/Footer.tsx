@@ -2,7 +2,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { Stethoscope, CheckCircle2 } from 'lucide-react';
 
 export function Footer() {

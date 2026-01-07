@@ -25,7 +25,6 @@ import {
   Send, 
   Loader2, 
   AlertTriangle,
-  Info,
   Calculator,
   FileText,
   GitBranch,

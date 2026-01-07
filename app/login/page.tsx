@@ -20,7 +20,6 @@ import {
   Loader2,
   Eye,
   EyeOff,
-  XCircle,
   AlertTriangle,
   Stethoscope,
 } from "lucide-react";
