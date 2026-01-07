@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import productsData from '@/data/products.json';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Send, Sparkles } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -118,8 +118,8 @@ export default function ProductsPage() {
               href="/requests/new"
               className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
+              <Send className="w-5 h-5" />
               ส่งคำขอใหม่
-              <ArrowRight className="w-5 h-5" />
             </a>
           </motion.div>
 

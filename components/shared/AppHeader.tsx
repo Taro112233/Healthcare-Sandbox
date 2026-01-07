@@ -23,6 +23,7 @@ import {
   Shield,
   LayoutDashboard,
   ChevronDown,
+  Send,
 } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -156,7 +157,7 @@ export function AppHeader() {
                 <Link href="/requests/new">
                   {/* Full Text (1024px+) */}
                   <Button className="hidden lg:flex items-center gap-2 bg-teal-600 hover:bg-teal-700">
-                    <Plus className="w-4 h-4" />
+                    <Send className="w-4 h-4" />
                     ส่งคำขอใหม่
                   </Button>
                   {/* Icon Only (< 1024px) */}
