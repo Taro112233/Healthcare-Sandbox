@@ -1,8 +1,7 @@
-// components/LandingPage/HeroSection.tsx
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -13,8 +12,23 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import { Zap, Activity, Sparkles, Calculator, FileText, GitBranch, Brain } from 'lucide-react';
-import { fadeIn, staggerContainer } from './animations';
 import Autoplay from 'embla-carousel-autoplay';
+
+// Animation Variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const requestTypes = [
   {
@@ -52,23 +66,49 @@ const requestTypes = [
 ];
 
 export function HeroSection() {
-  const [api, setApi] = React.useState<CarouselApi>();
+  const [api, setApi] = useState<CarouselApi>();
+  const textRef = useRef<HTMLHeadingElement>(null);
   
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Cinematic Smoothness
+  const smoothX = useSpring(mouseX, { damping: 50, stiffness: 100 });
+  const smoothY = useSpring(mouseY, { damping: 50, stiffness: 100 });
+
+  function handleMouseMove(e: React.MouseEvent) {
+    if (!textRef.current) return;
+    const rect = textRef.current.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  }
+
+  // แสงระดับ 1600px ที่อาบทั่วทั้งบริเวณ
+  const laserGradient = useTransform(
+    [smoothX, smoothY],
+    ([x, y]) => `radial-gradient(1600px circle at ${x}px ${y}px, #10b981 0%, #059669 15%, #064e3b 35%, transparent 70%)`
+  );
+
   const autoplayRef = React.useRef(
     Autoplay({ 
-      delay: 3000, // ลดเวลาลงเพื่อให้ไหลเร็วขึ้น
+      delay: 3000,
       stopOnInteraction: false,
       stopOnMouseEnter: true,
-      stopOnFocusIn: false,
     })
   );
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+    <section 
+      className="relative overflow-hidden cursor-default py-20 md:py-32 bg-white dark:bg-slate-950" 
+      onMouseMove={handleMouseMove}
+    >
+      {/* 1600px Background Aura */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none opacity-[0.15] dark:opacity-25 blur-[120px]"
+        style={{ background: laserGradient }}
+      />
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -76,44 +116,61 @@ export function HeroSection() {
           className="text-center"
         >
           {/* Badge */}
-          <motion.div variants={fadeIn} className="inline-flex mb-6">
-            <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-medium">
+          <motion.div variants={fadeIn} className="inline-flex mb-8">
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/20 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
               Technology Request Platform
             </div>
           </motion.div>
 
-          {/* Main Title */}
-          <motion.h1
-            variants={fadeIn}
-            className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
-          >
-            HealthTech Sandbox
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
-              แพลตฟอร์มส่งคำขอ
-            </span>
-          </motion.h1>
+          {/* Title - ขนาดพอดีๆ แต่ออร่าจัดเต็ม */}
+          <motion.div variants={fadeIn} className="relative mb-8">
+            <h1 
+              ref={textRef}
+              className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]"
+            >
+              <span className="text-slate-900 dark:text-white transition-colors duration-500">
+                HealthTech Sandbox
+              </span>
+              
+              <motion.span 
+                className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-10"
+                style={{ 
+                  WebkitBackgroundClip: 'text',
+                  backgroundImage: laserGradient,
+                }}
+              >
+                HealthTech Sandbox
+              </motion.span>
+              
+              {/* Soft glow behind text */}
+              <motion.span 
+                className="absolute inset-0 blur-[60px] -z-10 opacity-40"
+                style={{ background: laserGradient }}
+              />
+            </h1>
+          </motion.div>
 
           {/* Description */}
           <motion.p
             variants={fadeIn}
-            className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             แพลตฟอร์มสำหรับบุคลากรทางการแพทย์ในการส่งคำขอพัฒนาเครื่องมือดิจิทัล 
             ตั้งแต่เครื่องคำนวณยา ไปจนถึงระบบช่วยตัดสินใจทางคลินิก
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - ขนาดตามที่คุณต้องการ */}
           <motion.div
             variants={fadeIn}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
           >
             <Link href="/requests/new">
               <Button
                 size="lg"
-                className="text-lg px-8 py-6 w-full sm:w-auto bg-teal-600 hover:bg-teal-700"
+                className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.03] active:scale-95"
               >
-                <Zap className="w-5 h-5 mr-2" />
+                <Zap className="w-5 h-5 mr-2 fill-current" />
                 ส่งคำขอใหม่
               </Button>
             </Link>
@@ -122,7 +179,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-6 w-full sm:w-auto"
+                className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm transition-all hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
               >
                 <Activity className="w-5 h-5 mr-2" />
                 ดูคำขอของฉัน
@@ -131,44 +188,32 @@ export function HeroSection() {
           </motion.div>
 
           {/* Request Types Carousel */}
-          <motion.div
-            variants={fadeIn}
-            className="mt-12"
-          >
+          <motion.div variants={fadeIn}>
             <Carousel
               setApi={setApi}
-              opts={{
-                align: 'start',
-                loop: true,
-                skipSnaps: false, // ให้ snap แต่นุ่มนวล
-                dragFree: true, // ปิด dragFree เพื่อให้ autoplay ทำงานได้ดี
-                containScroll: false, // ไม่จำกัด scroll
-              }}
+              opts={{ align: 'start', loop: true }}
               plugins={[autoplayRef.current]}
               className="w-full max-w-6xl mx-auto"
             >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {/* เพิ่มจำนวน duplicate เพื่อให้ loop ไม่มีรอยต่อ */}
-                {[...requestTypes, ...requestTypes, ...requestTypes].map((type, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="flex items-center gap-3">
-                          <div
-                            className={`w-12 h-12 ${type.bgColor} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-                          >
+              <CarouselContent className="-ml-4">
+                {[...requestTypes, ...requestTypes].map((type, index) => (
+                  <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-md">
+                      <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-4 text-left">
+                          <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
                             <type.icon className={`w-6 h-6 ${type.iconColor}`} />
                           </div>
-                          <div className="text-left">
-                            <div className="text-base font-bold text-foreground">{type.title}</div>
-                            <div className="text-xs text-muted-foreground">
+                          <div>
+                            <div className="text-base font-bold">{type.title}</div>
+                            <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-black opacity-60">
                               {type.subtitle}
                             </div>
                           </div>
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="pt-0">
-                        <p className="text-muted-foreground text-sm text-left leading-relaxed">
+                      <CardContent className="pt-0 text-left">
+                        <p className="text-muted-foreground text-sm leading-relaxed">
                           {type.description}
                         </p>
                       </CardContent>
@@ -177,11 +222,6 @@ export function HeroSection() {
                 ))}
               </CarouselContent>
             </Carousel>
-
-            {/* Mobile Swipe Hint */}
-            <div className="md:hidden text-center mt-4 text-sm text-muted-foreground">
-              <p>← เลื่อนเพื่อดูเพิ่มเติม →</p>
-            </div>
           </motion.div>
         </motion.div>
       </div>
