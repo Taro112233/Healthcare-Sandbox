@@ -1,13 +1,11 @@
 // app/dashboard/page.tsx
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { RequestList } from '@/components/RequestList';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRequests } from '@/hooks/useRequests';
 import { RequestStatus, RequestType } from '@/types/request';
-import { useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -90,9 +88,6 @@ function DashboardSkeleton() {
 }
 
 export default function DashboardPage() {
-  const router = useRouter();
-  const { user, loading: userLoading, isAuthenticated } = useCurrentUser();
-  
   const [statusFilter, setStatusFilter] = useState<RequestStatus | 'ALL'>('ALL');
   const [typeFilter, setTypeFilter] = useState<RequestType | 'ALL'>('ALL');
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,12 +102,6 @@ export default function DashboardPage() {
     page: 1,
     pageSize: 1000,
   });
-
-  useEffect(() => {
-    if (!userLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [userLoading, isAuthenticated, router]);
 
   const filteredRequests = useMemo(() => {
     let filtered = [...allRequests];
@@ -147,12 +136,9 @@ export default function DashboardPage() {
     setCurrentPage(1);
   };
 
-  if (userLoading || (requestsLoading && allRequests.length === 0)) {
+  // แสดง Skeleton เฉพาะตอนที่กำลังโหลดข้อมูล Requests ครั้งแรก
+  if (requestsLoading && allRequests.length === 0) {
     return <DashboardSkeleton />;
-  }
-
-  if (!isAuthenticated || !user) {
-    return null;
   }
 
   return (

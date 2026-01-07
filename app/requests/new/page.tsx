@@ -1,11 +1,9 @@
 // app/requests/new/page.tsx
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { RequestForm } from '@/components/RequestForm';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -37,9 +35,7 @@ import {
 function NewRequestSkeleton() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Background Gradient - fixed position */}
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
-      
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -48,7 +44,6 @@ function NewRequestSkeleton() {
             transition={{ duration: 0.3 }}
             className="max-w-4xl mx-auto space-y-6"
           >
-            {/* Header Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -70,43 +65,24 @@ function NewRequestSkeleton() {
               </Card>
             </motion.div>
 
-            {/* Form Cards */}
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+            {[1, 2, 3].map((i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + (i * 0.05) }}
               >
-                <Card className={i <= 3 ? "border-l-4" : ""}>
+                <Card className="border-l-4">
                   <CardHeader>
                     <Skeleton className="h-6 w-48" />
                     <Skeleton className="h-4 w-full max-w-md" />
                   </CardHeader>
                   <CardContent className="space-y-3 pt-0">
-                    {i === 2 ? (
-                      <Skeleton className="h-10 w-full" />
-                    ) : (
-                      <>
-                        <Skeleton className="h-32 w-full" />
-                        <Skeleton className="h-4 w-24 ml-auto" />
-                      </>
-                    )}
+                    <Skeleton className="h-32 w-full" />
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.5 }}
-              className="flex justify-end gap-3"
-            >
-              <Skeleton className="h-10 w-24" />
-              <Skeleton className="h-10 w-32" />
-            </motion.div>
           </motion.div>
         </div>
       </main>
@@ -115,24 +91,8 @@ function NewRequestSkeleton() {
 }
 
 export default function NewRequestPage() {
-  const router = useRouter();
-  const { user, loading, isAuthenticated } = useCurrentUser();
   const [tipsOpen, setTipsOpen] = useState(false);
   const [processOpen, setProcessOpen] = useState(false);
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [loading, isAuthenticated, router]);
-
-  if (loading) {
-    return <NewRequestSkeleton />;
-  }
-
-  if (!isAuthenticated || !user) {
-    return null;
-  }
 
   return (
     <motion.div
@@ -141,14 +101,11 @@ export default function NewRequestPage() {
       transition={{ duration: 0.3 }}
       className="min-h-screen bg-background"
     >
-      {/* Background Gradient - fixed position */}
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
             
       <main className="relative">
-        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="max-w-4xl mx-auto space-y-6">
-            {/* Page Header Card with Modal Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -166,7 +123,6 @@ export default function NewRequestPage() {
                       </CardDescription>
                     </div>
                     
-                    {/* Action Buttons */}
                     <div className="flex gap-2">
                       {/* Tips Dialog */}
                       <Dialog open={tipsOpen} onOpenChange={setTipsOpen}>
@@ -188,7 +144,6 @@ export default function NewRequestPage() {
                           </DialogHeader>
 
                           <div className="space-y-6 mt-4">
-                            {/* Tip 1 - Be Specific */}
                             <motion.div
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -219,7 +174,6 @@ export default function NewRequestPage() {
 
                             <Separator />
 
-                            {/* Tip 2 - Include Numbers */}
                             <motion.div
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -250,7 +204,6 @@ export default function NewRequestPage() {
 
                             <Separator />
 
-                            {/* Tip 3 - Step by Step */}
                             <motion.div
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -281,7 +234,6 @@ export default function NewRequestPage() {
 
                             <Separator />
 
-                            {/* Tip 4 - Add Screenshots */}
                             <motion.div
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -314,7 +266,6 @@ export default function NewRequestPage() {
                               </div>
                             </motion.div>
 
-                            {/* Summary Box */}
                             <motion.div
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -520,32 +471,6 @@ export default function NewRequestPage() {
                                 </div>
                               </div>
                             </motion.div>
-
-                            {/* Timeline Summary */}
-                            <motion.div
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.3, delay: 0.6 }}
-                              className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-950/20 dark:to-blue-950/20 border border-teal-200 dark:border-teal-800 rounded-lg p-4"
-                            >
-                              <p className="text-sm font-semibold text-foreground mb-2">
-                                ⏱️ ระยะเวลารวมโดยประมาณ
-                              </p>
-                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                                <div className="bg-background/50 rounded-lg p-2">
-                                  <p className="text-muted-foreground mb-1">เครื่องมือง่าย</p>
-                                  <p className="font-bold text-foreground">1-2 สัปดาห์</p>
-                                </div>
-                                <div className="bg-background/50 rounded-lg p-2">
-                                  <p className="text-muted-foreground mb-1">เครื่องมือปานกลาง</p>
-                                  <p className="font-bold text-foreground">2-4 สัปดาห์</p>
-                                </div>
-                                <div className="bg-background/50 rounded-lg p-2">
-                                  <p className="text-muted-foreground mb-1">เครื่องมือซับซ้อน</p>
-                                  <p className="font-bold text-foreground">1-3 เดือน</p>
-                                </div>
-                              </div>
-                            </motion.div>
                           </div>
                         </DialogContent>
                       </Dialog>
@@ -555,7 +480,6 @@ export default function NewRequestPage() {
               </Card>
             </motion.div>
 
-            {/* Request Form with stagger animation */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
