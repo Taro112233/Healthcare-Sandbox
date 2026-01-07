@@ -45,6 +45,8 @@ Directory structure:
     │   │   └── page.tsx
     │   ├── login/
     │   │   └── page.tsx
+    │   ├── products/
+    │   │   └── page.tsx
     │   ├── register/
     │   │   └── page.tsx
     │   ├── requests/
@@ -60,6 +62,15 @@ Directory structure:
     ├── components/
     │   ├── theme-provider.tsx
     │   ├── theme-toggle.tsx
+    │   ├── LandingPage/
+    │   │   ├── animations.ts
+    │   │   ├── CTASection.tsx
+    │   │   ├── DevelopmentProcessSection.tsx
+    │   │   ├── Footer.tsx
+    │   │   ├── HeroSection.tsx
+    │   │   ├── index.ts
+    │   │   ├── ManualDialog.tsx
+    │   │   └── ProductShowcaseSection.tsx
     │   ├── RequestDetail/
     │   │   ├── AttachmentList.tsx
     │   │   ├── index.tsx
@@ -249,6 +260,8 @@ Directory structure:
     │       ├── toggle-group.tsx
     │       ├── toggle.tsx
     │       └── tooltip.tsx
+    ├── data/
+    │   └── products.json
     ├── hooks/
     │   ├── use-mobile.ts
     │   ├── use-theme-transition.ts
@@ -275,6 +288,8 @@ Directory structure:
     │       ├── comment.prisma
     │       ├── request.prisma
     │       └── user.prisma
+    ├── public/
+    │   └── products/
     ├── scripts/
     │   ├── merge-schemas.js
     │   └── merge-seeds.js
