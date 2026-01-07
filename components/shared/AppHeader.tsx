@@ -40,6 +40,11 @@ export function AppHeader() {
   const pathname = usePathname();
   const { user, logout } = useCurrentUser();
 
+  // ✅ ไม่แสดง navbar ในหน้า login/register
+  if (pathname === '/login' || pathname === '/register' || pathname === '/not-found') {
+    return null;
+  }
+
   const getUserInitials = () => {
     if (!user) return 'U';
     return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
@@ -208,7 +213,7 @@ export function AppHeader() {
                       </DropdownMenuItem>
                     )}
 
-                    <DropdownMenuItem onClick={() => router.push('/dashboard/settings/profile')}>
+                    <DropdownMenuItem onClick={() => router.push('/profile')}>
                       <User className="w-4 h-4 mr-2" />
                       ตั้งค่าโปรไฟล์
                     </DropdownMenuItem>

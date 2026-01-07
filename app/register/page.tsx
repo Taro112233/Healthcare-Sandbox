@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/app/utils/auth';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +16,6 @@ import {
   Stethoscope, 
   Eye, 
   EyeOff, 
-  CheckCircle2, 
   XCircle, 
   AlertTriangle,
   UserPlus,
@@ -155,14 +155,7 @@ export default function RegisterPage() {
     });
 
     try {
-      const registerData: {
-        username: string;
-        password: string;
-        firstName: string;
-        lastName: string;
-        email?: string;
-        phone?: string;
-      } = {
+      const registerData: any = {
         username: formData.username.trim().toLowerCase(),
         password: formData.password,
         firstName: formData.firstName.trim(),
@@ -191,7 +184,7 @@ export default function RegisterPage() {
         window.location.href = '/dashboard';
       }, 500);
         
-    } catch (error) {
+    } catch (error: any) {
       toast.dismiss(loadingToast);
       
       console.error('Registration error:', error);
@@ -201,19 +194,6 @@ export default function RegisterPage() {
       if (errorMsg.includes('username') || errorMsg.includes('Username')) {
         toast.error('Username นี้มีคนใช้แล้ว', {
           description: 'กรุณาเลือก Username อื่น',
-          icon: <XCircle className="w-4 h-4" />,
-          duration: 5000,
-          action: {
-            label: "แก้ไข",
-            onClick: () => {
-              setError('');
-              document.getElementById('username')?.focus();
-            },
-          },
-        });
-      } else if (errorMsg.includes('email') || errorMsg.includes('Email')) {
-        toast.error('อีเมลนี้มีคนใช้แล้ว', {
-          description: 'กรุณาใช้อีเมลอื่น หรือเว้นว่างไว้',
           icon: <XCircle className="w-4 h-4" />,
           duration: 5000,
         });
@@ -240,10 +220,6 @@ export default function RegisterPage() {
   };
 
   const handleLoginClick = () => {
-    toast.info('กำลังไปหน้าเข้าสู่ระบบ', {
-      description: 'จะนำไปยังหน้าเข้าสู่ระบบในอีกสักครู่',
-      duration: 2000,
-    });
     router.push('/login');
   };
 
@@ -263,15 +239,18 @@ export default function RegisterPage() {
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
+          >
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-foreground">HealthTech Sandbox</h1>
               <p className="text-sm text-muted-foreground">Technology Request Platform</p>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Register Form */}
@@ -357,9 +336,6 @@ export default function RegisterPage() {
                   className="h-11"
                   autoComplete="email"
                 />
-                <p className="text-xs text-muted-foreground">
-                  สำหรับรับการแจ้งเตือนเมื่อมี update
-                </p>
               </div>
 
               {/* Phone - Optional */}
