@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Save, Loader2, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Save, Loader2, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
 import type { CurrentUser } from '@/hooks/useCurrentUser';
@@ -29,7 +29,7 @@ interface PasswordFormProps {
   onSuccess: () => void;
 }
 
-export function PasswordForm({ user, onSuccess }: PasswordFormProps) {
+export function PasswordForm({ }: PasswordFormProps) {
   const router = useRouter();
   
   const [formData, setFormData] = useState<PasswordFormData>({

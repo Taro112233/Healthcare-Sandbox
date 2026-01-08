@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Mail, Phone, Save, Loader2, AlertTriangle, Info } from 'lucide-react';
+import { Mail, Phone, Save, Loader2, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
 import type { CurrentUser } from '@/hooks/useCurrentUser';
