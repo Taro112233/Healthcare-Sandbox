@@ -1,4 +1,4 @@
-// hooks/useCurrentUser.ts - เวอร์ชันปรับปรุง (มี caching)
+// hooks/useCurrentUser.ts - Fixed Version
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -29,46 +29,42 @@ interface UseCurrentUserReturn {
   logout: () => Promise<void>;
 }
 
-// ✅ In-memory cache (shared across all instances)
+// ✅ Shared state across all hook instances
 let cachedUser: CurrentUser | null = null;
-let isFetching = false;
 let lastFetchTime = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// ✅ Singleton fetch promise (prevent duplicate requests)
+let fetchPromise: Promise<CurrentUser | null> | null = null;
 
 function shouldRefetch(): boolean {
   return Date.now() - lastFetchTime > CACHE_DURATION;
 }
 
-export function useCurrentUser(): UseCurrentUserReturn {
-  const [user, setUser] = useState<CurrentUser | null>(cachedUser);
-  const [loading, setLoading] = useState(!cachedUser);
-  const [error, setError] = useState<string | null>(null);
+// ✅ Centralized fetch function (returns Promise)
+async function fetchUserData(): Promise<CurrentUser | null> {
+  // ✅ Return cached data if fresh
+  if (cachedUser && !shouldRefetch()) {
+    return cachedUser;
+  }
 
-  const fetchUser = useCallback(async () => {
-    // ✅ ถ้ามี cache และยังไม่หมดอายุ
-    if (cachedUser && !shouldRefetch()) {
-      setUser(cachedUser);
-      setLoading(false);
-      return;
-    }
+  // ✅ Reuse existing fetch if in progress
+  if (fetchPromise) {
+    return fetchPromise;
+  }
 
-    // ✅ ป้องกัน fetch ซ้ำซ้อน
-    if (isFetching) return;
-
+  // ✅ Create new fetch promise
+  fetchPromise = (async () => {
     try {
-      isFetching = true;
-      setLoading(true);
-      setError(null);
-
       const response = await fetch('/api/auth/me', {
         credentials: 'include',
+        cache: 'no-store', // ✅ Prevent browser cache
       });
 
       if (!response.ok) {
         if (response.status === 401) {
           cachedUser = null;
-          setUser(null);
-          return;
+          return null;
         }
         throw new Error('Failed to fetch user');
       }
@@ -92,24 +88,45 @@ export function useCurrentUser(): UseCurrentUserReturn {
           createdAt: u.createdAt,
           updatedAt: u.updatedAt,
         };
-        
-        // ✅ Cache user data
+
         cachedUser = userData;
         lastFetchTime = Date.now();
-        setUser(userData);
-      } else {
-        cachedUser = null;
-        setUser(null);
+        return userData;
       }
+
+      cachedUser = null;
+      return null;
+    } catch (err) {
+      console.error('Fetch user error:', err);
+      cachedUser = null;
+      throw err;
+    } finally {
+      // ✅ Clear promise after completion
+      fetchPromise = null;
+    }
+  })();
+
+  return fetchPromise;
+}
+
+export function useCurrentUser(): UseCurrentUserReturn {
+  const [user, setUser] = useState<CurrentUser | null>(cachedUser);
+  const [loading, setLoading] = useState(!cachedUser); // ✅ Start with false if cached
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchUser = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const userData = await fetchUserData();
+      setUser(userData);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'เกิดข้อผิดพลาด';
       setError(errorMsg);
-      console.error('Fetch user error:', err);
-      cachedUser = null;
       setUser(null);
     } finally {
-      setLoading(false);
-      isFetching = false;
+      setLoading(false); // ✅ Always set loading = false
     }
   }, []);
 
@@ -123,17 +140,19 @@ export function useCurrentUser(): UseCurrentUserReturn {
         method: 'POST',
         credentials: 'include',
       });
-      
-      // ✅ Clear cache
+
+      // ✅ Clear all cache
       cachedUser = null;
       lastFetchTime = 0;
+      fetchPromise = null;
       setUser(null);
-      
+
       window.location.href = '/login';
     } catch (err) {
       console.error('Logout error:', err);
       cachedUser = null;
       lastFetchTime = 0;
+      fetchPromise = null;
       setUser(null);
       window.location.href = '/login';
     }
