@@ -1,4 +1,3 @@
-// components/LandingPage/HeroSection.tsx
 'use client';
 
 import React, { useState, useRef } from 'react';
@@ -38,23 +37,23 @@ const requestTypes = [
     title: 'เว็บเพจ',
     subtitle: 'Web Tool',
     description: 'เครื่องมือออนไลน์สำหรับแสดงข้อมูลทางการแพทย์',
-    bgColor: 'bg-green-100 dark:bg-green-950/30',
-    iconColor: 'text-green-600 dark:text-green-400',
+    bgColor: 'bg-emerald-100 dark:bg-emerald-950/40',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
   },
   {
     icon: Calculator,
     title: 'เครื่องคำนวณ',
     subtitle: 'Calculator',
     description: 'เครื่องคำนวณทางการแพทย์ เช่น BMI, Drug Dosing, Risk Score',
-    bgColor: 'bg-violet-100 dark:bg-violet-950/30',
-    iconColor: 'text-violet-600 dark:text-violet-400',
+    bgColor: 'bg-blue-100 dark:bg-blue-950/40',
+    iconColor: 'text-blue-600 dark:text-blue-400',
   },
   {
     icon: FileText,
     title: 'แบบฟอร์ม',
     subtitle: 'Form',
     description: 'แบบฟอร์มบันทึกข้อมูล, Checklist, Assessment Form',
-    bgColor: 'bg-sky-100 dark:bg-sky-950/30',
+    bgColor: 'bg-sky-100 dark:bg-sky-950/40',
     iconColor: 'text-sky-600 dark:text-sky-400',
   },
   {
@@ -62,7 +61,7 @@ const requestTypes = [
     title: 'ระบบจัดการงาน',
     subtitle: 'Workflow',
     description: 'ระบบจัดการขั้นตอนการทำงาน, Process Automation',
-    bgColor: 'bg-amber-100 dark:bg-amber-950/30',
+    bgColor: 'bg-amber-100 dark:bg-amber-950/40',
     iconColor: 'text-amber-600 dark:text-amber-400',
   },
   {
@@ -70,7 +69,7 @@ const requestTypes = [
     title: 'ช่วยตัดสินใจ',
     subtitle: 'Decision Aid',
     description: 'เครื่องมือช่วยตัดสินใจทางคลินิก, Clinical Decision Support',
-    bgColor: 'bg-rose-100 dark:bg-rose-950/30',
+    bgColor: 'bg-rose-100 dark:bg-rose-950/40',
     iconColor: 'text-rose-600 dark:text-rose-400',
   },
   {
@@ -78,27 +77,23 @@ const requestTypes = [
     title: 'อื่นๆ',
     subtitle: 'Other',
     description: 'เครื่องมือดิจิทัลทางการแพทย์รูปแบบอื่น ๆ',
-    bgColor: 'bg-slate-100 dark:bg-slate-950/30',
+    bgColor: 'bg-slate-100 dark:bg-slate-900/50',
     iconColor: 'text-slate-600 dark:text-slate-400',
   }
 ];
 
 export function HeroSection() {
   const [, setApi] = useState<CarouselApi>();
-  
-  // สีพื้นหลังคงเดิม (Aura Layer)
   const laserGradient = `radial-gradient(1200px circle at 35% 50%, #10b981 0%, #059669 20%, #064e3b 45%, transparent 100%)`;
 
   const autoplayRef = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   return (
     <section className="relative overflow-hidden py-20 md:py-32 bg-white dark:bg-slate-950">
-      
-      {/* 1. Background Aura (ล่างสุด) */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-20 blur-[100px]"
+        className="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-25 blur-[100px]"
         style={{ background: laserGradient }}
       />
       
@@ -109,23 +104,19 @@ export function HeroSection() {
           variants={staggerContainer}
           className="text-center"
         >
-          {/* Badge */}
           <motion.div variants={fadeIn} className="inline-flex mb-8">
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/20 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/30 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
               Technology Request Platform
             </div>
           </motion.div>
 
-          {/* Title Section */}
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]">
-              {/* Base Text: สีหลักของตัวอักษร */}
               <span className="text-slate-900 dark:text-white">
                 HealthTech Sandbox
               </span>
               
-              {/* Layer 1: แต้มสีเขียวลงบนตัวอักษรโดยใช้ bg-clip-text */}
               <span 
                 className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-10"
                 style={{ 
@@ -136,16 +127,15 @@ export function HeroSection() {
                 HealthTech Sandbox
               </span>
 
-              {/* Layer 2: ⚡️ Blade Glint (แสงวิ่งผ่านหน้าสุด) */}
               <motion.span 
                 initial={{ backgroundPosition: '-150% 0' }}
                 animate={{ backgroundPosition: '250% 0' }}
                 transition={{ 
-                  delay: 1.2,
-                  duration: 3.0,
+                  delay: 2,
+                  duration: 4.0, // Slow and smooth glint
                   ease: [0.4, 0, 0.2, 1],
                   repeat: Infinity,
-                  repeatDelay: 4 
+                  repeatDelay: 5 
                 }}
                 className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-20"
                 style={{ 
@@ -154,7 +144,7 @@ export function HeroSection() {
                     115deg, 
                     transparent 45%, 
                     rgba(255,255,255,0) 47%, 
-                    rgba(255,255,255,1) 50%, 
+                    rgba(255,255,255,0.8) 50%, 
                     rgba(255,255,255,0) 53%, 
                     transparent 55%
                   )`,
@@ -171,18 +161,18 @@ export function HeroSection() {
             className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             แพลตฟอร์มสำหรับบุคลากรทางการแพทย์ในการส่งคำขอพัฒนาเครื่องมือดิจิทัล 
-            ตั้งแต่เครื่องคำนวณยา ไปจนถึงระบบช่วยตัดสินใจทางคลินิก
+            เพื่อเพิ่มประสิทธิภาพในการดูแลผู้ป่วยด้วยเทคโนโลยี
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <Link href="/requests/new">
-              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20">
+              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 shadow-xl shadow-emerald-600/20 dark:shadow-emerald-900/40 transition-all duration-300">
                 <Send className="w-5 h-5 mr-2" />
                 ส่งคำขอใหม่
               </Button>
             </Link>
             <Link href="/dashboard">
-              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800 backdrop-blur-sm">
+              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800/60 backdrop-blur-sm hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-300">
                 <Activity className="w-5 h-5 mr-2" />
                 ดูคำขอของฉัน
               </Button>
@@ -194,10 +184,10 @@ export function HeroSection() {
               <CarouselContent className="-ml-4">
                 {[...requestTypes, ...requestTypes].map((type, index) => (
                   <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border-t border-white/20">
+                    <Card className="border-0 shadow-soft-lg hover:shadow-xl transition-all duration-500 group h-full bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border-t border-white/20 dark:border-white/5">
                       <CardHeader className="pb-4 text-left">
                         <CardTitle className="flex items-center gap-4">
-                          <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                          <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
                             <type.icon className={`w-6 h-6 ${type.iconColor}`} />
                           </div>
                           <div>
