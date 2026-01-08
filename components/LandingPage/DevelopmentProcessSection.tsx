@@ -106,15 +106,32 @@ const processSteps = [
 ];
 
 export function DevelopmentProcessSection() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [openId, setOpenId] = React.useState<string>("");
 
   React.useEffect(() => {
+    // ถ้ามีตัวใดตัวหนึ่งเปิดอยู่ (openId ไม่ว่าง) ให้หยุด interval
+    if (openId !== "") return;
+
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % processSteps.length);
-    }, 500); // เปลี่ยนทุก 0.5 วินาที
+    }, 1200); // ปรับเวลาให้ช้าลงนิดนึงเพื่อให้ดูสบายตาขึ้น
 
     return () => clearInterval(interval);
-  }, []);
+  }, [openId]);
+
+  const handleAccordionChange = (value: string) => {
+    // Shadcn Accordion: ถ้ากดปิดอันเดิม value จะเป็น "" (string ว่าง)
+    // ถ้ากดอันใหม่ value จะเป็น id ของอันนั้น
+    setOpenId(value);
+
+    if (value !== "") {
+      const index = processSteps.findIndex((step) => step.id === value);
+      if (index !== -1) {
+        setActiveStep(index);
+      }
+    }
+  };
 
   return (
     <section className="py-16 px-4">
@@ -146,22 +163,28 @@ export function DevelopmentProcessSection() {
           viewport={{ once: true }}
           variants={staggerContainer}
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion 
+            type="single" 
+            collapsible 
+            className="space-y-4"
+            value={openId} // ควบคุมด้วย State ตัวเดียว (รองรับเปิดได้ทีละอัน)
+            onValueChange={handleAccordionChange}
+          >
             {processSteps.map((step, index) => (
               <motion.div key={step.id} variants={fadeIn}>
                 <AccordionItem
                   value={step.id}
                   className={`border-2 ${step.borderColor} rounded-2xl overflow-hidden bg-card transition-all duration-500 ${
                     activeStep === index 
-                      ? `shadow-lg ${step.glowColor}` 
-                      : 'shadow-none'
+                      ? `shadow-lg ${step.glowColor} scale-[1.01]` 
+                      : 'shadow-none opacity-80'
                   }`}
                 >
                   <AccordionTrigger className="px-6 py-4 hover:no-underline group">
                     <div className="flex items-center gap-4 w-full">
                       {/* Icon */}
-                      <div className={`w-12 h-12 ${step.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
-                        activeStep === index ? 'scale-110' : ''
+                      <div className={`w-12 h-12 ${step.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 transition-transform ${
+                        activeStep === index ? 'scale-110' : 'group-hover:scale-110'
                       }`}>
                         <step.icon className={`w-6 h-6 ${step.iconColor}`} />
                       </div>

@@ -68,21 +68,19 @@ const requestTypes = [
 ];
 
 export function HeroSection() {
-  // แก้ไข: ใช้เครื่องหมาย _ หรือลบทิ้งถ้าไม่ใช้ เพื่อเลี่ยง Warning
   const [, setApi] = useState<CarouselApi>();
-
+  
+  // สีพื้นหลังคงเดิม (Aura Layer)
   const laserGradient = `radial-gradient(1200px circle at 35% 50%, #10b981 0%, #059669 20%, #064e3b 45%, transparent 100%)`;
 
   const autoplayRef = useRef(
-    Autoplay({ 
-      delay: 3000, 
-      stopOnInteraction: false, 
-      stopOnMouseEnter: true 
-    })
+    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   return (
     <section className="relative overflow-hidden py-20 md:py-32 bg-white dark:bg-slate-950">
+      
+      {/* 1. Background Aura (ล่างสุด) */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-20 blur-[100px]"
         style={{ background: laserGradient }}
@@ -95,6 +93,7 @@ export function HeroSection() {
           variants={staggerContainer}
           className="text-center"
         >
+          {/* Badge */}
           <motion.div variants={fadeIn} className="inline-flex mb-8">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/20 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
@@ -102,11 +101,15 @@ export function HeroSection() {
             </div>
           </motion.div>
 
+          {/* Title Section */}
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]">
-              <span className="text-slate-900 dark:text-white transition-colors duration-500">
+              {/* Base Text: สีหลักของตัวอักษร */}
+              <span className="text-slate-900 dark:text-white">
                 HealthTech Sandbox
               </span>
+              
+              {/* Layer 1: แต้มสีเขียวลงบนตัวอักษรโดยใช้ bg-clip-text */}
               <span 
                 className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-10"
                 style={{ 
@@ -116,10 +119,34 @@ export function HeroSection() {
               >
                 HealthTech Sandbox
               </span>
-              <div 
-                className="absolute inset-0 blur-[60px] -z-10 opacity-30"
-                style={{ background: laserGradient }}
-              />
+
+              {/* Layer 2: ⚡️ Blade Glint (แสงวิ่งผ่านหน้าสุด) */}
+              <motion.span 
+                initial={{ backgroundPosition: '-150% 0' }}
+                animate={{ backgroundPosition: '250% 0' }}
+                transition={{ 
+                  delay: 1.2,
+                  duration: 3.0,
+                  ease: [0.4, 0, 0.2, 1],
+                  repeat: Infinity,
+                  repeatDelay: 4 
+                }}
+                className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-20"
+                style={{ 
+                  WebkitBackgroundClip: 'text',
+                  backgroundImage: `linear-gradient(
+                    115deg, 
+                    transparent 45%, 
+                    rgba(255,255,255,0) 47%, 
+                    rgba(255,255,255,1) 50%, 
+                    rgba(255,255,255,0) 53%, 
+                    transparent 55%
+                  )`,
+                  backgroundSize: '300% 100%'
+                }}
+              >
+                HealthTech Sandbox
+              </motion.span>
             </h1>
           </motion.div>
 
@@ -133,21 +160,13 @@ export function HeroSection() {
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <Link href="/requests/new">
-              <Button 
-                size="lg" 
-                className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20 transition-transform hover:scale-[1.03] active:scale-95"
-              >
-                <Send className="w-5 h-5 mr-2 fill-current" />
+              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20">
+                <Send className="w-5 h-5 mr-2" />
                 ส่งคำขอใหม่
               </Button>
             </Link>
-
             <Link href="/dashboard">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm transition-all hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
-              >
+              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800 backdrop-blur-sm">
                 <Activity className="w-5 h-5 mr-2" />
                 ดูคำขอของฉัน
               </Button>
@@ -155,23 +174,18 @@ export function HeroSection() {
           </motion.div>
 
           <motion.div variants={fadeIn}>
-            <Carousel 
-              setApi={setApi} 
-              opts={{ align: 'start', loop: true }} 
-              plugins={[autoplayRef.current]} 
-              className="w-full max-w-6xl mx-auto"
-            >
+            <Carousel setApi={setApi} opts={{ align: 'start', loop: true }} plugins={[autoplayRef.current]} className="w-full max-w-6xl mx-auto">
               <CarouselContent className="-ml-4">
                 {[...requestTypes, ...requestTypes].map((type, index) => (
                   <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-md">
-                      <CardHeader className="pb-4">
-                        <CardTitle className="flex items-center gap-4 text-left">
-                          <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500`}>
+                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group h-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border-t border-white/20">
+                      <CardHeader className="pb-4 text-left">
+                        <CardTitle className="flex items-center gap-4">
+                          <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
                             <type.icon className={`w-6 h-6 ${type.iconColor}`} />
                           </div>
                           <div>
-                            <div className="text-base font-bold text-foreground">{type.title}</div>
+                            <div className="text-base font-bold">{type.title}</div>
                             <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-black opacity-60">
                               {type.subtitle}
                             </div>
@@ -179,9 +193,7 @@ export function HeroSection() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pt-0 text-left">
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                          {type.description}
-                        </p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{type.description}</p>
                       </CardContent>
                     </Card>
                   </CarouselItem>
