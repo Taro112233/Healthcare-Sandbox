@@ -22,24 +22,6 @@ export default function NotFound() {
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative w-full max-w-md">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="text-center mb-8"
-        >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Stethoscope className="w-7 h-7 text-white" />
-            </div>
-            <div className="text-left">
-              <h1 className="text-2xl font-bold text-foreground">HealthTech Sandbox</h1>
-              <p className="text-sm text-muted-foreground">Technology Request Platform</p>
-            </div>
-          </div>
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

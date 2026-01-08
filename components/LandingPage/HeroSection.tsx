@@ -12,7 +12,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send } from 'lucide-react';
+import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
 
 const fadeIn: Variants = {
@@ -33,6 +33,14 @@ const staggerContainer: Variants = {
 };
 
 const requestTypes = [
+  {
+    icon: LayoutDashboard,
+    title: 'เว็บเพจ',
+    subtitle: 'Web Tool',
+    description: 'เครื่องมือออนไลน์สำหรับแสดงข้อมูลทางการแพทย์',
+    bgColor: 'bg-green-100 dark:bg-green-950/30',
+    iconColor: 'text-green-600 dark:text-green-400',
+  },
   {
     icon: Calculator,
     title: 'เครื่องคำนวณ',
@@ -65,6 +73,14 @@ const requestTypes = [
     bgColor: 'bg-rose-100 dark:bg-rose-950/30',
     iconColor: 'text-rose-600 dark:text-rose-400',
   },
+  {
+    icon: Sparkles,
+    title: 'อื่นๆ',
+    subtitle: 'Other',
+    description: 'เครื่องมือดิจิทัลทางการแพทย์รูปแบบอื่น ๆ',
+    bgColor: 'bg-slate-100 dark:bg-slate-950/30',
+    iconColor: 'text-slate-600 dark:text-slate-400',
+  }
 ];
 
 export function HeroSection() {
