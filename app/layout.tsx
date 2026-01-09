@@ -5,10 +5,18 @@ import { Toaster } from "@/components/ui/sonner"
 import { AuthProvider } from "@/app/utils/auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AppHeader } from "@/components/shared/AppHeader"
+import { CookieConsent } from "@/components/CookieConsent"
 
 export const metadata: Metadata = {
   title: "HealthTech Sandbox",
-  description: "Technology Request Platform",
+  description: "Technology Request Platform - แพลตฟอร์มรับคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์",
+  keywords: "healthcare, technology, digital health, medical tools, sandbox",
+  authors: [{ name: "HLAB Consulting" }],
+  openGraph: {
+    title: "HealthTech Sandbox",
+    description: "Technology Request Platform",
+    type: "website",
+  },
 }
 
 export default function RootLayout({
@@ -33,6 +41,7 @@ export default function RootLayout({
               </main>
             </div>
             <Toaster />
+            <CookieConsent />
           </AuthProvider>
         </ThemeProvider>
       </body>
