@@ -1,3 +1,4 @@
+// app/register/page.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Checkbox } from '@/components/ui/checkbox';
+import { TermsCheckbox } from '@/components/TermsCheckbox';
 import { 
   Loader2, 
   Stethoscope, 
@@ -34,7 +35,6 @@ interface RegisterFormData {
   phone?: string;
 }
 
-// กำหนด Interface สำหรับข้อมูลที่จะส่งไปยัง Register API
 interface RegisterPayload {
   username: string;
   password: string;
@@ -42,6 +42,11 @@ interface RegisterPayload {
   lastName: string;
   email?: string;
   phone?: string;
+}
+
+interface FormErrors {
+  terms?: string;
+  [key: string]: string | undefined;
 }
 
 export default function RegisterPage() {
@@ -60,6 +65,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
   
   const { register, loading } = useAuth();
   const router = useRouter();
@@ -136,8 +142,8 @@ export default function RegisterPage() {
     }
 
     if (!acceptedTerms) {
-      const errorMsg = 'กรุณายอมรับเงื่อนไขการใช้งาน';
-      setError(errorMsg);
+      const errorMsg = 'กรุณายอมรับข้อกำหนดและเงื่อนไขการใช้บริการ';
+      setErrors({ terms: errorMsg });
       toast.error('ยังไม่ได้ยอมรับเงื่อนไข', {
         description: 'กรุณาอ่านและยอมรับเงื่อนไขการใช้งานก่อนสมัครสมาชิก',
         icon: <AlertTriangle className="w-4 h-4" />,
@@ -197,7 +203,6 @@ export default function RegisterPage() {
       toast.dismiss(loadingToast);
       
       console.error('Registration error:', err);
-      // จัดการ Error message จาก unknown type
       const errorMsg = err instanceof Error ? err.message : 'สมัครสมาชิกไม่สำเร็จ';
       setError(errorMsg);
       
@@ -440,42 +445,26 @@ export default function RegisterPage() {
                 </Alert>
               )}
 
-              {/* Terms of Service */}
+              {/* Terms of Service - Using TermsCheckbox Component */}
               <div className="space-y-4 pt-2">
                 <Separator />
                 
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <Checkbox
-                      id="terms"
-                      checked={acceptedTerms}
-                      onCheckedChange={(checked) => {
-                        setAcceptedTerms(checked as boolean);
-                        if (error && checked) {
-                          setError('');
-                        }
-                      }}
-                      disabled={isLoading}
-                      className="h-4 w-4"
-                    />
-                    <Label 
-                      htmlFor="terms" 
-                      className="text-sm text-foreground leading-relaxed cursor-pointer"
-                    >
-                      ข้าพเจ้ายอมรับเงื่อนไขการใช้งาน Sandbox *
-                    </Label>
-                  </div>
-                </div>
+                <TermsCheckbox
+                  checked={acceptedTerms}
+                  onCheckedChange={(checked) => {
+                    setAcceptedTerms(checked);
+                    if (checked && errors.terms) {
+                      setErrors({ ...errors, terms: undefined });
+                    }
+                  }}
+                  error={errors.terms}
+                />
               </div>
 
               {/* Submit Button */}
               <Button 
                 type="submit" 
-                className={`w-full h-11 text-base transition-colors duration-200 ${
-                  acceptedTerms 
-                    ? 'bg-teal-600 hover:bg-teal-700' 
-                    : 'bg-muted hover:bg-muted'
-                }`}
+                className="w-full h-11 text-base bg-teal-600 hover:bg-teal-700 transition-colors duration-200"
                 disabled={isLoading || !acceptedTerms}
               >
                 {isLoading ? (

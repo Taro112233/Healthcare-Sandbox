@@ -43,12 +43,6 @@ export default function PrivacyPolicyPage() {
             variants={fadeIn}
             transition={{ duration: 0.4 }}
           >
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="mb-6 -ml-2">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                กลับหน้าหลัก
-              </Button>
-            </Link>
 
             <div className="flex items-start gap-4 mb-4">
               <div className="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-950/30 flex items-center justify-center flex-shrink-0">
