@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { AlertCircle } from 'lucide-react';
 
 interface TermsCheckboxProps {
   checked: boolean;
@@ -20,37 +21,36 @@ export function TermsCheckbox({ checked, onCheckedChange, error }: TermsCheckbox
           id="terms"
           checked={checked}
           onCheckedChange={onCheckedChange}
-          className="mt-1"
+          className={error ? "border-red-500" : ""}
         />
         <Label
           htmlFor="terms"
           className="text-sm leading-relaxed cursor-pointer"
         >
-          ข้าพเจ้ายอมรับ{' '}
+          ฉันได้อ่านและยอมรับ{' '}
           <Link
-            href="/terms-conditions"
+            href="/terms-of-service"
             target="_blank"
-            rel="noopener noreferrer"
             className="text-primary hover:underline font-medium"
-            onClick={(e) => e.stopPropagation()}
           >
             ข้อกำหนดและเงื่อนไขการใช้บริการ
-          </Link>{' '}
-          และ{' '}
+          </Link>
+          {' '}และ{' '}
           <Link
             href="/privacy-policy"
             target="_blank"
-            rel="noopener noreferrer"
             className="text-primary hover:underline font-medium"
-            onClick={(e) => e.stopPropagation()}
           >
             นโยบายความเป็นส่วนตัว
-          </Link>{' '}
-          ของ HealthTech Sandbox
+          </Link>
         </Label>
       </div>
+      
       {error && (
-        <p className="text-sm text-red-500 ml-7">{error}</p>
+        <div className="flex items-center gap-2 text-red-500 text-sm">
+          <AlertCircle className="w-4 h-4" />
+          <span>{error}</span>
+        </div>
       )}
     </div>
   );

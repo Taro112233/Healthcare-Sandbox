@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { useAuth } from "@/app/utils/auth";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // 1. นำเข้า Link
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -42,7 +42,6 @@ export default function LoginPage() {
   const { login, loading } = useAuth();
   const router = useRouter();
 
-  // ... (ส่วนฟังก์ชัน validateForm, handleSubmit, handleInputChange, handleRegisterClick เหมือนเดิม)
   const validateForm = (): boolean => {
     if (!formData.username?.trim()) {
       setError("กรุณากรอก Username");
@@ -70,11 +69,23 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+    
+    // ✅ Accept cookies automatically on login (same as "Accept All" button)
+    const allAccepted = {
+      necessary: true,
+      functional: true,
+      analytics: true,
+      marketing: true,
+    };
+    localStorage.setItem('hlab-cookie-consent', 'true');
+    localStorage.setItem('hlab-cookie-preferences', JSON.stringify(allAccepted));
+    
     setIsLoading(true);
     setError("");
     const loadingToast = toast.loading("กำลังเข้าสู่ระบบ...", {
       description: "กรุณารอสักครู่",
     });
+    
     try {
       await login({
         username: formData.username.trim(),
@@ -92,7 +103,32 @@ export default function LoginPage() {
       toast.dismiss(loadingToast);
       const errorMsg = error instanceof Error ? error.message : "เข้าสู่ระบบไม่สำเร็จ";
       setError(errorMsg);
-      // ... (toast error handling logic เหมือนเดิม)
+      
+      if (errorMsg.includes('Username') || errorMsg.includes('username')) {
+        toast.error("Username ไม่พบในระบบ", {
+          description: "กรุณาตรวจสอบ Username หรือสมัครสมาชิกใหม่",
+          icon: <AlertTriangle className="w-4 h-4" />,
+          duration: 5000,
+        });
+      } else if (errorMsg.includes('password') || errorMsg.includes('รหัสผ่าน')) {
+        toast.error("รหัสผ่านไม่ถูกต้อง", {
+          description: "กรุณาตรวจสอบรหัสผ่านและลองใหม่อีกครั้ง",
+          icon: <AlertTriangle className="w-4 h-4" />,
+          duration: 5000,
+        });
+      } else if (errorMsg.includes('rate limit') || errorMsg.includes('Too many')) {
+        toast.error("พยายามเข้าสู่ระบบบ่อยเกินไป", {
+          description: "กรุณารอ 5 นาทีก่อนลองใหม่",
+          icon: <AlertTriangle className="w-4 h-4" />,
+          duration: 5000,
+        });
+      } else {
+        toast.error("เข้าสู่ระบบไม่สำเร็จ", {
+          description: errorMsg,
+          icon: <AlertTriangle className="w-4 h-4" />,
+          duration: 5000,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -123,7 +159,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
       <div className="w-full max-w-md">
         
-        {/* Header - เพิ่ม Link คลุมไว้ */}
+        {/* Header */}
         <div className="text-center mb-8">
           <Link 
             href="/" 
@@ -145,7 +181,6 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
-          {/* ... ส่วนที่เหลือเหมือนเดิม ... */}
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">เข้าสู่ระบบ</CardTitle>
             <CardDescription className="text-center">

@@ -162,6 +162,16 @@ export default function RegisterPage() {
       return;
     }
 
+    // ✅ Accept cookies automatically on registration (same as "Accept All" button)
+    const allAccepted = {
+      necessary: true,
+      functional: true,
+      analytics: true,
+      marketing: true,
+    };
+    localStorage.setItem('hlab-cookie-consent', 'true');
+    localStorage.setItem('hlab-cookie-preferences', JSON.stringify(allAccepted));
+
     setIsLoading(true);
     setError('');
 
