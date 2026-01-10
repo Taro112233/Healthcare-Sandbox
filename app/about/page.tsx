@@ -1,12 +1,10 @@
 // app/about/page.tsx
 'use client';
 
-import {
-  HeroSection,
-  FounderSection,
-  MissionSection,
-  VisionSection,
-} from '@/components/AboutPage';
+import { HeroSection } from '@/components/AboutPage/HeroSection';
+import { FounderSection } from '@/components/AboutPage/FounderSection';
+import { MissionSection } from '@/components/AboutPage/MissionSection';
+import { VisionSection } from '@/components/AboutPage/VisionSection';
 
 export default function AboutPage() {
   return (
