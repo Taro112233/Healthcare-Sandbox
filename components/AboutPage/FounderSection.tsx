@@ -28,10 +28,17 @@ export function FounderSection() {
             transition={{ delay: 0.1 }}
             className="relative"
           >
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-6xl font-bold">
-              AY
+            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-teal-100 to-emerald-100 dark:from-teal-950/30 dark:to-emerald-950/30">
+              <Image
+                src="/images/thanatouch-picture.jpg"
+                alt="ธนธัช ธำรงโสตถิสกุล"
+                width={600}
+                height={600}
+                className="object-cover w-full h-full"
+                priority
+              />
             </div>
-
+            
             {/* Decorative Element */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-teal-500 rounded-full blur-3xl opacity-20" />
           </motion.div>
@@ -44,7 +51,7 @@ export function FounderSection() {
           >
             <div>
               <h2 className="text-4xl font-bold text-foreground mb-2">
-                อัยเศรษฐ์ โถทอง
+                นสภ.ธนธัช ธำรงโสตถิสกุล
               </h2>
               <p className="text-xl text-teal-600 dark:text-teal-400 font-medium">
                 Founder & Developer
@@ -54,7 +61,7 @@ export function FounderSection() {
             <div className="relative">
               <Quote className="absolute -top-2 -left-2 w-8 h-8 text-teal-500/20" />
               <blockquote className="text-lg text-muted-foreground leading-relaxed pl-6 border-l-4 border-teal-500">
-                "ผมเชื่อว่าเทคโนโลยีควรช่วยแก้ปัญหาจริงในหน้างาน ไม่ใช่สร้างภาระเพิ่ม
+                "ผมเชื่อว่าเทคโนโลยีควรช่วยแก้ปัญหาจริงในหน้างาน ไม่ใช่สร้างภาระเพิ่ม 
                 HealthTech Sandbox เกิดจากประสบการณ์การทำงานเป็นเภสัชกร และเห็นปัญหาที่ต้องแก้ด้วยมือทุกวัน"
               </blockquote>
             </div>
@@ -63,23 +70,23 @@ export function FounderSection() {
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  <strong className="text-foreground">Pharmacist & Full-Stack Developer</strong> —
+                  <strong className="text-foreground">Pharmacist & Full-Stack Developer</strong> — 
                   เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยี
                 </p>
               </div>
-
+              
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  <strong className="text-foreground">Healthcare Systems Builder</strong> —
+                  <strong className="text-foreground">Healthcare Systems Builder</strong> — 
                   พัฒนาระบบโรงพยาบาลและเครื่องมือดิจิทัลที่ใช้งานจริง
                 </p>
               </div>
-
+              
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
                 <p className="text-muted-foreground">
-                  <strong className="text-foreground">Problem Solver</strong> —
+                  <strong className="text-foreground">Problem Solver</strong> — 
                   มุ่งเน้นแก้ pain point จริงด้วยเทคโนโลยีที่เข้าถึงได้
                 </p>
               </div>

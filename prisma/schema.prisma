@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-10T10:25:04.806Z
+// Last generated: 2026-01-10T18:09:13.965Z
 // InvenStock - Multi-Tenant Inventory Management System V1.0
 
 generator client {
