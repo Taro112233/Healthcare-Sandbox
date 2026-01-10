@@ -11,14 +11,12 @@ import {
   Eye, 
   UserCheck, 
   Globe,
-  ArrowLeft,
   Clock,
   Mail,
   Phone,
   MapPin,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 const fadeIn = {
@@ -28,459 +26,495 @@ const fadeIn = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="min-h-screen bg-background"
-    >
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeIn}
-            transition={{ duration: 0.4 }}
-          >
+    <div className="min-h-screen bg-background">
+      {/* Fixed Background Gradient */}
+      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
-            <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-950/30 flex items-center justify-center flex-shrink-0">
-                <Shield className="w-6 h-6 text-teal-600 dark:text-teal-400" />
-              </div>
-              <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                  นโยบายความเป็นส่วนตัว
-                </h1>
-                <p className="text-lg text-muted-foreground">
-                  HealthTech Sandbox - Technology Request Platform
-                </p>
-              </div>
+      {/* Content */}
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+          className="space-y-6"
+        >
+          {/* Hero Section */}
+          <motion.div variants={fadeIn} className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 dark:bg-teal-950/30 rounded-2xl mb-4">
+              <Shield className="w-8 h-8 text-teal-600 dark:text-teal-400" />
             </div>
-
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <h1 className="text-4xl font-bold text-foreground mb-3">
+              นโยบายความเป็นส่วนตัว
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Privacy Policy for HealthTech Sandbox Platform
+            </p>
+            <div className="flex items-center justify-center gap-4 mt-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
                 <span>อัปเดตล่าสุด: 10 มกราคม 2568</span>
               </div>
+              <span>•</span>
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 <span>เวอร์ชัน 1.0</span>
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="space-y-8"
-        >
           {/* Introduction */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-teal-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-teal-600" />
                   บทนำ
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-foreground">
+                <p className="text-sm leading-relaxed">
                   บริษัท เอช แล็บ จำกัด (&quot;เรา&quot;, &quot;HLAB&quot; หรือ &quot;แพลตฟอร์ม&quot;) ให้ความสำคัญกับความเป็นส่วนตัว
                   และการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งานทุกท่าน นโยบายความเป็นส่วนตัวฉบับนี้อธิบายถึง
                   วิธีการที่เราเก็บรวบรวม ใช้งาน เปิดเผย และปกป้องข้อมูลส่วนบุคคลของท่าน
                   เมื่อท่านใช้บริการ HealthTech Sandbox
                 </p>
-                <p className="text-muted-foreground leading-relaxed mt-4">
-                  โดยการใช้บริการของเรา ท่านยอมรับและตกลงตามข้อกำหนดในนโยบายความเป็นส่วนตัวนี้
-                  หากท่านไม่เห็นด้วยกับนโยบายใดๆ โปรดหยุดการใช้บริการของเราทันที
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="bg-teal-50 dark:bg-teal-950/20 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
+                  <p className="text-sm text-teal-900 dark:text-teal-100">
+                    <strong>สำคัญ:</strong> โดยการใช้บริการของเรา ท่านยอมรับและตกลงตามข้อกำหนดในนโยบายความเป็นส่วนตัวนี้
+                    หากท่านไม่เห็นด้วยกับนโยบายใดๆ โปรดหยุดการใช้บริการของเราทันที
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Data Collection */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-blue-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-blue-600" />
                   ข้อมูลที่เราเก็บรวบรวม
-                </h2>
-                
-                <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">
-                  1. ข้อมูลที่ท่านให้แก่เราโดยตรง
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>ข้อมูลการลงทะเบียน: ชื่อ-นามสกุล, อีเมล, เบอร์โทรศัพท์, หน่วยงาน</li>
-                  <li>ข้อมูลในคำขอ: รายละเอียดปัญหา, ขั้นตอนการทำงาน, ความต้องการ</li>
-                  <li>ไฟล์แนบ: เอกสาร รูปภาพ หรือไฟล์ประกอบคำขอ</li>
-                  <li>ข้อมูลการสื่อสาร: ความคิดเห็น ข้อความในระบบ</li>
-                </ul>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                  <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
+                    1. ข้อมูลที่ท่านให้แก่เราโดยตรง
+                  </h4>
+                  <ul className="space-y-1 text-sm text-blue-900 dark:text-blue-100">
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลการลงทะเบียน: ชื่อ-นามสกุล, อีเมล, เบอร์โทรศัพท์, หน่วยงาน</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลในคำขอ: รายละเอียดปัญหา, ขั้นตอนการทำงาน, ความต้องการ</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ไฟล์แนบ: เอกสาร รูปภาพ หรือไฟล์ประกอบคำขอ</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลการสื่อสาร: ความคิดเห็น ข้อความในระบบ</span>
+                    </li>
+                  </ul>
+                </div>
 
-                <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">
-                  2. ข้อมูลที่เก็บอัตโนมัติ
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>ข้อมูลการใช้งาน: เวลาเข้าสู่ระบบ, หน้าที่เข้าชม, ฟีเจอร์ที่ใช้</li>
-                  <li>ข้อมูลอุปกรณ์: IP Address, Browser, ระบบปฏิบัติการ</li>
-                  <li>คุกกี้และเทคโนโลยีติดตาม: เพื่อปรับปรุงประสบการณ์การใช้งาน</li>
-                </ul>
+                <div className="space-y-3 text-sm text-foreground">
+                  <h4 className="font-semibold">2. ข้อมูลที่เก็บอัตโนมัติ</h4>
+                  <ul className="space-y-1 ml-4">
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลการใช้งาน: เวลาเข้าสู่ระบบ, หน้าที่เข้าชม, ฟีเจอร์ที่ใช้</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลอุปกรณ์: IP Address, Browser, ระบบปฏิบัติการ</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>คุกกี้และเทคโนโลยีติดตาม: เพื่อปรับปรุงประสบการณ์การใช้งาน</span>
+                    </li>
+                  </ul>
 
-                <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">
-                  3. ข้อมูลจากบุคคลที่สาม
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>ข้อมูลจากหน่วยงานภาครัฐที่ร่วมมือกับเรา</li>
-                  <li>ข้อมูลจากผู้ให้บริการด้านเทคโนโลยี (เช่น Cloud Storage)</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+                  <h4 className="font-semibold mt-4">3. ข้อมูลจากบุคคลที่สาม</h4>
+                  <ul className="space-y-1 ml-4">
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลจากหน่วยงานภาครัฐที่ร่วมมือกับเรา</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span>•</span>
+                      <span>ข้อมูลจากผู้ให้บริการด้านเทคโนโลยี (เช่น Cloud Storage)</span>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Purpose */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-purple-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <UserCheck className="w-5 h-5 text-purple-600" />
                   วัตถุประสงค์ในการใช้ข้อมูล
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   เราใช้ข้อมูลของท่านเพื่อวัตถุประสงค์ดังต่อไปนี้:
                 </p>
 
-                <div className="space-y-4">
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2">
+                <div className="space-y-3">
+                  <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2 text-sm">
                       การให้บริการและจัดการระบบ
                     </h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground ml-4">
-                      <li>• ยืนยันตัวตนและสิทธิ์การใช้งาน</li>
-                      <li>• ประมวลผลและติดตามคำขอของท่าน</li>
-                      <li>• สื่อสารและแจ้งสถานะคำขอ</li>
-                      <li>• ให้บริการช่วยเหลือและสนับสนุน</li>
+                    <ul className="space-y-1 text-xs text-purple-900 dark:text-purple-100">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ยืนยันตัวตนและสิทธิ์การใช้งาน</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ประมวลผลและติดตามคำขอของท่าน</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>สื่อสารและแจ้งสถานะคำขอ</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ให้บริการช่วยเหลือและสนับสนุน</span>
+                      </li>
                     </ul>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2">
+                  <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2 text-sm">
                       การปรับปรุงและพัฒนา
                     </h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground ml-4">
-                      <li>• วิเคราะห์พฤติกรรมการใช้งานเพื่อพัฒนาบริการ</li>
-                      <li>• ทดสอบฟีเจอร์ใหม่และปรับปรุงประสิทธิภาพ</li>
-                      <li>• สร้างรายงานและสถิติการใช้งาน</li>
+                    <ul className="space-y-1 text-xs text-purple-900 dark:text-purple-100">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>วิเคราะห์พฤติกรรมการใช้งานเพื่อพัฒนาบริการ</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ทดสอบฟีเจอร์ใหม่และปรับปรุงประสิทธิภาพ</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>สร้างรายงานและสถิติการใช้งาน</span>
+                      </li>
                     </ul>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2">
+                  <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2 text-sm">
                       ความปลอดภัยและการปฏิบัติตามกฎหมาย
                     </h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground ml-4">
-                      <li>• ป้องกันการฉ้อโกงและการใช้งานที่ผิดกฎหมาย</li>
-                      <li>• ปฏิบัติตามกฎหมายและข้อบังคับที่เกี่ยวข้อง</li>
-                      <li>• รักษาความปลอดภัยของระบบและข้อมูล</li>
+                    <ul className="space-y-1 text-xs text-purple-900 dark:text-purple-100">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ป้องกันการฉ้อโกงและการใช้งานที่ผิดกฎหมาย</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ปฏิบัติตามกฎหมายและข้อบังคับที่เกี่ยวข้อง</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>รักษาความปลอดภัยของระบบและข้อมูล</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Data Sharing */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-amber-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-amber-600" />
                   การเปิดเผยข้อมูล
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   เราอาจเปิดเผยข้อมูลของท่านในกรณีดังต่อไปนี้:
                 </p>
 
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>
-                      <strong className="text-foreground">ผู้ให้บริการ:</strong> บุคคลที่สามที่ช่วยเราดำเนินงาน 
+                <div className="space-y-2 text-sm text-foreground">
+                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div>
+                      <strong>ผู้ให้บริการ:</strong> บุคคลที่สามที่ช่วยเราดำเนินงาน 
                       (เช่น Cloud Storage, Email Service) ภายใต้ข้อตกลงการรักษาความลับ
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>
-                      <strong className="text-foreground">หน่วยงานภาครัฐ:</strong> เมื่อมีข้อบังคับทางกฎหมาย 
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div>
+                      <strong>หน่วยงานภาครัฐ:</strong> เมื่อมีข้อบังคับทางกฎหมาย 
                       หรือเพื่อการร่วมมือในโครงการของภาครัฐ
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <span>
-                      <strong className="text-foreground">ความยินยอม:</strong> เมื่อได้รับความยินยอมจากท่าน
-                    </span>
-                  </li>
-                </ul>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div>
+                      <strong>ความยินยอม:</strong> เมื่อได้รับความยินยอมจากท่าน
+                    </div>
+                  </div>
+                </div>
 
-                <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mt-6">
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                  <p className="text-sm text-amber-900 dark:text-amber-100">
                     <strong>ข้อสังเกต:</strong> เราไม่ขาย แลกเปลี่ยน หรือให้เช่าข้อมูลส่วนบุคคลของท่านแก่บุคคลที่สามเพื่อวัตถุประสงค์ทางการตลาด
                   </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Data Security */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Lock className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-green-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Lock className="w-5 h-5 text-green-600" />
                   ความปลอดภัยของข้อมูล
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   เรามีมาตรการรักษาความปลอดภัยทางเทคนิคและองค์กรที่เหมาะสมเพื่อปกป้องข้อมูลของท่าน:
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                    <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2 text-sm">
                       มาตรการทางเทคนิค
                     </h4>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>• การเข้ารหัสข้อมูล (Encryption)</li>
-                      <li>• Firewall และระบบป้องกันการโจมตี</li>
-                      <li>• การสำรองข้อมูลสม่ำเสมอ</li>
-                      <li>• ระบบยืนยันตัวตนแบบหลายชั้น</li>
+                    <ul className="space-y-1 text-xs text-green-900 dark:text-green-100">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>การเข้ารหัสข้อมูล (Encryption)</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>Firewall และระบบป้องกันการโจมตี</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>การสำรองข้อมูลสม่ำเสมอ</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>ระบบยืนยันตัวตนแบบหลายชั้น</span>
+                      </li>
                     </ul>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                    <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2 text-sm">
                       มาตรการทางองค์กร
                     </h4>
-                    <ul className="space-y-1 text-xs text-muted-foreground">
-                      <li>• จำกัดการเข้าถึงข้อมูลเฉพาะผู้มีสิทธิ์</li>
-                      <li>• อบรมพนักงานเรื่องความปลอดภัย</li>
-                      <li>• นโยบายและขั้นตอนที่ชัดเจน</li>
-                      <li>• การตรวจสอบและประเมินความเสี่ยง</li>
+                    <ul className="space-y-1 text-xs text-green-900 dark:text-green-100">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>จำกัดการเข้าถึงข้อมูลเฉพาะผู้มีสิทธิ์</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>อบรมพนักงานเรื่องความปลอดภัย</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>นโยบายและขั้นตอนที่ชัดเจน</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>การตรวจสอบและประเมินความเสี่ยง</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* User Rights */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-indigo-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <UserCheck className="w-5 h-5 text-indigo-600" />
                   สิทธิของท่าน
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 ท่านมีสิทธิดังต่อไปนี้:
                 </p>
 
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">1</span>
+                  {[
+                    {
+                      num: '1',
+                      title: 'สิทธิในการเข้าถึง',
+                      desc: 'ขอเข้าถึงและขอรับสำเนาข้อมูลส่วนบุคคลของท่าน'
+                    },
+                    {
+                      num: '2',
+                      title: 'สิทธิในการแก้ไข',
+                      desc: 'ขอแก้ไขข้อมูลที่ไม่ถูกต้องหรือไม่สมบูรณ์'
+                    },
+                    {
+                      num: '3',
+                      title: 'สิทธิในการลบ',
+                      desc: 'ขอให้ลบข้อมูลของท่านภายใต้เงื่อนไขที่กฎหมายกำหนด'
+                    },
+                    {
+                      num: '4',
+                      title: 'สิทธิในการคัดค้าน',
+                      desc: 'คัดค้านการประมวลผลข้อมูลของท่านในบางกรณี'
+                    },
+                    {
+                      num: '5',
+                      title: 'สิทธิในการถอนความยินยอม',
+                      desc: 'ถอนความยินยอมที่เคยให้ไว้ในการประมวลผลข้อมูล'
+                    },
+                    {
+                      num: '6',
+                      title: 'สิทธิในการโอนย้าย',
+                      desc: 'ขอรับข้อมูลในรูปแบบที่ใช้งานได้และขอให้โอนไปยังผู้ควบคุมข้อมูลอื่น'
+                    }
+                  ].map((right) => (
+                    <div key={right.num} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950/30 flex items-center justify-center flex-shrink-0">
+                        <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{right.num}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground text-sm mb-1">
+                          {right.title}
+                        </h4>
+                        <p className="text-xs text-muted-foreground">
+                          {right.desc}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการเข้าถึง
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        ขอเข้าถึงและขอรับสำเนาข้อมูลส่วนบุคคลของท่าน
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">2</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการแก้ไข
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        ขอแก้ไขข้อมูลที่ไม่ถูกต้องหรือไม่สมบูรณ์
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">3</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการลบ
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        ขอให้ลบข้อมูลของท่านภายใต้เงื่อนไขที่กฎหมายกำหนด
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">4</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการคัดค้าน
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        คัดค้านการประมวลผลข้อมูลของท่านในบางกรณี
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">5</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการถอนความยินยอม
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        ถอนความยินยอมที่เคยให้ไว้ในการประมวลผลข้อมูล
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-semibold text-primary">6</span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        สิทธิในการโอนย้าย
-                      </h4>
-                      <p className="text-xs text-muted-foreground">
-                        ขอรับข้อมูลในรูปแบบที่ใช้งานได้และขอให้โอนไปยังผู้ควบคุมข้อมูลอื่น
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
-                <div className="bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800 rounded-lg p-4 mt-6">
-                  <p className="text-sm text-teal-800 dark:text-teal-200">
+                <div className="bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800 rounded-lg p-4">
+                  <p className="text-sm text-indigo-900 dark:text-indigo-100">
                     <strong>การใช้สิทธิ:</strong> ท่านสามารถใช้สิทธิได้โดยติดต่อเราผ่านช่องทางที่ระบุไว้ด้านล่าง 
                     เราจะดำเนินการตามคำขอของท่านภายใน 30 วัน
                   </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Cookies */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Globe className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-orange-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-orange-600" />
                   คุกกี้และเทคโนโลยีติดตาม
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   เราใช้คุกกี้และเทคโนโลยีที่คล้ายกันเพื่อปรับปรุงประสบการณ์การใช้งานของท่าน:
                 </p>
 
-                <div className="space-y-4">
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                <div className="space-y-3">
+                  <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
+                    <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2 text-sm">
                       คุกกี้ที่จำเป็น
                     </h4>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-orange-900 dark:text-orange-100">
                       จำเป็นสำหรับการทำงานพื้นฐานของเว็บไซต์ ไม่สามารถปิดได้
                     </p>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                  <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
+                    <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2 text-sm">
                       คุกกี้เพื่อการใช้งาน
                     </h4>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-orange-900 dark:text-orange-100">
                       จดจำการตั้งค่าและความชอบของท่าน เช่น ภาษา ธีม
                     </p>
                   </div>
 
-                  <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                  <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-4 border border-orange-200 dark:border-orange-800">
+                    <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2 text-sm">
                       คุกกี้เพื่อการวิเคราะห์
                     </h4>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-orange-900 dark:text-orange-100">
                       ช่วยให้เราเข้าใจการใช้งานเพื่อปรับปรุงบริการ (Google Analytics)
                     </p>
                   </div>
                 </div>
 
-                <p className="text-sm text-muted-foreground mt-4">
+                <p className="text-sm text-muted-foreground">
                   ท่านสามารถจัดการการตั้งค่าคุกกี้ได้ผ่านเบราว์เซอร์ หรือคลิกปุ่มตั้งค่าในแบนเนอร์คุกกี้
                 </p>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Contact */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-cyan-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-cyan-600" />
                   ติดต่อเรา
-                </h2>
-                
-                <p className="text-muted-foreground mb-4">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-foreground">
                   หากท่านมีคำถาม ข้อสงสัย หรือต้องการใช้สิทธิใดๆ กรุณาติดต่อ:
                 </p>
 
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg">
-                    <div className="w-10 h-10 rounded-lg bg-teal-100 dark:bg-teal-950/30 flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        อีเมล
-                      </h4>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
+                    <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">อีเมล</p>
                       <a 
                         href="mailto:privacy@hlabconsulting.com" 
-                        className="text-primary hover:underline text-sm"
+                        className="text-sm text-primary hover:underline break-all"
                       >
                         privacy@hlabconsulting.com
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg">
-                    <div className="w-10 h-10 rounded-lg bg-teal-100 dark:bg-teal-950/30 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        โทรศัพท์
-                      </h4>
+                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
+                    <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">โทรศัพท์</p>
                       <a 
                         href="tel:0612345678" 
-                        className="text-primary hover:underline text-sm"
+                        className="text-sm text-primary hover:underline"
                       >
                         061-234-5678
                       </a>
@@ -490,15 +524,11 @@ export default function PrivacyPolicyPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg">
-                    <div className="w-10 h-10 rounded-lg bg-teal-100 dark:bg-teal-950/30 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground text-sm mb-1">
-                        ที่อยู่
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
+                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg sm:col-span-2">
+                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">ที่อยู่</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
                         บริษัท เอช แล็บ จำกัด<br />
                         123 ถนนสุขุมวิท แขวงคลองเตย<br />
                         เขตคลองเตย กรุงเทพฯ 10110
@@ -506,41 +536,57 @@ export default function PrivacyPolicyPage() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Updates */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary" />
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-gray-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-gray-600" />
                   การปรับปรุงนโยบาย
-                </h2>
-                
-                <p className="text-muted-foreground">
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-sm text-foreground">
+                <p>
                   เราอาจปรับปรุงนโยบายความเป็นส่วนตัวนี้เป็นครั้งคราวเพื่อให้สอดคล้องกับการเปลี่ยนแปลงของบริการและกฎหมาย 
                   การเปลี่ยนแปลงที่สำคัญจะถูกแจ้งให้ท่านทราบผ่านอีเมลหรือประกาศบนเว็บไซต์ 
                   เราขอแนะนำให้ท่านตรวจสอบนโยบายนี้เป็นประจำ
                 </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Footer Notice */}
+          <motion.div variants={fadeIn}>
+            <div className="text-center py-8 text-sm text-muted-foreground space-y-2">
+              <p>
+                นโยบายความเป็นส่วนตัวนี้มีผลบังคับใช้ตั้งแต่วันที่ 10 มกราคม 2568
+              </p>
+              <p>
+                © 2025 บริษัท เอช แล็บ จำกัด - สงวนลิขสิทธิ์
+              </p>
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <Link
+                  href="/terms-of-service"
+                  className="text-primary hover:underline"
+                >
+                  ข้อกำหนดและเงื่อนไข
+                </Link>
+                <span>•</span>
+                <Link
+                  href="/"
+                  className="text-primary hover:underline"
+                >
+                  กลับหน้าหลัก
+                </Link>
               </div>
-            </CardContent>
-          </Card>
-
-          <Separator />
-
-          {/* Footer Note */}
-          <div className="text-center text-sm text-muted-foreground">
-            <p>
-              นโยบายความเป็นส่วนตัวนี้มีผลบังคับใช้ตั้งแต่วันที่ 10 มกราคม 2568
-            </p>
-            <p className="mt-2">
-              © 2025 บริษัท เอช แล็บ จำกัด - สงวนลิขสิทธิ์
-            </p>
-          </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 }

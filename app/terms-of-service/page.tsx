@@ -1,4 +1,4 @@
-// app/terms-conditions/page.tsx
+// app/terms-of-service/page.tsx
 'use client';
 
 import React from 'react';
