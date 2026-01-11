@@ -127,28 +127,32 @@ export function HeroSection() {
                 HealthTech Sandbox
               </span>
 
+              {/* ✅ Single Sharp Glint - Optimized for Performance */}
               <motion.span 
-                initial={{ backgroundPosition: '-150% 0' }}
-                animate={{ backgroundPosition: '250% 0' }}
+                initial={{ backgroundPosition: '-20% 0' }}
+                animate={{ backgroundPosition: '120% 0' }}
                 transition={{ 
                   delay: 2,
-                  duration: 4.0, // Slow and smooth glint
+                  duration: 2,
                   ease: [0.4, 0, 0.2, 1],
                   repeat: Infinity,
-                  repeatDelay: 5 
+                  repeatDelay: 10
                 }}
                 className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-20"
                 style={{ 
                   WebkitBackgroundClip: 'text',
                   backgroundImage: `linear-gradient(
                     115deg, 
-                    transparent 45%, 
-                    rgba(255,255,255,0) 47%, 
-                    rgba(255,255,255,0.8) 50%, 
-                    rgba(255,255,255,0) 53%, 
-                    transparent 55%
+                    transparent 0%, 
+                    transparent 40%, 
+                    rgba(255,255,255,0) 45%, 
+                    rgba(255,255,255,0.9) 50%, 
+                    rgba(255,255,255,0) 55%, 
+                    transparent 60%,
+                    transparent 100%
                   )`,
-                  backgroundSize: '300% 100%'
+                  backgroundSize: '300% 100%',
+                  backgroundRepeat: 'no-repeat'
                 }}
               >
                 HealthTech Sandbox
