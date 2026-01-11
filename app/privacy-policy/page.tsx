@@ -17,7 +17,6 @@ import {
   MapPin,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },

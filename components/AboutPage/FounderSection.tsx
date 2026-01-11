@@ -61,8 +61,8 @@ export function FounderSection() {
             <div className="relative">
               <Quote className="absolute -top-2 -left-2 w-8 h-8 text-teal-500/20" />
               <blockquote className="text-lg text-muted-foreground leading-relaxed pl-6 border-l-4 border-teal-500">
-                "ผมเชื่อว่าเทคโนโลยีควรช่วยแก้ปัญหาจริงในหน้างาน ไม่ใช่สร้างภาระเพิ่ม 
-                HealthTech Sandbox เกิดจากประสบการณ์การทำงานเป็นเภสัชกร และเห็นปัญหาที่ต้องแก้ด้วยมือทุกวัน"
+                &ldquo;ผมเชื่อว่าเทคโนโลยีควรช่วยแก้ปัญหาจริงในหน้างาน ไม่ใช่สร้างภาระเพิ่ม 
+                HealthTech Sandbox เกิดจากประสบการณ์การทำงานเป็นเภสัชกร และเห็นปัญหาที่ต้องแก้ด้วยมือทุกวัน&rdquo;
               </blockquote>
             </div>
 

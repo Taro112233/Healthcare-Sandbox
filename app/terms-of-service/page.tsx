@@ -90,31 +90,31 @@ export default function TermsConditionsPage() {
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>"แพลตฟอร์ม"</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ HealthTech Sandbox
+                      <strong>&ldquo;แพลตฟอร์ม&rdquo;</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ HealthTech Sandbox
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>"ผู้ใช้งาน" หรือ "ท่าน"</strong> หมายถึง บุคคลธรรมดาหรือนิติบุคคลที่ใช้บริการแพลตฟอร์ม
+                      <strong>&ldquo;ผู้ใช้งาน&rdquo; หรือ &ldquo;ท่าน&rdquo;</strong> หมายถึง บุคคลธรรมดาหรือนิติบุคคลที่ใช้บริการแพลตฟอร์ม
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>"คำขอ" (Request)</strong> หมายถึง คำขอพัฒนาเครื่องมือที่ผู้ใช้งานส่งผ่านแพลตฟอร์ม
+                      <strong>&ldquo;คำขอ&rdquo; (Request)</strong> หมายถึง คำขอพัฒนาเครื่องมือที่ผู้ใช้งานส่งผ่านแพลตฟอร์ม
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>"Admin"</strong> หมายถึง ผู้ดูแลระบบที่มีสิทธิจัดการคำขอและเปลี่ยนสถานะ
+                      <strong>&ldquo;Admin&rdquo;</strong> หมายถึง ผู้ดูแลระบบที่มีสิทธิจัดการคำขอและเปลี่ยนสถานะ
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>"บริษัทฯ"</strong> หมายถึง HLAB Consulting ผู้ให้บริการแพลตฟอร์ม
+                      <strong>&ldquo;บริษัทฯ&rdquo;</strong> หมายถึง HLAB Consulting ผู้ให้บริการแพลตฟอร์ม
                     </div>
                   </div>
                 </div>
