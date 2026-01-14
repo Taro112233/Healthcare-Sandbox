@@ -2,8 +2,8 @@
   "products": [
     {
       "id": "vancomycin-calculator",
-      "title": "Vancomycin Dose Calculator",
-      "description": "คำนวณ Loading & Maintenance dose อัตโนมัติตาม eGFR ลดเวลาจาก 10 นาที เหลือ 30 วินาที",
+      "title": "Rxdrugstore",
+      "description": "แหล่งเรียนรู้ผลิตภัณฑ์สำหรับนักศึกษาเภสัช",
       "tags": ["PRODUCT DESIGN", "CALCULATOR", "2024"],
       "videoSrc": "/products/video1.mp4",
       "demoUrl": "https://demo.healthtech.com/vancomycin"
