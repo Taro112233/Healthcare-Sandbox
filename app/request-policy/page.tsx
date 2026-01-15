@@ -16,8 +16,6 @@ import {
   Code,
   TestTube,
   Sparkles,
-  Database,
-  Lock,
   Scale,
   Target,
   FileSearch,
