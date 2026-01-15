@@ -3,10 +3,13 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -60,6 +63,7 @@ interface FormErrors {
   currentWorkflow?: string;
   expectedTechHelp?: string;
   requestType?: string;
+  policy?: string;
 }
 
 const typeIcons: Record<RequestType, React.ReactNode> = {
@@ -80,6 +84,7 @@ export function RequestForm() {
     requestType: '',
   });
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -107,6 +112,10 @@ export function RequestForm() {
       newErrors.requestType = 'กรุณาเลือกประเภทคำขอ';
     }
 
+    if (!acceptedPolicy) {
+      newErrors.policy = 'กรุณายอมรับนโยบายการส่งคำขอก่อนส่งคำขอ';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -115,6 +124,13 @@ export function RequestForm() {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handlePolicyChange = (checked: boolean) => {
+    setAcceptedPolicy(checked);
+    if (checked && errors.policy) {
+      setErrors(prev => ({ ...prev, policy: undefined }));
     }
   };
 
@@ -189,8 +205,6 @@ export function RequestForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      
-
       {/* Department Input */}
       <Card>
         <CardHeader>
@@ -255,7 +269,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Pain Point Card - สีแดง */}
+      {/* Pain Point Card */}
       <Card className="border-l-4 border-l-red-500 dark:border-l-red-400">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
@@ -279,7 +293,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Current Workflow Card - สีน้ำเงิน */}
+      {/* Current Workflow Card */}
       <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2">
@@ -303,7 +317,7 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
-      {/* Expected Tech Help Card - สีเขียว */}
+      {/* Expected Tech Help Card */}
       <Card className="border-l-4 border-l-green-500 dark:border-l-green-400">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
@@ -345,12 +359,49 @@ export function RequestForm() {
         </CardContent>
       </Card>
 
+      {/* Policy Checkbox */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="space-y-2">
+            <div className="flex items-start gap-3">
+              <Checkbox
+                id="request-policy"
+                checked={acceptedPolicy}
+                onCheckedChange={handlePolicyChange}
+                className={errors.policy ? "border-red-500" : ""}
+              />
+              <Label
+                htmlFor="request-policy"
+                className="text-sm leading-relaxed cursor-pointer"
+              >
+                ฉันได้อ่านและยอมรับ{' '}
+                <Link
+                  href="/request-policy"
+                  target="_blank"
+                  className="text-primary hover:underline font-medium"
+                >
+                  นโยบายการส่งคำขอพัฒนาเครื่องมือ
+                </Link>
+              </Label>
+            </div>
+            
+            {errors.policy && (
+              <div className="flex items-center gap-2 text-red-500 text-sm ml-7">
+                <AlertCircle className="w-4 h-4" />
+                <span>{errors.policy}</span>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {submitError && (
         <Alert variant="destructive">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>{submitError}</AlertDescription>
         </Alert>
       )} 
+
       {/* Submit Buttons */}
       <div className="flex justify-end gap-3">
         <Button
