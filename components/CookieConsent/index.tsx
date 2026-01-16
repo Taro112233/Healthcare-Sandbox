@@ -65,7 +65,7 @@ export function CookieConsent() {
     setShowBanner(false);
   };
 
-  const handleSavePreferences = () => {
+  const handleAcceptSelected = () => {
     saveConsent(preferences);
     setShowSettings(false);
     setShowBanner(false);
@@ -196,9 +196,6 @@ export function CookieConsent() {
                 </div>
                 <Switch checked={true} disabled />
               </div>
-              <div className="bg-muted/50 rounded-lg p-3 text-xs text-muted-foreground">
-                ใช้สำหรับ: การยืนยันตัวตน, ความปลอดภัย, การจดจำการตั้งค่าพื้นฐาน
-              </div>
             </div>
 
             <Separator />
@@ -219,11 +216,6 @@ export function CookieConsent() {
                   onCheckedChange={() => togglePreference('functional')}
                 />
               </div>
-              {preferences.functional && (
-                <div className="bg-muted/50 rounded-lg p-3 text-xs text-muted-foreground">
-                  ใช้สำหรับ: จดจำการตั้งค่าภาษา, ธีมสี, การปรับแต่งส่วนตัว
-                </div>
-              )}
             </div>
 
             <Separator />
@@ -244,11 +236,6 @@ export function CookieConsent() {
                   onCheckedChange={() => togglePreference('analytics')}
                 />
               </div>
-              {preferences.analytics && (
-                <div className="bg-muted/50 rounded-lg p-3 text-xs text-muted-foreground">
-                  ใช้สำหรับ: Google Analytics, การวัดผลการใช้งาน, รายงานสถิติ
-                </div>
-              )}
             </div>
 
             <Separator />
@@ -269,28 +256,16 @@ export function CookieConsent() {
                   onCheckedChange={() => togglePreference('marketing')}
                 />
               </div>
-              {preferences.marketing && (
-                <div className="bg-muted/50 rounded-lg p-3 text-xs text-muted-foreground">
-                  ใช้สำหรับ: การแสดงโฆษณาที่ตรงกับความสนใจ, การติดตามการคลิก
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 mt-6 pt-6 border-t border-border">
+          {/* Action Button */}
+          <div className="flex justify-end mt-6 pt-6 border-t border-border">
             <Button
-              variant="outline"
-              onClick={handleSavePreferences}
-              className="flex-1"
+              onClick={handleAcceptSelected}
+              className="bg-teal-600 hover:bg-teal-700"
             >
-              บันทึกการตั้งค่า
-            </Button>
-            <Button
-              onClick={handleAcceptAll}
-              className="flex-1 bg-teal-600 hover:bg-teal-700"
-            >
-              ยอมรับทั้งหมด
+              ยอมรับการตั้งค่า
             </Button>
           </div>
         </DialogContent>
