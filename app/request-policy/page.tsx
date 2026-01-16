@@ -21,6 +21,8 @@ import {
   FileSearch,
   MessageSquare,
   Calendar,
+  Lightbulb,
+  TrendingUp,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -106,7 +108,7 @@ export default function RequestPolicyPage() {
                   />
                   <PolicyItem
                     icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
-                    text="ทีมพัฒนามีสิทธิ์เลือกพิจารณาคำขอตามความเหมาะสม ความเป็นไปได้ และทรัพยากรที่มี"
+                    text="ทีมพัฒนาจะพิจารณาคำขอตามความเหมาะสม ความเป็นไปได้ และทรัพยากรที่มี"
                   />
                   <PolicyItem
                     icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
@@ -158,31 +160,200 @@ export default function RequestPolicyPage() {
             </Card>
           </motion.div>
 
-          {/* Section 3: Responsibilities & Risks */}
+          {/* Section 3: Project Scope & Suitability */}
           <motion.div variants={fadeIn}>
             <Card className="border-l-4 border-l-purple-500">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-purple-600" />
-                  3. ความรับผิดชอบและความเสี่ยง
+                  <Target className="w-5 h-5 text-purple-600" />
+                  3. ขอบเขตและความเหมาะสมของโครงการ
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                  <p className="text-sm font-semibold text-green-900 dark:text-green-100 mb-3 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" />
+                    โครงการที่เหมาะสำหรับ Sandbox:
+                  </p>
+                  <div className="grid gap-2">
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      text="เครื่องมือเริ่มต้นใหม่จากศูนย์ (greenfield projects)"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      text="Proof-of-concept หรือ MVP สำหรับทดสอบแนวคิด"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      text="เครื่องมือที่ช่วยแก้ pain point เฉพาะจุด (focused problem)"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      text="Calculator, Form, Decision aid ที่ใช้ logic ไม่ซับซ้อนเกินไป"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      text="เครื่องมือที่เป็นประโยชน์ต่อชุมชนและสามารถ open source ได้"
+                      variant="info"
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+                  <p className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4" />
+                    โครงการที่อาจมีข้อจำกัด:
+                  </p>
+                  <div className="grid gap-2 text-sm text-amber-800 dark:text-amber-200">
+                    <PolicyItem
+                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
+                      text="โครงการที่ต้องการเชื่อมต่อกับระบบเดิม (legacy integration) - ทีมอาจไม่มีสิทธิ์เข้าถึง"
+                      variant="default"
+                    />
+                    <PolicyItem
+                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
+                      text="งานที่ต้องการทำต่อจากโปรเจกต์เดิมของคนอื่น - ทีมอาจไม่มี context ครบ"
+                      variant="default"
+                    />
+                    <PolicyItem
+                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
+                      text="ระบบขนาดใหญ่ที่ต้องการหลายโมดูล - อาจเกินขอบเขต sandbox"
+                      variant="default"
+                    />
+                    <PolicyItem
+                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
+                      text="เครื่องมือที่ต้องการ custom logic ซับซ้อนเฉพาะโรงพยาบาล - อาจไม่เหมาะกับการแชร์"
+                      variant="default"
+                    />
+                  </div>
+                  <div className="mt-3 p-3 bg-amber-100 dark:bg-amber-900/30 rounded text-xs text-amber-900 dark:text-amber-100">
+                    <strong>หมายเหตุ:</strong> หากโครงการของคุณอยู่ในกลุ่มนี้ 
+                    เราขอแนะนำให้ส่งคำขอมาได้ตามปกติ - ทีมจะพิจารณาแต่ละกรณีและอาจ:
+                    (1) แนะนำแนวทางอื่นที่เหมาะสมกว่า (2) ปรับขอบเขตให้เป็นไปได้ หรือ 
+                    (3) อธิบายเหตุผลหากไม่สามารถดำเนินการได้
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Section 4: Intellectual Property - NEW */}
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-indigo-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Scale className="w-5 h-5 text-indigo-600" />
+                  4. ลิขสิทธิ์และการใช้งาน
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-indigo-50 dark:bg-indigo-950/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
+                  <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-100 mb-3">
+                    📜 การครอบครองลิขสิทธิ์:
+                  </p>
+                  <div className="grid gap-3">
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
+                      text="เครื่องมือที่พัฒนาขึ้น ถือเป็นทรัพย์สินทางปัญญาของผู้พัฒนา (HLAB Consulting หรือทีมพัฒนา)"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
+                      text="ผู้ส่งคำขอยังคงเป็นเจ้าของแนวคิด (idea) และ use case ของตนเอง"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
+                      text="คุณสามารถใช้งานเครื่องมือได้ฟรี แต่ไม่สามารถนำไปขายหรือต่อยอดเชิงพาณิชย์โดยไม่ได้รับอนุญาต"
+                      variant="info"
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                  <p className="text-sm font-semibold text-purple-900 dark:text-purple-100 mb-3">
+                    🌐 การเผยแพร่และแชร์:
+                  </p>
+                  <div className="grid gap-3">
+                    <PolicyItem
+                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
+                      text="เครื่องมืออาจถูกเผยแพร่เป็น Open Source หรือตัวอย่างสาธารณะ"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
+                      text="แนวคิดและ pain point ที่ส่งมาอาจถูกใช้เพื่อพัฒนาเครื่องมือสำหรับผู้อื่นหรือชุมชน"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
+                      text="ข้อมูลที่ส่งมา (ไม่รวมข้อมูลส่วนบุคคล) อาจถูกใช้เพื่อวิจัยและปรับปรุงแพลตฟอร์ม"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
+                      text="ชื่อและ credit ของผู้ส่งคำขอจะถูกระบุเมื่อเผยแพร่เครื่องมือ (หากเป็นไปได้)"
+                      variant="info"
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                  <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                    🤝 การใช้งานเชิงพาณิชย์:
+                  </p>
+                  <div className="grid gap-3">
+                    <PolicyItem
+                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
+                      text="หากต้องการนำเครื่องมือไปใช้เชิงพาณิชย์ กรุณาติดต่อทีมพัฒนาเพื่อขอใบอนุญาต"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
+                      text="หากต้องการให้พัฒนา custom version สำหรับองค์กร อาจมีค่าใช้จ่ายแยกต่างหาก"
+                      variant="info"
+                    />
+                    <PolicyItem
+                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
+                      text="การใช้งานส่วนตัวหรือภายในองค์กร (non-commercial) ไม่ต้องขออนุญาต"
+                      variant="info"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Section 5: Responsibilities & Risks */}
+          <motion.div variants={fadeIn}>
+            <Card className="border-l-4 border-l-orange-500">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-orange-600" />
+                  5. ความรับผิดชอบและความเสี่ยง
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-3">
                   <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-purple-500" />}
+                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
                     text="เครื่องมืออยู่ในสถานะ 'As-Is' โดยไม่มีการรับประกันใดๆ"
                   />
                   <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-purple-500" />}
+                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
                     text="ผู้ใช้งานต้องรับผิดชอบเองในการ validate ความถูกต้องของเครื่องมือก่อนนำไปใช้จริง"
                   />
                   <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-purple-500" />}
+                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
                     text="ทีมพัฒนาไม่รับผิดชอบต่อความเสียหายหรือผลกระทบใดๆ ที่เกิดจากการใช้เครื่องมือ"
                   />
                   <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-purple-500" />}
+                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
                     text="หากต้องการนำไปใช้งานจริงในสภาพแวดล้อมคลินิก ผู้ใช้ต้องทำการทดสอบและรับรองเพิ่มเติมเอง"
                   />
                 </div>
@@ -190,45 +361,13 @@ export default function RequestPolicyPage() {
             </Card>
           </motion.div>
 
-          {/* Section 4: Intellectual Property */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-indigo-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-indigo-600" />
-                  4. ทรัพย์สินทางปัญญาและการใช้งาน
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-3">
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                    text="เครื่องมือที่พัฒนาอาจถูกเผยแพร่เป็น Open Source หรือตัวอย่างสาธารณะ"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                    text="แนวคิดและ pain point ที่ส่งมาอาจถูกใช้เพื่อพัฒนาเครื่องมือสำหรับผู้อื่นหรือชุมชน"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                    text="ข้อมูลที่ส่งมา (ไม่รวมข้อมูลส่วนบุคคล) อาจถูกใช้เพื่อวิจัยและปรับปรุงแพลตฟอร์ม"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                    text="คุณยังคงเป็นเจ้าของแนวคิดและ use case แต่เครื่องมือที่พัฒนาเป็น collaborative work"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 5: Development Process */}
+          {/* Section 6: Development Process */}
           <motion.div variants={fadeIn}>
             <Card className="border-l-4 border-l-green-500">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
                   <Clock className="w-5 h-5 text-green-600" />
-                  5. กระบวนการพัฒนาและระยะเวลา
+                  6. กระบวนการพัฒนาและระยะเวลา
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -267,7 +406,7 @@ export default function RequestPolicyPage() {
                     <StatusBadgeDemo
                       icon={<Eye className="w-4 h-4" />}
                       label="อยู่ในการพิจารณา"
-                      description="วิเคราะห์ความต้องการ"
+                      description="วิเคราะห์ความต้องการและความเป็นไปได้"
                       color="blue"
                     />
                     <StatusBadgeDemo
@@ -287,49 +426,6 @@ export default function RequestPolicyPage() {
                       label="สำเร็จ"
                       description="พร้อมใช้งาน"
                       color="green"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 6: Prohibited Actions */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-red-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-red-600" />
-                  6. สิ่งที่ไม่อนุญาต
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-red-50 dark:bg-red-950/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
-                  <div className="grid gap-3">
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="ส่งข้อมูลผู้ป่วยจริง (ชื่อ, HN, ข้อมูลทางการแพทย์ที่ระบุตัวตนได้)"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="ขอเครื่องมือที่ต้องการการรับรองทางการแพทย์หรือมาตรฐาน FDA/ISO"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="คาดหวังระดับความปลอดภัยเทียบเท่าระบบ Production ระดับโรงพยาบาล"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="ใช้เครื่องมือที่ได้กับผู้ป่วยจริงโดยไม่ผ่านการทดสอบและรับรองเพิ่มเติม"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="เรียกร้องค่าเสียหายหากเครื่องมือทำงานไม่ถูกต้องหรือไม่ได้รับการพัฒนา"
-                      variant="danger"
                     />
                   </div>
                 </div>
@@ -459,6 +555,14 @@ export default function RequestPolicyPage() {
                 <div className="flex items-start gap-2 text-sm text-foreground">
                   <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
                   <span>รับผิดชอบในการ validate และทดสอบเครื่องมือเองก่อนนำไปใช้จริง</span>
+                </div>
+                <div className="flex items-start gap-2 text-sm text-foreground">
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <span>ยอมรับว่าเครื่องมือที่พัฒนาเป็นลิขสิทธิ์ของผู้พัฒนา และอาจถูกเผยแพร่สาธารณะ</span>
+                </div>
+                <div className="flex items-start gap-2 text-sm text-foreground">
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <span>เข้าใจว่าโครงการบางประเภทอาจไม่เหมาะกับ sandbox และทีมอาจไม่สามารถรับทำได้</span>
                 </div>
               </div>
             </div>

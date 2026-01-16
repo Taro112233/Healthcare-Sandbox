@@ -107,14 +107,14 @@ export function HeroSection() {
           <motion.div variants={fadeIn} className="inline-flex mb-8">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/30 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
-              Technology Request Platform
+              Sandbox for Clinical Innovation
             </div>
           </motion.div>
 
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]">
               <span className="text-slate-900 dark:text-white">
-                HealthTech Sandbox
+                Project NextGen
               </span>
               
               <span 
@@ -124,7 +124,7 @@ export function HeroSection() {
                   backgroundImage: laserGradient,
                 }}
               >
-                HealthTech Sandbox
+                Project NextGen
               </span>
 
               {/* ✅ Single Sharp Glint - Optimized for Performance */}
@@ -155,7 +155,7 @@ export function HeroSection() {
                   backgroundRepeat: 'no-repeat'
                 }}
               >
-                HealthTech Sandbox
+                Project NextGen
               </motion.span>
             </h1>
           </motion.div>
