@@ -57,7 +57,7 @@ export default function TermsConditionsPage() {
               ข้อกำหนดและเงื่อนไขการใช้บริการ
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Terms & Conditions for HealthTech Sandbox Platform
+              Terms & Conditions for Project NextGen Platform
             </p>
             <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
               <Calendar className="w-4 h-4" />
@@ -78,7 +78,7 @@ export default function TermsConditionsPage() {
                 <div className="bg-teal-50 dark:bg-teal-950/20 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
                   <p className="text-sm leading-relaxed">
                     <strong className="text-teal-800 dark:text-teal-200">
-                      HealthTech Sandbox
+                      Project NextGen
                     </strong>{' '}
                     เป็นแพลตฟอร์มสำหรับรับและจัดการคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์ 
                     โดยมุ่งเน้นการพัฒนาแบบ Sandbox (สภาพแวดล้อมทดลอง) 
@@ -90,7 +90,7 @@ export default function TermsConditionsPage() {
                   <div className="flex gap-3">
                     <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
                     <div>
-                      <strong>&ldquo;แพลตฟอร์ม&rdquo;</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ HealthTech Sandbox
+                      <strong>&ldquo;แพลตฟอร์ม&rdquo;</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ Project NextGen
                     </div>
                   </div>
                   <div className="flex gap-3">
@@ -496,7 +496,7 @@ export default function TermsConditionsPage() {
           <motion.div variants={fadeIn}>
             <div className="text-center py-8 text-sm text-muted-foreground space-y-2">
               <p>
-                © 2025 HLAB Consulting - HealthTech Sandbox Platform
+                © 2025 HLAB Consulting - Project NextGen Platform
               </p>
               <p>
                 เอกสารฉบับนี้มีผลบังคับใช้ตั้งแต่วันที่ 10 มกราคม พ.ศ. 2568

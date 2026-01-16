@@ -118,8 +118,8 @@ export function AppHeader() {
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">HealthTech Sandbox</h1>
-              <p className="text-xs text-muted-foreground">Technology Request Platform</p>
+              <h1 className="text-xl font-bold text-foreground">Project NextGen</h1>
+              <p className="text-xs text-muted-foreground">Next-Generation Healthcare Innovation Sandbox</p>
             </div>
           </Link>
 

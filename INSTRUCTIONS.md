@@ -1,8 +1,8 @@
-# HealthTech Sandbox - Production Instruction (Updated)
+# Project NextGen - Production Instruction (Updated)
 
 ## 🎯 Project Overview
 
-**HealthTech Sandbox** เป็นแพลตฟอร์ม Sandbox สำหรับรับและพัฒนา Technology Requests จากบุคลากรทางการแพทย์  
+**Project NextGen** เป็นแพลตฟอร์ม Sandbox สำหรับรับและพัฒนา Technology Requests จากบุคลากรทางการแพทย์  
 โดยมีเป้าหมายเพื่อแปลง pain point หน้างาน → sandbox solution แบบ governed และตรวจสอบได้
 
 **หลักการสำคัญ:**
@@ -1303,7 +1303,7 @@ Store URL in database
 ### Environment Variables (.env)
 ```bash
 # .env
-# Healthcare Sandbox - Production Configuration
+# Project NextGen - Production Configuration
 
 # Database Configuration (Neon)
 DATABASE_URL="postgresql://neondb_owner:npg_ze4U3qbFtmCN@ep-gentle-silence-a1uh7c1j-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"

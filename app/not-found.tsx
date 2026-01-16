@@ -132,7 +132,7 @@ export default function NotFound() {
           transition={{ duration: 0.4, delay: 0.7 }}
           className="text-center mt-8 text-sm text-muted-foreground"
         >
-          <p>HealthTech Sandbox - Technology Request Platform</p>
+          <p>Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
           <p className="text-xs mt-1">© 2025 - Healthcare Innovation</p>
         </motion.div>
       </div>

@@ -1,5 +1,5 @@
 // lib/reserved-routes.ts
-// HealthTech Sandbox - Reserved Routes (Simplified)
+// Project NextGen - Reserved Routes (Simplified)
 // Note: Currently not used - kept for future expansion
 
 /**

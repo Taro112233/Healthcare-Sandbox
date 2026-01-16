@@ -1,5 +1,5 @@
 // app/api/requests/upload/route.ts
-// HealthTech Sandbox - File Upload API
+// Project NextGen - File Upload API
 // ============================================
 
 import { NextRequest, NextResponse } from 'next/server';

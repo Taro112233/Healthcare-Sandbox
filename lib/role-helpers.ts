@@ -1,5 +1,5 @@
 // lib/role-helpers.ts
-// HealthTech Sandbox - Role Management Helper Functions (Simplified)
+// Project NextGen - Role Management Helper Functions (Simplified)
 // ============================================
 
 // ===== ROLE DEFINITIONS (Simplified - No Multi-tenant) =====

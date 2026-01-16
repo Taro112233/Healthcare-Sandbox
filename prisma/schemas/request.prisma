@@ -1,5 +1,5 @@
 // prisma/schemas/request.prisma
-// ===== REQUEST SYSTEM SCHEMA - HealthTech Sandbox =====
+// ===== REQUEST SYSTEM SCHEMA - Project NextGen =====
 
 model Request {
   id                String        @id @default(cuid())

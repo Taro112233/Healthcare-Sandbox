@@ -1,5 +1,5 @@
 // types/comment.ts
-// HealthTech Sandbox - Comment Type Definitions
+// Project NextGen - Comment Type Definitions
 
 import type { RequestStatus } from './request';
 

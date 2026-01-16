@@ -1,5 +1,5 @@
 // lib/file-upload.ts
-// HealthTech Sandbox - File Upload Utilities (Vercel Blob)
+// Project NextGen - File Upload Utilities (Vercel Blob)
 // ============================================
 
 import { 

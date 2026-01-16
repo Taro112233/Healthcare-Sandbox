@@ -22,7 +22,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-xl">
             <Stethoscope className="w-6 h-6 text-teal-600" />
-            HealthTech Sandbox - คู่มือการใช้งาน
+            Project NextGen - คู่มือการใช้งาน
           </DialogTitle>
         </DialogHeader>
 
@@ -34,7 +34,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
             </h3>
             <div className="bg-teal-50 dark:bg-teal-950/20 p-4 rounded-lg">
               <p className="text-foreground mb-3">
-                <strong>HealthTech Sandbox</strong> คือแพลตฟอร์มสำหรับบุคลากรทางการแพทย์
+                <strong>Project NextGen</strong> คือแพลตฟอร์มสำหรับบุคลากรทางการแพทย์
                 ในการส่งคำขอพัฒนาเครื่องมือดิจิทัลที่ช่วยปรับปรุงการทำงานและคุณภาพการดูแลผู้ป่วย
               </p>
               <div className="grid md:grid-cols-2 gap-4">
@@ -226,7 +226,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
               ติดต่อทีมพัฒนาสำหรับการสนับสนุนด้านเทคนิค
             </p>
             <p className="text-xs text-muted-foreground">
-              © 2025 HealthTech Sandbox - Educational & Experimental Use Only
+              © 2025 Project NextGen - Educational & Experimental Use Only
             </p>
           </div>
         </div>

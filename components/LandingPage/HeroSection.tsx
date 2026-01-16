@@ -107,7 +107,7 @@ export function HeroSection() {
           <motion.div variants={fadeIn} className="inline-flex mb-8">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/30 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
-              Sandbox for Clinical Innovation
+              Next-Generation Healthcare Innovation Sandbox
             </div>
           </motion.div>
 

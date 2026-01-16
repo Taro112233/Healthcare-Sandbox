@@ -1,5 +1,5 @@
 // lib/security-logger.ts
-// HealthTech Sandbox - Centralized Security Event Management
+// Project NextGen - Centralized Security Event Management
 
 interface SecurityEventBase {
   timestamp: Date;

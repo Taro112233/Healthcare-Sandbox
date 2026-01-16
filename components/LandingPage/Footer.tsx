@@ -16,10 +16,10 @@ export function Footer() {
               </div>
               <div>
                 <span className="font-bold text-foreground text-xl">
-                  HealthTech Sandbox
+                  Project NextGen
                 </span>
                 <p className="text-sm text-muted-foreground">
-                  Technology Request Platform
+                  Next-Generation Healthcare Innovation Sandbox
                 </p>
               </div>
             </div>
@@ -85,7 +85,7 @@ export function Footer() {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="text-sm text-muted-foreground mb-4 md:mb-0">
-              <p>© 2025 HealthTech Sandbox - Technology Request Platform</p>
+              <p>© 2025 Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
               <p className="mt-1">Educational & Experimental Use Only</p>
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">

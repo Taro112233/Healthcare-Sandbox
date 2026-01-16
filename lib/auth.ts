@@ -1,5 +1,5 @@
 // lib/auth.ts
-// HealthTech Sandbox - Server-side Authentication Utilities (Simplified - Includes Role)
+// Project NextGen - Server-side Authentication Utilities (Simplified - Includes Role)
 
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';

@@ -1,5 +1,5 @@
 // types/request.ts
-// HealthTech Sandbox - Request Type Definitions
+// Project NextGen - Request Type Definitions
 
 // ✅ Import Prisma enums
 import type { 

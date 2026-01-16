@@ -1,5 +1,5 @@
 // prisma/schemas/user.prisma
-// ===== HEALTHTECH SANDBOX - USER SCHEMA (Simplified - No Multi-tenant) =====
+// ===== Project NextGen - USER SCHEMA (Simplified - No Multi-tenant) =====
 
 model User {
   id            String      @id @default(cuid())

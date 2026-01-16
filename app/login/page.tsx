@@ -93,7 +93,7 @@ export default function LoginPage() {
       });
       toast.dismiss(loadingToast);
       toast.success("เข้าสู่ระบบสำเร็จ!", {
-        description: "ยินดีต้อนรับเข้าสู่ HealthTech Sandbox",
+        description: "ยินดีต้อนรับเข้าสู่ Project NextGen",
         duration: 2000,
       });
       setTimeout(() => {
@@ -170,10 +170,10 @@ export default function LoginPage() {
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-foreground">
-                HealthTech Sandbox
+                Project NextGen
               </h1>
               <p className="text-sm text-muted-foreground">
-                Technology Request Platform
+                Next-Generation Healthcare Innovation Sandbox
               </p>
             </div>
           </Link>
@@ -279,7 +279,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>HealthTech Sandbox - Technology Request Platform</p>
+          <p>Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 // app/api/requests/[id]/route.ts
-// HealthTech Sandbox - Single Request API (Detail & Update)
+// Project NextGen - Single Request API (Detail & Update)
 
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';

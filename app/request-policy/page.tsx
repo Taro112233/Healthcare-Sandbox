@@ -60,7 +60,7 @@ export default function RequestPolicyPage() {
               นโยบายการส่งคำขอพัฒนาเครื่องมือ
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Request Policy for HealthTech Sandbox
+              Request Policy for Project NextGen
             </p>
             <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
               <Calendar className="w-4 h-4" />
@@ -445,7 +445,7 @@ export default function RequestPolicyPage() {
               <CardContent className="space-y-4">
                 <div className="bg-cyan-50 dark:bg-cyan-950/20 rounded-lg p-4 border border-cyan-200 dark:border-cyan-800">
                   <p className="text-sm font-semibold text-cyan-900 dark:text-cyan-100 mb-3">
-                    ✅ HealthTech Sandbox มีจุดประสงค์เพื่อ:
+                    ✅ Project NextGen มีจุดประสงค์เพื่อ:
                   </p>
                   <div className="grid gap-2">
                     <PolicyItem
@@ -577,7 +577,7 @@ export default function RequestPolicyPage() {
               </p>
               <Separator className="my-4" />
               <p>
-                © 2025 HLAB Consulting - HealthTech Sandbox Platform
+                © 2025 HLAB Consulting - Project NextGen Platform
               </p>
               <p className="text-xs">
                 Building the future of healthcare innovation, one sandbox at a time.

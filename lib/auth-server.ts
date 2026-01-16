@@ -1,5 +1,5 @@
 // lib/auth-server.ts
-// HealthTech Sandbox - Server-side User Verification Utilities (Simplified)
+// Project NextGen - Server-side User Verification Utilities (Simplified)
 
 import { cookies } from 'next/headers';
 import { verifyToken, JWTUser, UserRole } from './auth';

@@ -1,5 +1,5 @@
 // middleware.ts
-// HealthTech Sandbox - Authentication & Security Middleware
+// Project NextGen - Authentication & Security Middleware
 // Simplified - No Multi-tenant Logic
 
 import { NextResponse } from 'next/server';

@@ -1,5 +1,5 @@
 // prisma/schemas/base.prisma
-// ===== HEALTHTECH SANDBOX - BASE ENUMS =====
+// ===== Project NextGen - BASE ENUMS =====
 
 // ===== USER ROLE =====
 enum UserRole {

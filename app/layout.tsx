@@ -8,13 +8,13 @@ import { AppHeader } from "@/components/shared/AppHeader"
 import { CookieConsent } from "@/components/CookieConsent"
 
 export const metadata: Metadata = {
-  title: "HealthTech Sandbox",
-  description: "Technology Request Platform - แพลตฟอร์มรับคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์",
+  title: "Project NextGen",
+  description: "Next-Generation Healthcare Innovation Sandbox - แพลตฟอร์มรับคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์",
   keywords: "healthcare, technology, digital health, medical tools, sandbox",
   authors: [{ name: "HLAB Consulting" }],
   openGraph: {
-    title: "HealthTech Sandbox",
-    description: "Technology Request Platform",
+    title: "Project NextGen",
+    description: "Next-Generation Healthcare Innovation Sandbox",
     type: "website",
   },
 }

@@ -1,5 +1,5 @@
 // types/auth.d.ts
-// HealthTech Sandbox - Authentication Type Definitions (Simplified - No Multi-tenant)
+// Project NextGen - Authentication Type Definitions (Simplified - No Multi-tenant)
 
 // ===== USER TYPES =====
 

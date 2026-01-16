@@ -200,7 +200,7 @@ export default function RegisterPage() {
       toast.dismiss(loadingToast);
       
       toast.success('สมัครสมาชิกสำเร็จ!', {
-        description: 'ยินดีต้อนรับเข้าสู่ HealthTech Sandbox',
+        description: 'ยินดีต้อนรับเข้าสู่ Project NextGen',
         icon: <UserPlus className="w-4 h-4" />,
         duration: 2000,
       });
@@ -272,8 +272,8 @@ export default function RegisterPage() {
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-foreground">HealthTech Sandbox</h1>
-              <p className="text-sm text-muted-foreground">Technology Request Platform</p>
+              <h1 className="text-2xl font-bold text-foreground">Project NextGen</h1>
+              <p className="text-sm text-muted-foreground">Next-Generation Healthcare Innovation Sandbox</p>
             </div>
           </Link>
         </div>
@@ -510,7 +510,7 @@ export default function RegisterPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>HealthTech Sandbox - Technology Request Platform</p>
+          <p>Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>

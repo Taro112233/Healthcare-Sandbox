@@ -1,5 +1,5 @@
 // prisma/schemas/attachment.prisma
-// ===== ATTACHMENT SYSTEM SCHEMA - HealthTech Sandbox =====
+// ===== ATTACHMENT SYSTEM SCHEMA - Project NextGen =====
 
 model Attachment {
   id          String   @id @default(cuid())
