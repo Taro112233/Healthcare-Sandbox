@@ -1,36 +1,44 @@
 {
   "products": [
     {
-      "id": "vancomycin-calculator",
+      "id": "rxdrugstore",
       "title": "Rxdrugstore",
-      "description": "แหล่งเรียนรู้ผลิตภัณฑ์สำหรับนักศึกษาเภสัช",
-      "tags": ["PRODUCT DESIGN", "CALCULATOR", "2024"],
+      "description": "แหล่งเรียนรู้ผลิตภัณฑ์ในร้านยาสำหรับนักศึกษาเภสัช",
+      "tags": ["EDUCATION", "WEB PAGE", "2025"],
       "videoSrc": "/products/video1.mp4",
-      "demoUrl": "https://demo.healthtech.com/vancomycin"
+      "demoUrl": "https://rxdrugstore.vercel.app/"
     },
     {
-      "id": "gcs-calculator",
-      "title": "Glasgow Coma Scale Calculator",
-      "description": "ประเมิน GCS พร้อมแสดง severity classification และ clinical recommendations ใน ER",
-      "tags": ["PRODUCT DESIGN", "ASSESSMENT", "2024"],
+      "id": "substock-demo",
+      "title": "Substock Management System",
+      "description": "ระบบจัดการสต็อกยาสำหรับโรงพยาบาลขนาดเล็กถึงกลาง",
+      "tags": ["MANAGEMENT", "WEB APP", "2024"],
       "videoSrc": "/products/video2.mp4",
-      "demoUrl": "https://demo.healthtech.com/gcs"
+      "demoUrl": "https://substock-demo.vercel.app/"
     },
     {
-      "id": "drug-interaction",
-      "title": "Drug Interaction Checker",
-      "description": "ตรวจสอบปฏิกิริยาระหว่างยาแบบ real-time พร้อมคำแนะนำทางคลินิก",
-      "tags": ["PRODUCT DESIGN", "PHARMACY", "2025"],
+      "id": "respiratory-clinic-demo",
+      "title": "Respiratory Clinic Management System",
+      "description": "ระบบบันทึกการประเมินการใช้ยาผู้ป่วยคลินิกโรคทางเดินหายใจ",
+      "tags": ["CLINICAL", "WEB APP", "2025"],
       "videoSrc": "/products/video3.mp4",
-      "demoUrl": "https://demo.healthtech.com/drug-interaction"
+      "demoUrl": "https://respiratory-clinic-demo.vercel.app/"
     },
     {
-      "id": "bmi-calculator",
-      "title": "BMI & Nutrition Calculator",
-      "description": "คำนวณ BMI, IBW, และแนะนำแผนโภชนาการที่เหมาะสม",
-      "tags": ["CALCULATOR", "NUTRITION", "2024"],
+      "id": "qdengachecker",
+      "title": "Dengue Risk Assessment Form",
+      "description": "แบบประเมินความเสี่ยงในการเป็นไข้เลือดออก",
+      "tags": ["ASSESSMENT", "WEB APP", "2025"],
       "videoSrc": "/products/video4.mp4",
-      "demoUrl": "https://demo.healthtech.com/bmi"
+      "demoUrl": "https://qdengachecker.vercel.app/"
+    },
+    {
+      "id": "crcl-udh",
+      "title": "CrCl Calculator with adjusted dose suggestion",
+      "description": "เครื่องมือคำนวณค่า Creatinine Clearance พร้อมคำแนะนำการปรับขนาดยา",
+      "tags": ["CALCULATOR", "WEB APP", "2025"],
+      "videoSrc": "/products/video4.mp4",
+      "demoUrl": "https://crcl-udh.vercel.app/"
     }
   ]
 }
