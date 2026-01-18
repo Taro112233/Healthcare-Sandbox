@@ -5,7 +5,7 @@
       "title": "Rxdrugstore",
       "description": "แหล่งเรียนรู้ผลิตภัณฑ์ในร้านยาสำหรับนักศึกษาเภสัช",
       "tags": ["EDUCATION", "WEB PAGE", "2025"],
-      "videoSrc": "/products/video1.mp4",
+      "videoSrc": "/products/rxdrugstore.mp4",
       "demoUrl": "https://rxdrugstore.vercel.app/"
     },
     {
@@ -21,7 +21,7 @@
       "title": "Respiratory Clinic Management System",
       "description": "ระบบบันทึกการประเมินการใช้ยาผู้ป่วยคลินิกโรคทางเดินหายใจ",
       "tags": ["CLINICAL", "WEB APP", "2025"],
-      "videoSrc": "/products/video3.mp4",
+      "videoSrc": "/products/respiratory-clinic-demo.mp4",
       "demoUrl": "https://respiratory-clinic-demo.vercel.app/"
     },
     {
