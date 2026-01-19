@@ -134,10 +134,10 @@ export function DevelopmentProcessSection() {
           className="text-center mb-16"
         >
           <motion.h2 variants={fadeIn} className="text-4xl font-black text-foreground mb-4">
-            กระบวนการพัฒนา
+            ขั้นตอนหลังจากส่งคำขอ
           </motion.h2>
           <motion.p variants={fadeIn} className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-            เปลี่ยนไอเดียของคุณให้เป็นเครื่องมือที่ใช้งานได้จริง ด้วยขั้นตอนที่เป็นระบบและรวดเร็ว
+            คำขอของคุณจะถูกตรวจสอบ วิเคราะห์ และพัฒนาอย่างเป็นระบบ
           </motion.p>
         </motion.div>
 

@@ -12,7 +12,7 @@
       "id": "substock-demo",
       "title": "Substock Management System",
       "description": "ระบบจัดการสต็อกยาสำหรับโรงพยาบาลขนาดเล็กถึงกลาง",
-      "tags": ["MANAGEMENT", "WEB APP", "2024"],
+      "tags": ["MANAGEMENT", "WEB APP", "2025"],
       "videoSrc": "/products/substock-demo.mp4",
       "demoUrl": "https://substock-demo.vercel.app/"
     },
