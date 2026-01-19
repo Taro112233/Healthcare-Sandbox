@@ -6,40 +6,24 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { fadeIn, staggerContainer } from './animations';
+import productsData from '@/data/products.json';
 
 interface Product {
   id: string;
   title: string;
-  category: string;
+  description: string;
+  tags: string[];
   videoSrc: string;
   demoUrl: string;
 }
 
-const featuredProducts: Product[] = [
-  {
-    id: '1',
-    title: 'CHA₂DS₂-VASc Score',
-    category: 'เครื่องคำนวณ',
-    videoSrc: '/products/video1.mp4',
-    demoUrl: '/products/cha2ds2-vasc',
-  },
-  {
-    id: '2',
-    title: 'BMI Calculator',
-    category: 'เครื่องคำนวณ',
-    videoSrc: '/products/video2.mp4',
-    demoUrl: '/products/bmi-calculator',
-  },
-  {
-    id: '3',
-    title: 'Drug Dosing',
-    category: 'เครื่องคำนวณ',
-    videoSrc: '/products/video3.mp4',
-    demoUrl: '/products/drug-dosing',
-  },
-];
-
 export function ProductShowcaseSection() {
+  // ดึงข้อมูลจาก JSON แทนการ hardcode
+  const products: Product[] = productsData.products;
+  
+  // แสดงเฉพาะ 3 รายการแรก สำหรับ landing page
+  const featuredProducts = products.slice(0, 3);
+
   return (
     <section className="py-24 px-4 bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -128,20 +112,43 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         ease: [0.25, 0.1, 0.25, 1]
       }}
     >
-      <Link href={product.demoUrl} className="group block">
+      <a 
+        href={product.demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           
           {/* Text Content Area */}
           <div className={`space-y-6 lg:col-span-4 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
             <div className="inline-block">
               <span className="text-teal-400 text-sm font-semibold tracking-wider uppercase">
-                {product.category}
+                {product.tags[0] || 'WEB APP'}
               </span>
             </div>
             
             <h3 className="text-4xl md:text-5xl font-bold leading-tight group-hover:text-teal-400 transition-colors">
               {product.title}
             </h3>
+
+            <p className="text-lg text-gray-400 leading-relaxed">
+              {product.description}
+            </p>
+
+            {/* Tags Display */}
+            {product.tags.length > 1 && (
+              <div className="flex flex-wrap gap-2">
+                {product.tags.slice(1).map((tag, i) => (
+                  <span
+                    key={i}
+                    className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-white/5 text-gray-400 border border-white/10 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* CTA ที่แสดงเฉพาะตอน hover */}
             <div className="flex items-center gap-3 text-teal-400 opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -170,7 +177,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </div>
           
         </div>
-      </Link>
+      </a>
     </motion.div>
   );
 }

@@ -29,7 +29,7 @@
       "title": "Dengue Risk Assessment Form",
       "description": "แบบประเมินความเสี่ยงในการเป็นไข้เลือดออก",
       "tags": ["ASSESSMENT", "WEB APP", "2025"],
-      "videoSrc": "/products/video4.mp4",
+      "videoSrc": "/products/qdengachecker.mp4",
       "demoUrl": "https://qdengachecker.vercel.app/"
     },
     {
@@ -37,7 +37,7 @@
       "title": "CrCl Calculator with adjusted dose suggestion",
       "description": "เครื่องมือคำนวณค่า Creatinine Clearance พร้อมคำแนะนำการปรับขนาดยา",
       "tags": ["CALCULATOR", "WEB APP", "2025"],
-      "videoSrc": "/products/video4.mp4",
+      "videoSrc": "/products/crcl-udh.mp4",
       "demoUrl": "https://crcl-udh.vercel.app/"
     }
   ]
