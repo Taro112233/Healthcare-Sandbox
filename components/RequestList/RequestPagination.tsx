@@ -26,23 +26,27 @@ export function RequestPagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-between pt-4 border-t border-border">
-      <p className="text-sm text-muted-foreground">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border w-full">
+      {/* Items Count */}
+      <p className="text-sm text-muted-foreground text-center sm:text-left">
         แสดง {start}-{end} จาก {totalItems} รายการ
       </p>
       
-      <div className="flex items-center gap-2">
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-center gap-2 flex-wrap">
         <Button
           variant="outline"
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
+          className="flex-shrink-0"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
-          ก่อนหน้า
+          <span className="hidden xs:inline">ก่อนหน้า</span>
         </Button>
         
-        <div className="flex items-center gap-1">
+        {/* Page Numbers */}
+        <div className="flex items-center gap-1 flex-wrap justify-center">
           {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
             let pageNum: number;
             if (totalPages <= 5) {
@@ -61,7 +65,9 @@ export function RequestPagination({
                 variant={currentPage === pageNum ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onPageChange(pageNum)}
-                className={currentPage === pageNum ? 'bg-teal-600 hover:bg-teal-700' : ''}
+                className={`min-w-[36px] flex-shrink-0 ${
+                  currentPage === pageNum ? 'bg-teal-600 hover:bg-teal-700' : ''
+                }`}
               >
                 {pageNum}
               </Button>
@@ -74,8 +80,9 @@ export function RequestPagination({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
+          className="flex-shrink-0"
         >
-          ถัดไป
+          <span className="hidden xs:inline">ถัดไป</span>
           <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>

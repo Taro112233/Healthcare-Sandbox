@@ -18,7 +18,7 @@ interface PageProps {
 
 function RequestDetailSkeleton() {
   return (
-    <div className="relative">
+    <div className="relative min-h-screen overflow-x-hidden">
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -28,7 +28,9 @@ function RequestDetailSkeleton() {
           transition={{ duration: 0.3 }}
           className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
-          <div className="lg:col-span-2 space-y-6">
+          {/* Main Content Column */}
+          <div className="lg:col-span-2 space-y-6 min-w-0">
+            {/* Header Skeleton */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -36,9 +38,9 @@ function RequestDetailSkeleton() {
               className="space-y-3"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Skeleton className="h-6 w-28" />
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="h-6 w-36" />
+                <Skeleton className="h-6 w-24 sm:w-28 flex-shrink-0" />
+                <Skeleton className="h-6 w-28 sm:w-32 flex-shrink-0" />
+                <Skeleton className="h-6 w-32 sm:w-36 flex-shrink-0" />
               </div>
               <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4">
                 <Skeleton className="h-6 w-40" />
@@ -48,16 +50,18 @@ function RequestDetailSkeleton() {
               </div>
             </motion.div>
 
+            {/* Content Cards Skeleton */}
             {[1, 2, 3].map((i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + (i * 0.1) }}
+                className="min-w-0"
               >
-                <Card className="border-l-4 bg-card">
+                <Card className="border-l-4 bg-card w-full">
                   <CardHeader className="pb-4">
-                    <Skeleton className="h-6 w-48" />
+                    <Skeleton className="h-6 w-48 max-w-full" />
                   </CardHeader>
                   <CardContent className="pt-0 space-y-2">
                     <Skeleton className="h-4 w-full" />
@@ -70,24 +74,26 @@ function RequestDetailSkeleton() {
               </motion.div>
             ))}
 
+            {/* Attachments Skeleton */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.5 }}
+              className="min-w-0"
             >
-              <Card className="bg-card">
+              <Card className="bg-card w-full">
                 <CardHeader className="pb-3">
                   <Skeleton className="h-5 w-32" />
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {[1, 2].map((i) => (
-                    <div key={i} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-                      <Skeleton className="w-16 h-16 rounded" />
-                      <div className="flex-1 space-y-2">
-                        <Skeleton className="h-4 w-48" />
+                    <div key={i} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg min-w-0">
+                      <Skeleton className="w-16 h-16 rounded flex-shrink-0" />
+                      <div className="flex-1 space-y-2 min-w-0">
+                        <Skeleton className="h-4 w-full max-w-[200px]" />
                         <Skeleton className="h-3 w-24" />
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-shrink-0">
                         <Skeleton className="h-8 w-8" />
                         <Skeleton className="h-8 w-8" />
                       </div>
@@ -98,13 +104,14 @@ function RequestDetailSkeleton() {
             </motion.div>
           </div>
 
+          {/* Sidebar Column */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="lg:sticky lg:top-6 lg:self-start"
+            className="lg:sticky lg:top-6 lg:self-start min-w-0"
           >
-            <Card className="h-[600px] bg-card">
+            <Card className="h-[600px] bg-card w-full">
               <CardHeader className="pb-3 border-b border-border">
                 <Skeleton className="h-5 w-32" />
               </CardHeader>
@@ -115,11 +122,11 @@ function RequestDetailSkeleton() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.4 + (i * 0.05) }}
-                    className="flex gap-3"
+                    className="flex gap-3 min-w-0"
                   >
-                    <Skeleton className="h-8 w-8 rounded-full" />
-                    <div className="flex-1 space-y-2">
-                      <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
+                    <div className="flex-1 space-y-2 min-w-0">
+                      <Skeleton className="h-4 w-32 max-w-full" />
                       <Skeleton className="h-12 w-full" />
                     </div>
                   </motion.div>
@@ -159,7 +166,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="relative"
+        className="relative min-h-screen overflow-x-hidden"
       >
         <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
@@ -188,7 +195,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="relative"
+        className="relative min-h-screen overflow-x-hidden"
       >
         <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
@@ -216,7 +223,7 @@ export default function RequestDetailPage({ params }: PageProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="relative"
+      className="relative min-h-screen overflow-x-hidden"
     >
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       

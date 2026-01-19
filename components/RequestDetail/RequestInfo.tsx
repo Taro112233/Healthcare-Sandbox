@@ -46,21 +46,21 @@ export function RequestInfo({ request }: RequestInfoProps) {
   const totalComments = (request._count?.comments || 0) + (request.statusHistory?.length || 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0">
       {/* Header Card */}
-      <Card className="bg-card border-border">
+      <Card className="bg-card border-border w-full overflow-hidden">
         <CardContent className="pt-6 pb-6">
           {/* Top Row - Type Badge (Left) and Status Badge (Right) */}
-          <div className="flex items-start justify-between gap-2 mb-4">
+          <div className="flex items-start justify-between gap-2 mb-4 flex-wrap">
             <TypeBadge type={request.requestType} size="md" />
             <StatusBadge status={request.status} size="md" />
           </div>
 
-          {/* Department - Same size as Pain Point title */}
-          <div className="mb-4">
+          {/* Department - With proper text wrapping */}
+          <div className="mb-4 min-w-0">
             <h1 className="text-lg sm:text-xl font-bold text-foreground flex items-start gap-2">
               <Building2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span className="break-words">{request.department}</span>
+              <span className="break-words min-w-0 flex-1">{request.department}</span>
             </h1>
           </div>
 
@@ -71,12 +71,12 @@ export function RequestInfo({ request }: RequestInfoProps) {
               <Popover>
                 <PopoverTrigger asChild>
                   <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group self-start">
-                    <Avatar className="h-6 w-6">
+                    <Avatar className="h-6 w-6 flex-shrink-0">
                       <AvatarFallback className="text-xs bg-muted text-foreground group-hover:bg-muted-foreground/20 transition-colors">
                         {getUserInitials()}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="font-medium underline decoration-transparent group-hover:decoration-current transition-all">
+                    <span className="font-medium underline decoration-transparent group-hover:decoration-current transition-all break-words">
                       {request.user.firstName} {request.user.lastName}
                     </span>
                   </button>
@@ -85,7 +85,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                   <div className="space-y-4">
                     {/* Header */}
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12">
+                      <Avatar className="h-12 w-12 flex-shrink-0">
                         <AvatarFallback className="text-lg bg-primary/10 text-primary font-semibold">
                           {getUserInitials()}
                         </AvatarFallback>
@@ -109,7 +109,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                         <User className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs text-muted-foreground">ชื่อ-นามสกุล</p>
-                          <p className="text-sm text-foreground font-medium truncate">
+                          <p className="text-sm text-foreground font-medium break-words">
                             {request.user.firstName} {request.user.lastName}
                           </p>
                         </div>
@@ -132,7 +132,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                           <Phone className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs text-muted-foreground">เบอร์โทร</p>
-                            <p className="text-sm text-foreground">
+                            <p className="text-sm text-foreground break-words">
                               {request.user.phone}
                             </p>
                           </div>
@@ -146,7 +146,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
 
             {/* Right - Date, Comments, Files */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:justify-end">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 min-w-0">
                 <Calendar className="w-4 h-4 flex-shrink-0" />
                 <span className="truncate">{formatDate(request.createdAt)}</span>
               </div>
@@ -168,11 +168,11 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Pain Point Card - Red */}
-      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400 bg-card">
+      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-red-700 dark:text-red-400 flex items-start gap-2">
             <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-            <span>Pain Point หน้างาน</span>
+            <span className="break-words">Pain Point หน้างาน</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -181,11 +181,11 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Current Workflow Card - Blue */}
-      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400 bg-card">
+      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-400 flex items-start gap-2">
             <Workflow className="w-5 h-5 flex-shrink-0 mt-0.5" />
-            <span>ขั้นตอนการทำงานปัจจุบัน</span>
+            <span className="break-words">ขั้นตอนการทำงานปัจจุบัน</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -194,11 +194,11 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Expected Tech Help Card - Green */}
-      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400 bg-card">
+      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-green-700 dark:text-green-400 flex items-start gap-2">
             <Lightbulb className="w-5 h-5 flex-shrink-0 mt-0.5" />
-            <span>สิ่งที่ต้องการให้ Tech ช่วย</span>
+            <span className="break-words">สิ่งที่ต้องการให้ Tech ช่วย</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">

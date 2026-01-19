@@ -81,7 +81,8 @@ export function RequestList({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full min-w-0">
+      {/* Header with Filters */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 className="text-xl font-semibold text-foreground">{title}</h2>
         
@@ -95,6 +96,7 @@ export function RequestList({
         )}
       </div>
 
+      {/* Empty State */}
       {requests.length === 0 ? (
         <Card>
           <CardContent className="py-8">
@@ -108,17 +110,20 @@ export function RequestList({
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        /* Card Grid - Fixed overflow issue */
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
           {requests.map((request) => (
-            <RequestCard 
-              key={request.id} 
-              request={request}
-              showUser={showUser}
-            />
+            <div key={request.id} className="min-w-0 w-full">
+              <RequestCard 
+                request={request}
+                showUser={showUser}
+              />
+            </div>
           ))}
         </div>
       )}
 
+      {/* Pagination */}
       {requests.length > 0 && totalPages > 1 && onPageChange && (
         <RequestPagination
           currentPage={currentPage}

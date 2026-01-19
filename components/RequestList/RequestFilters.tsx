@@ -30,13 +30,13 @@ export function RequestFilters({
   onTypeChange,
 }: RequestFiltersProps) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
       {/* Status Filter */}
       <Select 
         value={status} 
         onValueChange={(value) => onStatusChange(value as RequestStatus | 'ALL')}
       >
-        <SelectTrigger className="w-[180px] bg-background">
+        <SelectTrigger className="w-full sm:w-[180px] bg-background">
           <SelectValue placeholder="เลือกสถานะ" />
         </SelectTrigger>
         <SelectContent>
@@ -46,8 +46,8 @@ export function RequestFilters({
           {Object.entries(REQUEST_STATUS_INFO).map(([key, info]) => (
             <SelectItem key={key} value={key}>
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${info.color}`} />
-                <span>{info.labelTh}</span>
+                <div className={`w-2 h-2 rounded-full ${info.color} flex-shrink-0`} />
+                <span className="truncate">{info.labelTh}</span>
               </div>
             </SelectItem>
           ))}
@@ -59,7 +59,7 @@ export function RequestFilters({
         value={type} 
         onValueChange={(value) => onTypeChange(value as RequestType | 'ALL')}
       >
-        <SelectTrigger className="w-[180px] bg-background">
+        <SelectTrigger className="w-full sm:w-[180px] bg-background">
           <SelectValue placeholder="เลือกประเภท" />
         </SelectTrigger>
         <SelectContent>
@@ -68,7 +68,7 @@ export function RequestFilters({
           </SelectItem>
           {Object.entries(REQUEST_TYPE_INFO).map(([key, info]) => (
             <SelectItem key={key} value={key}>
-              <span>{info.labelTh}</span>
+              <span className="truncate">{info.labelTh}</span>
             </SelectItem>
           ))}
         </SelectContent>

@@ -13,7 +13,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 function DashboardSkeleton() {
   return (
-    <div className="relative">
+    <div className="relative min-h-screen">
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -23,6 +23,7 @@ function DashboardSkeleton() {
           transition={{ duration: 0.3 }}
           className="space-y-4"
         >
+          {/* Header Skeleton */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -30,13 +31,14 @@ function DashboardSkeleton() {
             className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
           >
             <Skeleton className="h-8 w-48" />
-            <div className="flex gap-3">
-              <Skeleton className="h-10 w-[180px]" />
-              <Skeleton className="h-10 w-[180px]" />
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Skeleton className="h-10 w-full sm:w-[180px]" />
+              <Skeleton className="h-10 w-full sm:w-[180px]" />
             </div>
           </motion.div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {/* Card Grid Skeleton */}
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <motion.div
                 key={i}
@@ -44,19 +46,19 @@ function DashboardSkeleton() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 + (i * 0.05) }}
               >
-                <Card>
+                <Card className="w-full">
                   <CardContent className="p-5">
                     <div className="space-y-3">
                       <div className="flex items-start justify-between gap-2">
-                        <Skeleton className="h-6 w-24" />
-                        <Skeleton className="h-6 w-28" />
+                        <Skeleton className="h-6 w-24 flex-shrink-0" />
+                        <Skeleton className="h-6 w-28 flex-shrink-0" />
                       </div>
                       <div className="flex items-center gap-2">
-                        <Skeleton className="h-4 w-4" />
+                        <Skeleton className="h-4 w-4 flex-shrink-0" />
                         <Skeleton className="h-4 w-full" />
                       </div>
                       <Skeleton className="h-16 w-full" />
-                      <div className="flex flex-wrap items-center gap-4">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                         <Skeleton className="h-4 w-32" />
                         <Skeleton className="h-4 w-16" />
                         <Skeleton className="h-4 w-12" />
@@ -68,14 +70,15 @@ function DashboardSkeleton() {
             ))}
           </div>
 
+          {/* Pagination Skeleton */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.5 }}
-            className="flex items-center justify-between pt-4 border-t border-border"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border"
           >
             <Skeleton className="h-4 w-32" />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center sm:justify-end gap-2 flex-wrap">
               <Skeleton className="h-9 w-24" />
               <Skeleton className="h-9 w-9" />
               <Skeleton className="h-9 w-9" />
@@ -108,7 +111,6 @@ export default function DashboardPage() {
     pageSize: 1000,
   });
 
-  // ✅ Redirect to login if not authenticated
   useEffect(() => {
     if (!userLoading && !isAuthenticated) {
       router.push('/login');
@@ -148,12 +150,10 @@ export default function DashboardPage() {
     setCurrentPage(1);
   };
 
-  // ✅ Show skeleton while loading user OR initial requests fetch
   if (userLoading || (requestsLoading && allRequests.length === 0)) {
     return <DashboardSkeleton />;
   }
 
-  // ✅ Don't render if not authenticated (waiting for redirect)
   if (!isAuthenticated || !user) {
     return null;
   }
@@ -163,7 +163,7 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="relative"
+      className="relative min-h-screen"
     >
       <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
