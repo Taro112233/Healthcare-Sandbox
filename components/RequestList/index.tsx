@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RequestCard } from './RequestCard';
@@ -110,15 +111,25 @@ export function RequestList({
           </CardContent>
         </Card>
       ) : (
-        /* Card Grid - Fixed overflow issue */
+        /* Card Grid - With Stagger Animation */
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
-          {requests.map((request) => (
-            <div key={request.id} className="min-w-0 w-full">
+          {requests.map((request, index) => (
+            <motion.div 
+              key={request.id} 
+              className="min-w-0 w-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.4, 
+                delay: index * 0.05,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+            >
               <RequestCard 
                 request={request}
                 showUser={showUser}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       )}
