@@ -1,20 +1,24 @@
-// hooks/useCurrentUser.ts - Fixed Version
-'use client';
+// hooks/useCurrentUser.ts
+// Project NextGen - Current User Hook (Better Auth Version)
 
-import { useState, useEffect, useCallback } from 'react';
+"use client";
+
+import { useSession, authClient } from "@/lib/auth-client";
+import { useCallback } from "react";
 
 export interface CurrentUser {
   id: string;
-  username: string;
-  email: string | null;
+  email: string;
+  name: string;
   firstName: string;
   lastName: string;
   fullName: string;
   phone: string | null;
-  role: 'USER' | 'ADMIN';
+  role: "USER" | "ADMIN";
   status: string;
   isActive: boolean;
   emailVerified: boolean;
+  image?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -29,142 +33,56 @@ interface UseCurrentUserReturn {
   logout: () => Promise<void>;
 }
 
-// ✅ Shared state across all hook instances
-let cachedUser: CurrentUser | null = null;
-let lastFetchTime = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
-
-// ✅ Singleton fetch promise (prevent duplicate requests)
-let fetchPromise: Promise<CurrentUser | null> | null = null;
-
-function shouldRefetch(): boolean {
-  return Date.now() - lastFetchTime > CACHE_DURATION;
-}
-
-// ✅ Centralized fetch function (returns Promise)
-async function fetchUserData(): Promise<CurrentUser | null> {
-  // ✅ Return cached data if fresh
-  if (cachedUser && !shouldRefetch()) {
-    return cachedUser;
-  }
-
-  // ✅ Reuse existing fetch if in progress
-  if (fetchPromise) {
-    return fetchPromise;
-  }
-
-  // ✅ Create new fetch promise
-  fetchPromise = (async () => {
-    try {
-      const response = await fetch('/api/auth/me', {
-        credentials: 'include',
-        cache: 'no-store', // ✅ Prevent browser cache
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          cachedUser = null;
-          return null;
-        }
-        throw new Error('Failed to fetch user');
-      }
-
-      const data = await response.json();
-
-      if (data.success && data.data?.user) {
-        const u = data.data.user;
-        const userData: CurrentUser = {
-          id: u.id,
-          username: u.username,
-          email: u.email,
-          firstName: u.firstName,
-          lastName: u.lastName,
-          fullName: u.fullName || `${u.firstName} ${u.lastName}`,
-          phone: u.phone,
-          role: u.role || 'USER',
-          status: u.status,
-          isActive: u.isActive,
-          emailVerified: u.emailVerified,
-          createdAt: u.createdAt,
-          updatedAt: u.updatedAt,
-        };
-
-        cachedUser = userData;
-        lastFetchTime = Date.now();
-        return userData;
-      }
-
-      cachedUser = null;
-      return null;
-    } catch (err) {
-      console.error('Fetch user error:', err);
-      cachedUser = null;
-      throw err;
-    } finally {
-      // ✅ Clear promise after completion
-      fetchPromise = null;
-    }
-  })();
-
-  return fetchPromise;
-}
-
 export function useCurrentUser(): UseCurrentUserReturn {
-  const [user, setUser] = useState<CurrentUser | null>(cachedUser);
-  const [loading, setLoading] = useState(!cachedUser); // ✅ Start with false if cached
-  const [error, setError] = useState<string | null>(null);
+  const { data: session, isPending, error, refetch } = useSession();
 
-  const fetchUser = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const userData = await fetchUserData();
-      setUser(userData);
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'เกิดข้อผิดพลาด';
-      setError(errorMsg);
-      setUser(null);
-    } finally {
-      setLoading(false); // ✅ Always set loading = false
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+  // Transform session user to CurrentUser type
+  const user: CurrentUser | null = session?.user
+    ? {
+        id: session.user.id,
+        email: session.user.email,
+        name: session.user.name,
+        firstName:
+          (session.user as any).firstName ||
+          session.user.name?.split(" ")[0] ||
+          "",
+        lastName:
+          (session.user as any).lastName ||
+          session.user.name?.split(" ").slice(1).join(" ") ||
+          "",
+        fullName: session.user.name,
+        phone: (session.user as any).phone || null,
+        role: ((session.user as any).role as "USER" | "ADMIN") || "USER",
+        status: (session.user as any).status || "ACTIVE",
+        isActive: (session.user as any).isActive ?? true,
+        emailVerified: session.user.emailVerified || false,
+        image: session.user.image || undefined,
+        createdAt: session.user.createdAt,
+        updatedAt: session.user.updatedAt,
+      }
+    : null;
 
   const logout = useCallback(async () => {
     try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-
-      // ✅ Clear all cache
-      cachedUser = null;
-      lastFetchTime = 0;
-      fetchPromise = null;
-      setUser(null);
-
-      window.location.href = '/login';
+      await authClient.signOut();
+      window.location.href = "/login";
     } catch (err) {
-      console.error('Logout error:', err);
-      cachedUser = null;
-      lastFetchTime = 0;
-      fetchPromise = null;
-      setUser(null);
-      window.location.href = '/login';
+      console.error("Logout error:", err);
+      window.location.href = "/login";
     }
   }, []);
 
+  const handleRefetch = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
   return {
     user,
-    loading,
-    error,
-    isAdmin: user?.role === 'ADMIN',
+    loading: isPending,
+    error: error?.message || null,
+    isAdmin: user?.role === "ADMIN",
     isAuthenticated: !!user,
-    refetch: fetchUser,
+    refetch: handleRefetch,
     logout,
   };
 }

@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-19T18:26:14.614Z
+// Last generated: 2026-01-20T12:53:26.569Z
 // InvenStock - Multi-Tenant Inventory Management System V1.0
 
 generator client {
@@ -37,51 +37,6 @@ enum UserStatus {
 }
 
 // ==========================================
-// USER SCHEMA - V1.0
-// ==========================================
-
-// prisma/schemas/user.prisma
-// ===== Project NextGen - USER SCHEMA (Simplified - No Multi-tenant) =====
-
-model User {
-  id            String      @id @default(cuid())
-  email         String?     // Optional for notifications/recovery
-  username      String      @unique  // Primary login credential
-  password      String      // bcrypt hashed
-  
-  // Personal Information
-  firstName     String
-  lastName      String
-  phone         String?
-  
-  // Role (Simple - USER or ADMIN only)
-  role          UserRole    @default(USER)
-  
-  // Account Status
-  status        UserStatus  @default(ACTIVE)
-  isActive      Boolean     @default(true)
-  emailVerified Boolean     @default(false)
-  
-  // Security
-  lastLogin     DateTime?
-  
-  // Timestamps
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
-  // Relations
-  requests      Request[]
-  comments      Comment[]
-  statusChanges StatusHistory[]
-  
-  @@index([email])
-  @@index([username])
-  @@index([role])
-  @@index([isActive])
-  @@map("users")
-}
-
-// ==========================================
 // ATTACHMENT SCHEMA - ADDITIONAL
 // ==========================================
 
@@ -106,6 +61,95 @@ model Attachment {
   
   @@index([requestId])
   @@map("attachments")
+}
+
+// ==========================================
+// BETTER-AUTH SCHEMA - ADDITIONAL
+// ==========================================
+
+// prisma/schemas/better-auth.prisma
+// ===== Better Auth + Project NextGen Fields =====
+
+model User {
+  id            String    @id @default(cuid())
+  name          String                          // Required by Better Auth
+  email         String    @unique               // Required by Better Auth
+  emailVerified Boolean   @default(false)
+  image         String?
+  
+  // Project NextGen: เพิ่ม fields ที่จำเป็น
+  firstName     String                          
+  lastName      String
+  phone         String?
+  role          String    @default("USER")      // "USER" | "ADMIN"
+  status        String    @default("ACTIVE")    // "ACTIVE" | "SUSPENDED" | "INACTIVE"
+  isActive      Boolean   @default(true)
+  lastLogin     DateTime?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Better Auth relations
+  sessions      Session[]
+  accounts      Account[]
+  
+  // Project NextGen relations
+  requests      Request[]
+  comments      Comment[]
+  statusChanges StatusHistory[]
+  
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?   // Better Auth เก็บ password hash ที่นี่
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  @@index([userId])
+  @@unique([providerId, accountId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  @@unique([identifier, value])
+  @@map("verifications")
 }
 
 // ==========================================
