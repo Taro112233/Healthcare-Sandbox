@@ -19,12 +19,12 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
-    
+
     // Email verification (optional - implement later)
     // sendVerificationEmail: async ({ user, url, token }, request) => {
     //   // Send email logic here
     // },
-    
+
     // Password reset (optional - implement later)
     // sendResetPassword: async ({ user, url, token }, request) => {
     //   // Send email logic here
@@ -86,16 +86,12 @@ export const auth = betterAuth({
 
   // Advanced options
   advanced: {
-    generateId: () => {
-      // Use cuid-like ID generation
-      return crypto.randomUUID();
-    },
+    // generateId ถูกลบออกจาก Better Auth v1.4+
+    // Better Auth จะใช้ default ID generation แทน
   },
 
   // Trusted origins for CORS
-  trustedOrigins: [
-    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  ],
+  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"],
 });
 
 // Export type for client
