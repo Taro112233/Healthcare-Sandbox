@@ -8,17 +8,17 @@ const OUTPUT_FILE = path.join(__dirname, '../prisma/schema.prisma');
 const baseSchema = `// This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
 // Last generated: ${new Date().toISOString()}
-// InvenStock - Multi-Tenant Inventory Management System V1.0
+// HealthTech Sandbox
 
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["multiSchema", "relationJoins"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") // For connection pooling
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 `;

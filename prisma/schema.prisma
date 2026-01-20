@@ -1,17 +1,17 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-20T13:11:52.242Z
-// InvenStock - Multi-Tenant Inventory Management System V1.0
+// Last generated: 2026-01-20T15:05:42.639Z
+// HealthTech Sandbox
 
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["multiSchema", "relationJoins"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") // For connection pooling
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 
