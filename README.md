@@ -18,17 +18,18 @@ Directory structure:
     │   ├── layout.tsx
     │   ├── not-found.tsx
     │   ├── page.tsx
+    │   ├── about/
+    │   │   └── page.tsx
     │   ├── api/
     │   │   ├── arcjet/
     │   │   │   └── route.ts
     │   │   ├── auth/
-    │   │   │   ├── login/
+    │   │   │   └── [...all]/
+    │   │   │       └── route.ts
+    │   │   ├── profile/
+    │   │   │   ├── basic-info/
     │   │   │   │   └── route.ts
-    │   │   │   ├── logout/
-    │   │   │   │   └── route.ts
-    │   │   │   ├── me/
-    │   │   │   │   └── route.ts
-    │   │   │   └── register/
+    │   │   │   └── password/
     │   │   │       └── route.ts
     │   │   ├── requests/
     │   │   │   ├── route.ts
@@ -45,9 +46,15 @@ Directory structure:
     │   │   └── page.tsx
     │   ├── login/
     │   │   └── page.tsx
+    │   ├── privacy-policy/
+    │   │   └── page.tsx
     │   ├── products/
     │   │   └── page.tsx
+    │   ├── profile/
+    │   │   └── page.tsx
     │   ├── register/
+    │   │   └── page.tsx
+    │   ├── request-policy/
     │   │   └── page.tsx
     │   ├── requests/
     │   │   ├── [id]/
@@ -56,21 +63,33 @@ Directory structure:
     │   │       └── page.tsx
     │   ├── showcase/
     │   │   └── page.tsx
-    │   └── utils/
-    │       ├── auth-client.ts
-    │       └── auth.tsx
+    │   └── terms-of-service/
+    │       └── page.tsx
     ├── components/
     │   ├── theme-provider.tsx
     │   ├── theme-toggle.tsx
+    │   ├── AboutPage/
+    │   │   ├── FounderSection.tsx
+    │   │   ├── HeroSection.tsx
+    │   │   ├── MissionSection.tsx
+    │   │   └── VisionSection.tsx
+    │   ├── CookieConsent/
+    │   │   └── index.tsx
     │   ├── LandingPage/
     │   │   ├── animations.ts
     │   │   ├── CTASection.tsx
     │   │   ├── DevelopmentProcessSection.tsx
     │   │   ├── Footer.tsx
     │   │   ├── HeroSection.tsx
-    │   │   ├── index.ts
     │   │   ├── ManualDialog.tsx
     │   │   └── ProductShowcaseSection.tsx
+    │   ├── ProfileForm/
+    │   │   ├── BasicInfoSection.tsx
+    │   │   ├── ConfirmDialog.tsx
+    │   │   ├── index.tsx
+    │   │   └── PasswordSection.tsx
+    │   ├── providers/
+    │   │   └── AuthProvider.tsx
     │   ├── RequestDetail/
     │   │   ├── AttachmentList.tsx
     │   │   ├── index.tsx
@@ -88,6 +107,8 @@ Directory structure:
     │   │   ├── RequestCard.tsx
     │   │   ├── RequestFilters.tsx
     │   │   └── RequestPagination.tsx
+    │   ├── RequestPolicyCheckbox/
+    │   │   └── index.tsx
     │   ├── RichTextEditor/
     │   │   ├── index.ts
     │   │   ├── MenuBar.tsx
@@ -203,6 +224,8 @@ Directory structure:
     │   │   │   └── index.tsx
     │   │   └── TooltipShowcase/
     │   │       └── index.tsx
+    │   ├── TermsCheckbox/
+    │   │   └── index.tsx
     │   └── ui/
     │       ├── accordion.tsx
     │       ├── alert-dialog.tsx
@@ -269,7 +292,7 @@ Directory structure:
     │   ├── useCurrentUser.ts
     │   └── useRequests.ts
     ├── lib/
-    │   ├── auth-server.ts
+    │   ├── auth-client.ts
     │   ├── auth.ts
     │   ├── config.ts
     │   ├── file-upload.ts
@@ -285,10 +308,11 @@ Directory structure:
     │   └── schemas/
     │       ├── attachment.prisma
     │       ├── base.prisma
+    │       ├── better-auth.prisma
     │       ├── comment.prisma
-    │       ├── request.prisma
-    │       └── user.prisma
+    │       └── request.prisma
     ├── public/
+    │   ├── images/
     │   └── products/
     ├── scripts/
     │   ├── merge-schemas.js
@@ -297,4 +321,5 @@ Directory structure:
         ├── auth.d.ts
         ├── comment.ts
         ├── cookie.d.ts
+        ├── profile.ts
         └── request.ts
