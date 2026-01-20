@@ -19,16 +19,7 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
-
-    // Email verification (optional - implement later)
-    // sendVerificationEmail: async ({ user, url, token }, request) => {
-    //   // Send email logic here
-    // },
-
-    // Password reset (optional - implement later)
-    // sendResetPassword: async ({ user, url, token }, request) => {
-    //   // Send email logic here
-    // },
+    requireEmailVerification: false, // Set to true if you want email verification
   },
 
   // Social Providers
@@ -36,8 +27,8 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      // Always ask user to select account
       prompt: "select_account",
+      accessType: "offline",
     },
   },
 
@@ -51,7 +42,7 @@ export const auth = betterAuth({
     },
   },
 
-  // User configuration
+  // User configuration with additional fields
   user: {
     additionalFields: {
       firstName: {
@@ -82,12 +73,6 @@ export const auth = betterAuth({
         defaultValue: true,
       },
     },
-  },
-
-  // Advanced options
-  advanced: {
-    // generateId ถูกลบออกจาก Better Auth v1.4+
-    // Better Auth จะใช้ default ID generation แทน
   },
 
   // Trusted origins for CORS

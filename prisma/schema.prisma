@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-20T15:05:42.639Z
+// Last generated: 2026-01-20T18:47:40.575Z
 // HealthTech Sandbox
 
 generator client {
@@ -77,9 +77,9 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   
-  // Project NextGen: เพิ่ม fields ที่จำเป็น
-  firstName     String                          
-  lastName      String
+  // Project NextGen: เปลี่ยนเป็น optional พร้อม default value
+  firstName     String    @default("")          // ✅ Changed to optional
+  lastName      String    @default("")          // ✅ Changed to optional
   phone         String?
   role          String    @default("USER")      // "USER" | "ADMIN"
   status        String    @default("ACTIVE")    // "ACTIVE" | "SUSPENDED" | "INACTIVE"

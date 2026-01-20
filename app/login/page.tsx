@@ -121,6 +121,7 @@ export default function LoginPage() {
     setError("");
 
     try {
+      // Better Auth handles auto-registration for new Google users
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/dashboard",
@@ -142,7 +143,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
+    <div className="min-h-screen flex items-center justify-center from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -150,7 +151,7 @@ export default function LoginPage() {
             href="/"
             className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
