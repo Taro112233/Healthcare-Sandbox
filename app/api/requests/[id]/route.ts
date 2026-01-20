@@ -1,44 +1,26 @@
 // app/api/requests/[id]/route.ts
-// Project NextGen - Single Request API (Detail & Update)
-
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getUserFromHeaders, checkRequestOwnership } from '@/lib/auth-server';
+import { auth } from '@/lib/auth';
 
-// ===== GET - Request Detail =====
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
       );
     }
     
-    // Check ownership/access
-    const accessCheck = await checkRequestOwnership(userInfo.userId, userInfo.role, id);
-    
-    if (!accessCheck.request) {
-      return NextResponse.json(
-        { success: false, error: 'Request not found' },
-        { status: 404 }
-      );
-    }
-    
-    if (!accessCheck.hasAccess) {
-      return NextResponse.json(
-        { success: false, error: 'Access denied' },
-        { status: 403 }
-      );
-    }
-    
-    // Fetch full request with all relations
+    // Fetch request
     const requestData = await prisma.request.findUnique({
       where: { id },
       include: {
@@ -48,7 +30,7 @@ export async function GET(
             firstName: true,
             lastName: true,
             email: true,
-            phone: true, 
+            phone: true,
           },
         },
         attachments: {
@@ -88,6 +70,24 @@ export async function GET(
       },
     });
     
+    if (!requestData) {
+      return NextResponse.json(
+        { success: false, error: 'Request not found' },
+        { status: 404 }
+      );
+    }
+    
+    // Check access
+    const userRole = (session.user as any).role || 'USER';
+    const hasAccess = userRole === 'ADMIN' || requestData.userId === session.user.id;
+    
+    if (!hasAccess) {
+      return NextResponse.json(
+        { success: false, error: 'Access denied' },
+        { status: 403 }
+      );
+    }
+    
     return NextResponse.json({
       success: true,
       data: requestData,
@@ -102,31 +102,31 @@ export async function GET(
   }
 }
 
-// ===== PATCH - Update Request (Admin only for status) =====
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
       );
     }
     
-    // Only admin can update requests
-    if (userInfo.role !== 'ADMIN') {
+    const userRole = (session.user as any).role || 'USER';
+    if (userRole !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Admin access required' },
         { status: 403 }
       );
     }
     
-    // Check request exists
     const existingRequest = await prisma.request.findUnique({
       where: { id },
     });
@@ -141,7 +141,6 @@ export async function PATCH(
     const body = await request.json();
     const { status, note } = body;
     
-    // Validate status
     const validStatuses = [
       'PENDING_REVIEW',
       'UNDER_CONSIDERATION',
@@ -158,22 +157,19 @@ export async function PATCH(
       );
     }
     
-    // Update request and create status history in transaction
     const updatedRequest = await prisma.$transaction(async (tx) => {
-      // Create status history if status changed
       if (status && status !== existingRequest.status) {
         await tx.statusHistory.create({
           data: {
             requestId: id,
             fromStatus: existingRequest.status,
             toStatus: status,
-            changedBy: userInfo.userId,
+            changedBy: session.user.id,
             note: note || null,
           },
         });
       }
       
-      // Update request
       return await tx.request.update({
         where: { id },
         data: {
@@ -205,7 +201,7 @@ export async function PATCH(
       });
     });
     
-    console.log(`✅ Request ${id} updated by admin: ${userInfo.userId}`);
+    console.log(`✅ Request ${id} updated by admin: ${session.user.id}`);
     
     return NextResponse.json({
       success: true,

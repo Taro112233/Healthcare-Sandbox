@@ -1,7 +1,7 @@
 // app/api/requests/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getUserFromHeaders } from '@/lib/auth-server';
+import { auth } from '@/lib/auth';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 
@@ -21,9 +21,11 @@ const CreateRequestSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
@@ -38,8 +40,9 @@ export async function GET(request: NextRequest) {
     
     const where: Prisma.RequestWhereInput = {};
     
-    if (userInfo.role !== 'ADMIN') {
-      where.userId = userInfo.userId;
+    const userRole = (session.user as any).role || 'USER';
+    if (userRole !== 'ADMIN') {
+      where.userId = session.user.id;
     }
     
     if (status && status !== 'ALL') {
@@ -97,9 +100,11 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
@@ -128,7 +133,7 @@ export async function POST(request: NextRequest) {
     const newRequest = await prisma.$transaction(async (tx) => {
       const created = await tx.request.create({
         data: {
-          userId: userInfo.userId,
+          userId: session.user.id,
           department,
           painPoint,
           currentWorkflow,
@@ -172,7 +177,7 @@ export async function POST(request: NextRequest) {
       });
     });
     
-    console.log(`✅ Request created: ${newRequest?.id} by user: ${userInfo.userId}`);
+    console.log(`✅ Request created: ${newRequest?.id} by user: ${session.user.id}`);
     
     return NextResponse.json(
       {

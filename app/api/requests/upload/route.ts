@@ -1,9 +1,6 @@
 // app/api/requests/upload/route.ts
-// Project NextGen - File Upload API
-// ============================================
-
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserFromHeaders } from '@/lib/auth-server';
+import { auth } from '@/lib/auth';
 import { 
   validateFilesFromFormData, 
   sanitizeFilename,
@@ -12,7 +9,6 @@ import {
   getUploadConstraints,
 } from '@/lib/file-validation';
 
-// ===== INTERFACES =====
 interface UploadedFile {
   filename: string;
   originalFilename: string;
@@ -40,13 +36,13 @@ interface UploadResponse {
   constraints?: ReturnType<typeof getUploadConstraints>;
 }
 
-// ===== POST - Upload Files =====
 export async function POST(request: NextRequest): Promise<NextResponse<UploadResponse>> {
   try {
-    // ===== AUTHENTICATION =====
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { 
           success: false, 
@@ -57,7 +53,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
-    // ===== PARSE FORM DATA =====
     let formData: FormData;
     try {
       formData = await request.formData();
@@ -72,7 +67,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
-    // ===== VALIDATE FILES =====
     const validation = validateFilesFromFormData(formData, 'files');
     
     if (!validation.isValid) {
@@ -89,7 +83,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
     
     const { files } = validation;
     
-    // Check if any files provided
     if (files.length === 0) {
       return NextResponse.json(
         { 
@@ -101,7 +94,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
-    // Double-check file count
     if (files.length > MAX_FILES_PER_REQUEST) {
       return NextResponse.json(
         { 
@@ -113,19 +105,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
-    // ===== UPLOAD TO VERCEL BLOB =====
     const { put } = await import('@vercel/blob');
     
     const uploadResults = await Promise.all(
       files.map(async (file: File): Promise<{ success: true; data: UploadedFile } | { success: false; error: FailedUpload }> => {
         try {
-          // Generate unique path
           const timestamp = Date.now();
           const random = Math.random().toString(36).substring(2, 8);
           const sanitized = sanitizeFilename(file.name);
-          const path = `uploads/${userInfo.userId}/${timestamp}-${random}-${sanitized}`;
+          const path = `uploads/${session.user.id}/${timestamp}-${random}-${sanitized}`;
           
-          // Upload to Vercel Blob
           const blob = await put(path, file, {
             access: 'public',
             addRandomSuffix: false,
@@ -155,7 +144,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       })
     );
     
-    // Separate successful and failed uploads
     const uploaded: UploadedFile[] = [];
     const failed: FailedUpload[] = [];
     
@@ -167,7 +155,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       }
     }
     
-    // All uploads failed
     if (uploaded.length === 0) {
       return NextResponse.json(
         { 
@@ -180,9 +167,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
-    console.log(`✅ Uploaded ${uploaded.length}/${files.length} files by user: ${userInfo.userId}`);
+    console.log(`✅ Uploaded ${uploaded.length}/${files.length} files by user: ${session.user.id}`);
     
-    // ===== SUCCESS RESPONSE =====
     return NextResponse.json({
       success: true,
       data: {
@@ -206,7 +192,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
   }
 }
 
-// ===== GET - Get Upload Constraints =====
 export async function GET(): Promise<NextResponse> {
   return NextResponse.json({
     success: true,

@@ -1,10 +1,9 @@
 // app/api/requests/[id]/comments/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getUserFromHeaders, canCommentOnRequest } from '@/lib/auth-server';
+import { auth } from '@/lib/auth';
 import { z } from 'zod';
 
-// ===== VALIDATION SCHEMA =====
 const CreateCommentSchema = z.object({
   content: z.string().min(1, 'กรุณากรอกความคิดเห็น').max(5000, 'ความคิดเห็นยาวเกินไป'),
   type: z.enum(['COMMENT', 'STATUS_CHANGE']).optional().default('COMMENT'),
@@ -26,16 +25,17 @@ const CreateCommentSchema = z.object({
   ]).optional(),
 });
 
-// ===== GET - List Comments =====
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id: requestId } = await params;
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
@@ -54,8 +54,9 @@ export async function GET(
       );
     }
     
-    const isOwner = requestData.userId === userInfo.userId;
-    const isAdmin = userInfo.role === 'ADMIN';
+    const userRole = (session.user as any).role || 'USER';
+    const isOwner = requestData.userId === session.user.id;
+    const isAdmin = userRole === 'ADMIN';
     
     if (!isOwner && !isAdmin) {
       return NextResponse.json(
@@ -96,16 +97,17 @@ export async function GET(
   }
 }
 
-// ===== POST - Create Comment (รวมทั้ง STATUS_CHANGE) =====
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id: requestId } = await params;
-    const userInfo = getUserFromHeaders(new Headers(request.headers));
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
     
-    if (!userInfo) {
+    if (!session?.user) {
       return NextResponse.json(
         { success: false, error: 'Authentication required' },
         { status: 401 }
@@ -130,11 +132,10 @@ export async function POST(
     }
     
     const { content, type, fromStatus, toStatus } = validation.data;
+    const userRole = (session.user as any).role || 'USER';
     
-    // ✅ ตรวจสอบสิทธิ์
     if (type === 'STATUS_CHANGE') {
-      // เฉพาะ Admin เท่านั้นที่เปลี่ยนสถานะได้
-      if (userInfo.role !== 'ADMIN') {
+      if (userRole !== 'ADMIN') {
         return NextResponse.json(
           { success: false, error: 'เฉพาะ Admin เท่านั้นที่เปลี่ยนสถานะได้' },
           { status: 403 }
@@ -148,8 +149,19 @@ export async function POST(
         );
       }
     } else {
-      // ความคิดเห็นทั่วไป - ต้องมีสิทธิ์ comment
-      const canComment = await canCommentOnRequest(userInfo.userId, userInfo.role, requestId);
+      const requestData = await prisma.request.findUnique({
+        where: { id: requestId },
+        select: { userId: true },
+      });
+      
+      if (!requestData) {
+        return NextResponse.json(
+          { success: false, error: 'Request not found' },
+          { status: 404 }
+        );
+      }
+      
+      const canComment = userRole === 'ADMIN' || requestData.userId === session.user.id;
       
       if (!canComment) {
         return NextResponse.json(
@@ -159,13 +171,11 @@ export async function POST(
       }
     }
     
-    // ✅ ถ้าเป็น STATUS_CHANGE - อัปเดตสถานะ Request ด้วย
     const comment = await prisma.$transaction(async (tx) => {
-      // 1. Create comment
       const newComment = await tx.comment.create({
         data: {
           requestId,
-          userId: userInfo.userId,
+          userId: session.user.id,
           content,
           type,
           fromStatus: type === 'STATUS_CHANGE' ? fromStatus : null,
@@ -183,7 +193,6 @@ export async function POST(
         },
       });
       
-      // 2. ถ้าเป็น STATUS_CHANGE - อัปเดตสถานะ Request
       if (type === 'STATUS_CHANGE' && toStatus) {
         await tx.request.update({
           where: { id: requestId },
@@ -194,7 +203,7 @@ export async function POST(
       return newComment;
     });
     
-    console.log(`✅ Comment created (type: ${type}) on request ${requestId} by user: ${userInfo.userId}`);
+    console.log(`✅ Comment created (type: ${type}) on request ${requestId} by user: ${session.user.id}`);
     
     return NextResponse.json(
       {
