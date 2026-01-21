@@ -12,7 +12,7 @@ model User {
   firstName     String    @default("")          // ✅ Changed to optional
   lastName      String    @default("")          // ✅ Changed to optional
   phone         String?
-  role          String    @default("USER")      // "USER" | "ADMIN"
+  role          UserRole  @default(USER)        // ✅ Using enum instead of String
   status        String    @default("ACTIVE")    // "ACTIVE" | "SUSPENDED" | "INACTIVE"
   isActive      Boolean   @default(true)
   lastLogin     DateTime?
@@ -81,4 +81,10 @@ model Verification {
   
   @@unique([identifier, value])
   @@map("verifications")
+}
+
+// ===== USER ROLE ENUM =====
+enum UserRole {
+  USER
+  ADMIN
 }

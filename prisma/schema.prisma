@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-20T19:18:38.860Z
+// Last generated: 2026-01-21T04:35:19.728Z
 // HealthTech Sandbox
 
 generator client {
@@ -14,27 +14,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-
-// ==========================================
-// BASE SCHEMA - V1.0
-// ==========================================
-
-// prisma/schemas/base.prisma
-// ===== Project NextGen - BASE ENUMS =====
-
-// ===== USER ROLE =====
-enum UserRole {
-  USER
-  ADMIN
-}
-
-// ===== USER STATUS =====
-enum UserStatus {
-  PENDING
-  ACTIVE
-  SUSPENDED
-  INACTIVE
-}
 
 // ==========================================
 // ATTACHMENT SCHEMA - ADDITIONAL
@@ -81,7 +60,7 @@ model User {
   firstName     String    @default("")          // ✅ Changed to optional
   lastName      String    @default("")          // ✅ Changed to optional
   phone         String?
-  role          String    @default("USER")      // "USER" | "ADMIN"
+  role          UserRole  @default(USER)        // ✅ Using enum instead of String
   status        String    @default("ACTIVE")    // "ACTIVE" | "SUSPENDED" | "INACTIVE"
   isActive      Boolean   @default(true)
   lastLogin     DateTime?
@@ -150,6 +129,12 @@ model Verification {
   
   @@unique([identifier, value])
   @@map("verifications")
+}
+
+// ===== USER ROLE ENUM =====
+enum UserRole {
+  USER
+  ADMIN
 }
 
 // ==========================================
