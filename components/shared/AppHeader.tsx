@@ -24,6 +24,7 @@ import {
   LayoutDashboard,
   ChevronDown,
   Send,
+  List,
 } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -203,7 +204,7 @@ export function AppHeader() {
                     <DropdownMenuSeparator />
                     
                     <DropdownMenuItem onClick={() => router.push('/dashboard')}>
-                      <LayoutDashboard className="w-4 h-4 mr-2" />
+                      <List className="w-4 h-4 mr-2" />
                       คำขอของฉัน
                     </DropdownMenuItem>
 

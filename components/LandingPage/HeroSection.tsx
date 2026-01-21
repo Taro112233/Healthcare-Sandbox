@@ -11,7 +11,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard } from 'lucide-react';
+import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard, List } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
 
 const fadeIn: Variants = {
@@ -177,7 +177,7 @@ export function HeroSection() {
             </Link>
             <Link href="/dashboard">
               <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800/60 backdrop-blur-sm hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-300">
-                <Activity className="w-5 h-5 mr-2" />
+                <List className="w-5 h-5 mr-2" />
                 ดูคำขอของฉัน
               </Button>
             </Link>
