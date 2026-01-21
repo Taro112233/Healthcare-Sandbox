@@ -161,7 +161,7 @@ export default function RegisterPage() {
             href="/"
             className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <div className="w-12 h-12 from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
@@ -185,18 +185,6 @@ export default function RegisterPage() {
           </CardHeader>
 
           <CardContent className="space-y-4">
-            {/* Terms Checkbox */}
-            <TermsCheckbox
-              checked={acceptedTerms}
-              onCheckedChange={(checked) => {
-                setAcceptedTerms(checked);
-                if (checked && errors.terms) {
-                  setErrors({ ...errors, terms: undefined });
-                }
-              }}
-              error={errors.terms}
-            />
-
             {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
@@ -344,6 +332,19 @@ export default function RegisterPage() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
+
+              {/* Terms Checkbox */}
+            <TermsCheckbox
+              checked={acceptedTerms}
+              onCheckedChange={(checked) => {
+                setAcceptedTerms(checked);
+                if (checked && errors.terms) {
+                  setErrors({ ...errors, terms: undefined });
+                }
+              }}
+              error={errors.terms}
+            />
+
 
               {/* Submit Button */}
               <Button
