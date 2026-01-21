@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-21T04:38:03.971Z
+// Last generated: 2026-01-21T12:54:32.790Z
 // HealthTech Sandbox
 
 generator client {
@@ -49,6 +49,7 @@ model Attachment {
 // prisma/schemas/better-auth.prisma
 // ===== Better Auth + Project NextGen Fields =====
 
+// prisma/schemas/better-auth.prisma
 model User {
   id            String    @id @default(cuid())
   name          String                          // Required by Better Auth
@@ -56,29 +57,31 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   
-  // Project NextGen: เปลี่ยนเป็น optional พร้อม default value
-  firstName     String    @default("")          // ✅ Changed to optional
-  lastName      String    @default("")          // ✅ Changed to optional
-  phone         String?
-  role          UserRole  @default(USER)        // ✅ Using enum instead of String
-  status        String    @default("ACTIVE")    // "ACTIVE" | "SUSPENDED" | "INACTIVE"
+  // ✅ Changed to optional with default empty string
+  firstName     String    @default("")          
+  lastName      String    @default("")          
+  phone         String    @default("")
+  
+  // ✅ NEW: Onboarding completion flag
+  onboardingCompleted Boolean @default(false)
+  
+  role          UserRole  @default(USER)
+  status        String    @default("ACTIVE")
   isActive      Boolean   @default(true)
   lastLogin     DateTime?
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   
-  // Better Auth relations
   sessions      Session[]
   accounts      Account[]
-  
-  // Project NextGen relations
   requests      Request[]
   comments      Comment[]
   statusChanges StatusHistory[]
   
   @@index([email])
   @@index([role])
+  @@index([onboardingCompleted])
   @@map("users")
 }
 

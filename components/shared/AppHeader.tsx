@@ -21,7 +21,6 @@ import {
   LogOut,
   User,
   Shield,
-  LayoutDashboard,
   ChevronDown,
   Send,
   List,
@@ -43,7 +42,7 @@ export function AppHeader() {
   const { user, logout } = useCurrentUser();
 
   // ✅ ไม่แสดง navbar ในหน้า login/register
-  if (pathname === '/login' || pathname === '/register' || pathname === '/not-found') {
+  if (pathname === '/login' || pathname === '/register' || pathname === '/not-found' || pathname === '/onboarding') {
     return null;
   }
 
@@ -182,13 +181,11 @@ export function AppHeader() {
                           {user.fullName}
                         </span>
                         <div className="flex items-center gap-1">
-                          {user.role === 'ADMIN' ? (
+                          {user.role === 'ADMIN' && (
                             <Badge variant="outline" className="text-xs px-1.5 py-0 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300">
                               <Shield className="w-3 h-3 mr-1" />
                               Admin
                             </Badge>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">@{user.username}</span>
                           )}
                         </div>
                       </div>
@@ -198,7 +195,7 @@ export function AppHeader() {
                     <DropdownMenuLabel>
                       <div className="flex flex-col">
                         <span className="font-medium">{user.fullName}</span>
-                        <span className="text-xs text-muted-foreground font-normal">@{user.username}</span>
+                        <span className="text-xs text-muted-foreground font-normal">{user.email}</span>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />

@@ -116,25 +116,24 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
-    setError("");
+const handleGoogleSignIn = async () => {
+  setIsGoogleLoading(true);
+  setError("");
 
-    try {
-      // Better Auth handles auto-registration for new Google users
-      await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/dashboard",
-      });
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : "เข้าสู่ระบบด้วย Google ไม่สำเร็จ";
-      setError(errorMsg);
-      toast.error("เข้าสู่ระบบไม่สำเร็จ", {
-        description: errorMsg,
-      });
-      setIsGoogleLoading(false);
-    }
-  };
+  try {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/onboarding", // ✅ Changed to onboarding instead of dashboard
+    });
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : "เข้าสู่ระบบด้วย Google ไม่สำเร็จ";
+    setError(errorMsg);
+    toast.error("เข้าสู่ระบบไม่สำเร็จ", {
+      description: errorMsg,
+    });
+    setIsGoogleLoading(false);
+  }
+};
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -151,7 +150,7 @@ export default function LoginPage() {
             href="/"
             className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <div className="w-12 h-12 from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">

@@ -1,28 +1,22 @@
 // lib/auth.ts
-// Project NextGen - Better Auth Configuration
-
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 
 export const auth = betterAuth({
-  // Database adapter
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
 
-  // Base URL for callbacks
   baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
 
-  // Email & Password Authentication
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
-    requireEmailVerification: false, // Set to true if you want email verification
+    requireEmailVerification: false,
   },
 
-  // Social Providers
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -32,7 +26,6 @@ export const auth = betterAuth({
     },
   },
 
-  // Session configuration
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // Update session every 24 hours
@@ -42,20 +35,27 @@ export const auth = betterAuth({
     },
   },
 
-  // User configuration with additional fields
   user: {
     additionalFields: {
       firstName: {
         type: "string",
-        required: true,
+        required: false, // ✅ Changed to optional
+        defaultValue: "",
       },
       lastName: {
         type: "string",
-        required: true,
+        required: false, // ✅ Changed to optional
+        defaultValue: "",
       },
       phone: {
         type: "string",
         required: false,
+        defaultValue: "",
+      },
+      onboardingCompleted: {
+        type: "boolean",
+        required: false,
+        defaultValue: false, // ✅ NEW field
       },
       role: {
         type: "string",
@@ -75,9 +75,7 @@ export const auth = betterAuth({
     },
   },
 
-  // Trusted origins for CORS
   trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"],
 });
 
-// Export type for client
 export type Auth = typeof auth;

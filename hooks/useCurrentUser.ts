@@ -1,6 +1,4 @@
 // hooks/useCurrentUser.ts
-// Project NextGen - Current User Hook (Better Auth Version)
-
 "use client";
 
 import { useSession, authClient } from "@/lib/auth-client";
@@ -18,6 +16,7 @@ export interface CurrentUser {
   status: string;
   isActive: boolean;
   emailVerified: boolean;
+  onboardingCompleted: boolean; // ✅ Required field
   image?: string;
   createdAt: string;
   updatedAt: string;
@@ -56,6 +55,7 @@ export function useCurrentUser(): UseCurrentUserReturn {
         status: (session.user as any).status || "ACTIVE",
         isActive: (session.user as any).isActive ?? true,
         emailVerified: session.user.emailVerified || false,
+        onboardingCompleted: (session.user as any).onboardingCompleted ?? false, // ✅ FIX: Add field with default
         image: session.user.image || undefined,
         createdAt: new Date(session.user.createdAt).toISOString(),
         updatedAt: new Date(session.user.updatedAt).toISOString(),
