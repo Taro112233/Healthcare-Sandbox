@@ -39,7 +39,7 @@ export function RequestPagination({
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
-          className="flex-shrink-0"
+          className="shrink-0"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
           <span className="hidden xs:inline">ก่อนหน้า</span>
@@ -65,7 +65,7 @@ export function RequestPagination({
                 variant={currentPage === pageNum ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onPageChange(pageNum)}
-                className={`min-w-[36px] flex-shrink-0 ${
+                className={`min-w-9 shrink-0 ${
                   currentPage === pageNum ? 'bg-teal-600 hover:bg-teal-700' : ''
                 }`}
               >
@@ -80,7 +80,7 @@ export function RequestPagination({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          className="flex-shrink-0"
+          className="shrink-0"
         >
           <span className="hidden xs:inline">ถัดไป</span>
           <ChevronRight className="w-4 h-4 ml-1" />

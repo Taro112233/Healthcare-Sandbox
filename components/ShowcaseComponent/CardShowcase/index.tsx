@@ -128,7 +128,7 @@ export function CardShowcase() {
         </Card>
 
         {/* Gradient Card */}
-        <Card gradient className="bg-gradient-to-br from-purple-500 to-pink-500 text-white border-0">
+        <Card gradient className="bg-linear-to-br from-purple-500 to-pink-500 text-white border-0">
           <CardHeader>
             <CardTitle className="text-white">Gradient Card</CardTitle>
             <CardDescription className="text-white/80">Beautiful gradient background</CardDescription>

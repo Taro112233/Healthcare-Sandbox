@@ -19,7 +19,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-background relative flex items-center justify-center p-4">
       {/* Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative w-full max-w-md">
 

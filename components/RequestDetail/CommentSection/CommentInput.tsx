@@ -64,7 +64,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder={isAdmin ? "เขียนความคิดเห็น หรือบันทึกการเปลี่ยนสถานะ..." : "เขียนความคิดเห็น..."}
-        className="min-h-[80px] resize-none"
+        className="min-h-20 resize-none"
         disabled={isSubmitting}
       />
       
@@ -78,7 +78,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
               onValueChange={(value) => setNewStatus(value as RequestStatus)}
               disabled={isSubmitting}
             >
-              <SelectTrigger className="w-[200px] h-9">
+              <SelectTrigger className="w-50 h-9">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

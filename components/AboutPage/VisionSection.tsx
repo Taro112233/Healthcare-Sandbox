@@ -38,9 +38,9 @@ export function VisionSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-12"
         >
-          <div className="bg-gradient-to-br from-teal-500 to-emerald-600 dark:from-teal-700 dark:to-emerald-800 rounded-2xl p-8 md:p-12 text-white">
+          <div className="bg-linear-to-br from-teal-500 to-emerald-600 dark:from-teal-700 dark:to-emerald-800 rounded-2xl p-8 md:p-12 text-white">
             <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
                 <Users2 className="w-6 h-6" />
               </div>
               <div>
@@ -81,7 +81,7 @@ export function VisionSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Rocket className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">
@@ -101,7 +101,7 @@ export function VisionSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-center"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-linear-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Globe2 className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">
@@ -121,7 +121,7 @@ export function VisionSection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-center"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-linear-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <TrendingUp className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-xl font-bold text-foreground mb-2">

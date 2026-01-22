@@ -151,7 +151,7 @@ export function CommentItem({ comment }: CommentItemProps) {
           </div>
         )}
 
-        <div className="text-sm text-foreground whitespace-pre-wrap break-words">
+        <div className="text-sm text-foreground whitespace-pre-wrap wrap-break-words">
           {comment.content}
         </div>
       </div>

@@ -113,9 +113,9 @@ export function CommentSection({
   };
 
   return (
-    <Card className="flex flex-col h-[600px]">
+    <Card className="flex flex-col h-150">
       {/* Header - Fixed */}
-      <CardHeader className="pb-3 border-b border-border flex-shrink-0">
+      <CardHeader className="pb-3 border-b border-border shrink-0">
         <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
           ความคิดเห็น ({comments.length})
@@ -144,7 +144,7 @@ export function CommentSection({
 
         {/* Comment Input - Fixed ด้านล่าง */}
         {canComment && (
-          <div className="px-4 py-3 border-t border-border bg-card flex-shrink-0">
+          <div className="px-4 py-3 border-t border-border bg-card shrink-0">
             <CommentInput
               user={user}
               currentStatus={currentStatus}

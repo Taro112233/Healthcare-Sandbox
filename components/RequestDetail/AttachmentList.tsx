@@ -60,7 +60,7 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
                   href={attachment.fileUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex-shrink-0"
+                  className="shrink-0"
                 >
                   <Image
                     src={attachment.fileUrl}
@@ -85,7 +85,7 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
                 </p>
               </div>
 
-              <div className="flex-shrink-0 flex items-center gap-2">
+              <div className="shrink-0 flex items-center gap-2">
                 <Button
                   variant="ghost"
                   size="sm"

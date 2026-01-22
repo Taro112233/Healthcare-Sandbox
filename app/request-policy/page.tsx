@@ -35,7 +35,7 @@ export default function RequestPolicyPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
       {/* Content */}
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -72,7 +72,7 @@ export default function RequestPolicyPage() {
           <motion.div variants={fadeIn}>
             <div className="bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 p-6 rounded-r-lg">
               <div className="flex items-start gap-4">
-                <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+                <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
                 <div>
                   <h3 className="text-lg font-semibold text-amber-900 dark:text-amber-200 mb-2">
                     ⚠️ สำคัญ: โปรดอ่านอย่างละเอียดก่อนส่งคำขอ
@@ -527,7 +527,7 @@ export default function RequestPolicyPage() {
 
           {/* Acceptance Notice */}
           <motion.div variants={fadeIn}>
-            <div className="bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/20 rounded-xl p-6 border border-teal-200 dark:border-teal-800">
+            <div className="bg-linear-to-r from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/20 rounded-xl p-6 border border-teal-200 dark:border-teal-800">
               <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                 <FileSearch className="w-5 h-5 text-teal-600" />
                 การยอมรับนโยบาย
@@ -537,31 +537,31 @@ export default function RequestPolicyPage() {
               </p>
               <div className="grid gap-2 ml-4">
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>อ่านและเข้าใจนโยบายทั้งหมดแล้ว</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>ยอมรับข้อจำกัดและเงื่อนไขการให้บริการ</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>รับทราบว่าเครื่องมือเป็น sandbox และไม่เหมาะสำหรับใช้กับผู้ป่วยจริง</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>จะไม่ส่งข้อมูลผู้ป่วยจริงหรือข้อมูลที่ละเมิด PDPA</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>รับผิดชอบในการ validate และทดสอบเครื่องมือเองก่อนนำไปใช้จริง</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>ยอมรับว่าเครื่องมือที่พัฒนาเป็นลิขสิทธิ์ของผู้พัฒนา และอาจถูกเผยแพร่สาธารณะ</span>
                 </div>
                 <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
                   <span>เข้าใจว่าโครงการบางประเภทอาจไม่เหมาะกับ sandbox และทีมอาจไม่สามารถรับทำได้</span>
                 </div>
               </div>

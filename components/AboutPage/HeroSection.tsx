@@ -12,7 +12,7 @@ const fadeIn = {
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <motion.div
@@ -39,7 +39,7 @@ export function HeroSection() {
             className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
           >
             เปลี่ยน Pain Point
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
+            <span className="block text-transparent bg-clip-text bg-linear-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
               เป็นเครื่องมือดิจิทัล
             </span>
           </motion.h1>

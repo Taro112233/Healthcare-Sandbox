@@ -180,7 +180,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
           <div className="mb-4 min-w-0">
             <h1 className="text-lg sm:text-xl font-bold text-foreground flex items-start gap-2">
               <Building2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-              <span className="break-words min-w-0 flex-1">{request.department}</span>
+              <span className="wrap-break-words min-w-0 flex-1">{request.department}</span>
             </h1>
           </div>
 
@@ -198,7 +198,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                         {getUserInitials(request.user)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="font-medium underline decoration-transparent group-hover:decoration-current transition-all break-words">
+                    <span className="font-medium underline decoration-transparent group-hover:decoration-current transition-all wrap-break-words">
                       {getUserDisplayName(request.user)}
                     </span>
                   </button>
@@ -233,7 +233,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                         <User className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs text-muted-foreground">ชื่อ-นามสกุล</p>
-                          <p className="text-sm text-foreground font-medium break-words">
+                          <p className="text-sm text-foreground font-medium wrap-break-words">
                             {getUserFullName(request.user)}
                           </p>
                         </div>
@@ -256,7 +256,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                           <Phone className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs text-muted-foreground">เบอร์โทร</p>
-                            <p className="text-sm text-foreground break-words">
+                            <p className="text-sm text-foreground wrap-break-words">
                               {userPhone}
                             </p>
                           </div>
@@ -296,7 +296,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-red-700 dark:text-red-400 flex items-start gap-2">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-            <span className="break-words">Pain Point หน้างาน</span>
+            <span className="wrap-break-words">Pain Point หน้างาน</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -309,7 +309,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-400 flex items-start gap-2">
             <Workflow className="w-5 h-5 shrink-0 mt-0.5" />
-            <span className="break-words">ขั้นตอนการทำงานปัจจุบัน</span>
+            <span className="wrap-break-words">ขั้นตอนการทำงานปัจจุบัน</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -322,7 +322,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-green-700 dark:text-green-400 flex items-start gap-2">
             <Lightbulb className="w-5 h-5 shrink-0 mt-0.5" />
-            <span className="break-words">สิ่งที่ต้องการให้ Tech ช่วย</span>
+            <span className="wrap-break-words">สิ่งที่ต้องการให้ Tech ช่วย</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">

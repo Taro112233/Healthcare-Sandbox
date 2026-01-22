@@ -117,7 +117,7 @@ export function CookieConsent() {
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 {/* Content */}
                 <div className="flex-1 flex items-start gap-3">
-                  <Cookie className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <Cookie className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm text-foreground mb-1">
                       เราใช้คุกกี้บนเว็บไซต์เพื่อเพิ่มประสบการณ์การใช้งานที่ดีขึ้น 

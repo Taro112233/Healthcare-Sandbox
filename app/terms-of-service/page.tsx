@@ -32,7 +32,7 @@ export default function TermsConditionsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
       {/* Content */}
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -88,31 +88,31 @@ export default function TermsConditionsPage() {
 
                 <div className="space-y-3 text-sm">
                   <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>&ldquo;แพลตฟอร์ม&rdquo;</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ Project NextGen
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>&ldquo;ผู้ใช้งาน&rdquo; หรือ &ldquo;ท่าน&rdquo;</strong> หมายถึง บุคคลธรรมดาหรือนิติบุคคลที่ใช้บริการแพลตฟอร์ม
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>&ldquo;คำขอ&rdquo; (Request)</strong> หมายถึง คำขอพัฒนาเครื่องมือที่ผู้ใช้งานส่งผ่านแพลตฟอร์ม
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>&ldquo;Admin&rdquo;</strong> หมายถึง ผู้ดูแลระบบที่มีสิทธิจัดการคำขอและเปลี่ยนสถานะ
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>&ldquo;บริษัทฯ&rdquo;</strong> หมายถึง HLAB Consulting ผู้ให้บริการแพลตฟอร์ม
                     </div>
@@ -134,28 +134,28 @@ export default function TermsConditionsPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-3 text-sm text-foreground">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                     <div>
                       <strong>คุณสมบัติผู้ใช้งาน:</strong> ผู้ใช้งานต้องเป็นบุคคลธรรมดาที่มีอายุครบ 18 ปีบริบูรณ์ 
                       หรือนิติบุคคลที่มีผู้แทนโดยชอบด้วยกฎหมาย
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                     <div>
                       <strong>ข้อมูลที่ถูกต้อง:</strong> ผู้ใช้งานรับรองว่าข้อมูลที่ให้ไว้เป็นความจริงและครบถ้วน 
                       ไม่เป็นเท็จหรือทำให้ผู้อื่นเข้าใจผิด
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                     <div>
                       <strong>ความปลอดภัย:</strong> ผู้ใช้งานมีหน้าที่รักษาความลับของบัญชีและรหัสผ่าน 
                       และแจ้งบริษัทฯ ทันทีหากพบการใช้งานที่ผิดปกติ
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <div>
                       <strong>ข้อห้าม:</strong> ห้ามใช้แพลตฟอร์มเพื่อการที่ผิดกฎหมาย หลอกลวง หรือก่อกวน 
                       ห้ามเผยแพร่เนื้อหาที่ไม่เหมาะสมหรือละเมิดสิทธิผู้อื่น
@@ -252,28 +252,28 @@ export default function TermsConditionsPage() {
                   </h4>
                   <div className="space-y-3 text-sm text-amber-900 dark:text-amber-100">
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <p>
                         <strong>ไม่ใช่ระบบผลิตภัณฑ์:</strong> เครื่องมือที่พัฒนาเป็นแบบ Sandbox 
                         เพื่อการทดลองและศึกษาเท่านั้น ไม่ควรนำไปใช้กับผู้ป่วยจริง
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <p>
                         <strong>ไม่รับประกันผลลัพธ์:</strong> บริษัทฯ ไม่รับประกันว่าคำขอทุกรายการจะได้รับการพัฒนา 
                         หรือผลลัพธ์จะตรงตามที่คาดหวังทุกประการ
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <p>
                         <strong>ความรับผิดจำกัด:</strong> บริษัทฯ ไม่รับผิดชอบต่อความเสียหายใดๆ 
                         ที่เกิดจากการใช้เครื่องมือที่พัฒนา
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <p>
                         <strong>ไม่มีค่าใช้จ่าย:</strong> การใช้บริการเป็นแบบไม่มีค่าใช้จ่าย 
                         แต่อาจมีข้อจำกัดตามนโยบายของบริษัทฯ
@@ -378,23 +378,23 @@ export default function TermsConditionsPage() {
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span>ใช้บริการฝ่าฝืนข้อกำหนดและเงื่อนไขนี้</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span>ให้ข้อมูลเท็จหรือทำให้เข้าใจผิด</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span>กระทำการที่ผิดกฎหมายหรือไม่เหมาะสม</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span>พยายามเข้าถึงระบบโดยไม่ได้รับอนุญาต</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                     <span>กระทำการที่อาจสร้างความเสียหายต่อแพลตฟอร์มหรือผู้ใช้รายอื่น</span>
                   </div>
                 </div>
@@ -447,7 +447,7 @@ export default function TermsConditionsPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">อีเมล</p>
                       <p className="text-sm text-muted-foreground break-all">
@@ -457,7 +457,7 @@ export default function TermsConditionsPage() {
                   </div>
 
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">โทรศัพท์</p>
                       <p className="text-sm text-muted-foreground">
@@ -470,7 +470,7 @@ export default function TermsConditionsPage() {
                   </div>
 
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg sm:col-span-2">
-                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">ที่อยู่</p>
                       <p className="text-sm text-muted-foreground leading-relaxed">

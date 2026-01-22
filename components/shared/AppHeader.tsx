@@ -69,7 +69,7 @@ export function AppHeader() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <div className="w-10 h-10 bg-linear-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
                     <Stethoscope className="w-6 h-6 text-white" />
                   </div>
                   <ChevronDown className="w-4 h-4 text-muted-foreground" />
@@ -104,7 +104,7 @@ export function AppHeader() {
             href="/" 
             className="hidden md:flex xl:hidden items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 bg-linear-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
           </Link>
@@ -114,7 +114,7 @@ export function AppHeader() {
             href="/" 
             className="hidden xl:flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 bg-linear-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
               <Stethoscope className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -178,7 +178,7 @@ export function AppHeader() {
                             alt={user.fullName || `${user.firstName} ${user.lastName}`} 
                           />
                         )}
-                        <AvatarFallback className="bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-sm">
+                        <AvatarFallback className="bg-linear-to-br from-teal-500 to-emerald-600 text-white text-sm">
                           {getUserInitials()}
                         </AvatarFallback>
                       </Avatar>

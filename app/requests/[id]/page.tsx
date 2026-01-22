@@ -19,7 +19,7 @@ interface PageProps {
 function RequestDetailSkeleton() {
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
@@ -38,9 +38,9 @@ function RequestDetailSkeleton() {
               className="space-y-3"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Skeleton className="h-6 w-24 sm:w-28 flex-shrink-0" />
-                <Skeleton className="h-6 w-28 sm:w-32 flex-shrink-0" />
-                <Skeleton className="h-6 w-32 sm:w-36 flex-shrink-0" />
+                <Skeleton className="h-6 w-24 sm:w-28 shrink-0" />
+                <Skeleton className="h-6 w-28 sm:w-32 shrink-0" />
+                <Skeleton className="h-6 w-32 sm:w-36 shrink-0" />
               </div>
               <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4">
                 <Skeleton className="h-6 w-40" />
@@ -88,12 +88,12 @@ function RequestDetailSkeleton() {
                 <CardContent className="space-y-3">
                   {[1, 2].map((i) => (
                     <div key={i} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg min-w-0">
-                      <Skeleton className="w-16 h-16 rounded flex-shrink-0" />
+                      <Skeleton className="w-16 h-16 rounded shrink-0" />
                       <div className="flex-1 space-y-2 min-w-0">
-                        <Skeleton className="h-4 w-full max-w-[200px]" />
+                        <Skeleton className="h-4 w-full max-w-50" />
                         <Skeleton className="h-3 w-24" />
                       </div>
-                      <div className="flex gap-2 flex-shrink-0">
+                      <div className="flex gap-2 shrink-0">
                         <Skeleton className="h-8 w-8" />
                         <Skeleton className="h-8 w-8" />
                       </div>
@@ -111,7 +111,7 @@ function RequestDetailSkeleton() {
             transition={{ duration: 0.4, delay: 0.3 }}
             className="lg:sticky lg:top-6 lg:self-start min-w-0"
           >
-            <Card className="h-[600px] bg-card w-full">
+            <Card className="h-150 bg-card w-full">
               <CardHeader className="pb-3 border-b border-border">
                 <Skeleton className="h-5 w-32" />
               </CardHeader>
@@ -124,7 +124,7 @@ function RequestDetailSkeleton() {
                     transition={{ duration: 0.3, delay: 0.4 + (i * 0.05) }}
                     className="flex gap-3 min-w-0"
                   >
-                    <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
+                    <Skeleton className="h-8 w-8 rounded-full shrink-0" />
                     <div className="flex-1 space-y-2 min-w-0">
                       <Skeleton className="h-4 w-32 max-w-full" />
                       <Skeleton className="h-12 w-full" />
@@ -168,7 +168,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         transition={{ duration: 0.3 }}
         className="relative min-h-screen overflow-x-hidden"
       >
-        <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -197,7 +197,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         transition={{ duration: 0.3 }}
         className="relative min-h-screen overflow-x-hidden"
       >
-        <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -225,7 +225,7 @@ export default function RequestDetailPage({ params }: PageProps) {
       transition={{ duration: 0.3 }}
       className="relative min-h-screen overflow-x-hidden"
     >
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div

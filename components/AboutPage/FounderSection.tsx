@@ -28,7 +28,7 @@ export function FounderSection() {
             transition={{ delay: 0.1 }}
             className="relative"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-teal-100 to-emerald-100 dark:from-teal-950/30 dark:to-emerald-950/30">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-linear-to-br from-teal-100 to-emerald-100 dark:from-teal-950/30 dark:to-emerald-950/30">
               <Image
                 src="/images/thanatouch-picture.jpg"
                 alt="ธนธัช ธำรงโสตถิสกุล"
@@ -68,7 +68,7 @@ export function FounderSection() {
 
             <div className="space-y-4 pt-4">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
+                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 shrink-0" />
                 <p className="text-muted-foreground">
                   <strong className="text-foreground">Pharmacist & Full-Stack Developer</strong> — 
                   เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยี
@@ -76,7 +76,7 @@ export function FounderSection() {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
+                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 shrink-0" />
                 <p className="text-muted-foreground">
                   <strong className="text-foreground">Healthcare Systems Builder</strong> — 
                   พัฒนาระบบโรงพยาบาลและเครื่องมือดิจิทัลที่ใช้งานจริง
@@ -84,7 +84,7 @@ export function FounderSection() {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 flex-shrink-0" />
+                <div className="w-2 h-2 rounded-full bg-teal-500 mt-2 shrink-0" />
                 <p className="text-muted-foreground">
                   <strong className="text-foreground">Problem Solver</strong> — 
                   มุ่งเน้นแก้ pain point จริงด้วยเทคโนโลยีที่เข้าถึงได้

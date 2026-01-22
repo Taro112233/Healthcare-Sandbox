@@ -118,7 +118,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
             </h3>
             <div className="grid gap-3">
               <div className="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded-lg flex items-start gap-3">
-                <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-1">
                     รอตรวจสอบ (Pending Review)
@@ -130,7 +130,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
               </div>
 
               <div className="bg-blue-50 dark:bg-blue-950/20 p-3 rounded-lg flex items-start gap-3">
-                <Eye className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <Eye className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-1">
                     อยู่ในการพิจารณา (Under Consideration)
@@ -142,7 +142,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
               </div>
 
               <div className="bg-purple-50 dark:bg-purple-950/20 p-3 rounded-lg flex items-start gap-3">
-                <Code className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
+                <Code className="w-5 h-5 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-1">
                     อยู่ในการพัฒนา (In Development)
@@ -154,7 +154,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
               </div>
 
               <div className="bg-orange-50 dark:bg-orange-950/20 p-3 rounded-lg flex items-start gap-3">
-                <TestTube className="w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" />
+                <TestTube className="w-5 h-5 text-orange-600 dark:text-orange-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-1">
                     อยู่ในการทดสอบ (In Testing)
@@ -166,7 +166,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
               </div>
 
               <div className="bg-green-50 dark:bg-green-950/20 p-3 rounded-lg flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-green-800 dark:text-green-300 mb-1">
                     สำเร็จ (Completed)
@@ -180,13 +180,13 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
           </div>
 
           {/* Tips */}
-          <div className="bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-950/20 dark:to-blue-950/20 p-6 rounded-lg">
+          <div className="bg-linear-to-r from-teal-50 to-blue-50 dark:from-teal-950/20 dark:to-blue-950/20 p-6 rounded-lg">
             <h3 className="font-bold text-lg mb-4 text-teal-700 dark:text-teal-400 flex items-center gap-2">
               💡 เคล็ดลับ
             </h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
-                <Star className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                <Star className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-foreground">
                     ให้รายละเอียดมากที่สุด
@@ -197,7 +197,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <Target className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                <Target className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-foreground">ใส่ตัวเลขและความถี่</p>
                   <p className="text-muted-foreground text-xs">
@@ -206,7 +206,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <MessageSquare className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                <MessageSquare className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-foreground">ตอบ Comment ทันที</p>
                   <p className="text-muted-foreground text-xs">

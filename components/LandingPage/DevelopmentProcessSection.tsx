@@ -155,7 +155,7 @@ export function DevelopmentProcessSection() {
                 >
                   <AccordionTrigger className="px-6 py-5 hover:no-underline group">
                     <div className="flex items-center gap-5 w-full">
-                      <div className={`w-14 h-14 ${step.bgColor} rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-500 ${
+                      <div className={`w-14 h-14 ${step.bgColor} rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 ${
                         activeStep === index ? 'scale-110 shadow-inner' : 'group-hover:scale-105'
                       }`}>
                         <step.icon className={`w-7 h-7 ${step.iconColor}`} />
@@ -171,7 +171,7 @@ export function DevelopmentProcessSection() {
                       <ul className="space-y-3">
                         {step.details.map((detail, idx) => (
                           <li key={idx} className="flex items-start gap-3 text-[15px] text-muted-foreground/90">
-                            <div className={`w-2 h-2 rounded-full ${step.iconColor} mt-2 flex-shrink-0`} />
+                            <div className={`w-2 h-2 rounded-full ${step.iconColor} mt-2 shrink-0`} />
                             <span>{detail}</span>
                           </li>
                         ))}

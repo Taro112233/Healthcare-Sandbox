@@ -36,7 +36,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       if (animation === "wave") {
         return (
           <motion.div
-            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent"
             animate={{
               translateX: ["100%", "200%"],
             }}

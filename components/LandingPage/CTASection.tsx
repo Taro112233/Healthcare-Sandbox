@@ -14,7 +14,7 @@ interface CTASectionProps {
 
 export function CTASection({ onManualClick }: CTASectionProps) {
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+    <section className="py-20 px-4 bg-linear-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
       <motion.div
         initial="hidden"
         whileInView="visible"

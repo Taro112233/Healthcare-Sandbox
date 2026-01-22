@@ -58,7 +58,7 @@ export function CarouselShowcase() {
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
                       <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                        <CardContent className="flex aspect-square items-center justify-center p-6 bg-linear-to-br from-blue-500 to-purple-600 text-white">
                           <span className="text-3xl font-semibold">{index + 1}</span>
                         </CardContent>
                       </Card>
@@ -88,7 +88,7 @@ export function CarouselShowcase() {
                   <CarouselItem key={index} className="pt-1 md:basis-1/2">
                     <div className="p-1">
                       <Card>
-                        <CardContent className="flex items-center justify-center p-6 bg-gradient-to-r from-green-500 to-teal-600 text-white">
+                        <CardContent className="flex items-center justify-center p-6 bg-linear-to-r from-green-500 to-teal-600 text-white">
                           <span className="text-2xl font-semibold">{index + 1}</span>
                         </CardContent>
                       </Card>

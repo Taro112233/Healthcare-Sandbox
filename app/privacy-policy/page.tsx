@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Fixed Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
       {/* Content */}
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -259,21 +259,21 @@ export default function PrivacyPolicyPage() {
 
                 <div className="space-y-2 text-sm text-foreground">
                   <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>ผู้ให้บริการ:</strong> บุคคลที่สามที่ช่วยเราดำเนินงาน 
                       (เช่น Cloud Storage, Email Service) ภายใต้ข้อตกลงการรักษาความลับ
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>หน่วยงานภาครัฐ:</strong> เมื่อมีข้อบังคับทางกฎหมาย 
                       หรือเพื่อการร่วมมือในโครงการของภาครัฐ
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 shrink-0" />
                     <div>
                       <strong>ความยินยอม:</strong> เมื่อได้รับความยินยอมจากท่าน
                     </div>
@@ -404,7 +404,7 @@ export default function PrivacyPolicyPage() {
                     }
                   ].map((right) => (
                     <div key={right.num} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                      <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950/30 flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-950/30 flex items-center justify-center shrink-0">
                         <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{right.num}</span>
                       </div>
                       <div className="flex-1">
@@ -495,7 +495,7 @@ export default function PrivacyPolicyPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">อีเมล</p>
                       <a 
@@ -508,7 +508,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Phone className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">โทรศัพท์</p>
                       <a 
@@ -524,7 +524,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg sm:col-span-2">
-                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">ที่อยู่</p>
                       <p className="text-sm text-muted-foreground leading-relaxed">

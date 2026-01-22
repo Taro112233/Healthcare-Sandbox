@@ -17,7 +17,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={cn(
           "rounded-lg border bg-card text-card-foreground shadow",
-          gradient && "bg-gradient-to-r",
+          gradient && "bg-linear-to-r",
           className
         )}
         whileHover={hoverable ? { scale: 1.02, y: -2 } : undefined}

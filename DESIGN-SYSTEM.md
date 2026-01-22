@@ -166,7 +166,7 @@ export function ModuleCard({ item, canManage, onEdit, onDelete }) {
           {/* Header: Icon + Title + Badge */}
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3 flex-1 min-w-0">
-              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center shrink-0">
                 <Icon className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -177,12 +177,12 @@ export function ModuleCard({ item, canManage, onEdit, onDelete }) {
             
             {/* Status Badge */}
             {item.isActive ? (
-              <Badge variant="default" className="bg-green-500 flex-shrink-0">
+              <Badge variant="default" className="bg-green-500 shrink-0">
                 <CheckCircle className="w-3 h-3 mr-1" />
                 ใช้งาน
               </Badge>
             ) : (
-              <Badge variant="secondary" className="flex-shrink-0">
+              <Badge variant="secondary" className="shrink-0">
                 <XCircle className="w-3 h-3 mr-1" />
                 ปิด
               </Badge>
@@ -190,7 +190,7 @@ export function ModuleCard({ item, canManage, onEdit, onDelete }) {
           </div>
           
           {/* Description */}
-          <div className="min-h-[40px]">
+          <div className="min-h-10">
             {item.description ? (
               <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
             ) : (
@@ -255,7 +255,7 @@ export function ModuleCard({ item, canManage, onEdit, onDelete }) {
             </div>
             
             {/* Status Badge + Actions */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               {item.isActive ? (
                 <Badge variant="default" className="bg-green-500">
                   <CheckCircle className="w-3 h-3 mr-1" />
@@ -335,7 +335,7 @@ export function ModuleFormModal({ open, onOpenChange, item, onSubmit }) {
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-125">
         <DialogHeader>
           <DialogTitle>{item ? 'แก้ไข' : 'สร้างใหม่'}</DialogTitle>
           <DialogDescription>กรอกข้อมูลด้านล่าง</DialogDescription>
@@ -666,7 +666,7 @@ Every component must have:
 ✅ Form spacing:      space-y-2
 ✅ Button padding:    px-4 py-2
 ✅ Border top:        border-t pt-2 (for actions)
-✅ Flex shrink:       flex-shrink-0 (for badges/icons)
+✅ Flex shrink:       shrink-0 (for badges/icons)
 ✅ Min width:         min-w-0 (for truncate to work)
 
 // FLEXIBLE patterns (choose based on content)

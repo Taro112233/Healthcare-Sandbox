@@ -38,7 +38,7 @@ export default function ProductsPage() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <motion.div
@@ -59,7 +59,7 @@ export default function ProductsPage() {
               className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
             >
               เครื่องมือที่สร้างเสร็จแล้ว
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
+              <span className="block text-transparent bg-clip-text bg-linear-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
                 และใช้งานจริง
               </span>
             </motion.h1>
@@ -97,7 +97,7 @@ export default function ProductsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+      <section className="py-20 px-4 bg-linear-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -188,7 +188,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         rel="noopener noreferrer"
         className="group block"
       >
-        <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-muted mb-4 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+        <div className="relative aspect-16/10 rounded-xl overflow-hidden bg-muted mb-4 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
           <video
             ref={videoRef}
             src={product.videoSrc}
@@ -199,7 +199,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             className="w-full h-full object-cover"
           />
           
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
 
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-foreground flex items-center gap-2">

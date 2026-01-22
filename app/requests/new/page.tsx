@@ -37,7 +37,7 @@ import {
 function NewRequestSkeleton() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -143,7 +143,7 @@ export default function NewRequestPage() {
       transition={{ duration: 0.3 }}
       className="min-h-screen bg-background"
     >
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
             
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -193,7 +193,7 @@ export default function NewRequestPage() {
                               className="space-y-3"
                             >
                               <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
                                   <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div className="flex-1">
@@ -202,11 +202,11 @@ export default function NewRequestPage() {
                                   </h3>
                                   <div className="space-y-2 text-sm text-muted-foreground">
                                     <p className="flex items-start gap-2">
-                                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                       <span><strong className="text-foreground">ดี:</strong> &ldquo;ต้องคำนวณ Vancomycin dose ตาม Cockcroft-Gault eGFR ทุกครั้งที่ใช้ยา ซึ่งใช้เวลา 5-10 นาที/ครั้ง&rdquo;</span>
                                     </p>
                                     <p className="flex items-start gap-2">
-                                      <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+                                      <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                                       <span><strong className="text-foreground">ไม่ดี:</strong> &ldquo;ต้องคำนวณยาตลอดเวลา ลำบาก&rdquo;</span>
                                     </p>
                                   </div>
@@ -223,7 +223,7 @@ export default function NewRequestPage() {
                               className="space-y-3"
                             >
                               <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center shrink-0">
                                   <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                                 </div>
                                 <div className="flex-1">
@@ -232,11 +232,11 @@ export default function NewRequestPage() {
                                   </h3>
                                   <div className="space-y-2 text-sm text-muted-foreground">
                                     <p className="flex items-start gap-2">
-                                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                       <span><strong className="text-foreground">ดี:</strong> &ldquo;ER รับผู้ป่วยเฉลี่ย 150 ราย/วัน ต้องคำนวณ GCS + AVPU ประมาณ 40-50 ครั้ง/วัน&rdquo;</span>
                                     </p>
                                     <p className="flex items-start gap-2">
-                                      <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+                                      <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                                       <span><strong className="text-foreground">ไม่ดี:</strong> &ldquo;ต้องคำนวณบ่อยมาก&rdquo;</span>
                                     </p>
                                   </div>
@@ -253,7 +253,7 @@ export default function NewRequestPage() {
                               className="space-y-3"
                             >
                               <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center shrink-0">
                                   <FileText className="w-5 h-5 text-orange-600 dark:text-orange-400" />
                                 </div>
                                 <div className="flex-1">
@@ -283,7 +283,7 @@ export default function NewRequestPage() {
                               className="space-y-3"
                             >
                               <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-950/30 flex items-center justify-center shrink-0">
                                   <ImageIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
                                 </div>
                                 <div className="flex-1">
@@ -292,15 +292,15 @@ export default function NewRequestPage() {
                                   </h3>
                                   <ul className="space-y-2 text-sm text-muted-foreground">
                                     <li className="flex items-start gap-2">
-                                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                       <span>Screenshot ของแบบฟอร์มที่ต้องกรอกบ่อย</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                       <span>ภาพถ่ายหน้าหนังสือที่ใช้อ้างอิง</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                      <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                       <span>ตัวอย่าง flow ที่วาดด้วยมือ</span>
                                     </li>
                                   </ul>
@@ -353,10 +353,10 @@ export default function NewRequestPage() {
                               className="flex gap-4"
                             >
                               <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-950/30 flex items-center justify-center shrink-0">
                                   <Clock className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
                                 </div>
-                                <div className="w-0.5 h-full bg-gradient-to-b from-yellow-200 to-blue-200 dark:from-yellow-900 dark:to-blue-900 mt-2" />
+                                <div className="w-0.5 h-full bg-linear-to-b from-yellow-200 to-blue-200 dark:from-yellow-900 dark:to-blue-900 mt-2" />
                               </div>
                               <div className="flex-1 pb-6">
                                 <div className="mb-2">
@@ -386,10 +386,10 @@ export default function NewRequestPage() {
                               className="flex gap-4"
                             >
                               <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-950/30 flex items-center justify-center shrink-0">
                                   <Eye className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                                 </div>
-                                <div className="w-0.5 h-full bg-gradient-to-b from-blue-200 to-purple-200 dark:from-blue-900 dark:to-purple-900 mt-2" />
+                                <div className="w-0.5 h-full bg-linear-to-b from-blue-200 to-purple-200 dark:from-blue-900 dark:to-purple-900 mt-2" />
                               </div>
                               <div className="flex-1 pb-6">
                                 <div className="mb-2">
@@ -419,10 +419,10 @@ export default function NewRequestPage() {
                               className="flex gap-4"
                             >
                               <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-950/30 flex items-center justify-center shrink-0">
                                   <Code className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                                 </div>
-                                <div className="w-0.5 h-full bg-gradient-to-b from-purple-200 to-orange-200 dark:from-purple-900 dark:to-orange-900 mt-2" />
+                                <div className="w-0.5 h-full bg-linear-to-b from-purple-200 to-orange-200 dark:from-purple-900 dark:to-orange-900 mt-2" />
                               </div>
                               <div className="flex-1 pb-6">
                                 <div className="mb-2">
@@ -452,10 +452,10 @@ export default function NewRequestPage() {
                               className="flex gap-4"
                             >
                               <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center shrink-0">
                                   <TestTube className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                                 </div>
-                                <div className="w-0.5 h-full bg-gradient-to-b from-orange-200 to-green-200 dark:from-orange-900 dark:to-green-900 mt-2" />
+                                <div className="w-0.5 h-full bg-linear-to-b from-orange-200 to-green-200 dark:from-orange-900 dark:to-green-900 mt-2" />
                               </div>
                               <div className="flex-1 pb-6">
                                 <div className="mb-2">
@@ -485,7 +485,7 @@ export default function NewRequestPage() {
                               className="flex gap-4"
                             >
                               <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-950/30 flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-950/30 flex items-center justify-center shrink-0">
                                   <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
                                 </div>
                               </div>

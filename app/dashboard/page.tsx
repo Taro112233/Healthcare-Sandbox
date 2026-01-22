@@ -14,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 function DashboardSkeleton() {
   return (
     <div className="relative min-h-screen">
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
@@ -32,8 +32,8 @@ function DashboardSkeleton() {
           >
             <Skeleton className="h-8 w-48" />
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Skeleton className="h-10 w-full sm:w-[180px]" />
-              <Skeleton className="h-10 w-full sm:w-[180px]" />
+              <Skeleton className="h-10 w-full sm:w-45" />
+              <Skeleton className="h-10 w-full sm:w-45" />
             </div>
           </motion.div>
 
@@ -50,11 +50,11 @@ function DashboardSkeleton() {
                   <CardContent className="p-5">
                     <div className="space-y-3">
                       <div className="flex items-start justify-between gap-2">
-                        <Skeleton className="h-6 w-24 flex-shrink-0" />
-                        <Skeleton className="h-6 w-28 flex-shrink-0" />
+                        <Skeleton className="h-6 w-24 shrink-0" />
+                        <Skeleton className="h-6 w-28 shrink-0" />
                       </div>
                       <div className="flex items-center gap-2">
-                        <Skeleton className="h-4 w-4 flex-shrink-0" />
+                        <Skeleton className="h-4 w-4 shrink-0" />
                         <Skeleton className="h-4 w-full" />
                       </div>
                       <Skeleton className="h-16 w-full" />
@@ -165,7 +165,7 @@ export default function DashboardPage() {
       transition={{ duration: 0.3 }}
       className="relative min-h-screen"
     >
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div

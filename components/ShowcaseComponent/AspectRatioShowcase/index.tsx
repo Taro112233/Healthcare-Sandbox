@@ -16,7 +16,7 @@ export function AspectRatioShowcase() {
         <div className="space-y-2">
           <h4 className="text-sm font-medium">16:9 (Video)</h4>
           <AspectRatio ratio={16 / 9} className="bg-muted rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-blue-500 to-purple-600 text-white font-medium">
               16:9
             </div>
           </AspectRatio>
@@ -26,7 +26,7 @@ export function AspectRatioShowcase() {
         <div className="space-y-2">
           <h4 className="text-sm font-medium">4:3 (Classic)</h4>
           <AspectRatio ratio={4 / 3} className="bg-muted rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-500 to-teal-600 text-white font-medium">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-green-500 to-teal-600 text-white font-medium">
               4:3
             </div>
           </AspectRatio>
@@ -36,7 +36,7 @@ export function AspectRatioShowcase() {
         <div className="space-y-2">
           <h4 className="text-sm font-medium">1:1 (Square)</h4>
           <AspectRatio ratio={1} className="bg-muted rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 text-white font-medium">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-orange-500 to-red-600 text-white font-medium">
               1:1
             </div>
           </AspectRatio>
@@ -46,7 +46,7 @@ export function AspectRatioShowcase() {
         <div className="space-y-2 md:col-span-2">
           <h4 className="text-sm font-medium">21:9 (Ultra-wide)</h4>
           <AspectRatio ratio={21 / 9} className="bg-muted rounded-lg overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-rose-600 text-white font-medium">
+            <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-pink-500 to-rose-600 text-white font-medium">
               21:9
             </div>
           </AspectRatio>
@@ -57,7 +57,7 @@ export function AspectRatioShowcase() {
           <h4 className="text-sm font-medium">9:16 (Portrait)</h4>
           <div className="w-1/2">
             <AspectRatio ratio={9 / 16} className="bg-muted rounded-lg overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-medium">
+              <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-indigo-500 to-violet-600 text-white font-medium">
                 9:16
               </div>
             </AspectRatio>

@@ -159,7 +159,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
           {/* Video Showcase Area */}
           <div className={`relative lg:col-span-8 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-            <div className="relative aspect-video lg:aspect-[16/9] rounded-[2rem] overflow-hidden bg-gray-900 shadow-2xl transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-teal-500/10">
+            <div className="relative aspect-video lg:aspect-video rounded-4xl overflow-hidden bg-gray-900 shadow-2xl transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-teal-500/10">
               <video
                 ref={videoRef}
                 src={product.videoSrc}
@@ -169,11 +169,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 className="w-full h-full object-cover"
               />
               
-              <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/5" />
+              <div className="absolute inset-0 bg-linear-to-tr from-black/40 via-transparent to-white/5" />
             </div>
 
             {/* Background Glow Effect */}
-            <div className="absolute -inset-8 bg-gradient-to-r from-teal-500/5 to-emerald-500/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+            <div className="absolute -inset-8 bg-linear-to-r from-teal-500/5 to-emerald-500/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
           </div>
           
         </div>
