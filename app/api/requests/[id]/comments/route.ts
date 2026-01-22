@@ -4,6 +4,18 @@ import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 import { z } from 'zod';
 
+// ✅ Define Better Auth User interface
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role?: 'USER' | 'ADMIN';
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  image?: string;
+}
+
 const CreateCommentSchema = z.object({
   content: z.string().min(1, 'กรุณากรอกความคิดเห็น').max(5000, 'ความคิดเห็นยาวเกินไป'),
   type: z.enum(['COMMENT', 'STATUS_CHANGE']).optional().default('COMMENT'),
@@ -54,7 +66,9 @@ export async function GET(
       );
     }
     
-    const userRole = (session.user as any).role || 'USER';
+    // ✅ Type user properly
+    const betterAuthUser = session.user as BetterAuthUser;
+    const userRole = betterAuthUser.role || 'USER';
     const isOwner = requestData.userId === session.user.id;
     const isAdmin = userRole === 'ADMIN';
     
@@ -75,7 +89,7 @@ export async function GET(
             role: true,
             firstName: true,
             lastName: true,
-            image: true,        // ✅ เพิ่มบรรทัดนี้
+            image: true,
           },
         },
       },
@@ -144,7 +158,10 @@ export async function POST(
     }
     
     const { content, type, fromStatus, toStatus } = validation.data;
-    const userRole = (session.user as any).role || 'USER';
+    
+    // ✅ Type user properly
+    const betterAuthUser = session.user as BetterAuthUser;
+    const userRole = betterAuthUser.role || 'USER';
     
     if (type === 'STATUS_CHANGE') {
       if (userRole !== 'ADMIN') {
@@ -200,7 +217,7 @@ export async function POST(
               firstName: true,
               lastName: true,
               role: true,
-              image: true,      // ✅ เพิ่มบรรทัดนี้
+              image: true,
             },
           },
         },

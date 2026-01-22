@@ -5,6 +5,18 @@ import { auth } from '@/lib/auth';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 
+// ✅ Define Better Auth User interface
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role?: 'USER' | 'ADMIN';
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  image?: string;
+}
+
 const CreateRequestSchema = z.object({
   department: z.string().min(1).max(200).trim(),
   painPoint: z.string().min(10).max(5000),
@@ -40,7 +52,10 @@ export async function GET(request: NextRequest) {
     
     const where: Prisma.RequestWhereInput = {};
     
-    const userRole = (session.user as any).role || 'USER';
+    // ✅ Type user properly
+    const betterAuthUser = session.user as BetterAuthUser;
+    const userRole = betterAuthUser.role || 'USER';
+    
     if (userRole !== 'ADMIN') {
       where.userId = session.user.id;
     }

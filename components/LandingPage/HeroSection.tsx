@@ -11,7 +11,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { Activity, Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard, List } from 'lucide-react';
+import { Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard, List } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
 
 const fadeIn: Variants = {

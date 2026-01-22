@@ -29,6 +29,19 @@ import {
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
+// ✅ Define Better Auth sign up data interface
+interface BetterAuthSignUpData {
+  email: string;
+  password: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  role: string;
+  status: string;
+  isActive: boolean;
+}
+
 interface RegisterFormData {
   email: string;
   password: string;
@@ -108,18 +121,20 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const result = await authClient.signUp.email({
+      // ✅ Type the sign up data properly
+      const signUpData: BetterAuthSignUpData = {
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
         name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
-        // Additional fields
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
         phone: formData.phone.trim() || "",
         role: "USER",
         status: "ACTIVE",
         isActive: true,
-      } as any);
+      };
+
+      const result = await authClient.signUp.email(signUpData);
 
       if (result.error) {
         throw new Error(result.error.message || "สมัครสมาชิกไม่สำเร็จ");

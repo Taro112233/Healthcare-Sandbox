@@ -3,6 +3,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 
+// ✅ Define Better Auth User interface
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role?: 'USER' | 'ADMIN';
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  image?: string;
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -20,7 +32,6 @@ export async function GET(
       );
     }
     
-    // ✅ เพิ่ม image field ในทุกจุดที่ select user
     const requestData = await prisma.request.findUnique({
       where: { id },
       include: {
@@ -32,7 +43,7 @@ export async function GET(
             phone: true,
             firstName: true,
             lastName: true,
-            image: true,        // ✅ เพิ่มบรรทัดนี้
+            image: true,
           },
         },
         attachments: {
@@ -47,7 +58,7 @@ export async function GET(
                 role: true,
                 firstName: true,
                 lastName: true,
-                image: true,    // ✅ เพิ่มบรรทัดนี้
+                image: true,
               },
             },
           },
@@ -61,7 +72,7 @@ export async function GET(
                 name: true,
                 firstName: true,
                 lastName: true,
-                image: true,    // ✅ เพิ่มบรรทัดนี้
+                image: true,
               },
             },
           },
@@ -83,7 +94,9 @@ export async function GET(
       );
     }
     
-    const userRole = (session.user as any).role || 'USER';
+    // ✅ Type user properly
+    const betterAuthUser = session.user as BetterAuthUser;
+    const userRole = betterAuthUser.role || 'USER';
     const hasAccess = userRole === 'ADMIN' || requestData.userId === session.user.id;
     
     if (!hasAccess) {

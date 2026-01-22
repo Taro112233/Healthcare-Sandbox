@@ -1,10 +1,25 @@
 // components/providers/AuthProvider.tsx
-// Project NextGen - Auth Provider
-
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authClient, useSession } from "@/lib/auth-client";
+
+// ✅ Define Better Auth User interface
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  role?: 'USER' | 'ADMIN';
+  status?: string;
+  isActive?: boolean;
+  image?: string;
+  emailVerified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 // Types
 export interface AuthUser {
@@ -13,7 +28,7 @@ export interface AuthUser {
   name: string;
   firstName?: string;
   lastName?: string;
-  phone?: string;
+  phone?: string; // ✅ Changed from string | null to string | undefined
   role: "USER" | "ADMIN";
   status: string;
   isActive: boolean;
@@ -62,21 +77,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Transform session user to our AuthUser type
   const user: AuthUser | null = session?.user
-    ? {
-        id: session.user.id,
-        email: session.user.email,
-        name: session.user.name,
-        firstName: (session.user as any).firstName || session.user.name?.split(" ")[0] || "",
-        lastName: (session.user as any).lastName || session.user.name?.split(" ").slice(1).join(" ") || "",
-        phone: (session.user as any).phone || null,
-        role: ((session.user as any).role as "USER" | "ADMIN") || "USER",
-        status: (session.user as any).status || "ACTIVE",
-        isActive: (session.user as any).isActive ?? true,
-        image: session.user.image || undefined,
-        emailVerified: session.user.emailVerified || false,
-        createdAt: new Date(session.user.createdAt),
-        updatedAt: new Date(session.user.updatedAt),
-      }
+    ? (() => {
+        // ✅ Type user properly
+        const betterAuthUser = session.user as BetterAuthUser;
+        
+        return {
+          id: betterAuthUser.id,
+          email: betterAuthUser.email,
+          name: betterAuthUser.name,
+          firstName: betterAuthUser.firstName || betterAuthUser.name?.split(" ")[0] || "",
+          lastName: betterAuthUser.lastName || betterAuthUser.name?.split(" ").slice(1).join(" ") || "",
+          phone: betterAuthUser.phone || undefined, // ✅ Changed from null to undefined
+          role: (betterAuthUser.role || "USER") as "USER" | "ADMIN",
+          status: betterAuthUser.status || "ACTIVE",
+          isActive: betterAuthUser.isActive ?? true,
+          image: betterAuthUser.image || undefined,
+          emailVerified: betterAuthUser.emailVerified || false,
+          createdAt: new Date(betterAuthUser.createdAt),
+          updatedAt: new Date(betterAuthUser.updatedAt),
+        };
+      })()
     : null;
 
   const handleSignInEmail = async (data: {
@@ -114,18 +134,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     lastName: string;
     phone?: string;
   }) => {
-    const result = await authClient.signUp.email({
+    // ✅ Type the sign up data with proper Better Auth structure
+    const signUpData = {
       email: data.email,
       password: data.password,
       name: data.name,
-      // Additional fields
+      // Additional fields will be handled by Better Auth
       firstName: data.firstName,
       lastName: data.lastName,
       phone: data.phone || "",
       role: "USER",
       status: "ACTIVE",
       isActive: true,
-    } as any);
+    };
+
+    const result = await authClient.signUp.email(signUpData);
 
     if (result.error) {
       throw new Error(result.error.message || "สมัครสมาชิกไม่สำเร็จ");
