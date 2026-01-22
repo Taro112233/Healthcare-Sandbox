@@ -159,10 +159,13 @@ export interface Request {
   
   user?: {
     id: string;
-    firstName: string;
-    lastName: string;
+    name: string;          // Better Auth field
+    fullName?: string;     // Computed field
+    firstName?: string;    // Fallback
+    lastName?: string;     // Fallback
     email?: string | null;
     phone?: string | null;
+    image?: string;        // ✅ Added: Avatar image
   };
   attachments?: Attachment[];
   comments?: Comment[];

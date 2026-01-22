@@ -15,8 +15,7 @@ import { Send, Loader2, RefreshCw } from 'lucide-react';
 import { RequestStatus, REQUEST_STATUS_INFO } from '@/types/request';
 
 interface CommentInputUser {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   role: 'USER' | 'ADMIN';
 }
 

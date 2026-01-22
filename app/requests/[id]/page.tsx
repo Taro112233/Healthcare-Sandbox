@@ -237,8 +237,7 @@ export default function RequestDetailPage({ params }: PageProps) {
             request={request}
             user={{
               id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
+              fullName: user.fullName,
               role: user.role,
             }}
             onRefresh={refetch}

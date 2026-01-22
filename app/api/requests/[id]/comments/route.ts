@@ -71,20 +71,31 @@ export async function GET(
         user: {
           select: {
             id: true,
+            name: true,        // ✅ Better Auth uses 'name'
+            role: true,
             firstName: true,
             lastName: true,
-            role: true,
           },
         },
       },
       orderBy: { createdAt: 'desc' },
     });
     
+    // ✅ Transform comments to include fullName
+    const transformedComments = comments.map(comment => ({
+      ...comment,
+      user: comment.user ? {
+        ...comment.user,
+        fullName: comment.user.name ||
+                  `${comment.user.firstName || ''} ${comment.user.lastName || ''}`.trim(),
+      } : null,
+    }));
+    
     return NextResponse.json({
       success: true,
-      data: comments,
+      data: transformedComments,
       meta: {
-        total: comments.length,
+        total: transformedComments.length,
       },
     });
     

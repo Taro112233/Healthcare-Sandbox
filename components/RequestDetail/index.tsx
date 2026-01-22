@@ -9,8 +9,7 @@ import { Request } from '@/types/request';
 
 interface CurrentUser {
   id: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   role: 'USER' | 'ADMIN';
 }
 

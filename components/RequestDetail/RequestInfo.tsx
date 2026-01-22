@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Popover,
   PopoverContent,
@@ -32,18 +32,138 @@ interface RequestInfoProps {
   request: Request;
 }
 
-export function RequestInfo({ request }: RequestInfoProps) {
-  const getUserInitials = () => {
-    if (!request.user) return 'U';
-    return `${request.user.firstName.charAt(0)}${request.user.lastName.charAt(0)}`.toUpperCase();
-  };
+// ✅ Helper function สำหรับ user initials
+function getUserInitials(user: Request['user']): string {
+  if (!user) return 'U';
+  
+  const userObj = user as Record<string, unknown>;
+  
+  // Priority 1: fullName
+  if ('fullName' in userObj && typeof userObj.fullName === 'string') {
+    const names = userObj.fullName.split(' ').filter(Boolean);
+    if (names.length >= 2) {
+      return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`.toUpperCase();
+    }
+    return userObj.fullName.charAt(0).toUpperCase();
+  }
+  
+  // Priority 2: name
+  if ('name' in userObj && typeof userObj.name === 'string') {
+    const names = userObj.name.split(' ').filter(Boolean);
+    if (names.length >= 2) {
+      return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`.toUpperCase();
+    }
+    return userObj.name.charAt(0).toUpperCase();
+  }
+  
+  // Priority 3: firstName + lastName
+  if ('firstName' in userObj && 'lastName' in userObj && 
+      typeof userObj.firstName === 'string' && typeof userObj.lastName === 'string') {
+    return `${userObj.firstName.charAt(0)}${userObj.lastName.charAt(0)}`.toUpperCase();
+  }
+  
+  // Priority 4: firstName only
+  if ('firstName' in userObj && typeof userObj.firstName === 'string') {
+    return userObj.firstName.charAt(0).toUpperCase();
+  }
+  
+  return 'U';
+}
 
+// ✅ Helper function สำหรับ display name แบบย่อ (FirstName + LastInitial)
+function getUserDisplayName(user: Request['user']): string {
+  if (!user) return 'Unknown User';
+  
+  const userObj = user as Record<string, unknown>;
+  
+  // Priority 1: fullName → FirstName + Last Initial
+  if ('fullName' in userObj && typeof userObj.fullName === 'string') {
+    const names = userObj.fullName.split(' ').filter(Boolean);
+    if (names.length >= 2) {
+      return `${names[0]} ${names[names.length - 1].charAt(0)}.`;
+    }
+    return userObj.fullName;
+  }
+  
+  // Priority 2: name → FirstName + Last Initial
+  if ('name' in userObj && typeof userObj.name === 'string') {
+    const names = userObj.name.split(' ').filter(Boolean);
+    if (names.length >= 2) {
+      return `${names[0]} ${names[names.length - 1].charAt(0)}.`;
+    }
+    return userObj.name;
+  }
+  
+  // Priority 3: firstName + lastName → FirstName + Last Initial
+  if ('firstName' in userObj && 'lastName' in userObj && 
+      typeof userObj.firstName === 'string' && typeof userObj.lastName === 'string') {
+    return `${userObj.firstName} ${userObj.lastName.charAt(0)}.`;
+  }
+  
+  // Priority 4: firstName only
+  if ('firstName' in userObj && typeof userObj.firstName === 'string') {
+    return userObj.firstName;
+  }
+  
+  return 'Unknown User';
+}
+
+// ✅ Helper function สำหรับ full name (ใช้ใน Popover)
+function getUserFullName(user: Request['user']): string {
+  if (!user) return 'Unknown User';
+  
+  const userObj = user as Record<string, unknown>;
+  
+  // Priority 1: fullName
+  if ('fullName' in userObj && typeof userObj.fullName === 'string') {
+    return userObj.fullName;
+  }
+  
+  // Priority 2: name
+  if ('name' in userObj && typeof userObj.name === 'string') {
+    return userObj.name;
+  }
+  
+  // Priority 3: firstName + lastName
+  if ('firstName' in userObj && 'lastName' in userObj && 
+      typeof userObj.firstName === 'string' && typeof userObj.lastName === 'string') {
+    return `${userObj.firstName} ${userObj.lastName}`;
+  }
+  
+  // Priority 4: firstName only
+  if ('firstName' in userObj && typeof userObj.firstName === 'string') {
+    return userObj.firstName;
+  }
+  
+  return 'Unknown User';
+}
+
+// ✅ Helper function สำหรับ avatar image
+function getUserImage(user: Request['user']): string | undefined {
+  if (!user) return undefined;
+  
+  const userObj = user as Record<string, unknown>;
+  
+  if ('image' in userObj && typeof userObj.image === 'string') {
+    return userObj.image;
+  }
+  
+  return undefined;
+}
+
+export function RequestInfo({ request }: RequestInfoProps) {
   const formatDate = (date: Date | string) => {
     const d = typeof date === 'string' ? new Date(date) : date;
     return format(d, 'dd MMMM yyyy, HH:mm', { locale: th });
   };
 
   const totalComments = (request._count?.comments || 0) + (request.statusHistory?.length || 0);
+  
+  // Type guard for email and phone
+  const userObj = request.user as Record<string, unknown>;
+  const userEmail = ('email' in userObj && typeof userObj.email === 'string') ? userObj.email : null;
+  const userPhone = ('phone' in userObj && typeof userObj.phone === 'string') ? userObj.phone : null;
+  const userImage = getUserImage(request.user);
 
   return (
     <div className="space-y-6 min-w-0">
@@ -59,7 +179,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
           {/* Department - With proper text wrapping */}
           <div className="mb-4 min-w-0">
             <h1 className="text-lg sm:text-xl font-bold text-foreground flex items-start gap-2">
-              <Building2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+              <Building2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <span className="break-words min-w-0 flex-1">{request.department}</span>
             </h1>
           </div>
@@ -71,13 +191,14 @@ export function RequestInfo({ request }: RequestInfoProps) {
               <Popover>
                 <PopoverTrigger asChild>
                   <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group self-start">
-                    <Avatar className="h-6 w-6 flex-shrink-0">
+                    <Avatar className="h-6 w-6 shrink-0">
+                      {userImage && <AvatarImage src={userImage} alt={getUserDisplayName(request.user)} />}
                       <AvatarFallback className="text-xs bg-muted text-foreground group-hover:bg-muted-foreground/20 transition-colors">
-                        {getUserInitials()}
+                        {getUserInitials(request.user)}
                       </AvatarFallback>
                     </Avatar>
                     <span className="font-medium underline decoration-transparent group-hover:decoration-current transition-all break-words">
-                      {request.user.firstName} {request.user.lastName}
+                      {getUserDisplayName(request.user)}
                     </span>
                   </button>
                 </PopoverTrigger>
@@ -85,14 +206,15 @@ export function RequestInfo({ request }: RequestInfoProps) {
                   <div className="space-y-4">
                     {/* Header */}
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12 flex-shrink-0">
+                      <Avatar className="h-12 w-12 shrink-0">
+                        {userImage && <AvatarImage src={userImage} alt={getUserFullName(request.user)} />}
                         <AvatarFallback className="text-lg bg-primary/10 text-primary font-semibold">
-                          {getUserInitials()}
+                          {getUserInitials(request.user)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-foreground truncate">
-                          {request.user.firstName} {request.user.lastName}
+                          {getUserFullName(request.user)}
                         </p>
                         <p className="text-sm text-muted-foreground">
                           ผู้ส่งคำขอ
@@ -106,34 +228,34 @@ export function RequestInfo({ request }: RequestInfoProps) {
                     {/* User Details */}
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <User className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <User className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
                           <p className="text-xs text-muted-foreground">ชื่อ-นามสกุล</p>
                           <p className="text-sm text-foreground font-medium break-words">
-                            {request.user.firstName} {request.user.lastName}
+                            {getUserFullName(request.user)}
                           </p>
                         </div>
                       </div>
 
-                      {request.user.email && (
+                      {userEmail && (
                         <div className="flex items-start gap-3">
-                          <Mail className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <Mail className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs text-muted-foreground">อีเมล</p>
                             <p className="text-sm text-foreground break-all">
-                              {request.user.email}
+                              {userEmail}
                             </p>
                           </div>
                         </div>
                       )}
 
-                      {request.user.phone && (
+                      {userPhone && (
                         <div className="flex items-start gap-3">
-                          <Phone className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <Phone className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs text-muted-foreground">เบอร์โทร</p>
                             <p className="text-sm text-foreground break-words">
-                              {request.user.phone}
+                              {userPhone}
                             </p>
                           </div>
                         </div>
@@ -147,18 +269,18 @@ export function RequestInfo({ request }: RequestInfoProps) {
             {/* Right - Date, Comments, Files */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:justify-end">
               <div className="flex items-center gap-1.5 min-w-0">
-                <Calendar className="w-4 h-4 flex-shrink-0" />
+                <Calendar className="w-4 h-4 shrink-0" />
                 <span className="truncate">{formatDate(request.createdAt)}</span>
               </div>
 
               <div className="flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4 flex-shrink-0" />
+                <MessageSquare className="w-4 h-4 shrink-0" />
                 <span>{totalComments}</span>
               </div>
 
               {request._count && (
                 <div className="flex items-center gap-1.5">
-                  <Paperclip className="w-4 h-4 flex-shrink-0" />
+                  <Paperclip className="w-4 h-4 shrink-0" />
                   <span>{request._count.attachments}</span>
                 </div>
               )}
@@ -171,7 +293,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
       <Card className="border-l-4 border-l-red-500 dark:border-l-red-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-red-700 dark:text-red-400 flex items-start gap-2">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="break-words">Pain Point หน้างาน</span>
           </CardTitle>
         </CardHeader>
@@ -184,7 +306,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
       <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-400 flex items-start gap-2">
-            <Workflow className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <Workflow className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="break-words">ขั้นตอนการทำงานปัจจุบัน</span>
           </CardTitle>
         </CardHeader>
@@ -197,7 +319,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
       <Card className="border-l-4 border-l-green-500 dark:border-l-green-400 bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg sm:text-xl font-bold text-green-700 dark:text-green-400 flex items-start gap-2">
-            <Lightbulb className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <Lightbulb className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="break-words">สิ่งที่ต้องการให้ Tech ช่วย</span>
           </CardTitle>
         </CardHeader>

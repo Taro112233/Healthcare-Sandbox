@@ -11,8 +11,7 @@ import { RequestStatus } from '@/types/request';
 
 interface CommentSectionUser {
   id: string;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   role: 'USER' | 'ADMIN';
 }
 

@@ -20,17 +20,19 @@ export async function GET(
       );
     }
     
-    // Fetch request
+    // ✅ Fetch request with proper user data selection
     const requestData = await prisma.request.findUnique({
       where: { id },
       include: {
         user: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,        // ✅ Better Auth uses 'name' field
             email: true,
             phone: true,
+            // ✅ Add these if they exist in your schema
+            firstName: true,
+            lastName: true,
           },
         },
         attachments: {
@@ -41,9 +43,11 @@ export async function GET(
             user: {
               select: {
                 id: true,
+                name: true,    // ✅ Better Auth uses 'name'
+                role: true,
+                // ✅ Add these if needed
                 firstName: true,
                 lastName: true,
-                role: true,
               },
             },
           },
@@ -54,6 +58,7 @@ export async function GET(
             user: {
               select: {
                 id: true,
+                name: true,    // ✅ Better Auth uses 'name'
                 firstName: true,
                 lastName: true,
               },
@@ -88,129 +93,31 @@ export async function GET(
       );
     }
     
+    // ✅ Transform user data to include fullName
+    const transformedRequest = {
+      ...requestData,
+      user: requestData.user ? {
+        ...requestData.user,
+        fullName: requestData.user.name || 
+                  `${requestData.user.firstName || ''} ${requestData.user.lastName || ''}`.trim(),
+      } : null,
+      comments: requestData.comments.map(comment => ({
+        ...comment,
+        user: comment.user ? {
+          ...comment.user,
+          fullName: comment.user.name ||
+                    `${comment.user.firstName || ''} ${comment.user.lastName || ''}`.trim(),
+        } : null,
+      })),
+    };
+    
     return NextResponse.json({
       success: true,
-      data: requestData,
+      data: transformedRequest,
     });
     
   } catch (error) {
     console.error('Get request detail error:', error);
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const session = await auth.api.getSession({
-      headers: request.headers,
-    });
-    
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, error: 'Authentication required' },
-        { status: 401 }
-      );
-    }
-    
-    const userRole = (session.user as any).role || 'USER';
-    if (userRole !== 'ADMIN') {
-      return NextResponse.json(
-        { success: false, error: 'Admin access required' },
-        { status: 403 }
-      );
-    }
-    
-    const existingRequest = await prisma.request.findUnique({
-      where: { id },
-    });
-    
-    if (!existingRequest) {
-      return NextResponse.json(
-        { success: false, error: 'Request not found' },
-        { status: 404 }
-      );
-    }
-    
-    const body = await request.json();
-    const { status, note } = body;
-    
-    const validStatuses = [
-      'PENDING_REVIEW',
-      'UNDER_CONSIDERATION',
-      'IN_DEVELOPMENT',
-      'IN_TESTING',
-      'COMPLETED',
-      'BEYOND_CAPACITY',
-    ];
-    
-    if (status && !validStatuses.includes(status)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid status' },
-        { status: 400 }
-      );
-    }
-    
-    const updatedRequest = await prisma.$transaction(async (tx) => {
-      if (status && status !== existingRequest.status) {
-        await tx.statusHistory.create({
-          data: {
-            requestId: id,
-            fromStatus: existingRequest.status,
-            toStatus: status,
-            changedBy: session.user.id,
-            note: note || null,
-          },
-        });
-      }
-      
-      return await tx.request.update({
-        where: { id },
-        data: {
-          ...(status && { status }),
-        },
-        include: {
-          user: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-              email: true,
-            },
-          },
-          statusHistory: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  firstName: true,
-                  lastName: true,
-                },
-              },
-            },
-            orderBy: { changedAt: 'desc' },
-            take: 5,
-          },
-        },
-      });
-    });
-    
-    console.log(`✅ Request ${id} updated by admin: ${session.user.id}`);
-    
-    return NextResponse.json({
-      success: true,
-      data: updatedRequest,
-      message: 'อัพเดทสถานะสำเร็จ',
-    });
-    
-  } catch (error) {
-    console.error('Update request error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

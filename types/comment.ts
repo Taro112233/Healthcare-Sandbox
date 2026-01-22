@@ -16,11 +16,11 @@ export interface Comment {
   requestId: string;
   userId: string;
   content: string;
-  type: CommentType; // ✅ NEW
+  type: CommentType;
   
   // For STATUS_CHANGE type only
-  fromStatus?: RequestStatus | null; // ✅ NEW
-  toStatus?: RequestStatus | null;   // ✅ NEW
+  fromStatus?: RequestStatus | null;
+  toStatus?: RequestStatus | null;
   
   createdAt: Date;
   updatedAt: Date;
@@ -28,17 +28,20 @@ export interface Comment {
   // User info (populated when needed)
   user?: {
     id: string;
-    firstName: string;
-    lastName: string;
+    name: string;          // Better Auth field
+    fullName?: string;     // Computed field
+    firstName?: string;    // Fallback
+    lastName?: string;     // Fallback
+    image?: string;        // ✅ Added: Avatar image
     role: 'USER' | 'ADMIN';
   };
 }
 
 export interface CreateCommentFormData {
   content: string;
-  type?: CommentType;           // ✅ NEW - optional, default COMMENT
-  fromStatus?: RequestStatus;   // ✅ NEW - required if type = STATUS_CHANGE
-  toStatus?: RequestStatus;     // ✅ NEW - required if type = STATUS_CHANGE
+  type?: CommentType;
+  fromStatus?: RequestStatus;
+  toStatus?: RequestStatus;
 }
 
 export interface CommentListResponse {

@@ -26,11 +26,6 @@ Directory structure:
     │   │   ├── auth/
     │   │   │   └── [...all]/
     │   │   │       └── route.ts
-    │   │   ├── profile/
-    │   │   │   ├── basic-info/
-    │   │   │   │   └── route.ts
-    │   │   │   └── password/
-    │   │   │       └── route.ts
     │   │   ├── requests/
     │   │   │   ├── route.ts
     │   │   │   ├── [id]/
@@ -49,8 +44,6 @@ Directory structure:
     │   ├── privacy-policy/
     │   │   └── page.tsx
     │   ├── products/
-    │   │   └── page.tsx
-    │   ├── profile/
     │   │   └── page.tsx
     │   ├── register/
     │   │   └── page.tsx
@@ -307,7 +300,6 @@ Directory structure:
     │   ├── schema.prisma
     │   └── schemas/
     │       ├── attachment.prisma
-    │       ├── base.prisma
     │       ├── better-auth.prisma
     │       ├── comment.prisma
     │       └── request.prisma
