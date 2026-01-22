@@ -1,9 +1,8 @@
 // middleware.ts
-// Project NextGen - Better Auth Middleware
+// Project NextGen - Simplified Middleware
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
 
 // Public routes that don't require authentication
 const PUBLIC_ROUTES = [
@@ -17,12 +16,7 @@ const PUBLIC_ROUTES = [
   "/request-policy",
 ];
 
-// API routes that are public
-const PUBLIC_API_ROUTES = [
-  "/api/auth",
-];
-
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip static files
@@ -47,47 +41,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Allow public API routes
-  if (PUBLIC_API_ROUTES.some((route) => pathname.startsWith(route))) {
-    return NextResponse.next();
-  }
-
-  // Get session from Better Auth
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
-
-  // No session - redirect to login
-  if (!session) {
-    if (pathname.startsWith("/api/")) {
-      return NextResponse.json(
-        { success: false, error: "Authentication required" },
-        { status: 401 }
-      );
-    }
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  // Admin route protection
-  if (pathname.startsWith("/admin")) {
-    const userRole = (session.user as any).role;
-    if (userRole !== "ADMIN") {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
-  }
-
-  // Inject user info into headers for API routes
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-user-id", session.user.id);
-  requestHeaders.set("x-user-email", session.user.email);
-  requestHeaders.set("x-user-role", (session.user as any).role || "USER");
-  requestHeaders.set("x-user-name", session.user.name || "");
-
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
+  // For protected routes, let the page/API route handle auth check
+  // This avoids Edge Runtime issues with Better Auth
+  return NextResponse.next();
 }
 
 export const config = {

@@ -19,7 +19,7 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 128,
-    requireEmailVerification: false, // Set to true if you want email verification
+    requireEmailVerification: false,
   },
 
   // Social Providers
