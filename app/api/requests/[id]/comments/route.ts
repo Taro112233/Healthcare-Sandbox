@@ -71,17 +71,18 @@ export async function GET(
         user: {
           select: {
             id: true,
-            name: true,        // ✅ Better Auth uses 'name'
+            name: true,
             role: true,
             firstName: true,
             lastName: true,
+            image: true,        // ✅ เพิ่มบรรทัดนี้
           },
         },
       },
       orderBy: { createdAt: 'desc' },
     });
     
-    // ✅ Transform comments to include fullName
+    // Transform comments to include fullName
     const transformedComments = comments.map(comment => ({
       ...comment,
       user: comment.user ? {
@@ -199,6 +200,7 @@ export async function POST(
               firstName: true,
               lastName: true,
               role: true,
+              image: true,      // ✅ เพิ่มบรรทัดนี้
             },
           },
         },

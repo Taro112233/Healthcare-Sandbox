@@ -163,7 +163,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
   const userObj = request.user as Record<string, unknown>;
   const userEmail = ('email' in userObj && typeof userObj.email === 'string') ? userObj.email : null;
   const userPhone = ('phone' in userObj && typeof userObj.phone === 'string') ? userObj.phone : null;
-  const userImage = getUserImage(request.user);
+  const userImage = getUserImage(request.user);  // ✅ ดึง image
 
   return (
     <div className="space-y-6 min-w-0">
@@ -192,6 +192,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                 <PopoverTrigger asChild>
                   <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group self-start">
                     <Avatar className="h-6 w-6 shrink-0">
+                      {/* ✅ เพิ่ม AvatarImage component */}
                       {userImage && <AvatarImage src={userImage} alt={getUserDisplayName(request.user)} />}
                       <AvatarFallback className="text-xs bg-muted text-foreground group-hover:bg-muted-foreground/20 transition-colors">
                         {getUserInitials(request.user)}
@@ -207,6 +208,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
                     {/* Header */}
                     <div className="flex items-center gap-3">
                       <Avatar className="h-12 w-12 shrink-0">
+                        {/* ✅ เพิ่ม AvatarImage component */}
                         {userImage && <AvatarImage src={userImage} alt={getUserFullName(request.user)} />}
                         <AvatarFallback className="text-lg bg-primary/10 text-primary font-semibold">
                           {getUserInitials(request.user)}

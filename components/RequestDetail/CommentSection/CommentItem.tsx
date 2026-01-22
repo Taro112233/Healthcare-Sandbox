@@ -104,11 +104,12 @@ function getUserImage(user: Comment['user']): string | undefined {
 export function CommentItem({ comment }: CommentItemProps) {
   const isAdmin = comment.user?.role === 'ADMIN';
   const isStatusChange = comment.type === 'STATUS_CHANGE';
-  const userImage = getUserImage(comment.user);
+  const userImage = getUserImage(comment.user);  // ✅ ดึง image
 
   return (
     <div className="flex gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
       <Avatar className="h-8 w-8 shrink-0">
+        {/* ✅ เพิ่ม AvatarImage component */}
         {userImage && <AvatarImage src={userImage} alt={getUserDisplayName(comment.user)} />}
         <AvatarFallback 
           className={`text-xs font-medium ${

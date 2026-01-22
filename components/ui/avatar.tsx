@@ -54,20 +54,28 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
 )
 Avatar.displayName = "Avatar"
 
-// แก้ไข components/ui/avatar.tsx - เพิ่ม alt prop
+// Fixed AvatarImage: Added missing < and correct React.ComponentRef
+const AvatarImage = React.forwardRef<
+  React.ComponentRef<typeof Image>,
+  React.ComponentPropsWithoutRef<typeof Image>
+>(({ className, alt = "", src, ...props }, ref) => {
+  if (!src) return null;
 
-const AvatarImage = (
-  { className, alt = "", src, ...props }: Omit<React.ComponentProps<typeof Image>, "ref"> 
-) => (
-  <Image
-    className={cn("aspect-square h-full w-full object-cover", className)}
-    alt={alt}
-    src={src}
-    {...props}
-  />
-)
+  return (
+    <Image
+      ref={ref}
+      className={cn("aspect-square h-full w-full object-cover", className)}
+      alt={alt}
+      src={src}
+      width={96}
+      height={96}
+      {...props}
+    />
+  );
+})
 AvatarImage.displayName = "AvatarImage"
 
+// Fixed AvatarFallback: Added missing < and used React.HTMLAttributes
 const AvatarFallback = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

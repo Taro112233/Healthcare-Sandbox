@@ -5,7 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -171,6 +171,13 @@ export function AppHeader() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="flex items-center gap-2 pl-2 pr-3 cursor-pointer">
                       <Avatar className="h-8 w-8">
+                        {/* ✅ เพิ่ม AvatarImage component */}
+                        {user.image && (
+                          <AvatarImage 
+                            src={user.image} 
+                            alt={user.fullName || `${user.firstName} ${user.lastName}`} 
+                          />
+                        )}
                         <AvatarFallback className="bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-sm">
                           {getUserInitials()}
                         </AvatarFallback>

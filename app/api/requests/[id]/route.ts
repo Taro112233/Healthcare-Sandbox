@@ -20,19 +20,19 @@ export async function GET(
       );
     }
     
-    // ✅ Fetch request with proper user data selection
+    // ✅ เพิ่ม image field ในทุกจุดที่ select user
     const requestData = await prisma.request.findUnique({
       where: { id },
       include: {
         user: {
           select: {
             id: true,
-            name: true,        // ✅ Better Auth uses 'name' field
+            name: true,
             email: true,
             phone: true,
-            // ✅ Add these if they exist in your schema
             firstName: true,
             lastName: true,
+            image: true,        // ✅ เพิ่มบรรทัดนี้
           },
         },
         attachments: {
@@ -43,11 +43,11 @@ export async function GET(
             user: {
               select: {
                 id: true,
-                name: true,    // ✅ Better Auth uses 'name'
+                name: true,
                 role: true,
-                // ✅ Add these if needed
                 firstName: true,
                 lastName: true,
+                image: true,    // ✅ เพิ่มบรรทัดนี้
               },
             },
           },
@@ -58,9 +58,10 @@ export async function GET(
             user: {
               select: {
                 id: true,
-                name: true,    // ✅ Better Auth uses 'name'
+                name: true,
                 firstName: true,
                 lastName: true,
+                image: true,    // ✅ เพิ่มบรรทัดนี้
               },
             },
           },
@@ -82,7 +83,6 @@ export async function GET(
       );
     }
     
-    // Check access
     const userRole = (session.user as any).role || 'USER';
     const hasAccess = userRole === 'ADMIN' || requestData.userId === session.user.id;
     
@@ -93,7 +93,7 @@ export async function GET(
       );
     }
     
-    // ✅ Transform user data to include fullName
+    // Transform user data to include fullName
     const transformedRequest = {
       ...requestData,
       user: requestData.user ? {
