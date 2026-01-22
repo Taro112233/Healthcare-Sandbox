@@ -1,9 +1,8 @@
-# Project NextGen - Production Instruction (Updated)
+# HealthTech Sandbox - Production Instruction (Condensed)
 
 ## 🎯 Project Overview
 
-**Project NextGen** เป็นแพลตฟอร์ม Sandbox สำหรับรับและพัฒนา Technology Requests จากบุคลากรทางการแพทย์  
-โดยมีเป้าหมายเพื่อแปลง pain point หน้างาน → sandbox solution แบบ governed และตรวจสอบได้
+**HealthTech Sandbox** เป็นแพลตฟอร์ม Sandbox สำหรับรับและพัฒนา Technology Requests จากบุคลากรทางการแพทย์
 
 **หลักการสำคัญ:**
 - ไม่ใช้ข้อมูลผู้ป่วยจริง
@@ -19,35 +18,122 @@
 - **Frontend:** Next.js 15 (App Router) + TypeScript
 - **UI:** TailwindCSS 4 + Shadcn/UI
 - **Backend:** Next.js API Routes
-- **Database:** PostgreSQL (Neon / Supabase)
+- **Database:** PostgreSQL (Neon)
 - **ORM:** Prisma
-- **Authentication:** JWT via jose library
-- **Password:** bcryptjs
-- **File Storage:** Vercel Blob / Supabase Storage
-- **Security:** Arcjet (Selective protection)
+- **Authentication:** Better Auth
+- **File Storage:** Vercel Blob
+- **Security:** Arcjet
 - **Date Utilities:** date-fns
 - **Form Management:** react-hook-form + zod
-- **Toast Notifications:** sonner
+- **Toast:** sonner
 - **Hosting:** Vercel
+
+---
+
+## 🎓 Code Quality Standards (MANDATORY)
+
+### 1. TypeScript Strict Mode - NO EXCEPTIONS
+
+**NEVER use `any` type. Always use proper types.**
+
+#### ❌ WRONG:
+```typescript
+const userRole = (session.user as any).role || 'USER';
+```
+
+#### ✅ CORRECT:
+```typescript
+interface BetterAuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role?: 'USER' | 'ADMIN';
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  image?: string;
+}
+
+const betterAuthUser = session.user as BetterAuthUser;
+const userRole = betterAuthUser.role || 'USER';
+```
+
+---
+
+### 2. Handle Optional/Undefined Values - ALWAYS
+
+**NEVER access properties without checking if they exist.**
+
+#### ❌ WRONG:
+```typescript
+const getUserInitials = () => {
+  return `${request.user.firstName.charAt(0)}${request.user.lastName.charAt(0)}`;
+};
+```
+
+#### ✅ CORRECT:
+```typescript
+const getUserInitials = () => {
+  if (!request.user) return 'U';
+  
+  const firstName = request.user.firstName || request.user.name?.split(' ')[0] || '';
+  const lastName = request.user.lastName || request.user.name?.split(' ').slice(1).join(' ') || '';
+  
+  if (!firstName && !lastName) return 'U';
+  
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+};
+```
+
+---
+
+### 3. Tailwind CSS v4 - Use Canonical Classes
+
+#### ❌ WRONG:
+```typescript
+<div className="flex-shrink-0 break-words">
+```
+
+#### ✅ CORRECT:
+```typescript
+<div className="shrink-0 wrap-break-word">
+```
+
+**Common Replacements:**
+| Old Class | New Class |
+|-----------|-----------|
+| `flex-shrink-0` | `shrink-0` |
+| `flex-grow-0` | `grow-0` |
+| `break-words` | `wrap-break-word` |
+| `break-all` | `wrap-break-all` |
+
+---
+
+### 4. Pre-commit Checklist
+
+**Before committing ANY code, verify:**
+
+- [ ] No `any` types used anywhere
+- [ ] All optional properties handled with `?.` or fallback
+- [ ] Tailwind classes use v4 canonical names
+- [ ] No unused imports
+- [ ] `pnpm type-check` passes (0 errors)
+- [ ] `pnpm lint` passes
 
 ---
 
 ## 👥 User Roles & Permissions
 
-### Role System
 ```typescript
 enum UserRole {
-  USER = "USER",     // Submit requests + view own requests + comment on own
+  USER = "USER",     // Submit requests + view own + comment on own
   ADMIN = "ADMIN"    // Full access + status management + comment anywhere
 }
 ```
 
-### Permission Matrix
-
 | Feature | USER | ADMIN |
 |---------|------|-------|
-| View landing page | ✅ | ✅ |
-| Submit request (requires login) | ✅ | ✅ |
+| Submit request | ✅ | ✅ |
 | View own requests | ✅ | ✅ |
 | View all requests | ❌ | ✅ |
 | Change request status | ❌ | ✅ |
@@ -58,7 +144,6 @@ enum UserRole {
 
 ## 🏷️ Request Status System
 
-### Status Tags (Admin can change anytime - no state machine)
 ```typescript
 enum RequestStatus {
   PENDING_REVIEW = "รอตรวจสอบ",
@@ -70,951 +155,396 @@ enum RequestStatus {
 }
 ```
 
-**Status Rules:**
-- Default: ทุก request เริ่มต้นที่ `รอตรวจสอบ`
+**Rules:**
+- Default: `รอตรวจสอบ`
 - Admin only: เปลี่ยนสถานะได้ตลอดเวลา
-- No auto-transition: manual change only
-- Status History: บันทึกทุก transition (fromStatus → toStatus + changedBy + note + timestamp)
+- No auto-transition
+- Status History: บันทึกทุก transition
 
 ---
 
 ## 📝 Request Schema
 
-### Request Form Fields
 ```typescript
 interface RequestForm {
-  // Required
-  painPoint: string              // Pain point หน้างาน (Text area)
-  currentWorkflow: string        // ทำงานยังไงตอนนี้ (Text area)
-  expectedTechHelp: string       // อยากให้ tech ช่วยอะไร (Text area)
-  requestType: RequestType       // Dropdown selection
-  
-  // Optional
-  attachments?: File[]           // รูปภาพ, PDF (max 5 files, 10MB each)
+  department: string             // หน่วยงานที่ขอ
+  painPoint: string              // Pain point (Rich text)
+  currentWorkflow: string        // ขั้นตอนปัจจุบัน (Rich text)
+  expectedTechHelp: string       // สิ่งที่ต้องการ (Rich text)
+  requestType: RequestType       // Dropdown
+  attachments?: File[]           // max 5 files, 10MB each
 }
 
 enum RequestType {
-  CALCULATOR = "CALCULATOR",
-  FORM = "FORM",
-  WORKFLOW = "WORKFLOW",
-  DECISION_AID = "DECISION_AID",
-  OTHER = "OTHER"
+  CALCULATOR, FORM, WORKFLOW, DECISION_AID, OTHER
 }
 ```
 
 ---
 
-## 💾 File Upload Architecture
+## 🗂️ Database Schema (Core Models)
 
-### Storage Strategy
-
-**Recommended:** Vercel Blob (หรือ Supabase Storage)
-
-**Upload Rules:**
-- Max file size: 10MB per file
-- Max files: 5 files per request
-- Allowed types: `image/*`, `application/pdf`
-- Security: Server-side validation required
-
-**Data Model:**
-```typescript
-interface Attachment {
-  id: string
-  requestId: string
-  filename: string
-  fileType: string        // MIME type
-  fileSize: number        // bytes
-  fileUrl: string         // CDN URL
-  uploadedAt: DateTime
-}
-```
-
-**File Validation Principles:**
-- ตรวจสอบ file type และ size ที่ server-side
-- ห้าม trust client-side validation
-- Sanitize filename
-- Generate unique storage paths
-
----
-
-## 🗂️ Database Schema Design
-
-### Schema Organization
-```
-prisma/
-├── schema.prisma           # Main schema (generated from merge)
-├── schemas/                # Modular schemas
-│   ├── user.prisma        # User & Auth
-│   ├── request.prisma     # Request system
-│   ├── comment.prisma     # Comment system
-│   └── attachment.prisma  # File attachments
-└── seed.ts                # Seed data
-```
-
-### Core Models (Detailed Structure)
-
-#### **User Model** (Simplified - No Multi-tenant)
+### User Model (Better Auth)
 ```prisma
-// prisma/schemas/user.prisma
 model User {
-  id            String      @id @default(cuid())
-  email         String?     // Optional for notifications/recovery
-  username      String      @unique  // Primary login credential
-  password      String      // bcrypt hashed
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
   
-  // Personal Information
-  firstName     String
-  lastName      String
+  // Project fields (optional with defaults)
+  firstName     String    @default("")
+  lastName      String    @default("")
   phone         String?
+  role          UserRole  @default(USER)
+  status        String    @default("ACTIVE")
+  isActive      Boolean   @default(true)
   
-  // Role (Simple - USER or ADMIN only)
-  role          UserRole    @default(USER)
-  
-  // Account Status
-  isActive      Boolean     @default(true)
-  emailVerified Boolean     @default(false)
-  
-  // Security
-  lastLogin     DateTime?
-  
-  // Timestamps
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   
   // Relations
+  sessions      Session[]
+  accounts      Account[]
   requests      Request[]
   comments      Comment[]
   statusChanges StatusHistory[]
-  
-  @@index([email])
-  @@index([username])
-  @@index([role])
-  @@index([isActive])
-  @@map("users")
-}
-
-enum UserRole {
-  USER
-  ADMIN
 }
 ```
 
-#### **Request Model**
+### Request Model
 ```prisma
-// prisma/schemas/request.prisma
 model Request {
   id                String        @id @default(cuid())
-  
-  // Requester
   userId            String
-  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Request Content
+  department        String
   painPoint         String        @db.Text
   currentWorkflow   String        @db.Text
   expectedTechHelp  String        @db.Text
   requestType       RequestType
-  
-  // Status
   status            RequestStatus @default(PENDING_REVIEW)
   
-  // Timestamps
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
   
-  // Relations
+  user              User          @relation(...)
   attachments       Attachment[]
   comments          Comment[]
   statusHistory     StatusHistory[]
-  
-  @@index([userId])
-  @@index([status])
-  @@index([requestType])
-  @@index([createdAt])
-  @@map("requests")
-}
-
-enum RequestType {
-  CALCULATOR
-  FORM
-  WORKFLOW
-  DECISION_AID
-  OTHER
-}
-
-enum RequestStatus {
-  PENDING_REVIEW
-  UNDER_CONSIDERATION
-  IN_DEVELOPMENT
-  IN_TESTING
-  COMPLETED
-  BEYOND_CAPACITY
 }
 ```
 
-#### **Attachment Model**
+### Comment Model
 ```prisma
-// prisma/schemas/attachment.prisma
-model Attachment {
-  id          String   @id @default(cuid())
-  
-  // Request relation
-  requestId   String
-  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
-  
-  // File info
-  filename    String
-  fileType    String   // MIME type
-  fileSize    Int      // bytes
-  fileUrl     String   // CDN URL
-  
-  // Timestamp
-  uploadedAt  DateTime @default(now())
-  
-  @@index([requestId])
-  @@map("attachments")
-}
-```
-
-#### **Comment Model**
-```prisma
-// prisma/schemas/comment.prisma
 model Comment {
-  id          String   @id @default(cuid())
-  
-  // Relations
-  requestId   String
-  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
-  
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Content
-  content     String   @db.Text
-  
-  // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  @@index([requestId])
-  @@index([userId])
-  @@index([createdAt])
-  @@map("comments")
-}
-```
-
-#### **StatusHistory Model**
-```prisma
-// prisma/schemas/status-history.prisma
-model StatusHistory {
   id          String        @id @default(cuid())
-  
-  // Request relation
   requestId   String
-  request     Request       @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  userId      String
+  content     String        @db.Text
+  type        CommentType   @default(COMMENT)
   
-  // Status transition
-  fromStatus  RequestStatus
-  toStatus    RequestStatus
+  // For STATUS_CHANGE type only
+  fromStatus  RequestStatus?
+  toStatus    RequestStatus?
   
-  // Changed by (Admin)
-  changedBy   String
-  user        User          @relation(fields: [changedBy], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   
-  // Optional note
-  note        String?       @db.Text
-  
-  // Timestamp
-  changedAt   DateTime      @default(now())
-  
-  @@index([requestId])
-  @@index([changedAt])
-  @@map("status_history")
+  request     Request       @relation(...)
+  user        User          @relation(...)
+}
+
+enum CommentType {
+  COMMENT
+  STATUS_CHANGE
 }
 ```
 
 ---
 
-## 🔐 Authentication Architecture
+## 🔐 Authentication (Better Auth)
 
-### JWT Strategy (Minimal Payload)
-
-**Principle:** Store only user identity in JWT → Check permissions real-time from database
-
-**JWT Payload:**
+### Configuration
 ```typescript
-interface JWTPayload {
-  userId: string
-  username: string
-  firstName: string
-  lastName: string
-  email?: string
-  phone?: string
-  role: UserRole  // Include role for quick UI decisions
-}
+// lib/auth.ts
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  baseURL: process.env.BETTER_AUTH_URL,
+  
+  emailAndPassword: {
+    enabled: true,
+    minPasswordLength: 8,
+    requireEmailVerification: false,
+  },
+  
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+  
+  user: {
+    additionalFields: {
+      firstName: { type: "string", required: true },
+      lastName: { type: "string", required: true },
+      phone: { type: "string", required: false },
+      role: { type: "string", defaultValue: "USER" },
+      status: { type: "string", defaultValue: "ACTIVE" },
+      isActive: { type: "boolean", defaultValue: true },
+    },
+  },
+});
 ```
 
-**Implementation Libraries:**
-- JWT signing/verification: `jose` library
-- Password hashing: `bcryptjs`
-- Token storage: HTTP-only cookies
+### Client Setup
+```typescript
+// lib/auth-client.ts
+export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL,
+});
 
-**Auth Flow:**
-1. User login → Verify username/password → Sign JWT → Set HTTP-only cookie
-2. Middleware reads cookie → Verify JWT → Extract user data
-3. API routes check role from JWT (trusted since signed)
-
-**Why Include Role in JWT?**
-- Fast UI rendering (no DB query needed)
-- Role changes are rare (acceptable JWT refresh delay)
-- Simplifies permission checks in frontend
-
-**Security Notes:**
-- JWT expires in 7 days (configurable)
-- HTTP-only cookie prevents XSS
-- Secure flag in production
-- SameSite: lax/strict
+export const { signIn, signUp, signOut, useSession } = authClient;
+```
 
 ---
 
-## 🛡️ Middleware Security Architecture
+## 🛡️ Middleware Security
 
-### Protection Layers
-
-**Layer 1: Middleware (Authentication + Route Guard)**
 ```typescript
-// middleware.ts responsibilities:
+// middleware.ts
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  
-  // 1. Skip static files
-  if (pathname.startsWith('/_next') || 
-      pathname.startsWith('/static') || 
-      pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|css|js)$/)) {
-    return NextResponse.next()
+  const { pathname } = request.nextUrl;
+
+  // Skip static files
+  if (pathname.startsWith("/_next") || pathname.includes(".")) {
+    return NextResponse.next();
   }
-  
-  // 2. Allow public routes
-  const publicRoutes = ['/', '/login', '/register']
-  if (publicRoutes.includes(pathname)) {
-    return NextResponse.next()
+
+  // Allow Better Auth routes
+  if (pathname.startsWith("/api/auth")) {
+    return NextResponse.next();
   }
-  
-  // 3. Arcjet protection (auth endpoints only)
-  if (pathname.startsWith('/api/auth/')) {
-    const decision = await aj.protect(request)
-    if (decision.isDenied()) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded' },
-        { status: 429 }
-      )
+
+  // Public routes
+  const PUBLIC_ROUTES = ["/", "/login", "/register", "/products", "/about"];
+  if (PUBLIC_ROUTES.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  // Get session
+  const session = await auth.api.getSession({ headers: request.headers });
+
+  if (!session) {
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Admin route protection
+  if (pathname.startsWith("/admin")) {
+    const betterAuthUser = session.user as BetterAuthUser;
+    if (betterAuthUser.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   }
-  
-  // 4. JWT validation
-  const token = request.cookies.get('auth-token')?.value
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-  
-  try {
-    const payload = await verifyToken(token)
-    
-    // 5. Admin route guard
-    if (pathname.startsWith('/admin') && payload.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-    
-    // 6. Inject user headers for API routes
-    const requestHeaders = new Headers(request.headers)
-    requestHeaders.set('x-user-id', payload.userId)
-    requestHeaders.set('x-user-role', payload.role)
-    requestHeaders.set('x-user-name', `${payload.firstName} ${payload.lastName}`)
-    
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders
-      }
-    })
-  } catch (error) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+
+  // Inject user headers
+  const requestHeaders = new Headers(request.headers);
+  const betterAuthUser = session.user as BetterAuthUser;
+  requestHeaders.set("x-user-id", betterAuthUser.id);
+  requestHeaders.set("x-user-role", betterAuthUser.role || "USER");
+
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 ```
-
-**Layer 2: API Route Permission Checks**
-```typescript
-// Every API route must:
-export async function GET(request: Request) {
-  // 1. Extract user from headers (injected by middleware)
-  const userId = request.headers.get('x-user-id')
-  const userRole = request.headers.get('x-user-role')
-  
-  if (!userId) {
-    return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    )
-  }
-  
-  // 2. Permission check (if needed)
-  if (requiresAdmin && userRole !== 'ADMIN') {
-    return NextResponse.json(
-      { error: 'Admin access required' },
-      { status: 403 }
-    )
-  }
-  
-  // 3. Ownership check (for user resources)
-  const request = await prisma.request.findUnique({
-    where: { id: requestId }
-  })
-  
-  if (userRole !== 'ADMIN' && request.userId !== userId) {
-    return NextResponse.json(
-      { error: 'Access denied' },
-      { status: 403 }
-    )
-  }
-  
-  // 4. Business logic
-  // ...
-}
-```
-
-**Layer 3: UI Permission Checks**
-```typescript
-// Components should:
-export function AdminActions({ userRole }: { userRole: UserRole }) {
-  if (userRole !== 'ADMIN') return null
-  
-  return (
-    <div>
-      <StatusChangeDropdown />
-      <DeleteRequestButton />
-    </div>
-  )
-}
-```
-
-**Security Principles:**
-- Middleware เป็น first line of defense
-- API routes ห้าม trust headers blindly (validate against database if critical)
-- Database check for ownership on sensitive operations
-- Arcjet only on sensitive endpoints (performance)
 
 ---
 
-## 🗺️ Application Routes Structure
+## 🗺️ Application Routes
 
-### Page Routes (App Router Pattern)
+### Page Routes
 ```
 app/
-├── page.tsx                    # Landing page (public)
+├── page.tsx                    # Landing (public)
 ├── login/page.tsx              # Login (public)
 ├── register/page.tsx           # Register (public)
-├── dashboard/page.tsx          # My requests (auth required)
+├── dashboard/page.tsx          # My requests (auth)
 ├── requests/
-│   ├── new/page.tsx           # Submit form (auth required)
-│   └── [id]/page.tsx          # Request detail (auth required, ownership check)
+│   ├── new/page.tsx           # Submit form (auth)
+│   └── [id]/page.tsx          # Detail (auth + ownership)
 └── admin/
     └── page.tsx               # Admin dashboard (admin only)
 ```
 
-### API Routes Pattern
+### API Routes
 ```
 app/api/
-├── auth/
-│   ├── login/route.ts         # POST - Login (username + password)
-│   ├── register/route.ts      # POST - Register
-│   ├── logout/route.ts        # POST - Logout
-│   └── me/route.ts            # GET - Current user
+├── auth/[...all]/route.ts     # Better Auth handler
 ├── requests/
-│   ├── route.ts               # POST - Create, GET - List (filtered by role)
-│   ├── [id]/
-│   │   ├── route.ts          # GET - Detail, PATCH - Update (admin only)
-│   │   └── comments/route.ts  # POST - Add comment, GET - List comments
-│   └── upload/route.ts        # POST - File upload helper
-└── admin/
-    └── requests/
-        └── [id]/
-            └── status/route.ts # PATCH - Change status (admin only)
+│   ├── route.ts               # POST Create, GET List
+│   ├── [id]/route.ts          # GET Detail, PATCH Update
+│   ├── [id]/comments/route.ts # POST Add, GET List
+│   └── upload/route.ts        # POST Upload files
 ```
 
 ---
 
-## 🔄 User Flow Architecture
+## 🔄 Key User Flows
 
-### Flow 1: Landing → Login → Dashboard
+### Flow 1: Login → Dashboard
 ```
-/ (Landing - Public)
-  ↓
-/login (Public - username + password)
-  ↓ [After successful login]
-/dashboard (Protected)
+/ (Landing) → /login → /dashboard
 ```
 
-**Landing Page Responsibilities:**
-- Explain sandbox concept clearly
-- Show completed projects showcase
-- Display stats (total requests, completed, in progress)
-- CTA buttons → Login / Register
-
-**Login Page:**
-- Username + Password fields
-- Remember me checkbox (optional)
-- Forgot password link (optional - future enhancement)
-- Register link
-
-**Dashboard Responsibilities:**
-- List user's own requests (USER role)
-- List all requests (ADMIN role)
-- Show request cards with: title (truncated painPoint), status badge, type, created date
-- Link to detail page
-- CTA → Submit new request
-
----
-
-### Flow 2: Register New User
+### Flow 2: Register
 ```
-/register (Public)
-  ↓ [Submit registration]
-POST /api/auth/register
-  ↓ [Success]
-/login (with success message)
+/register → Better Auth Sign Up → /dashboard (auto login)
 ```
-
-**Registration Form Fields:**
-```typescript
-interface RegisterForm {
-  username: string      // Required, unique
-  password: string      // Required, min 8 chars
-  confirmPassword: string
-  email?: string        // Optional
-  firstName: string     // Required
-  lastName: string      // Required
-  phone?: string        // Optional
-}
-```
-
-**Registration Validation:**
-- Username uniqueness check
-- Password strength (min 8 chars, alphanumeric recommended)
-- Email format validation (if provided)
-- All required fields filled
-
-**Default User Settings:**
-- role: USER (default)
-- isActive: true
-- emailVerified: false
-- Created successfully → Redirect to login
-
----
 
 ### Flow 3: Submit Request
 ```
-/requests/new (Protected - Auth Required)
-  ↓ [Submit form with files]
-POST /api/requests
-  ↓ [Success]
-/requests/[id] (Detail page)
+/requests/new → POST /api/requests → /requests/[id]
 ```
-
-**Form Responsibilities:**
-- Multi-step or single form (your choice)
-- Validate all required fields
-- File upload with client-side preview
-- Show file validation errors
-- Loading state during submission
-
-**API Responsibilities:**
-- Validate user authentication (from headers)
-- Validate form data (use zod schema)
-- Validate uploaded files (server-side)
-- Upload files to storage (Vercel Blob)
-- Create request in database
-- Create attachment records
-- Return created request with ID
-
----
 
 ### Flow 4: View Request Detail
 ```
-/requests/[id] (Protected - Ownership check)
-  ↓ [Load data]
-GET /api/requests/[id]
+/requests/[id] → GET /api/requests/[id]
+
+Permission: USER (own) OR ADMIN (all)
 ```
-
-**Permission Logic:**
-```typescript
-// User can view if:
-// 1. User is ADMIN, OR
-// 2. User owns the request (request.userId === currentUser.id)
-
-const hasAccess = 
-  currentUser.role === 'ADMIN' || 
-  request.userId === currentUser.userId
-```
-
-**Page Layout (Two-column):**
-
-**Left Column:**
-- Request info (painPoint, currentWorkflow, expectedTechHelp, requestType)
-- Status badge
-- Attachments (clickable thumbnails/links)
-- Comment section (Facebook-style)
-
-**Right Column:**
-- Admin actions (if ADMIN) → Status change dropdown
-- Status history timeline
-- Request metadata (created date, requester name)
-
----
 
 ### Flow 5: Admin Status Change
 ```
 Admin opens /requests/[id]
   ↓
-Change status via dropdown
+Change status in comment section
   ↓
-PATCH /api/admin/requests/[id]/status
+POST /api/requests/[id]/comments (type: STATUS_CHANGE)
   ↓
-Create StatusHistory record
-  ↓
-Update request status
-  ↓
-Refresh page / Real-time update
+Request status updates
 ```
 
-**Status Change Data:**
-```typescript
-{
-  status: RequestStatus,      // New status
-  note?: string              // Optional note explaining change
-}
+### Flow 6: Comment
 ```
-
-**StatusHistory Record:**
-```typescript
-{
-  requestId: string,
-  fromStatus: RequestStatus,  // Previous status
-  toStatus: RequestStatus,    // New status
-  changedBy: string,          // Admin userId
-  note?: string,              // Optional note
-  changedAt: DateTime         // Auto timestamp
-}
-```
-
----
-
-### Flow 6: Comment System
-```
-User views /requests/[id]
-  ↓
-Type comment in textarea
+Type in comment section (right sidebar)
   ↓
 POST /api/requests/[id]/comments
   ↓
-Permission check (own request OR admin)
+Permission: own request OR admin
   ↓
-Create comment in database
-  ↓
-Return comment with user data
-  ↓
-Update UI (prepend new comment)
+Optimistic update → Show immediately
 ```
-
-**Comment Permission:**
-```typescript
-// User can comment if:
-// 1. User is ADMIN (can comment anywhere), OR
-// 2. User owns the request
-
-const canComment = 
-  currentUser.role === 'ADMIN' || 
-  request.userId === currentUser.userId
-```
-
-**Comment Display (Facebook-style):**
-- Avatar (user initials)
-- User name
-- Comment content (whitespace-preserved)
-- Relative timestamp (e.g., "2 hours ago")
-- Sort: newest first
 
 ---
 
-## 🎨 Component Architecture Standards
+## 🎨 Component Architecture
 
-### Directory Structure Pattern
+### Directory Structure
 ```
 components/
-├── ui/                     # Shadcn/UI primitives (button, card, dialog, etc.)
-├── shared/                 # Reusable components (Header, Footer, LoadingState)
-├── RequestForm/            # Request submission module
+├── ui/                     # Shadcn/UI
+├── shared/                 # Reusable (Header, Footer, Loading)
+├── providers/              # AuthProvider
+├── RequestForm/
 │   ├── index.tsx
-│   ├── BasicInfoStep.tsx
 │   └── FileUploadSection.tsx
-├── RequestList/            # Request listing module
+├── RequestList/
 │   ├── index.tsx
 │   ├── RequestCard.tsx
-│   └── RequestFilters.tsx
-├── RequestDetail/          # Request detail module
+│   ├── RequestFilters.tsx
+│   └── RequestPagination.tsx
+├── RequestDetail/
 │   ├── index.tsx
 │   ├── RequestInfo.tsx
-│   ├── StatusBadge.tsx
-│   ├── StatusHistory.tsx
 │   ├── AttachmentList.tsx
 │   └── CommentSection/
 │       ├── index.tsx
 │       ├── CommentList.tsx
 │       ├── CommentItem.tsx
 │       └── CommentInput.tsx
-└── AdminDashboard/         # Admin dashboard module
-    ├── index.tsx
-    ├── StatsOverview.tsx
-    ├── RequestTable.tsx
-    └── StatusFilter.tsx
+└── RichTextEditor/
+    ├── RichTextEditor.tsx
+    └── RichTextViewer.tsx
 ```
 
-### Component File Header Convention
-
-**ทุกไฟล์ component ต้องมี comment header ระบุ path และชื่อ component**
-```typescript
-// components/RequestForm/index.tsx
-// RequestForm - Main form component
-
-// components/RequestDetail/CommentSection/CommentInput.tsx
-// RequestDetail/CommentSection/CommentInput - Comment input form
-```
-
-### Component Design Rules
-
-**Size Limits:**
-- Max 200 lines per component
-- Max 8 props → use composition if more
-- Extract complex logic to custom hooks
-
-**Prop Safety:**
-```typescript
-// ✅ Always provide default values
-interface ComponentProps {
-  stats?: {
-    total?: number;
-    pending?: number;
-  };
-}
-
-export const Component = ({ stats = {} }: ComponentProps) => {
-  const safeStats = {
-    total: stats.total ?? 0,
-    pending: stats.pending ?? 0,
-  };
-  
-  return <div>{safeStats.total}</div>;
-}
-```
-
-**Composition Over Props:**
-```typescript
-// ❌ Bad: Too many props
-<Table data={data} loading={loading} error={error} onSort={...} onFilter={...} />
-
-// ✅ Good: Composition
-<Table>
-  <TableHeader />
-  <TableBody data={data} />
-  <TableFooter />
-</Table>
-```
-
-**Extract Logic to Hooks:**
-```typescript
-// ✅ Custom hooks for data fetching
-function useRequestData(requestId: string) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    // Fetch logic
-  }, [requestId]);
-  
-  return { data, loading, error };
-}
-```
+### Component Rules
+- Max 200 lines per file
+- Header comment with path
+- Default values for optional props
+- Extract logic to custom hooks
+- **Safe null/undefined handling**
+- **No `any` types**
 
 ---
 
-## 💬 Comment System Architecture
+## 💬 Comment System (Facebook-style)
 
-### UI Pattern (Facebook-style)
-
-**Layout:**
+### Layout
 ```
 ┌─────────────────────────────────┐
-│ Comment Input (Textarea + Button)│
+│ Comment List (scrollable)       │
+│ - Oldest first                   │
+│ - Bottom = newest                │
 ├─────────────────────────────────┤
-│ ┌───┬─────────────────────────┐ │
-│ │ A │ John Doe                │ │
-│ │   │ Great idea! Let's...    │ │
-│ │   │ 2 hours ago             │ │
-│ └───┴─────────────────────────┘ │
-│ ┌───┬─────────────────────────┐ │
-│ │ B │ Jane Smith              │ │
-│ │   │ I agree with...         │ │
-│ │   │ 5 hours ago             │ │
-│ └───┴─────────────────────────┘ │
+│ Comment Input                    │
+│ [For Admin: Status dropdown]    │
 └─────────────────────────────────┘
 ```
 
-**Features:**
-- Avatar with user initials
-- User name display
-- Comment content (whitespace preserved)
-- Relative timestamp using `date-fns` (Thai locale)
-- Auto-scroll to new comment
-- Optimistic update (show immediately, then confirm)
-
-**State Management:**
-```typescript
-// Local state for comment list
-const [comments, setComments] = useState(initialComments);
-
-// Add comment optimistically
-const handleCommentAdded = (newComment) => {
-  setComments(prev => [newComment, ...prev]); // Prepend
-};
-```
+### Features
+- Avatar (initials or Better Auth image)
+- Name display (FirstName + Last Initial)
+- Status change indicator (if type=STATUS_CHANGE)
+- Relative timestamp (date-fns, Thai locale)
+- Auto-scroll to bottom on new comment
+- Optimistic update
+- Fixed height (h-150) with scroll
 
 ---
 
-## 📊 Admin Dashboard Architecture
+## 🔌 API Design Standards
 
-### Dashboard Layout
-
-**Top Section: Stats Overview (4 cards)**
-```
-┌──────────┬──────────┬──────────┬──────────┐
-│ Total    │ Pending  │ In Dev   │ Completed│
-│ Requests │ Review   │          │          │
-└──────────┴──────────┴──────────┴──────────┘
-```
-
-**Middle Section: Filters**
-- Status filter dropdown (All / Specific status)
-- Search by keyword (optional - future enhancement)
-
-**Bottom Section: Request Table**
-
-Columns:
-- ID (truncated)
-- Pain Point (truncated, max 100 chars)
-- Type (badge)
-- Status (badge)
-- Requester (name + email)
-- Submitted Date
-- Comments Count
-- Actions (View Detail button)
-
-**Table Features:**
-- Sortable columns
-- Status badge color coding
-- Pagination (if > 50 requests)
-- Click row → Navigate to detail page
-
----
-
-## 🔌 API Design Principles
-
-### Response Format Standards
-
-**Success Response:**
+### Response Format
 ```typescript
-{
-  success: true,
-  data: { ... },
-  meta?: { ... }  // Optional pagination, etc.
-}
-```
+// Success
+{ success: true, data: {...}, meta?: {...} }
 
-**Error Response:**
-```typescript
-{
-  success: false,
-  error: "Error message",
-  code?: "ERROR_CODE",
-  details?: { ... }
-}
+// Error
+{ success: false, error: "message", code?: "CODE" }
 ```
 
 ### HTTP Status Codes
+- `200` OK → GET/PATCH success
+- `201` Created → POST success
+- `400` Bad Request → Validation error
+- `401` Unauthorized → No auth
+- `403` Forbidden → No permission
+- `404` Not Found
+- `500` Internal Server Error
 
-- `200 OK` → Successful GET/PATCH
-- `201 Created` → Successful POST
-- `400 Bad Request` → Validation error
-- `401 Unauthorized` → Missing/invalid auth
-- `403 Forbidden` → Valid auth but no permission
-- `404 Not Found` → Resource doesn't exist
-- `500 Internal Server Error` → Server error
-
-### Authentication Pattern for API Routes
+### API Route Pattern (Better Auth)
 ```typescript
-// All protected API routes follow this pattern:
-
 export async function GET(request: Request) {
-  // 1. Extract user from headers (injected by middleware)
-  const userId = request.headers.get('x-user-id');
-  const userRole = request.headers.get('x-user-role');
+  // 1. Get session
+  const session = await auth.api.getSession({ headers: request.headers });
   
-  if (!userId) {
-    return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    );
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   
-  // 2. Permission check (if needed)
+  // 2. Type user properly
+  const betterAuthUser = session.user as BetterAuthUser;
+  const userRole = betterAuthUser.role || 'USER';
+  
+  // 3. Permission check
   if (requiresAdmin && userRole !== 'ADMIN') {
-    return NextResponse.json(
-      { error: 'Admin access required' },
-      { status: 403 }
-    );
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
   
-  // 3. Business logic
-  // ...
-}
-```
-
-### File Upload API Pattern
-```typescript
-// POST /api/requests/upload
-export async function POST(request: Request) {
-  // 1. Auth check
-  const userId = request.headers.get('x-user-id')
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  
-  // 2. Parse FormData
-  const formData = await request.formData();
-  const files = formData.getAll('files') as File[];
-  
-  // 3. Validate files server-side
-  for (const file of files) {
-    if (file.size > MAX_SIZE) return error;
-    if (!ALLOWED_TYPES.includes(file.type)) return error;
-  }
-  
-  // 4. Upload to storage (Vercel Blob)
-  const urls = await Promise.all(
-    files.map(file => uploadToBlob(file))
-  );
-  
-  // 5. Return URLs
-  return NextResponse.json({ urls });
+  // 4. Business logic
 }
 ```
 
@@ -1022,540 +552,101 @@ export async function POST(request: Request) {
 
 ## 🚀 Development Workflow
 
-### Database Scripts (from package.json pattern)
-
-**Schema Management:**
+### Database Commands
 ```bash
-pnpm schema:merge       # Merge modular schemas
+pnpm schema:merge       # Merge schemas
 pnpm db:generate        # Generate Prisma client
-pnpm db:push           # Push schema to database
-pnpm db:migrate        # Create migration (dev)
+pnpm db:push           # Push to DB
+pnpm db:migrate        # Create migration
+pnpm db:seed           # Seed data
 pnpm db:studio         # Open Prisma Studio
-```
-
-**Seed Data:**
-```bash
-pnpm seeds:merge       # Merge seed files (if modular)
-pnpm db:seed           # Run seed
-pnpm db:seed:demo      # Seed with demo data
-```
-
-**Database Reset:**
-```bash
-pnpm db:reset          # Reset + seed
-pnpm db:reset:demo     # Reset + seed with demo
-pnpm db:fresh          # Full reset + demo seed
-```
-
-**Development Setup:**
-```bash
-pnpm db:setup          # Push schema + seed
-pnpm db:setup:demo     # Push schema + seed demo
 ```
 
 ### Development Commands
 ```bash
-pnpm dev               # Start dev server (with schema merge)
-pnpm build            # Build for production (with schema merge + generate)
-pnpm start            # Start production server
-pnpm lint             # Run ESLint
-pnpm type-check       # TypeScript type checking
+pnpm dev               # Start dev server
+pnpm build            # Build for production
+pnpm type-check       # TypeScript check
+pnpm lint             # ESLint check
+pnpm lint --fix       # Auto-fix
 ```
-
----
-
-## 📁 Project File Organization
-
-### Root Level Structure
-```
-project-root/
-├── app/                    # Next.js 15 App Router
-│   ├── page.tsx           # Landing page
-│   ├── layout.tsx         # Root layout
-│   ├── globals.css        # Global styles
-│   ├── login/
-│   ├── register/
-│   ├── dashboard/
-│   ├── requests/
-│   ├── admin/
-│   └── api/               # API routes
-├── components/            # React components
-│   ├── ui/               # Shadcn/UI components
-│   ├── shared/           # Shared components
-│   └── (feature modules)
-├── lib/                   # Utility libraries
-│   ├── auth.ts           # JWT utilities (jose)
-│   ├── auth-server.ts    # Server auth helpers
-│   ├── password.ts       # bcryptjs helpers
-│   ├── file-upload.ts    # File upload utilities
-│   ├── file-validation.ts # File validation
-│   ├── prisma.ts         # Prisma client singleton
-│   └── utils.ts          # General utilities
-├── hooks/                 # Custom React hooks
-│   ├── useAuth.ts
-│   ├── useRequest.ts
-│   └── useComments.ts
-├── types/                 # TypeScript types
-│   ├── auth.d.ts
-│   ├── request.ts
-│   └── comment.ts
-├── prisma/               # Database
-│   ├── schema.prisma     # Main schema (generated)
-│   ├── schemas/          # Modular schemas
-│   └── seed.ts           # Seed file
-├── scripts/              # Build scripts
-│   ├── merge-schemas.js  # Schema merge utility
-│   └── merge-seeds.js    # Seed merge utility
-├── middleware.ts         # Next.js middleware
-└── package.json          # Dependencies
-```
-
-### Lib Directory Purpose
-
-**lib/auth.ts** (JWT utilities):
-- signToken() → Create JWT
-- verifyToken() → Verify JWT
-- Uses `jose` library
-
-**lib/auth-server.ts** (Server helpers):
-- getServerUser() → Get user from cookies
-- getUserFromHeaders() → Get user from middleware headers
-- requireAuth() → Throw if not authenticated
-- requireAdmin() → Throw if not admin
-
-**lib/password.ts** (Password utilities):
-- hashPassword() → Hash with bcryptjs
-- comparePassword() → Verify password
-
-**lib/file-upload.ts** (File storage):
-- uploadFile() → Upload single file to Vercel Blob
-- uploadMultipleFiles() → Upload array of files
-- deleteFile() → Delete file from storage
-
-**lib/file-validation.ts** (File checks):
-- validateFile() → Check size, type, extension
-- sanitizeFilename() → Clean filename
-- Constants: MAX_SIZE, ALLOWED_TYPES
-
-**lib/prisma.ts** (Database client):
-- Singleton Prisma client
-- Prevents multiple instances in development
 
 ---
 
 ## ⚠️ Security Best Practices
 
 ### Input Validation
-
-**Principle:** Never trust client input
-
-**Implementation:**
 - Use `zod` for schema validation
 - Validate on both client and server
 - Server validation is mandatory
-- Sanitize user input (comments, filenames)
+- Sanitize user input
 
 ### File Upload Security
-
-**Server-side Validation:**
-1. Check file size (before upload)
-2. Verify file type (MIME type)
-3. Validate file extension
-4. Check file content (if critical)
+1. Check file size (< 10MB)
+2. Verify MIME type (image/*, application/pdf)
+3. Validate extension
+4. Sanitize filename
 5. Generate unique storage path
-6. Sanitize filename
 
-**Example Validation Flow:**
-```
-Client uploads file
-  ↓
-Server receives FormData
-  ↓
-Extract file
-  ↓
-Check size (reject if > 10MB)
-  ↓
-Check MIME type (reject if not image/pdf)
-  ↓
-Sanitize filename
-  ↓
-Upload to Vercel Blob
-  ↓
-Store URL in database
-```
+### Better Auth Security
+- HTTP-only cookies (XSS prevention)
+- Secure flag in production
+- SameSite: 'lax'
+- Session expiration: 7 days
+- Built-in CSRF protection
 
-### Authentication Security
-
-**JWT Security:**
-- Use HTTP-only cookies (prevent XSS)
-- Set secure flag in production
-- Set sameSite: 'lax' or 'strict'
-- Token expiration: 7 days (configurable)
-
-**Password Security:**
-- Hash with bcryptjs (10 rounds minimum)
-- Never log passwords
-- Never return password in API responses
-- Enforce minimum password length (8+ chars recommended)
-
-### API Route Protection
-
-**Every API route checklist:**
-1. ✅ Authentication check (except public routes)
-2. ✅ Permission check (role-based)
-3. ✅ Input validation (zod schema)
-4. ✅ Ownership check (for user resources)
+### API Route Checklist
+1. ✅ Authentication check
+2. ✅ Permission check
+3. ✅ Input validation (zod)
+4. ✅ Ownership check
 5. ✅ Error handling (try-catch)
-6. ✅ Proper HTTP status codes
+6. ✅ Proper HTTP status
+7. ✅ No `any` types
 
 ---
 
-## 🎯 Key Implementation Principles
+## 📦 Core Dependencies
 
-### 1. Simplicity First
-- Choose simplest solution that works
-- Don't over-engineer
-- Start with MVP, iterate later
-- Avoid premature optimization
-
-### 2. Security by Default
-- Authentication required for all protected routes
-- Permission checks on every API call
-- Server-side validation mandatory
-- Sanitize all user input
-- HTTP-only cookies for tokens
-
-### 3. Data Integrity
-- Foreign key constraints
-- Cascade delete where appropriate
-- Indexed columns for performance
-- Timestamps on all records
-- Status history for transparency
-
-### 4. Developer Experience
-- Clear file organization
-- Consistent naming conventions
-- Component header comments
-- Reusable patterns
-- Type safety with TypeScript
-
-### 5. User Experience
-- Loading states everywhere
-- Clear error messages
-- Optimistic updates where safe
-- Mobile responsive design
-- Fast page loads
-
-### 6. Maintainability
-- Modular components (<200 lines)
-- Custom hooks for shared logic
-- Centralized utilities (lib/)
-- Consistent API patterns
-- Comprehensive error handling
+- `next` (15.5.9), `react` (19.2.1), `typescript`
+- `@prisma/client`, `@prisma/adapter-neon`, `@neondatabase/serverless`
+- `better-auth`
+- `tailwindcss` (v4), Shadcn/UI (@radix-ui/*)
+- `react-hook-form`, `zod`, `@hookform/resolvers`
+- `sonner`, `date-fns`, `framer-motion`
+- `@tiptap/react`, `@tiptap/starter-kit`
+- `@vercel/blob`
+- `lucide-react`
 
 ---
 
-## 📦 Dependencies Overview
+## 🎯 Key Principles
 
-### Core Framework
-- `next` (15.5.9) → App Router, API Routes
-- `react` (19.2.1) → UI framework
-- `typescript` → Type safety
-
-### Database & ORM
-- `@prisma/client` → Database client
-- `prisma` (devDep) → Schema management
-
-### Authentication & Security
-- `jose` → JWT signing/verification (modern, edge-compatible)
-- `bcryptjs` → Password hashing
-- `@arcjet/next` → Rate limiting, bot protection
-
-### UI & Styling
-- `tailwindcss` (v4) → Utility-first CSS
-- Shadcn/UI components (via @radix-ui/*)
-- `lucide-react` → Icons
-- `class-variance-authority` → Component variants
-- `tailwind-merge` → Class merging utility
-
-### Form Management
-- `react-hook-form` → Form state management
-- `zod` → Schema validation
-- `@hookform/resolvers` → Zod + RHF integration
-
-### UI Utilities
-- `sonner` → Toast notifications
-- `date-fns` → Date formatting/manipulation
-- `framer-motion` → Animations (optional)
-
-### File Handling
-- Vercel Blob SDK → File storage
-
-### Development Tools
-- `tsx` → TypeScript execution
-- `ts-node` → TypeScript Node.js runner
-- `eslint` → Code linting
+1. **Simplicity First** - Choose simplest solution
+2. **Security by Default** - Auth required, server-side validation
+3. **Data Integrity** - FK constraints, timestamps, status history
+4. **Type Safety** - Zero `any` types, handle nulls properly
+5. **User Experience** - Loading states, error messages, optimistic updates
+6. **Maintainability** - <200 lines, custom hooks, centralized utils
 
 ---
 
-## 🚀 Deployment Architecture
+## 📋 Pre-Commit Checklist (MANDATORY)
 
-### Environment Variables (.env)
-```bash
-# .env
-# Project NextGen - Production Configuration
-
-# Database Configuration (Neon)
-DATABASE_URL="postgresql://neondb_owner:npg_ze4U3qbFtmCN@ep-gentle-silence-a1uh7c1j-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-DIRECT_URL="postgresql://neondb_owner:npg_ze4U3qbFtmCN@ep-gentle-silence-a1uh7c1j-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
-# JWT Configuration
-JWT_SECRET="733b42354071ceb8afd17126e0dc70c42687afd070f6fdf08e09e2b895dd5ccd"
-
-# Security (Arcjet)
-ARCJET_KEY="ajkey_01kdj38f12fz6sfza98ry92bm3"
-
-# Application Configuration
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NODE_ENV="development"
-
-# Vercel Blob Storage Token
-BLOB_READ_WRITE_TOKEN="vercel_blob_rw_LCtA4ZJciPr6IlhT_qNJZIzvmKD1ARk6bGHZ62UiC6dR5vu"
-```
-
-### Vercel Configuration Pattern
-```json
-{
-  "framework": "nextjs",
-  "buildCommand": "pnpm schema:merge && pnpm db:generate && next build",
-  "installCommand": "pnpm install",
-  "regions": ["sin1"],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "JWT_SECRET": "@jwt_secret",
-    "ARCJET_KEY": "@arcjet_key",
-    "BLOB_READ_WRITE_TOKEN": "@blob_token"
-  }
-}
-```
-
-### Database Migration Strategy
-
-**Development:**
-```bash
-pnpm db:migrate          # Create migration
-pnpm db:push            # Push schema changes (prototyping)
-```
-
-**Production:**
-```bash
-pnpm db:migrate:prod    # Deploy migrations
-# or auto-run via Vercel build command
-```
+- [ ] No `any` types
+- [ ] Optional properties handled (`?.` or fallback)
+- [ ] Tailwind v4 canonical classes (`shrink-0`, not `flex-shrink-0`)
+- [ ] No unused imports
+- [ ] `pnpm type-check` passes
+- [ ] `pnpm lint` passes
 
 ---
 
-## 📋 Implementation Checklist
-
-### Phase 1: Foundation (Week 1)
-- [ ] Initialize Next.js 15 project
-- [ ] Setup Prisma with modular schemas
-- [ ] Configure Tailwind CSS v4
-- [ ] Install Shadcn/UI components
-- [ ] Setup database (Neon/Supabase)
-- [ ] Create schema merge script
-- [ ] Run initial migration
-
-### Phase 2: Authentication (Week 1-2)
-- [ ] Implement JWT utilities (jose)
-- [ ] Create auth API routes (login with username/password, register, logout, me)
-- [ ] Build middleware (auth + route guard)
-- [ ] Create login/register pages
-- [ ] Test authentication flow
-- [ ] Setup Arcjet rate limiting
-
-### Phase 3: Request System (Week 2-3)
-- [ ] Create Request schema
-- [ ] Build request submission form
-- [ ] Implement file upload (Vercel Blob)
-- [ ] Create request listing page
-- [ ] Build request detail page
-- [ ] Test request CRUD operations
-
-### Phase 4: Admin Features (Week 3)
-- [ ] Create admin dashboard
-- [ ] Implement status change system
-- [ ] Build StatusHistory tracking
-- [ ] Add admin filters
-- [ ] Create stats overview
-- [ ] Test admin workflows
-
-### Phase 5: Comment System (Week 3-4)
-- [ ] Create Comment schema
-- [ ] Build comment components
-- [ ] Implement comment API
-- [ ] Add real-time updates (optional)
-- [ ] Test comment permissions
-- [ ] Style comment UI (Facebook-style)
-
-### Phase 6: Polish & Deploy (Week 4)
-- [ ] Add loading states
-- [ ] Implement error handling
-- [ ] Mobile responsive testing
-- [ ] Performance optimization
-- [ ] Security audit
-- [ ] Deploy to Vercel
-- [ ] Production testing
-- [ ] Setup monitoring
-
----
-
-## 🎓 Development Guidelines Summary
-
-### Code Style
-- TypeScript strict mode
-- Functional components only
-- Custom hooks for shared logic
-- Consistent file naming (kebab-case for files, PascalCase for components)
-
-### Component Rules
-- Max 200 lines per file
-- Header comment with file path
-- Props interface above component
-- Default values for optional props
-- Extract complex JSX to sub-components
-
-### API Route Rules
-- Consistent response format
-- Proper HTTP status codes
-- Error handling with try-catch
-- Input validation with zod
-- Authentication check first
-- Permission check second
-- Business logic last
-
-### Database Rules
-- Use transactions for multi-step operations
-- Include timestamps (createdAt, updatedAt)
-- Cascade delete where appropriate
-- Index frequently queried columns
-- Use enums for fixed value sets
-
-### Security Rules
-- Never trust client input
-- Validate on server always
-- Use HTTP-only cookies for tokens
-- Hash passwords with bcryptjs
-- Sanitize file uploads
-- Rate limit sensitive endpoints
-
----
-
-## 📚 Reference Patterns
-
-### Custom Hook Pattern
-```typescript
-// hooks/useRequest.ts
-export function useRequest(requestId: string) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    async function fetchRequest() {
-      try {
-        const res = await fetch(`/api/requests/${requestId}`);
-        const json = await res.json();
-        setData(json.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchRequest();
-  }, [requestId]);
-  
-  return { data, loading, error };
-}
-```
-
-### Server Action Pattern (Optional - for form submissions)
-```typescript
-// app/actions/request.ts
-'use server';
-
-export async function createRequest(formData: FormData) {
-  // Validation
-  // Database operation
-  // Return result
-}
-```
-
-### Error Boundary Pattern
-```typescript
-// components/shared/ErrorBoundary.tsx
-'use client';
-
-export default function ErrorBoundary({ error, reset }) {
-  return (
-    <div className="error-container">
-      <h2>Something went wrong</h2>
-      <button onClick={reset}>Try again</button>
-    </div>
-  );
-}
-```
-
----
-
-## 🎯 Success Metrics (Not Revenue-Based)
-
-**Quality Metrics:**
-- Number of published sandbox cases
-- Diversity of solved pain points
-- Request completion rate
-- Average time to completion
-
-**Engagement Metrics:**
-- Number of active requesters
-- Comment activity per request
-- Repeat request submissions
-- User retention rate
-
-**Impact Metrics:**
-- External references/citations
-- Community contribution growth
-- Solved pain point categories
-- Knowledge sharing reach
-
----
-
-## 🔄 Future Enhancements (Post-MVP)
-
-**Phase 2 Features:**
-- Request voting system
-- Email notifications
-- Real-time updates (WebSocket)
-- Advanced search and filters
-- Request templates
-- Duplicate detection
-- Export functionality
-
-**Phase 3 Features:**
-- Project showcase section
-- Public API for integrations
-- Analytics dashboard
-- Batch operations
-- Advanced admin tools
-- Collaboration features
-
----
-
-**End of Instructions**
-
-คำแนะนำนี้ครอบคลุม high-level architecture และ implementation principles  
-สำหรับ detailed implementation, ให้ดูที่ existing codebase patterns และ adapt ตามต้องการ
-
-**Remember:** Start simple, iterate based on real usage, maintain security, and focus on user value.
+**Remember:** 
+- Start simple, iterate based on real usage
+- Maintain security with Better Auth
+- Focus on user value
+- **ZERO tolerance for `any` types**
+- **Handle null/undefined safely**
+- **Use Tailwind v4 canonical classes**
+- **Pass linting before every commit**
