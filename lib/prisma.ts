@@ -1,16 +1,21 @@
-// lib/prisma.ts (FINAL - RECOMMENDED)
+// lib/prisma.ts
 import { PrismaClient } from '@prisma/client';
 import { neonConfig } from '@neondatabase/serverless';
 import { PrismaNeon } from '@prisma/adapter-neon';
 
-// ✅ Conditional WebSocket configuration
-if (typeof window === 'undefined') {
-  // Server-side: Use ws package (Node.js runtime)
-  const ws = require('ws');
-  neonConfig.webSocketConstructor = ws;
+// ✅ Configure WebSocket for server-side only
+if (typeof globalThis.WebSocket === 'undefined') {
+  // Server-side (Node.js): dynamically import ws
+  (async () => {
+    const { default: WebSocket } = await import('ws');
+    neonConfig.webSocketConstructor = WebSocket;
+  })();
+} else {
+  // Client-side: use native WebSocket
+  neonConfig.webSocketConstructor = globalThis.WebSocket;
 }
 
-const globalForPrisma = global as unknown as {
+const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
