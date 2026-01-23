@@ -10,7 +10,7 @@ import { AuthGuard } from "@/components/AuthGuard"; // ✅ เพิ่มนี
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
+  maximumScale: 1,
   userScalable: true,
 };
 
