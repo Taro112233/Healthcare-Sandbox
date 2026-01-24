@@ -33,13 +33,13 @@ const staggerContainer = {
 
 export default function ProductsPage() {
   const products: Product[] = productsData.products;
-  
+
   return (
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <motion.div
             initial="hidden"
@@ -47,29 +47,19 @@ export default function ProductsPage() {
             variants={staggerContainer}
             className="text-center"
           >
-            <motion.div variants={fadeIn} className="inline-flex mb-6">
-              <div className="inline-flex items-center gap-2 bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-medium">
-                <Sparkles className="w-4 h-4" />
-                Product Showcase
-              </div>
-            </motion.div>
 
             <motion.h1
               variants={fadeIn}
               className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
             >
-              เครื่องมือที่สร้างเสร็จแล้ว
-              <span className="block text-transparent bg-clip-text bg-linear-to-r from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400">
-                และใช้งานจริง
-              </span>
+              Products
             </motion.h1>
 
             <motion.p
               variants={fadeIn}
               className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
             >
-              เครื่องมือดิจิทัลที่พัฒนาจากคำขอของบุคลากรทางการแพทย์ 
-              ช่วยประหยัดเวลาและเพิ่มประสิทธิภาพการทำงาน
+              เครื่องมือที่เราทำจริง ใช้จริง แก้ปัญหาจริง
             </motion.p>
           </motion.div>
         </div>
@@ -86,8 +76,8 @@ export default function ProductsPage() {
             className="grid md:grid-cols-2 gap-8 lg:gap-12"
           >
             {products.map((product, index) => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 product={product}
                 index={index}
               />
@@ -117,7 +107,7 @@ export default function ProductsPage() {
 
           <motion.div variants={fadeIn}>
             {/* แก้ไขจาก <a> เป็น <Link> เพื่อประสิทธิภาพการนำทางที่ดีขึ้น */}
-            <Link 
+            <Link
               href="/requests/new"
               className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
@@ -139,14 +129,14 @@ export default function ProductsPage() {
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  
+
   useEffect(() => {
     if (!videoRef.current) return;
-    
+
     const video = videoRef.current;
-    
+
     const playVideo = () => {
-      video.play().catch(() => {});
+      video.play().catch(() => { });
     };
 
     const observer = new IntersectionObserver(
@@ -175,14 +165,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
+      transition={{
         duration: 0.6,
         delay: index * 0.1,
         ease: [0.25, 0.1, 0.25, 1]
       }}
     >
       {/* สำหรับลิงก์ภายนอก (Demo) ยังคงใช้ <a> พร้อม target="_blank" ได้ปกติ */}
-      <a 
+      <a
         href={product.demoUrl}
         target="_blank"
         rel="noopener noreferrer"
@@ -198,7 +188,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             preload="auto"
             className="w-full h-full object-cover"
           />
-          
+
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
 
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
