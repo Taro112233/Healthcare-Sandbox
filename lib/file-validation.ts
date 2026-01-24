@@ -1,5 +1,5 @@
 // lib/file-validation.ts
-// Project NextGen - File Validation Utilities
+// NextHealTH Sandbox - File Validation Utilities
 // ============================================
 
 // ===== CONSTANTS =====

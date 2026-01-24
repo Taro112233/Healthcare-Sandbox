@@ -1,5 +1,5 @@
 // lib/auth.ts
-// Project NextGen - Better Auth Configuration
+// NextHealTH Sandbox - Better Auth Configuration
 
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";

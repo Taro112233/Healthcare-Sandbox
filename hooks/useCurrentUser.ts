@@ -1,5 +1,5 @@
 // hooks/useCurrentUser.ts
-// Project NextGen - Current User Hook (Better Auth Version)
+// NextHealTH Sandbox - Current User Hook (Better Auth Version)
 
 "use client";
 

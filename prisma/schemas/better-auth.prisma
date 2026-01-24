@@ -1,5 +1,5 @@
 // prisma/schemas/better-auth.prisma
-// ===== Better Auth + Project NextGen Fields =====
+// ===== Better Auth + NextHealTH Sandbox Fields =====
 
 model User {
   id            String    @id @default(cuid())
@@ -8,7 +8,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   
-  // Project NextGen: เปลี่ยนเป็น optional พร้อม default value
+  // NextHealTH Sandbox: เปลี่ยนเป็น optional พร้อม default value
   firstName     String    @default("")          // ✅ Changed to optional
   lastName      String    @default("")          // ✅ Changed to optional
   phone         String?
@@ -24,7 +24,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   
-  // Project NextGen relations
+  // NextHealTH Sandbox relations
   requests      Request[]
   comments      Comment[]
   statusChanges StatusHistory[]

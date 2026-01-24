@@ -15,9 +15,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Project NextGen",
+  title: "NextHealTH Sandbox",
   description:
-    "Next-Generation Healthcare Innovation Sandbox",
+    "Public Health Innovation Sandbox",
 };
 
 export default function RootLayout({

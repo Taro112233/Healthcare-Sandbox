@@ -137,19 +137,19 @@ export default function RegisterPage() {
       const result = await authClient.signUp.email(signUpData);
 
       if (result.error) {
-        throw new Error(result.error.message || "สมัครสมาชิกไม่สำเร็จ");
+        throw new Error(result.error.message || "สร้างบัญชีไม่สำเร็จ");
       }
 
-      toast.success("สมัครสมาชิกสำเร็จ!", {
-        description: "ยินดีต้อนรับเข้าสู่ Project NextGen",
+      toast.success("สร้างบัญชีสำเร็จ!", {
+        description: "ยินดีต้อนรับเข้าสู่ NextHealTH Sandbox",
       });
 
       router.push("/dashboard");
       router.refresh();
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : "สมัครสมาชิกไม่สำเร็จ";
+      const errorMsg = err instanceof Error ? err.message : "สร้างบัญชีไม่สำเร็จ";
       setError(errorMsg);
-      toast.error("สมัครสมาชิกไม่สำเร็จ", {
+      toast.error("สร้างบัญชีไม่สำเร็จ", {
         description: errorMsg,
       });
     } finally {
@@ -181,10 +181,10 @@ export default function RegisterPage() {
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-foreground">
-                Project NextGen
+                NextHealTH Sandbox
               </h1>
               <p className="text-sm text-muted-foreground">
-                Next-Generation Healthcare Innovation Sandbox
+                Public Health Innovation Sandbox
               </p>
             </div>
           </Link>
@@ -193,7 +193,7 @@ export default function RegisterPage() {
         {/* Register Form */}
         <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-xl text-center">สมัครสมาชิก</CardTitle>
+            <CardTitle className="text-xl text-center">สร้างบัญชี</CardTitle>
             <CardDescription className="text-center">
               สร้างบัญชีเพื่อเริ่มใช้งาน Sandbox
             </CardDescription>
@@ -375,7 +375,7 @@ export default function RegisterPage() {
                 ) : (
                   <>
                     <UserPlus className="w-4 h-4 mr-2" />
-                    สมัครสมาชิก
+                    สร้างบัญชี
                   </>
                 )}
               </Button>
@@ -398,7 +398,7 @@ export default function RegisterPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
+          <p>NextHealTH Sandbox - Public Health Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-24T10:51:25.163Z
+// Last generated: 2026-01-24T13:29:42.967Z
 // HealthTech Sandbox
 
 generator client {
@@ -20,7 +20,7 @@ datasource db {
 // ==========================================
 
 // prisma/schemas/attachment.prisma
-// ===== ATTACHMENT SYSTEM SCHEMA - Project NextGen =====
+// ===== ATTACHMENT SYSTEM SCHEMA - NextHealTH Sandbox =====
 
 model Attachment {
   id          String   @id @default(cuid())
@@ -47,7 +47,7 @@ model Attachment {
 // ==========================================
 
 // prisma/schemas/better-auth.prisma
-// ===== Better Auth + Project NextGen Fields =====
+// ===== Better Auth + NextHealTH Sandbox Fields =====
 
 model User {
   id            String    @id @default(cuid())
@@ -56,7 +56,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   
-  // Project NextGen: เปลี่ยนเป็น optional พร้อม default value
+  // NextHealTH Sandbox: เปลี่ยนเป็น optional พร้อม default value
   firstName     String    @default("")          // ✅ Changed to optional
   lastName      String    @default("")          // ✅ Changed to optional
   phone         String?
@@ -72,7 +72,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   
-  // Project NextGen relations
+  // NextHealTH Sandbox relations
   requests      Request[]
   comments      Comment[]
   statusChanges StatusHistory[]
@@ -181,7 +181,7 @@ enum CommentType {
 // ==========================================
 
 // prisma/schemas/request.prisma
-// ===== REQUEST SYSTEM SCHEMA - Project NextGen =====
+// ===== REQUEST SYSTEM SCHEMA - NextHealTH Sandbox =====
 
 model Request {
   id                String        @id @default(cuid())

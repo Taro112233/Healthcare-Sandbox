@@ -1,5 +1,5 @@
 // middleware.ts
-// Project NextGen - Simplified Middleware
+// NextHealTH Sandbox - Simplified Middleware
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";

@@ -1,5 +1,5 @@
 // app/api/auth/[...all]/route.ts
-// Project NextGen - Better Auth Handler
+// NextHealTH Sandbox - Better Auth Handler
 
 import { auth } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";

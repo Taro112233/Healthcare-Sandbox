@@ -1,5 +1,5 @@
 // types/auth.d.ts
-// Project NextGen - Authentication Type Definitions (Simplified - No Multi-tenant)
+// NextHealTH Sandbox - Authentication Type Definitions (Simplified - No Multi-tenant)
 
 // ===== USER TYPES =====
 

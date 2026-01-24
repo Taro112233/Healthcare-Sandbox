@@ -100,7 +100,7 @@ export default function LoginPage() {
       }
 
       toast.success("เข้าสู่ระบบสำเร็จ!", {
-        description: "ยินดีต้อนรับเข้าสู่ Project NextGen",
+        description: "ยินดีต้อนรับเข้าสู่ NextHealTH Sandbox",
       });
 
       router.push("/dashboard");
@@ -156,10 +156,10 @@ export default function LoginPage() {
             </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-foreground">
-                Project NextGen
+                NextHealTH Sandbox
               </h1>
               <p className="text-sm text-muted-foreground">
-                Next-Generation Healthcare Innovation Sandbox
+                Public Health Innovation Sandbox
               </p>
             </div>
           </Link>
@@ -283,7 +283,7 @@ export default function LoginPage() {
                   href="/register"
                   className="text-teal-600 hover:text-teal-800 font-medium"
                 >
-                  สมัครสมาชิก
+                  สร้างบัญชี
                 </Link>
               </p>
             </div>
@@ -292,7 +292,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>Project NextGen - Next-Generation Healthcare Innovation Sandbox</p>
+          <p>NextHealTH Sandbox - Public Health Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
       </div>

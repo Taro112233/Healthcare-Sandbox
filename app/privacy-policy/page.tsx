@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
               นโยบายความเป็นส่วนตัว
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Privacy Policy for Project NextGen Platform
+              Privacy Policy for NextHealTH Sandbox Platform
             </p>
             <div className="flex items-center justify-center gap-4 mt-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function PrivacyPolicyPage() {
                   บริษัท เอช แล็บ จำกัด (&quot;เรา&quot;, &quot;HLAB&quot; หรือ &quot;แพลตฟอร์ม&quot;) ให้ความสำคัญกับความเป็นส่วนตัว
                   และการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งานทุกท่าน นโยบายความเป็นส่วนตัวฉบับนี้อธิบายถึง
                   วิธีการที่เราเก็บรวบรวม ใช้งาน เปิดเผย และปกป้องข้อมูลส่วนบุคคลของท่าน
-                  เมื่อท่านใช้บริการ Project NextGen
+                  เมื่อท่านใช้บริการ NextHealTH Sandbox
                 </p>
                 <div className="bg-teal-50 dark:bg-teal-950/20 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
                   <p className="text-sm text-teal-900 dark:text-teal-100">

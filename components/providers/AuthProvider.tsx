@@ -151,7 +151,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const result = await authClient.signUp.email(signUpData);
 
     if (result.error) {
-      throw new Error(result.error.message || "สมัครสมาชิกไม่สำเร็จ");
+      throw new Error(result.error.message || "สร้างบัญชีไม่สำเร็จ");
     }
   };
 

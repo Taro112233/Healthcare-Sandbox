@@ -107,14 +107,14 @@ export function HeroSection() {
           <motion.div variants={fadeIn} className="inline-flex mb-8">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/30 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
-              Next-Generation Healthcare Innovation Sandbox
+              Public Health Innovation Sandbox
             </div>
           </motion.div>
 
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]">
               <span className="text-slate-900 dark:text-white">
-                Project NextGen
+                NextHealTH Sandbox
               </span>
               
               <span 
@@ -124,7 +124,7 @@ export function HeroSection() {
                   backgroundImage: laserGradient,
                 }}
               >
-                Project NextGen
+                NextHealTH Sandbox
               </span>
 
               {/* ✅ Single Sharp Glint - Optimized for Performance */}
@@ -155,7 +155,7 @@ export function HeroSection() {
                   backgroundRepeat: 'no-repeat'
                 }}
               >
-                Project NextGen
+                NextHealTH Sandbox
               </motion.span>
             </h1>
           </motion.div>
@@ -164,8 +164,9 @@ export function HeroSection() {
             variants={fadeIn}
             className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            แพลตฟอร์มสำหรับบุคลากรทางการแพทย์ในการส่งคำขอพัฒนาเครื่องมือดิจิทัล 
-            เพื่อเพิ่มประสิทธิภาพในการดูแลผู้ป่วยด้วยเทคโนโลยี
+            แพลตฟอร์มสำหรับทดลองแนวคิดและนวัตกรรมด้านสาธารณสุข 
+            <br />
+            จาก pain point หน้างานสู่ digital solution
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">

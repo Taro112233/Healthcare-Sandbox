@@ -1,5 +1,5 @@
 // lib/auth-client.ts
-// Project NextGen - Better Auth Client
+// NextHealTH Sandbox - Better Auth Client
 
 import { createAuthClient } from "better-auth/react";
 
