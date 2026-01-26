@@ -4,522 +4,580 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
+  Scale,
+  AlertTriangle,
+  Info,
+  Shield,
   FileText,
   Users,
-  ShieldCheck,
-  AlertTriangle,
-  Lock,
-  Mail,
-  Phone,
-  MapPin,
-  Calendar,
-  Briefcase,
-  CheckCircle2,
-  XCircle,
-  Scale,
-  RefreshCw,
+  Ban,
+  CheckCircle,
 } from 'lucide-react';
-import Link from 'next/link';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
-export default function TermsConditionsPage() {
+export default function TermsOfServicePage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Background Gradient */}
       <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
-      {/* Content */}
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
-          className="space-y-6"
-        >
-          {/* Hero Section */}
-          <motion.div variants={fadeIn} className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 dark:bg-teal-950/30 rounded-2xl mb-4">
-              <FileText className="w-8 h-8 text-teal-600 dark:text-teal-400" />
-            </div>
-            <h1 className="text-4xl font-bold text-foreground mb-3">
-              ข้อกำหนดและเงื่อนไขการใช้บริการ
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Terms & Conditions for NextHealTH Sandbox Platform
-            </p>
-            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
-              <Calendar className="w-4 h-4" />
-              <span>มีผลบังคับใช้ตั้งแต่วันที่ 10 มกราคม พ.ศ. 2568</span>
-            </div>
-          </motion.div>
-
-          {/* Introduction Card */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-teal-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Briefcase className="w-5 h-5 text-teal-600" />
-                  นิยามและบทนำ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-foreground">
-                <div className="bg-teal-50 dark:bg-teal-950/20 rounded-lg p-4 border border-teal-200 dark:border-teal-800">
-                  <p className="text-sm leading-relaxed">
-                    <strong className="text-teal-800 dark:text-teal-200">
-                      NextHealTH Sandbox
-                    </strong>{' '}
-                    เป็นแพลตฟอร์มสำหรับรับและจัดการคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์ 
-                    โดยมุ่งเน้นการพัฒนาแบบ Sandbox (สภาพแวดล้อมทดลอง) 
-                    ซึ่งไม่ใช้ข้อมูลผู้ป่วยจริงและเน้นวัตถุประสงค์เพื่อการศึกษาและทดลองเท่านั้น
-                  </p>
-                </div>
-
-                <div className="space-y-3 text-sm">
-                  <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
-                    <div>
-                      <strong>&ldquo;แพลตฟอร์ม&rdquo;</strong> หมายถึง เว็บไซต์และแอปพลิเคชันของ NextHealTH Sandbox
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
-                    <div>
-                      <strong>&ldquo;ผู้ใช้งาน&rdquo; หรือ &ldquo;ท่าน&rdquo;</strong> หมายถึง บุคคลธรรมดาหรือนิติบุคคลที่ใช้บริการแพลตฟอร์ม
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
-                    <div>
-                      <strong>&ldquo;คำขอ&rdquo; (Request)</strong> หมายถึง คำขอพัฒนาเครื่องมือที่ผู้ใช้งานส่งผ่านแพลตฟอร์ม
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
-                    <div>
-                      <strong>&ldquo;Admin&rdquo;</strong> หมายถึง ผู้ดูแลระบบที่มีสิทธิจัดการคำขอและเปลี่ยนสถานะ
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 shrink-0" />
-                    <div>
-                      <strong>&ldquo;บริษัทฯ&rdquo;</strong> หมายถึง HLAB Consulting ผู้ให้บริการแพลตฟอร์ม
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* User Responsibilities */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-blue-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  การสมัครและหน้าที่ของผู้ใช้งาน
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3 text-sm text-foreground">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong>คุณสมบัติผู้ใช้งาน:</strong> ผู้ใช้งานต้องเป็นบุคคลธรรมดาที่มีอายุครบ 18 ปีบริบูรณ์ 
-                      หรือนิติบุคคลที่มีผู้แทนโดยชอบด้วยกฎหมาย
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong>ข้อมูลที่ถูกต้อง:</strong> ผู้ใช้งานรับรองว่าข้อมูลที่ให้ไว้เป็นความจริงและครบถ้วน 
-                      ไม่เป็นเท็จหรือทำให้ผู้อื่นเข้าใจผิด
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong>ความปลอดภัย:</strong> ผู้ใช้งานมีหน้าที่รักษาความลับของบัญชีและรหัสผ่าน 
-                      และแจ้งบริษัทฯ ทันทีหากพบการใช้งานที่ผิดปกติ
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <div>
-                      <strong>ข้อห้าม:</strong> ห้ามใช้แพลตฟอร์มเพื่อการที่ผิดกฎหมาย หลอกลวง หรือก่อกวน 
-                      ห้ามเผยแพร่เนื้อหาที่ไม่เหมาะสมหรือละเมิดสิทธิผู้อื่น
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Service Usage */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-purple-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <RefreshCw className="w-5 h-5 text-purple-600" />
-                  การใช้บริการและคำขอ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
-                  <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" />
-                    การส่งคำขอพัฒนา
-                  </h4>
-                  <ul className="space-y-2 text-sm text-purple-900 dark:text-purple-100">
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>ผู้ใช้งานสามารถส่งคำขอพัฒนาเครื่องมือดิจิทัลผ่านแบบฟอร์มที่กำหนด</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>คำขอจะถูกตรวจสอบโดย Admin ภายใน 1-3 วันทำการ</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>สถานะคำขอจะอัปเดตตลอดกระบวนการพัฒนา</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>ผู้ใช้งานสามารถติดตามและแสดงความคิดเห็นได้ตลอดเวลา</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="space-y-3 text-sm text-foreground">
-                  <p className="font-medium">สถานะของคำขอ (Request Status):</p>
-                  <div className="grid gap-2">
-                    <div className="flex items-center gap-3 p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-                      <span className="font-medium">รอตรวจสอบ</span>
-                      <span className="text-muted-foreground">- คำขอรอการพิจารณา</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 bg-blue-50 dark:bg-blue-950/20 rounded">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                      <span className="font-medium">อยู่ในการพิจารณา</span>
-                      <span className="text-muted-foreground">- กำลังวิเคราะห์ความต้องการ</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 bg-purple-50 dark:bg-purple-950/20 rounded">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full" />
-                      <span className="font-medium">อยู่ในการพัฒนา</span>
-                      <span className="text-muted-foreground">- กำลังสร้างเครื่องมือ</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 bg-orange-50 dark:bg-orange-950/20 rounded">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                      <span className="font-medium">อยู่ในการทดสอบ</span>
-                      <span className="text-muted-foreground">- ทดลองใช้งานจริง</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 bg-green-50 dark:bg-green-950/20 rounded">
-                      <div className="w-2 h-2 bg-green-500 rounded-full" />
-                      <span className="font-medium">สำเร็จ</span>
-                      <span className="text-muted-foreground">- พร้อมใช้งาน</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Disclaimer */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-amber-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-600" />
-                  ข้อจำกัดความรับผิดและคำเตือน
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
-                  <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3 flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5" />
-                    ข้อจำกัดสำคัญของแพลตฟอร์ม Sandbox
-                  </h4>
-                  <div className="space-y-3 text-sm text-amber-900 dark:text-amber-100">
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <p>
-                        <strong>ไม่ใช่ระบบผลิตภัณฑ์:</strong> เครื่องมือที่พัฒนาเป็นแบบ Sandbox 
-                        เพื่อการทดลองและศึกษาเท่านั้น ไม่ควรนำไปใช้กับผู้ป่วยจริง
-                      </p>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <p>
-                        <strong>ไม่รับประกันผลลัพธ์:</strong> บริษัทฯ ไม่รับประกันว่าคำขอทุกรายการจะได้รับการพัฒนา 
-                        หรือผลลัพธ์จะตรงตามที่คาดหวังทุกประการ
-                      </p>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <p>
-                        <strong>ความรับผิดจำกัด:</strong> บริษัทฯ ไม่รับผิดชอบต่อความเสียหายใดๆ 
-                        ที่เกิดจากการใช้เครื่องมือที่พัฒนา
-                      </p>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <p>
-                        <strong>ไม่มีค่าใช้จ่าย:</strong> การใช้บริการเป็นแบบไม่มีค่าใช้จ่าย 
-                        แต่อาจมีข้อจำกัดตามนโยบายของบริษัทฯ
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Intellectual Property */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-indigo-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-indigo-600" />
-                  ทรัพย์สินทางปัญญาและความเป็นเจ้าของ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-foreground">
-                <div className="space-y-3">
-                  <p>
-                    <strong>เครื่องมือที่พัฒนา:</strong> เครื่องมือที่พัฒนาผ่านแพลตฟอร์มจะเป็นทรัพย์สินของบริษัทฯ 
-                    แต่ผู้ใช้งานสามารถใช้งานได้ฟรีตามเงื่อนไขที่กำหนด
-                  </p>
-                  <p>
-                    <strong>ข้อมูลที่ส่ง:</strong> ข้อมูลและไอเดียที่ผู้ใช้งานส่งผ่านคำขออาจถูกนำไปพัฒนาต่อ 
-                    หรือแชร์เป็นความรู้สาธารณะได้ โดยไม่ระบุตัวตนผู้ส่ง
-                  </p>
-                  <p>
-                    <strong>การใช้งาน:</strong> ผู้ใช้งานสามารถใช้เครื่องมือที่พัฒนาเพื่อการศึกษา ทดลอง 
-                    และวัตถุประสงค์ที่ไม่หวังผลกำไร
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Privacy & Security */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-green-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Lock className="w-5 h-5 text-green-600" />
-                  ความเป็นส่วนตัวและความปลอดภัย
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
-                  <p className="text-sm text-green-900 dark:text-green-100 leading-relaxed">
-                    บริษัทฯ ให้ความสำคัญกับความเป็นส่วนตัวของผู้ใช้งาน 
-                    การเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลจะเป็นไปตาม{' '}
-                    <Link
-                      href="/privacy-policy"
-                      target="_blank"
-                      className="text-green-700 dark:text-green-300 hover:underline font-medium"
-                    >
-                      นโยบายความเป็นส่วนตัว
-                    </Link>{' '}
-                    และพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
-                  </p>
-                </div>
-
-                <div className="space-y-2 text-sm text-foreground">
-                  <p className="font-medium">บริษัทฯ จะเก็บรักษาข้อมูลประเภทต่อไปนี้:</p>
-                  <ul className="space-y-1 ml-4">
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>ข้อมูลบัญชีผู้ใช้งาน (ชื่อ-นามสกุล, อีเมล, เบอร์โทรศัพท์)</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>ข้อมูลการใช้งานแพลตฟอร์ม (Login history, Activity logs)</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>เนื้อหาคำขอและความคิดเห็น</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>ไฟล์แนบที่ส่งมาพร้อมคำขอ</span>
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Termination */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-red-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-red-600" />
-                  การระงับและยกเลิกบัญชี
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-foreground">
-                <p>
-                  บริษัทฯ มีสิทธิระงับหรือยกเลิกบัญชีผู้ใช้งานได้ หากพบว่า:
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>ใช้บริการฝ่าฝืนข้อกำหนดและเงื่อนไขนี้</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>ให้ข้อมูลเท็จหรือทำให้เข้าใจผิด</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>กระทำการที่ผิดกฎหมายหรือไม่เหมาะสม</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>พยายามเข้าถึงระบบโดยไม่ได้รับอนุญาต</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>กระทำการที่อาจสร้างความเสียหายต่อแพลตฟอร์มหรือผู้ใช้รายอื่น</span>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <p className="font-medium">
-                  ผู้ใช้งานสามารถขอยกเลิกบัญชีได้ทุกเมื่อ โดยติดต่อผ่านช่องทางที่กำหนด
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Changes to Terms */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-gray-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <RefreshCw className="w-5 h-5 text-gray-600" />
-                  การแก้ไขข้อกำหนด
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-foreground">
-                <p>
-                  บริษัทฯ ขอสงวนสิทธิ์ในการแก้ไขเพิ่มเติมข้อกำหนดและเงื่อนไขนี้ได้ตลอดเวลา 
-                  โดยจะประกาศให้ทราบล่วงหน้าผ่านแพลตฟอร์มอย่างน้อย 7 วันก่อนมีผลบังคับใช้
-                </p>
-                <p>
-                  การใช้บริการต่อไปหลังจากมีการแก้ไขถือว่าท่านยอมรับข้อกำหนดใหม่ 
-                  หากไม่เห็นด้วย กรุณาหยุดใช้บริการและติดต่อบริษัทฯ เพื่อยกเลิกบัญชี
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Contact Information */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-cyan-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-cyan-600" />
-                  ข้อมูลการติดต่อ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-foreground">
-                  หากท่านมีคำถามหรือข้อสงสัยเกี่ยวกับข้อกำหนดและเงื่อนไขนี้ 
-                  สามารถติดต่อบริษัทฯ ได้ตามช่องทางด้านล่าง:
-                </p>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground">อีเมล</p>
-                      <p className="text-sm text-muted-foreground break-all">
-                        legal@hlabconsulting.com
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground">โทรศัพท์</p>
-                      <p className="text-sm text-muted-foreground">
-                        061-234-5678
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        จันทร์-ศุกร์ 09:00-17:00 น.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg sm:col-span-2">
-                    <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground">ที่อยู่</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        HLAB Consulting Co., Ltd.<br />
-                        123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย<br />
-                        กรุงเทพมหานคร 10110 ประเทศไทย
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-cyan-50 dark:bg-cyan-950/20 rounded-lg p-4 border border-cyan-200 dark:border-cyan-800">
-                  <p className="text-sm text-cyan-900 dark:text-cyan-100 leading-relaxed">
-                    <strong>หมายเหตุ:</strong> ข้อกำหนดและเงื่อนไขนี้อยู่ภายใต้กฎหมายไทย 
-                    และข้อพิพาทใดๆ จะอยู่ในเขตอำนาจศาลไทย
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Footer Notice */}
-          <motion.div variants={fadeIn}>
-            <div className="text-center py-8 text-sm text-muted-foreground space-y-2">
-              <p>
-                © 2025 HLAB Consulting - NextHealTH Sandbox Platform
-              </p>
-              <p>
-                เอกสารฉบับนี้มีผลบังคับใช้ตั้งแต่วันที่ 10 มกราคม พ.ศ. 2568
-              </p>
-              <div className="flex items-center justify-center gap-4 mt-4">
-                <Link
-                  href="/privacy-policy"
-                  className="text-primary hover:underline"
-                >
-                  นโยบายความเป็นส่วนตัว
-                </Link>
-                <span>•</span>
-                <Link
-                  href="/"
-                  className="text-primary hover:underline"
-                >
-                  กลับหน้าหลัก
-                </Link>
+      <main className="relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
+          >
+            {/* Header */}
+            <motion.div variants={fadeIn} className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-950/30 rounded-full mb-4">
+                <Scale className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
-            </div>
+              <h1 className="text-4xl font-bold text-foreground mb-4">
+                ข้อกำหนดและเงื่อนไขการใช้บริการ
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Terms and Conditions of Service
+              </p>
+              <p className="text-sm text-muted-foreground mt-2">
+                มีผลบังคับใช้: 26 มกราคม 2568
+              </p>
+            </motion.div>
+
+            {/* Critical Warning */}
+            <motion.div variants={fadeIn}>
+              <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20 mb-8">
+                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                <AlertDescription className="text-red-800 dark:text-red-200">
+                  <strong className="font-semibold text-lg">⚠️ ข้อกำหนดสำคัญ - กรุณาอ่านให้ละเอียด</strong>
+                  <ul className="list-disc list-inside mt-3 space-y-1">
+                    <li><strong>บริการนี้เป็น Sandbox/Prototype Environment</strong> ไม่ใช่ระบบสำหรับใช้งานจริงในการรักษาผู้ป่วย</li>
+                    <li><strong>ผู้ให้บริการไม่รับผิดชอบ</strong>ต่อความเสียหายใดๆ ที่เกิดจากการใช้เครื่องมือ</li>
+                    <li><strong>ห้ามเด็ดขาด:</strong> การใช้ข้อมูลผู้ป่วยจริง (Real Patient Data)</li>
+                    <li>การใช้บริการนี้ถือว่าคุณยอมรับข้อกำหนดทั้งหมดโดยไม่มีเงื่อนไข</li>
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            </motion.div>
+
+            {/* Section 1: Introduction */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Info className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                    1. บทนำ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    ข้อกำหนดและเงื่อนไขการใช้บริการ ("ข้อตกลง") นี้เป็นสัญญาทางกฎหมายระหว่าง
+                    คุณ ("ผู้ใช้", "คุณ") และ NextHealTH Sandbox ("เรา", "ผู้ให้บริการ")
+                  </p>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">1.1 ข้อมูลผู้ให้บริการ</h3>
+                    <div className="bg-muted/50 rounded-lg p-4 space-y-1 text-sm">
+                      <p><strong>ชื่อบริการ:</strong> NextHealTH Sandbox</p>
+                      <p><strong>ประเภท:</strong> บุคคลธรรมดา (Individual)</p>
+                      <p><strong>ที่อยู่:</strong> Phitsanulok, Thailand 65000</p>
+                      <p><strong>อีเมล:</strong> thanatouchth@gmail.com</p>
+                      <p><strong>โทรศัพท์:</strong> 095-590-4245</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">1.2 การยอมรับข้อตกลง</h3>
+                    <p className="text-muted-foreground">
+                      การเข้าใช้หรือลงทะเบียนบริการนี้ ถือว่าคุณ:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>ได้อ่านและเข้าใจข้อตกลงนี้แล้ว</li>
+                      <li>ยอมรับที่จะผูกพันตามข้อตกลงนี้</li>
+                      <li>มีอายุอย่างน้อย 18 ปีบริบูรณ์</li>
+                      <li>มีสิทธิตามกฎหมายในการทำสัญญานี้</li>
+                    </ul>
+                  </div>
+
+                  <Alert className="bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+                    <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                    <AlertDescription className="text-amber-800 dark:text-amber-200">
+                      <strong>หมายเหตุ:</strong> หากคุณไม่ยอมรับข้อตกลงนี้ กรุณาหยุดการใช้บริการทันที
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 2: Service Description */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    2. ลักษณะของบริการ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">2.1 บริการที่ให้:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      NextHealTH Sandbox เป็นแพลตฟอร์ม Sandbox สำหรับ:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>รับและพิจารณาคำขอพัฒนาเครื่องมือดิจิทัลทางการแพทย์</li>
+                      <li>พัฒนา Prototype/MVP ของเครื่องมือสุขภาพ</li>
+                      <li>เป็นพื้นที่ทดลองและเรียนรู้เทคโนโลยี</li>
+                      <li>แบ่งปันความรู้และประสบการณ์</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">2.2 ข้อจำกัดของบริการ:</h3>
+                    <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                      <Ban className="h-4 w-4 text-red-600 dark:text-red-400" />
+                      <AlertDescription className="text-red-800 dark:text-red-200">
+                        <strong>บริการนี้ไม่ใช่:</strong>
+                        <ul className="list-disc list-inside mt-2 space-y-1">
+                          <li>ระบบสารสนเทศทางการแพทย์ที่ได้รับรอง (Certified Medical Software)</li>
+                          <li>บริการให้คำปรึกษาทางการแพทย์</li>
+                          <li>เครื่องมือแพทย์ที่ผ่านการรับรองจาก FDA หรือ อย.</li>
+                          <li>ระบบที่รับประกันความถูกต้อง 100%</li>
+                        </ul>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">2.3 การไม่รับประกัน:</h3>
+                    <p className="text-muted-foreground">
+                      เราให้บริการตาม <strong>"AS-IS"</strong> และ <strong>"AS-AVAILABLE"</strong> basis
+                      โดยไม่มีการรับประกันใดๆ ทั้งโดยชัดแจ้งหรือโดยนัยยะ รวมถึง:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>ความถูกต้อง ครบถ้วน หรือเชื่อถือได้ของเครื่องมือ</li>
+                      <li>ความเหมาะสมต่อวัตถุประสงค์เฉพาะ</li>
+                      <li>การทำงานไม่หยุดชะงักหรือปราศจากข้อผิดพลาด</li>
+                      <li>ความปลอดภัยของข้อมูล 100%</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 3: User Obligations */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    3. หน้าที่และความรับผิดชอบของผู้ใช้
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">3.1 การลงทะเบียนและบัญชีผู้ใช้:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>คุณต้องให้ข้อมูลที่ถูกต้องและเป็นจริง</li>
+                      <li>คุณรับผิดชอบในการรักษาความปลอดภัยของรหัสผ่าน</li>
+                      <li>ห้ามแชร์บัญชีหรือให้ผู้อื่นใช้บัญชีของคุณ</li>
+                      <li>แจ้งเราทันทีหากพบการเข้าใช้งานที่ไม่ได้รับอนุญาต</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">3.2 การใช้งานที่ยอมรับได้:</h3>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-sm font-semibold text-green-700 dark:text-green-400 mb-2 flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          ✅ สามารถทำได้:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-6">
+                          <li>ส่งคำขอพัฒนาเครื่องมือ</li>
+                          <li>ให้ข้อมูลและความร่วมมือในการพัฒนา</li>
+                          <li>ทดสอบและให้ Feedback</li>
+                          <li>ใช้เครื่องมือเพื่อการศึกษาและทดลอง</li>
+                          <li>แชร์เครื่องมือให้เพื่อนร่วมงาน (ภายใต้ข้อจำกัด)</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <p className="text-sm font-semibold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+                          <Ban className="w-4 h-4" />
+                          ❌ ห้ามเด็ดขาด:
+                        </p>
+                        <ul className="list-disc list-inside space-y-1 text-muted-foreground text-sm ml-6">
+                          <li>ใช้ข้อมูลผู้ป่วยจริง (Real Patient Data)</li>
+                          <li>นำเครื่องมือไปใช้ในการตัดสินใจรักษาผู้ป่วยโดยตรง (โดยไม่ผ่าน Validation)</li>
+                          <li>ขายหรือนำเครื่องมือไปหาประโยชน์เชิงพาณิชย์โดยไม่ได้รับอนุญาต</li>
+                          <li>Reverse engineer, decompile หรือ hack ระบบ</li>
+                          <li>ส่งคำขอที่ผิดกฎหมายหรือขัดต่อจริยธรรม</li>
+                          <li>แอบอ้างว่าเป็นบุคคลอื่นหรือให้ข้อมูลเท็จ</li>
+                          <li>ละเมิดสิทธิ์ทางปัญญาของผู้อื่น</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">3.3 ความรับผิดชอบในการใช้เครื่องมือ:</h3>
+                    <Alert className="border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/20">
+                      <AlertTriangle className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+                      <AlertDescription className="text-orange-800 dark:text-orange-200">
+                        <strong>สำคัญมาก:</strong> หากคุณเลือกที่จะนำเครื่องมือไปใช้กับผู้ป่วยจริง:
+                        <ul className="list-disc list-inside mt-2 space-y-1">
+                          <li>คุณ<strong>รับผิดชอบแต่เพียงผู้เดียว</strong>ในการ Validate ความถูกต้อง</li>
+                          <li>คุณต้อง<strong>ทดสอบอย่างละเอียด</strong>และมี<strong>แพทย์ตรวจสอบ</strong></li>
+                          <li>คุณ<strong>รับผิดชอบ</strong>ต่อความเสียหายทั้งหมดที่อาจเกิดขึ้น</li>
+                          <li>ผู้ให้บริการ<strong>ไม่รับผิดชอบใดๆ</strong> ทั้งสิ้น</li>
+                        </ul>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 4: Intellectual Property */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                    4. ลิขสิทธิ์และทรัพย์สินทางปัญญา
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.1 ความเป็นเจ้าของ:</h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>
+                        <strong className="text-foreground">Idea/Concept ของคำขอ:</strong> เป็นของผู้ส่งคำขอ
+                      </li>
+                      <li>
+                        <strong className="text-foreground">Source Code และเครื่องมือ:</strong> เป็นของ NextHealTH Sandbox
+                      </li>
+                      <li>
+                        <strong className="text-foreground">สิทธิ์การใช้งาน:</strong> Dual License
+                        <ul className="list-circle list-inside ml-6 mt-1 space-y-1">
+                          <li>ผู้ส่งคำขอ: ใช้งานได้ฟรีตลอดไป (ภายใต้ข้อจำกัด)</li>
+                          <li>ผู้พัฒนา: เป็นเจ้าของโค้ดและสามารถใช้ต่อได้</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.2 การใช้เชิงพาณิชย์:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      หากต้องการนำเครื่องมือไปใช้เชิงพาณิชย์:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ต้อง<strong className="text-foreground">ขออนุญาตเป็นลายลักษณ์อักษร</strong>ล่วงหน้า</li>
+                      <li>อาจมี<strong className="text-foreground">ค่าธรรมเนียม License Fee</strong> (ตามตกลง)</li>
+                      <li>ต้องลงนามใน<strong className="text-foreground">Commercial License Agreement</strong></li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.3 Open Source:</h3>
+                    <p className="text-muted-foreground">
+                      เครื่องมือบางประเภทอาจถูกเผยแพร่เป็น Open Source (MIT หรือ Apache 2.0)
+                      ตามดุลยพินิจของผู้ให้บริการ โดยคำนึงถึง:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>ความซับซ้อนของเครื่องมือ</li>
+                      <li>ประโยชน์ต่อสาธารณะ</li>
+                      <li>ความเห็นของผู้ส่งคำขอ</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.4 เครื่องหมายการค้า:</h3>
+                    <p className="text-muted-foreground">
+                      "NextHealTH Sandbox" และโลโก้ เป็นทรัพย์สินของผู้ให้บริการ
+                      คุณไม่สามารถใช้โดยไม่ได้รับอนุญาต
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 5: Liability Limitation */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8 border-red-200 dark:border-red-800">
+                <CardHeader className="bg-red-50 dark:bg-red-950/20">
+                  <CardTitle className="flex items-center gap-2 text-red-800 dark:text-red-200">
+                    <AlertTriangle className="w-5 h-5" />
+                    5. ข้อจำกัดความรับผิด
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="mt-6 space-y-4">
+                  <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                    <Ban className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    <AlertDescription className="text-red-800 dark:text-red-200">
+                      <strong className="text-lg">⚠️ ผู้ให้บริการไม่รับผิดชอบต่อความเสียหายใดๆ</strong>
+                    </AlertDescription>
+                  </Alert>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">5.1 ขอบเขตการไม่รับผิด:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      NextHealTH Sandbox และผู้พัฒนา<strong>ไม่รับผิดชอบ</strong>ต่อความเสียหายดังต่อไปนี้
+                      ไม่ว่าจะเกิดจาก:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>
+                        <strong className="text-foreground">ความเสียหายต่อผู้ป่วย:</strong>
+                        การบาดเจ็บ เจ็บป่วย หรือเสียชีวิต ที่เกิดจากการใช้เครื่องมือ
+                      </li>
+                      <li>
+                        <strong className="text-foreground">ความเสียหายทางการเงิน:</strong>
+                        รายได้สูญเสีย ค่าเสียหายทางกฎหมาย ค่าชดเชย
+                      </li>
+                      <li>
+                        <strong className="text-foreground">ข้อมูลสูญหาย:</strong>
+                        การสูญหาย เสียหาย หรือรั่วไหลของข้อมูล
+                      </li>
+                      <li>
+                        <strong className="text-foreground">การหยุดชะงักของบริการ:</strong>
+                        Downtime, การไม่สามารถเข้าใช้งานได้
+                      </li>
+                      <li>
+                        <strong className="text-foreground">ข้อผิดพลาดของเครื่องมือ:</strong>
+                        Bug, Calculation Error, Logic Error
+                      </li>
+                      <li>
+                        <strong className="text-foreground">การกระทำของผู้ใช้รายอื่น:</strong>
+                        ความเสียหายจากผู้ใช้คนอื่นๆ
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">5.2 วงเงินความรับผิดสูงสุด:</h3>
+                    <p className="text-muted-foreground">
+                      ในกรณีที่มีศาลหรือหน่วยงานที่เกี่ยวข้องตัดสินว่าเราต้องรับผิดชอบ
+                      ความรับผิดสูงสุดของเราจำกัดไว้ที่ <strong className="text-foreground">0 บาท (ศูนย์บาท)</strong>
+                      เนื่องจากบริการนี้ให้ฟรีและไม่มีค่าใช้จ่าย
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">5.3 ข้อยกเว้น:</h3>
+                    <p className="text-muted-foreground">
+                      ข้อจำกัดความรับผิดนี้ไม่ใช้กับ:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>ความเสียหายที่เกิดจากการกระทำโดยเจตนาหรือประมาทเลินเล่ออย่างร้ายแรง</li>
+                      <li>การละเมิดสิทธิส่วนบุคคลตามกฎหมาย PDPA</li>
+                      <li>กรณีที่กฎหมายห้ามจำกัดความรับผิด</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 6: Privacy & Data */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    6. ความเป็นส่วนตัวและข้อมูล
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    การใช้บริการของคุณอยู่ภายใต้{' '}
+                    <a
+                      href="/privacy-policy"
+                      className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 font-semibold underline"
+                    >
+                      นโยบายความเป็นส่วนตัว (Privacy Policy)
+                    </a>{' '}
+                    ของเรา
+                  </p>
+
+                  <Alert className="bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
+                    <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    <AlertDescription className="text-blue-800 dark:text-blue-200">
+                      <strong>หมายเหตุ:</strong> กรุณาอ่านนโยบายความเป็นส่วนตัวเพิ่มเติม
+                      เพื่อทำความเข้าใจว่าเราเก็บรวบรวม ใช้ และคุ้มครองข้อมูลของคุณอย่างไร
+                    </AlertDescription>
+                  </Alert>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">ข้อห้ามสำคัญ:</h3>
+                    <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                      <Ban className="h-4 w-4 text-red-600 dark:text-red-400" />
+                      <AlertDescription className="text-red-800 dark:text-red-200">
+                        <strong>ห้ามเด็ดขาด:</strong> อัปโหลดหรือส่งข้อมูลผู้ป่วยจริง (Real Patient Data) รวมถึง:
+                        <ul className="list-disc list-inside mt-2 space-y-1">
+                          <li>ชื่อ-นามสกุล, HN, เลขบัตรประชาชน</li>
+                          <li>ผลตรวจแลป, รูปภาพ X-ray/CT/MRI</li>
+                          <li>ประวัติการรักษา, ข้อมูลสุขภาพ</li>
+                          <li>ข้อมูลอื่นที่สามารถระบุตัวบุคคลได้</li>
+                        </ul>
+                        <p className="mt-2"><strong>ผลกระทบ:</strong> บัญชีจะถูกระงับทันที และอาจมีความผิดตาม PDPA</p>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 7: Termination */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>7. การสิ้นสุดการใช้บริการ</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">7.1 การยกเลิกโดยผู้ใช้:</h3>
+                    <p className="text-muted-foreground">
+                      คุณสามารถยกเลิกบัญชีได้ตลอดเวลา โดยติดต่อเราทางอีเมล
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">7.2 การระงับโดยผู้ให้บริการ:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      เราสงวนสิทธิ์ในการระงับหรือยกเลิกบัญชีของคุณทันที หาก:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ละเมิดข้อตกลงนี้</li>
+                      <li>ใช้ข้อมูลผู้ป่วยจริง</li>
+                      <li>กระทำการผิดกฎหมายหรือขัดต่อจริยธรรม</li>
+                      <li>ละเมิดสิทธิ์ของผู้อื่น</li>
+                      <li>ทำให้ระบบเสียหาย</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">7.3 ผลกระทบจากการยกเลิก:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>คุณจะไม่สามารถเข้าถึงบัญชีและข้อมูลได้</li>
+                      <li>เครื่องมือที่ได้รับอาจยังใช้งานได้ (ตามดุลยพินิจ)</li>
+                      <li>เราอาจลบข้อมูลของคุณตาม Privacy Policy</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 8: General Provisions */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>8. บทบัญญัติทั่วไป</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">8.1 การแก้ไขข้อตกลง:</h3>
+                    <p className="text-muted-foreground">
+                      เราสงวนสิทธิ์ในการแก้ไขข้อตกลงนี้ได้ตลอดเวลา โดยจะแจ้งให้ทราบผ่าน:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>ประกาศบนแพลตฟอร์ม</li>
+                      <li>อีเมล (กรณีเปลี่ยนแปลงสำคัญ)</li>
+                    </ul>
+                    <p className="text-muted-foreground mt-2">
+                      การใช้บริการต่อหลังจากมีการแก้ไข ถือว่าคุณยอมรับข้อตกลงฉบับใหม่
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">8.2 กฎหมายที่ใช้บังคับ:</h3>
+                    <p className="text-muted-foreground">
+                      ข้อตกลงนี้อยู่ภายใต้กฎหมายไทย
+                      ข้อพิพาทใดๆ จะอยู่ในเขตอำนาจศาลไทยเท่านั้น
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">8.3 การแยกส่วนได้:</h3>
+                    <p className="text-muted-foreground">
+                      หากส่วนใดของข้อตกลงนี้ถูกตัดสินว่าไม่สมบูรณ์หรือบังคับไม่ได้
+                      ส่วนอื่นยังคงมีผลบังคับใช้
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">8.4 การสละสิทธิ์:</h3>
+                    <p className="text-muted-foreground">
+                      การที่เราไม่ใช้สิทธิ์ในข้อตกลงนี้ ไม่ถือเป็นการสละสิทธิ์นั้น
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">8.5 ความสมบูรณ์ของข้อตกลง:</h3>
+                    <p className="text-muted-foreground">
+                      ข้อตกลงนี้ถือเป็นข้อตกลงฉบับสมบูรณ์ระหว่างคุณและเรา
+                      แทนที่ข้อตกลงก่อนหน้านี้ทั้งหมด
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Contact */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>9. ติดต่อเรา</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    หากมีข้อสงสัยเกี่ยวกับข้อตกลงนี้ กรุณาติดต่อ:
+                  </p>
+
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <p className="font-semibold text-foreground">NextHealTH Sandbox</p>
+                    <p className="text-sm text-muted-foreground">Phitsanulok, Thailand 65000</p>
+                    <div className="pt-2 space-y-1">
+                      <p className="text-sm">
+                        <strong>อีเมล:</strong>{' '}
+                        <a href="mailto:thanatouchth@gmail.com" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">
+                          thanatouchth@gmail.com
+                        </a>
+                      </p>
+                      <p className="text-sm">
+                        <strong>โทรศัพท์:</strong>{' '}
+                        <a href="tel:0955904245" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">
+                          095-590-4245
+                        </a>
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        (วันจันทร์-ศุกร์ เวลา 09:00-17:00 น.)
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Footer */}
+            <motion.div variants={fadeIn} className="text-center pt-8 border-t border-border">
+              <p className="text-sm text-muted-foreground">
+                ข้อกำหนดและเงื่อนไขฉบับนี้มีผลบังคับใช้ตั้งแต่วันที่ 26 มกราคม 2568 เป็นต้นไป
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                © 2025 NextHealTH Sandbox - Educational & Experimental Use Only
+              </p>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

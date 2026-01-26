@@ -4,27 +4,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   FileText,
   AlertTriangle,
-  Shield,
-  CheckCircle2,
+  CheckCircle,
   XCircle,
-  Clock,
-  Eye,
-  Code,
-  TestTube,
-  Sparkles,
+  Info,
   Scale,
-  Target,
-  FileSearch,
-  MessageSquare,
-  Calendar,
+  Users,
   Lightbulb,
-  TrendingUp,
+  Shield,
 } from 'lucide-react';
-import Link from 'next/link';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -34,636 +25,459 @@ const fadeIn = {
 export default function RequestPolicyPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Background Gradient */}
       <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
 
-      {/* Content */}
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
-          className="space-y-6"
-        >
-          {/* Hero Section */}
-          <motion.div variants={fadeIn} className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-950/30 rounded-2xl mb-4">
-              <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-            </div>
-            <h1 className="text-4xl font-bold text-foreground mb-3">
-              นโยบายการส่งคำขอพัฒนาเครื่องมือ
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Request Policy for NextHealTH Sandbox
-            </p>
-            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
-              <Calendar className="w-4 h-4" />
-              <span>มีผลบังคับใช้ตั้งแต่วันที่ 15 มกราคม พ.ศ. 2568</span>
-            </div>
-          </motion.div>
-
-          {/* Warning Banner */}
-          <motion.div variants={fadeIn}>
-            <div className="bg-amber-50 dark:bg-amber-950/20 border-l-4 border-amber-500 p-6 rounded-r-lg">
-              <div className="flex items-start gap-4">
-                <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-lg font-semibold text-amber-900 dark:text-amber-200 mb-2">
-                    ⚠️ สำคัญ: โปรดอ่านอย่างละเอียดก่อนส่งคำขอ
-                  </h3>
-                  <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
-                    นี่คือ <strong>Sandbox Environment</strong> สำหรับทดลองและเรียนรู้เท่านั้น 
-                    ไม่เหมาะสำหรับใช้กับผู้ป่วยจริงในสภาพแวดล้อมคลินิก 
-                    กรุณาอ่านและทำความเข้าใจนโยบายทั้งหมดก่อนยอมรับ
-                  </p>
-                </div>
+      <main className="relative">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
+          >
+            {/* Header */}
+            <motion.div variants={fadeIn} className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 dark:bg-teal-950/30 rounded-full mb-4">
+                <FileText className="w-8 h-8 text-teal-600 dark:text-teal-400" />
               </div>
-            </div>
-          </motion.div>
-
-          {/* Section 1: Service Nature */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-blue-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-blue-600" />
-                  1. ลักษณะการให้บริการ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-3">
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
-                    text="นี่คือ sandbox environment สำหรับทดลองและเรียนรู้เท่านั้น"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
-                    text="ไม่รับประกันว่าคำขอทุกรายการจะได้รับการพัฒนา"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
-                    text="ทีมพัฒนาจะพิจารณาคำขอตามความเหมาะสม ความเป็นไปได้ และทรัพยากรที่มี"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-blue-500" />}
-                    text="การพัฒนาเครื่องมือเป็นไปเพื่อวัตถุประสงค์ทางการศึกษาและทดลอง"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 2: Data & Security Restrictions */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-red-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-red-600" />
-                  2. ข้อจำกัดด้านข้อมูลและความปลอดภัย
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-red-50 dark:bg-red-950/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
-                  <p className="text-sm text-red-900 dark:text-red-100 leading-relaxed font-semibold mb-3">
-                    🚫 ข้อห้ามสำคัญ:
-                  </p>
-                  <div className="grid gap-3">
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="ห้ามใช้ข้อมูลผู้ป่วยจริงในทุกกรณี"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="หากเครื่องมือต้องการข้อมูล ต้องใช้ข้อมูลจำลองหรือข้อมูลสาธิต (demo data) เท่านั้น"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="แพลตฟอร์มไม่รับรอง HIPAA, PDPA หรือมาตรฐานด้านความปลอดภัยทางการแพทย์"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-5 h-5 text-red-500" />}
-                      text="เครื่องมือเหมาะสำหรับการทดสอบและนำเสนอแนวคิด ไม่ใช่ใช้กับผู้ป่วยจริง"
-                      variant="danger"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 3: Project Scope & Suitability */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-purple-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Target className="w-5 h-5 text-purple-600" />
-                  3. ขอบเขตและความเหมาะสมของโครงการ
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
-                  <p className="text-sm font-semibold text-green-900 dark:text-green-100 mb-3 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    โครงการที่เหมาะสำหรับ Sandbox:
-                  </p>
-                  <div className="grid gap-2">
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
-                      text="เครื่องมือเริ่มต้นใหม่จากศูนย์ (greenfield projects)"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
-                      text="Proof-of-concept หรือ MVP สำหรับทดสอบแนวคิด"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
-                      text="เครื่องมือที่ช่วยแก้ pain point เฉพาะจุด (focused problem)"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
-                      text="Calculator, Form, Decision aid ที่ใช้ logic ไม่ซับซ้อนเกินไป"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-4 h-4 text-green-600" />}
-                      text="เครื่องมือที่เป็นประโยชน์ต่อชุมชนและสามารถ open source ได้"
-                      variant="info"
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 dark:bg-amber-950/20 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
-                  <p className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" />
-                    โครงการที่อาจมีข้อจำกัด:
-                  </p>
-                  <div className="grid gap-2 text-sm text-amber-800 dark:text-amber-200">
-                    <PolicyItem
-                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
-                      text="โครงการที่ต้องการเชื่อมต่อกับระบบเดิม (legacy integration) - ทีมอาจไม่มีสิทธิ์เข้าถึง"
-                      variant="default"
-                    />
-                    <PolicyItem
-                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
-                      text="งานที่ต้องการทำต่อจากโปรเจกต์เดิมของคนอื่น - ทีมอาจไม่มี context ครบ"
-                      variant="default"
-                    />
-                    <PolicyItem
-                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
-                      text="ระบบขนาดใหญ่ที่ต้องการหลายโมดูล - อาจเกินขอบเขต sandbox"
-                      variant="default"
-                    />
-                    <PolicyItem
-                      icon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
-                      text="เครื่องมือที่ต้องการ custom logic ซับซ้อนเฉพาะโรงพยาบาล - อาจไม่เหมาะกับการแชร์"
-                      variant="default"
-                    />
-                  </div>
-                  <div className="mt-3 p-3 bg-amber-100 dark:bg-amber-900/30 rounded text-xs text-amber-900 dark:text-amber-100">
-                    <strong>หมายเหตุ:</strong> หากโครงการของคุณอยู่ในกลุ่มนี้ 
-                    เราขอแนะนำให้ส่งคำขอมาได้ตามปกติ - ทีมจะพิจารณาแต่ละกรณีและอาจ:
-                    (1) แนะนำแนวทางอื่นที่เหมาะสมกว่า (2) ปรับขอบเขตให้เป็นไปได้ หรือ 
-                    (3) อธิบายเหตุผลหากไม่สามารถดำเนินการได้
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 4: Intellectual Property - NEW */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-indigo-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-indigo-600" />
-                  4. ลิขสิทธิ์และการใช้งาน
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-indigo-50 dark:bg-indigo-950/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-800">
-                  <p className="text-sm font-semibold text-indigo-900 dark:text-indigo-100 mb-3">
-                    📜 การครอบครองลิขสิทธิ์:
-                  </p>
-                  <div className="grid gap-3">
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                      text="เครื่องมือที่พัฒนาขึ้น ถือเป็นทรัพย์สินทางปัญญาของผู้พัฒนา (HLAB Consulting หรือทีมพัฒนา)"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                      text="ผู้ส่งคำขอยังคงเป็นเจ้าของแนวคิด (idea) และ use case ของตนเอง"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<CheckCircle2 className="w-5 h-5 text-indigo-500" />}
-                      text="คุณสามารถใช้งานเครื่องมือได้ฟรี แต่ไม่สามารถนำไปขายหรือต่อยอดเชิงพาณิชย์โดยไม่ได้รับอนุญาต"
-                      variant="info"
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
-                  <p className="text-sm font-semibold text-purple-900 dark:text-purple-100 mb-3">
-                    🌐 การเผยแพร่และแชร์:
-                  </p>
-                  <div className="grid gap-3">
-                    <PolicyItem
-                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
-                      text="เครื่องมืออาจถูกเผยแพร่เป็น Open Source หรือตัวอย่างสาธารณะ"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
-                      text="แนวคิดและ pain point ที่ส่งมาอาจถูกใช้เพื่อพัฒนาเครื่องมือสำหรับผู้อื่นหรือชุมชน"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
-                      text="ข้อมูลที่ส่งมา (ไม่รวมข้อมูลส่วนบุคคล) อาจถูกใช้เพื่อวิจัยและปรับปรุงแพลตฟอร์ม"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-5 h-5 text-purple-500" />}
-                      text="ชื่อและ credit ของผู้ส่งคำขอจะถูกระบุเมื่อเผยแพร่เครื่องมือ (หากเป็นไปได้)"
-                      variant="info"
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
-                  <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-3">
-                    🤝 การใช้งานเชิงพาณิชย์:
-                  </p>
-                  <div className="grid gap-3">
-                    <PolicyItem
-                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
-                      text="หากต้องการนำเครื่องมือไปใช้เชิงพาณิชย์ กรุณาติดต่อทีมพัฒนาเพื่อขอใบอนุญาต"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
-                      text="หากต้องการให้พัฒนา custom version สำหรับองค์กร อาจมีค่าใช้จ่ายแยกต่างหาก"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<TrendingUp className="w-5 h-5 text-blue-500" />}
-                      text="การใช้งานส่วนตัวหรือภายในองค์กร (non-commercial) ไม่ต้องขออนุญาต"
-                      variant="info"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 5: Responsibilities & Risks */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-orange-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-orange-600" />
-                  5. ความรับผิดชอบและความเสี่ยง
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-3">
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
-                    text="เครื่องมืออยู่ในสถานะ 'As-Is' โดยไม่มีการรับประกันใดๆ"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
-                    text="ผู้ใช้งานต้องรับผิดชอบเองในการ validate ความถูกต้องของเครื่องมือก่อนนำไปใช้จริง"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
-                    text="ทีมพัฒนาไม่รับผิดชอบต่อความเสียหายหรือผลกระทบใดๆ ที่เกิดจากการใช้เครื่องมือ"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-orange-500" />}
-                    text="หากต้องการนำไปใช้งานจริงในสภาพแวดล้อมคลินิก ผู้ใช้ต้องทำการทดสอบและรับรองเพิ่มเติมเอง"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 6: Development Process */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-green-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-green-600" />
-                  6. กระบวนการพัฒนาและระยะเวลา
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-3">
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-green-500" />}
-                    text="ไม่มีการรับประกันระยะเวลาในการพิจารณาหรือพัฒนา"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-green-500" />}
-                    text="สถานะคำขออาจเปลี่ยนแปลงได้ตลอดเวลา รวมถึง 'เกินความสามารถ'"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-green-500" />}
-                    text="ทีมพัฒนาอาจร้องขอข้อมูลเพิ่มเติมหรือปรับขอบเขตโครงการตามความเหมาะสม"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-green-500" />}
-                    text="การพัฒนาจะเป็นไปแบบ iterative โดยอาจมีการทดสอบและปรับปรุงหลายรอบ"
-                  />
-                </div>
-
-                <Separator />
-
-                <div className="space-y-3">
-                  <p className="text-sm font-semibold text-foreground">
-                    ขั้นตอนหลังส่งคำขอ:
-                  </p>
-                  <div className="grid gap-2">
-                    <StatusBadgeDemo
-                      icon={<Clock className="w-4 h-4" />}
-                      label="รอตรวจสอบ"
-                      description="1-3 วันทำการ"
-                      color="yellow"
-                    />
-                    <StatusBadgeDemo
-                      icon={<Eye className="w-4 h-4" />}
-                      label="อยู่ในการพิจารณา"
-                      description="วิเคราะห์ความต้องการและความเป็นไปได้"
-                      color="blue"
-                    />
-                    <StatusBadgeDemo
-                      icon={<Code className="w-4 h-4" />}
-                      label="อยู่ในการพัฒนา"
-                      description="1-4 สัปดาห์ (ขึ้นกับความซับซ้อน)"
-                      color="purple"
-                    />
-                    <StatusBadgeDemo
-                      icon={<TestTube className="w-4 h-4" />}
-                      label="อยู่ในการทดสอบ"
-                      description="ทดลองใช้งานกับผู้ใช้จริง"
-                      color="orange"
-                    />
-                    <StatusBadgeDemo
-                      icon={<CheckCircle2 className="w-4 h-4" />}
-                      label="สำเร็จ"
-                      description="พร้อมใช้งาน"
-                      color="green"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 7: Platform Purpose */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-cyan-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Target className="w-5 h-5 text-cyan-600" />
-                  7. วัตถุประสงค์ของแพลตฟอร์ม
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-cyan-50 dark:bg-cyan-950/20 rounded-lg p-4 border border-cyan-200 dark:border-cyan-800">
-                  <p className="text-sm font-semibold text-cyan-900 dark:text-cyan-100 mb-3">
-                    ✅ NextHealTH Sandbox มีจุดประสงค์เพื่อ:
-                  </p>
-                  <div className="grid gap-2">
-                    <PolicyItem
-                      icon={<Sparkles className="w-4 h-4 text-cyan-500" />}
-                      text="สร้างพื้นที่ทดลองสำหรับบุคลากรทางการแพทย์ในการแปลง pain point → digital solution"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-4 h-4 text-cyan-500" />}
-                      text="ส่งเสริมการเรียนรู้และแลกเปลี่ยนความรู้ในชุมชน healthcare innovation"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-4 h-4 text-cyan-500" />}
-                      text="พัฒนา proof-of-concept ที่สามารถนำไปต่อยอดหรือเป็นแรงบันดาลใจ"
-                      variant="info"
-                    />
-                    <PolicyItem
-                      icon={<Sparkles className="w-4 h-4 text-cyan-500" />}
-                      text="สร้างเครื่องมือต้นแบบที่แสดงให้เห็นว่าเทคโนโลยีช่วยแก้ปัญหาทางคลินิกได้อย่างไร"
-                      variant="info"
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-red-50 dark:bg-red-950/20 rounded-lg p-4 border border-red-200 dark:border-red-800">
-                  <p className="text-sm font-semibold text-red-900 dark:text-red-100 mb-3">
-                    ❌ ไม่ใช่แพลตฟอร์มสำหรับ:
-                  </p>
-                  <div className="grid gap-2">
-                    <PolicyItem
-                      icon={<XCircle className="w-4 h-4 text-red-500" />}
-                      text="พัฒนาระบบ Production ระดับโรงพยาบาล"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-4 h-4 text-red-500" />}
-                      text="สร้าง Medical Device ที่ต้องการการรับรอง"
-                      variant="danger"
-                    />
-                    <PolicyItem
-                      icon={<XCircle className="w-4 h-4 text-red-500" />}
-                      text="แทนที่บริการพัฒนาซอฟต์แวร์แบบเต็มรูปแบบ"
-                      variant="danger"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Section 8: Contact & Support */}
-          <motion.div variants={fadeIn}>
-            <Card className="border-l-4 border-l-teal-500">
-              <CardHeader>
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-teal-600" />
-                  8. การติดต่อและการสนับสนุน
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm text-foreground">
-                <div className="grid gap-3">
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-teal-500" />}
-                    text="หากต้องการพัฒนาเครื่องมือระดับ Production โปรดติดต่อทีมพัฒนาโดยตรง"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-teal-500" />}
-                    text="หากพบปัญหาหรือต้องการคำแนะนำ สามารถแสดงความคิดเห็นผ่าน Comment Section"
-                  />
-                  <PolicyItem
-                    icon={<CheckCircle2 className="w-5 h-5 text-teal-500" />}
-                    text="ทีมพัฒนาจะตอบกลับผ่าน Comment Section เท่านั้น ไม่มีการรับประกันเวลาตอบกลับ"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Acceptance Notice */}
-          <motion.div variants={fadeIn}>
-            <div className="bg-linear-to-r from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/20 rounded-xl p-6 border border-teal-200 dark:border-teal-800">
-              <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-                <FileSearch className="w-5 h-5 text-teal-600" />
-                การยอมรับนโยบาย
-              </h3>
-              <p className="text-sm text-foreground leading-relaxed mb-4">
-                การกด <strong>&ldquo;ฉันยอมรับนโยบาย&rdquo;</strong> และส่งคำขอ แสดงว่าคุณ:
+              <h1 className="text-4xl font-bold text-foreground mb-4">
+                นโยบายการส่งคำขอพัฒนาเครื่องมือ
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Request Development Policy
               </p>
-              <div className="grid gap-2 ml-4">
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>อ่านและเข้าใจนโยบายทั้งหมดแล้ว</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>ยอมรับข้อจำกัดและเงื่อนไขการให้บริการ</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>รับทราบว่าเครื่องมือเป็น sandbox และไม่เหมาะสำหรับใช้กับผู้ป่วยจริง</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>จะไม่ส่งข้อมูลผู้ป่วยจริงหรือข้อมูลที่ละเมิด PDPA</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>รับผิดชอบในการ validate และทดสอบเครื่องมือเองก่อนนำไปใช้จริง</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>ยอมรับว่าเครื่องมือที่พัฒนาเป็นลิขสิทธิ์ของผู้พัฒนา และอาจถูกเผยแพร่สาธารณะ</span>
-                </div>
-                <div className="flex items-start gap-2 text-sm text-foreground">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
-                  <span>เข้าใจว่าโครงการบางประเภทอาจไม่เหมาะกับ sandbox และทีมอาจไม่สามารถรับทำได้</span>
-                </div>
-              </div>
-            </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                มีผลบังคับใช้: 26 มกราคม 2568
+              </p>
+            </motion.div>
+
+            {/* Critical Warning */}
+            <motion.div variants={fadeIn}>
+              <Alert className="border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20 mb-8">
+                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                <AlertDescription className="text-red-800 dark:text-red-200">
+                  <strong className="font-semibold">⚠️ ข้อกำหนดสำคัญ:</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>NextHealTH Sandbox เป็น <strong>Sandbox/Prototype Environment</strong> สำหรับการทดลองและเรียนรู้เท่านั้น</li>
+                    <li><strong>ไม่รับประกัน</strong>ว่าคำขอทุกรายการจะได้รับการพัฒนา</li>
+                    <li><strong>ห้าม</strong>ใช้ข้อมูลผู้ป่วยจริง (Real Patient Data) ในการทดสอบ</li>
+                    <li>เครื่องมือที่พัฒนาเสร็จ <strong>ไม่ได้รับรอง</strong>ตาม HIPAA, PDPA, หรือข้อกำหนด Medical Device Regulation</li>
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            </motion.div>
+
+            {/* Introduction */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Info className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                    บทนำ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="prose dark:prose-invert max-w-none">
+                  <p>
+                    NextHealTH Sandbox เป็นแพลตฟอร์มสำหรับรับและพัฒนาเครื่องมือดิจิทัลทางการแพทย์
+                    โดยมีวัตถุประสงค์เพื่อ:
+                  </p>
+                  <ul>
+                    <li>เป็นพื้นที่ทดลอง (Sandbox) สำหรับนวัตกรรมด้าน HealthTech</li>
+                    <li>ส่งเสริมการเรียนรู้และพัฒนาทักษะทางเทคโนโลยี</li>
+                    <li>สนับสนุนการแก้ปัญหาในหน้างานจริงด้วยเครื่องมือดิจิทัล</li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground mt-4">
+                    นโยบายฉบับนี้กำหนดหลักเกณฑ์และเงื่อนไขในการส่งคำขอพัฒนาเครื่องมือผ่านแพลตฟอร์ม
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 1: Eligibility */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    1. คุณสมบัติผู้ส่งคำขอ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">ผู้ที่สามารถส่งคำขอได้:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>บุคลากรทางการแพทย์และสาธารณสุข</li>
+                      <li>นักวิจัย นักศึกษาสาขาสุขภาพ</li>
+                      <li>ผู้ที่สนใจพัฒนาเครื่องมือสุขภาพ</li>
+                    </ul>
+                  </div>
+
+                  <Alert className="bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800">
+                    <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    <AlertDescription className="text-blue-800 dark:text-blue-200">
+                      <strong>หมายเหตุ:</strong> ผู้ส่งคำขอต้องลงทะเบียนบัญชีผู้ใช้งานในระบบก่อนส่งคำขอ
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 2: Request Guidelines */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                    2. หลักเกณฑ์การส่งคำขอ
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      คำขอที่เหมาะสม:
+                    </h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>มีวัตถุประสงค์ชัดเจนในการแก้ปัญหาหน้างานจริง</li>
+                      <li>ระบุ Pain Point และขั้นตอนการทำงานปัจจุบันอย่างละเอียด</li>
+                      <li>เป็นเครื่องมือที่สามารถพัฒนาได้ด้วยเทคโนโลยีเว็บ</li>
+                      <li>ไม่ต้องการข้อมูลผู้ป่วยจริงในการทดสอบ</li>
+                      <li>มีประโยชน์ต่อการเรียนรู้และพัฒนาทักษะ</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <XCircle className="w-4 h-4 text-red-600" />
+                      คำขอที่ไม่เหมาะสม:
+                    </h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>คำขอที่ต้องใช้ข้อมูลผู้ป่วยจริง (Real Patient Data)</li>
+                      <li>เครื่องมือที่ต้องการการรับรอง Medical Device</li>
+                      <li>ระบบที่ต้องการ Real-time Integration กับ HIS/EMR</li>
+                      <li>คำขอที่ซับซ้อนเกินไป หรือต้องใช้ทรัพยากรมาก</li>
+                      <li>คำขอที่ผิดกฎหมายหรือขัดต่อจริยธรรม</li>
+                    </ul>
+                  </div>
+
+                  <Alert className="bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+                    <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                    <AlertDescription className="text-amber-800 dark:text-amber-200">
+                      <strong>สำคัญ:</strong> ทีมพัฒนามีสิทธิ์ปฏิเสธหรือระงับคำขอที่ไม่เหมาะสมโดยไม่ต้องแจ้งเหตุผล
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 3: Development Process */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Scale className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    3. กระบวนการพิจารณาและพัฒนา
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-3">ขั้นตอนการพิจารณา:</h3>
+                    <ol className="list-decimal list-inside space-y-3 text-muted-foreground">
+                      <li>
+                        <strong className="text-foreground">รอตรวจสอบ (Pending Review)</strong>
+                        <p className="ml-6 mt-1">ทีมตรวจสอบความเหมาะสมเบื้องต้น (1-3 วันทำการ)</p>
+                      </li>
+                      <li>
+                        <strong className="text-foreground">อยู่ในการพิจารณา (Under Consideration)</strong>
+                        <p className="ml-6 mt-1">วิเคราะห์ความต้องการและความเป็นไปได้ อาจมีการสอบถามเพิ่มเติม</p>
+                      </li>
+                      <li>
+                        <strong className="text-foreground">อยู่ในการพัฒนา (In Development)</strong>
+                        <p className="ml-6 mt-1">เริ่มพัฒนาเครื่องมือ (1-4 สัปดาห์ ขึ้นกับความซับซ้อน)</p>
+                      </li>
+                      <li>
+                        <strong className="text-foreground">อยู่ในการทดสอบ (In Testing)</strong>
+                        <p className="ml-6 mt-1">ผู้ส่งคำขอทดลองใช้และให้ Feedback</p>
+                      </li>
+                      <li>
+                        <strong className="text-foreground">สำเร็จ (Completed)</strong>
+                        <p className="ml-6 mt-1">ส่งมอบเครื่องมือพร้อมคู่มือการใช้งาน</p>
+                      </li>
+                    </ol>
+                  </div>
+
+                  <Alert className="bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800">
+                    <Info className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                    <AlertDescription className="text-purple-800 dark:text-purple-200">
+                      <strong>หมายเหตุ:</strong> ระยะเวลาเป็นเพียงประมาณการ และขึ้นกับความซับซ้อนของคำขอ
+                      ทีมพัฒนาสามารถเปลี่ยนสถานะเป็น "เกินความสามารถ (Beyond Capacity)" ได้หากคำขอซับซ้อนเกินไป
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 4: Intellectual Property */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                    4. ลิขสิทธิ์และการใช้งาน
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.1 ความเป็นเจ้าของ:</h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li><strong className="text-foreground">Idea/Concept:</strong> เป็นของผู้ส่งคำขอ</li>
+                      <li><strong className="text-foreground">Source Code:</strong> เป็นของ NextHealTH Sandbox</li>
+                      <li><strong className="text-foreground">เครื่องมือที่สำเร็จ:</strong> Dual License (ผู้ส่งคำขอใช้ได้ฟรี, ผู้พัฒนาเป็นเจ้าของโค้ด)</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.2 การใช้งาน:</h3>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>ผู้ส่งคำขอสามารถ<strong className="text-foreground">ใช้งานฟรี</strong>ตลอดไป</li>
+                      <li>สามารถแชร์ให้เพื่อนร่วมงานใช้ได้ (ไม่แนะนำให้ใช้กับผู้ป่วยจริงโดยตรง)</li>
+                      <li><strong className="text-foreground">ห้าม</strong>นำไปขายหรือต่อยอดเชิงพาณิชย์โดยไม่ได้รับอนุญาต</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.3 การใช้เชิงพาณิชย์:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      หากต้องการนำเครื่องมือไปใช้เชิงพาณิชย์ (ขาย, ให้บริการแบบเสียค่าใช้จ่าย):
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                      <li>ต้องติดต่อขออนุญาตล่วงหน้า</li>
+                      <li>อาจมีค่าธรรมเนียม License Fee (ตามตกลง)</li>
+                      <li>ต้องลงนามในสัญญา Commercial License Agreement</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">4.4 Open Source Policy:</h3>
+                    <p className="text-muted-foreground">
+                      เครื่องมือบางประเภทอาจถูกเผยแพร่เป็น Open Source (MIT License หรือ Apache 2.0)
+                      ขึ้นกับความซับซ้อนและประโยชน์สาธารณะ:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-2">
+                      <li><strong className="text-foreground">Simple Tools:</strong> มักเป็น Open Source</li>
+                      <li><strong className="text-foreground">Complex Tools:</strong> Proprietary (ใช้ได้แต่ไม่เปิดโค้ด)</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 5: Usage Warning */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8 border-orange-200 dark:border-orange-800">
+                <CardHeader className="bg-orange-50 dark:bg-orange-950/20">
+                  <CardTitle className="flex items-center gap-2 text-orange-800 dark:text-orange-200">
+                    <AlertTriangle className="w-5 h-5" />
+                    5. ข้อจำกัดและการใช้งาน
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="mt-6 space-y-4">
+                  <Alert className="border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/20">
+                    <AlertTriangle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                    <AlertDescription className="text-orange-800 dark:text-orange-200">
+                      <strong className="text-lg">⚠️ เครื่องมือที่พัฒนาเป็น Sandbox/Prototype สำหรับการทดลองและเรียนรู้เท่านั้น</strong>
+                      <div className="mt-3 space-y-2">
+                        <p><strong>หากต้องการนำไปใช้กับผู้ป่วยจริง:</strong></p>
+                        <ul className="list-disc list-inside space-y-1 ml-4">
+                          <li>✅ ผู้ใช้ต้อง<strong>รับผิดชอบ</strong>ในการ Validate ความถูกต้องด้วยตัวเอง</li>
+                          <li>✅ แนะนำให้<strong>ทดสอบอย่างละเอียด</strong>ก่อนใช้จริง</li>
+                          <li>✅ ควรมี<strong>แพทย์หรือผู้เชี่ยวชาญ</strong>ตรวจสอบผลลัพธ์</li>
+                          <li>❌ ผู้พัฒนา<strong>ไม่รับผิดชอบ</strong>ต่อความเสียหายใดๆ ที่เกิดขึ้น</li>
+                          <li>❌ เครื่องมือ<strong>ไม่ได้รับรอง</strong>ตามมาตรฐาน HIPAA, PDPA, หรือ Medical Device Regulation</li>
+                        </ul>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">5.1 ข้อจำกัดการรับประกัน:</h3>
+                    <p className="text-muted-foreground mb-2">
+                      เครื่องมือจัดทำขึ้นตาม <strong>"AS-IS"</strong> basis โดยไม่มีการรับประกันใดๆ ทั้งโดยชัดแจ้งหรือโดยนัยยะ:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ไม่รับประกันความถูกต้อง ครบถ้วน หรือเหมาะสมต่อวัตถุประสงค์เฉพาะ</li>
+                      <li>ไม่รับประกันว่าจะไม่มีข้อผิดพลาดหรือการทำงานหยุดชะงัก</li>
+                      <li>ไม่รับประกันความปลอดภัยของข้อมูล 100%</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">5.2 ข้อจำกัดความรับผิด:</h3>
+                    <p className="text-muted-foreground">
+                      NextHealTH Sandbox และผู้พัฒนา<strong>ไม่รับผิดชอบ</strong>ต่อความเสียหายใดๆ ที่เกิดจาก:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
+                      <li>การใช้งานเครื่องมือไม่ถูกต้อง</li>
+                      <li>ข้อผิดพลาดของเครื่องมือ (Bug, Calculation Error)</li>
+                      <li>ความเสียหายต่อผู้ป่วย อุปกรณ์ หรือข้อมูล</li>
+                      <li>การสูญหายของข้อมูล</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 6: Data Protection */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    6. การคุ้มครองข้อมูลส่วนบุคคล
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    การส่งคำขอถือว่าผู้ใช้ยอมรับนโยบายความเป็นส่วนตัว (Privacy Policy) ของเรา
+                  </p>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">ข้อมูลที่เก็บรวบรวม:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ชื่อ-นามสกุล, อีเมล, เบอร์โทรศัพท์</li>
+                      <li>หน่วยงาน/โรงพยาบาล</li>
+                      <li>เนื้อหาคำขอ (Pain Point, Workflow, Expected Tech Help)</li>
+                      <li>ไฟล์แนบ (รูปภาพ, เอกสาร PDF)</li>
+                    </ul>
+                  </div>
+
+                  <Alert className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800">
+                    <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    <AlertDescription className="text-red-800 dark:text-red-200">
+                      <strong>ห้ามเด็ดขาด:</strong> ห้ามแนบข้อมูลผู้ป่วยจริง (ชื่อ, HN, ผลแลป, ภาพถ่ายผู้ป่วย)
+                      ในคำขอหรือไฟล์แนบ หากพบจะถูกลบทันทีและอาจถูกระงับบัญชี
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 7: Rights & Responsibilities */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Scale className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    7. สิทธิและหน้าที่
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">สิทธิของผู้ส่งคำขอ:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ติดตามสถานะคำขอผ่านระบบ</li>
+                      <li>สอบถามและให้ข้อมูลเพิ่มเติมผ่าน Comment Section</li>
+                      <li>ทดลองใช้เครื่องมือในขั้นตอน Testing</li>
+                      <li>ให้ Feedback และขอปรับปรุง</li>
+                      <li>ขอลบคำขอที่ยังไม่เริ่มพัฒนา</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">หน้าที่ของผู้ส่งคำขอ:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ให้ข้อมูลที่ถูกต้อง ครบถ้วน และชัดเจน</li>
+                      <li>ตอบคำถามและให้ความร่วมมือในขั้นตอน Under Consideration</li>
+                      <li>ทดสอบเครื่องมือและให้ Feedback ในขั้นตอน Testing</li>
+                      <li>ไม่ส่งคำขอซ้ำซ้อน</li>
+                      <li>ปฏิบัติตามข้อกำหนดและนโยบายทั้งหมด</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-2">สิทธิของ NextHealTH Sandbox:</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      <li>ปฏิเสธหรือระงับคำขอที่ไม่เหมาะสม</li>
+                      <li>เปลี่ยนแปลงสถานะคำขอตามความเหมาะสม</li>
+                      <li>แก้ไขหรือปรับปรุงเครื่องมือในภายหลัง</li>
+                      <li>เผยแพร่เครื่องมือเป็น Open Source (ตามดุลยพินิจ)</li>
+                      <li>ระงับบัญชีผู้ใช้ที่ละเมิดเงื่อนไข</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Section 8: Policy Updates */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>8. การแก้ไขนโยบาย</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    NextHealTH Sandbox สงวนสิทธิ์ในการแก้ไขนโยบายนี้ได้ตลอดเวลา โดยจะแจ้งให้ทราบผ่าน:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                    <li>ประกาศบนแพลตฟอร์ม</li>
+                    <li>อีเมลแจ้งผู้ใช้ (กรณีเปลี่ยนแปลงสำคัญ)</li>
+                  </ul>
+                  <p className="text-muted-foreground">
+                    การส่งคำขอหลังจากมีการแก้ไข ถือว่าผู้ใช้ยอมรับนโยบายฉบับใหม่
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Contact Section */}
+            <motion.div variants={fadeIn}>
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle>9. ติดต่อเรา</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    หากมีข้อสงสัยเกี่ยวกับนโยบายนี้ กรุณาติดต่อ:
+                  </p>
+
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <p className="font-semibold text-foreground">NextHealTH Sandbox</p>
+                    <p className="text-sm text-muted-foreground">Phitsanulok, Thailand 65000</p>
+                    <div className="pt-2 space-y-1">
+                      <p className="text-sm">
+                        <strong>อีเมล:</strong>{' '}
+                        <a href="mailto:thanatouchth@gmail.com" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">
+                          thanatouchth@gmail.com
+                        </a>
+                      </p>
+                      <p className="text-sm">
+                        <strong>โทรศัพท์:</strong>{' '}
+                        <a href="tel:0955904245" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300">
+                          095-590-4245
+                        </a>
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        (วันจันทร์-ศุกร์ เวลา 09:00-17:00 น.)
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Footer */}
+            <motion.div variants={fadeIn} className="text-center pt-8 border-t border-border">
+              <p className="text-sm text-muted-foreground">
+                นโยบายฉบับนี้มีผลบังคับใช้ตั้งแต่วันที่ 26 มกราคม 2568 เป็นต้นไป
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                © 2025 NextHealTH Sandbox - Educational & Experimental Use Only
+              </p>
+            </motion.div>
           </motion.div>
-
-          {/* Footer Notice */}
-          <motion.div variants={fadeIn}>
-            <div className="text-center py-8 text-sm text-muted-foreground space-y-2">
-              <p className="font-medium">
-                <strong>หมายเหตุ:</strong> นโยบายนี้อาจมีการปรับปรุงเป็นครั้งคราว 
-                โปรดตรวจสอบก่อนส่งคำขอทุกครั้ง
-              </p>
-              <Separator className="my-4" />
-              <p>
-                © 2025 HLAB Consulting - NextHealTH Sandbox Platform
-              </p>
-              <p className="text-xs">
-                Building the future of healthcare innovation, one sandbox at a time.
-              </p>
-              <div className="flex items-center justify-center gap-4 mt-4">
-                <Link
-                  href="/terms-of-service"
-                  className="text-primary hover:underline"
-                >
-                  ข้อกำหนดและเงื่อนไข
-                </Link>
-                <span>•</span>
-                <Link
-                  href="/privacy-policy"
-                  className="text-primary hover:underline"
-                >
-                  นโยบายความเป็นส่วนตัว
-                </Link>
-                <span>•</span>
-                <Link
-                  href="/"
-                  className="text-primary hover:underline"
-                >
-                  กลับหน้าหลัก
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
-
-// Helper Components
-function PolicyItem({ 
-  icon, 
-  text, 
-  variant = 'default' 
-}: { 
-  icon: React.ReactNode; 
-  text: string;
-  variant?: 'default' | 'danger' | 'info';
-}) {
-  const textColor = {
-    default: 'text-foreground',
-    danger: 'text-red-900 dark:text-red-100',
-    info: 'text-cyan-900 dark:text-cyan-100'
-  };
-
-  return (
-    <div className="flex items-start gap-3">
-      {icon}
-      <span className={`text-sm leading-relaxed ${textColor[variant]}`}>
-        {text}
-      </span>
-    </div>
-  );
-}
-
-function StatusBadgeDemo({ 
-  icon, 
-  label, 
-  description, 
-  color 
-}: { 
-  icon: React.ReactNode; 
-  label: string; 
-  description: string;
-  color: 'yellow' | 'blue' | 'purple' | 'orange' | 'green';
-}) {
-  const colorClasses = {
-    yellow: 'bg-yellow-50 dark:bg-yellow-950/20 text-yellow-900 dark:text-yellow-100',
-    blue: 'bg-blue-50 dark:bg-blue-950/20 text-blue-900 dark:text-blue-100',
-    purple: 'bg-purple-50 dark:bg-purple-950/20 text-purple-900 dark:text-purple-100',
-    orange: 'bg-orange-50 dark:bg-orange-950/20 text-orange-900 dark:text-orange-100',
-    green: 'bg-green-50 dark:bg-green-950/20 text-green-900 dark:text-green-100'
-  };
-
-  return (
-    <div className={`flex items-center gap-3 p-3 rounded-lg ${colorClasses[color]}`}>
-      {icon}
-      <div className="flex-1">
-        <span className="font-medium text-sm">{label}</span>
-        <span className="text-xs text-muted-foreground ml-2">- {description}</span>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
