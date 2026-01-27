@@ -78,8 +78,8 @@ export default function PrivacyPolicyPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">
-                    นโยบายความเป็นส่วนตัว ("นโยบาย") นี้อธิบายว่า NextHealTH Sandbox ("เรา", "ผู้ให้บริการ")
-                    เก็บรวบรวม ใช้ เปิดเผย และคุ้มครองข้อมูลส่วนบุคคลของคุณ ("ผู้ใช้", "คุณ") อย่างไร
+                    นโยบายความเป็นส่วนตัว (&ldquo;นโยบาย&rdquo;) นี้อธิบายว่า NextHealTH Sandbox (&ldquo;เรา&rdquo;, &ldquo;ผู้ให้บริการ&rdquo;)
+                    เก็บรวบรวม ใช้ เปิดเผย และคุ้มครองข้อมูลส่วนบุคคลของคุณ (&ldquo;ผู้ใช้&rdquo;, &ldquo;คุณ&rdquo;) อย่างไร
                   </p>
 
                   <div>
@@ -809,7 +809,7 @@ export default function PrivacyPolicyPage() {
                     โดยจะแจ้งให้ทราบผ่านช่องทางดังต่อไปนี้:
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
-                    <li>ประกาศบนแพลตฟอร์ม (อัปเดต "วันที่มีผลบังคับใช้")</li>
+                    <li>ประกาศบนแพลตฟอร์ม (อัปเดต &ldquo;วันที่มีผลบังคับใช้&rdquo;)</li>
                     <li>อีเมลแจ้งผู้ใช้ (กรณีเปลี่ยนแปลงสำคัญ)</li>
                   </ul>
                   <p className="text-muted-foreground">

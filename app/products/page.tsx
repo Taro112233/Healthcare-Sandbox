@@ -5,7 +5,7 @@ import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link'; // เพิ่มการ Import Link
 import productsData from '@/data/products.json';
-import { ArrowRight, Send, Sparkles } from 'lucide-react';
+import { ArrowRight, Send } from 'lucide-react';
 
 interface Product {
   id: string;

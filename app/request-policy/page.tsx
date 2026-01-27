@@ -211,7 +211,7 @@ export default function RequestPolicyPage() {
                     <Info className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                     <AlertDescription className="text-purple-800 dark:text-purple-200">
                       <strong>หมายเหตุ:</strong> ระยะเวลาเป็นเพียงประมาณการ และขึ้นกับความซับซ้อนของคำขอ
-                      ทีมพัฒนาสามารถเปลี่ยนสถานะเป็น "เกินความสามารถ (Beyond Capacity)" ได้หากคำขอซับซ้อนเกินไป
+                      ทีมพัฒนาสามารถเปลี่ยนสถานะเป็น &quot;เกินความสามารถ (Beyond Capacity)&quot; ได้หากคำขอซับซ้อนเกินไป
                     </AlertDescription>
                   </Alert>
                 </CardContent>
@@ -303,7 +303,7 @@ export default function RequestPolicyPage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">5.1 ข้อจำกัดการรับประกัน:</h3>
                     <p className="text-muted-foreground mb-2">
-                      เครื่องมือจัดทำขึ้นตาม <strong>"AS-IS"</strong> basis โดยไม่มีการรับประกันใดๆ ทั้งโดยชัดแจ้งหรือโดยนัยยะ:
+                      เครื่องมือจัดทำขึ้นตาม <strong>&quot;AS-IS&quot;</strong> basis โดยไม่มีการรับประกันใดๆ ทั้งโดยชัดแจ้งหรือโดยนัยยะ:
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                       <li>ไม่รับประกันความถูกต้อง ครบถ้วน หรือเหมาะสมต่อวัตถุประสงค์เฉพาะ</li>

@@ -78,8 +78,8 @@ export default function TermsOfServicePage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">
-                    ข้อกำหนดและเงื่อนไขการใช้บริการ ("ข้อตกลง") นี้เป็นสัญญาทางกฎหมายระหว่าง
-                    คุณ ("ผู้ใช้", "คุณ") และ NextHealTH Sandbox ("เรา", "ผู้ให้บริการ")
+                    ข้อกำหนดและเงื่อนไขการใช้บริการ (&quot;ข้อตกลง&quot;) นี้เป็นสัญญาทางกฎหมายระหว่าง
+                    คุณ (&quot;ผู้ใช้&quot;, &quot;คุณ&quot;) และ NextHealTH Sandbox (&quot;เรา&quot;, &quot;ผู้ให้บริการ&quot;)
                   </p>
 
                   <div>
@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">2.3 การไม่รับประกัน:</h3>
                     <p className="text-muted-foreground">
-                      เราให้บริการตาม <strong>"AS-IS"</strong> และ <strong>"AS-AVAILABLE"</strong> basis
+                      เราให้บริการตาม <strong>&quot;AS-IS&quot;</strong> และ <strong>&quot;AS-AVAILABLE&quot;</strong> basis
                       โดยไม่มีการรับประกันใดๆ ทั้งโดยชัดแจ้งหรือโดยนัยยะ รวมถึง:
                     </p>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground mt-2">
@@ -220,7 +220,7 @@ export default function TermsOfServicePage() {
                           <li>ขายหรือนำเครื่องมือไปหาประโยชน์เชิงพาณิชย์โดยไม่ได้รับอนุญาต</li>
                           <li>Reverse engineer, decompile หรือ hack ระบบ</li>
                           <li>ส่งคำขอที่ผิดกฎหมายหรือขัดต่อจริยธรรม</li>
-                          <li>แอบอ้างว่าเป็นบุคคลอื่นหรือให้ข้อมูลเท็จ</li>
+                          <li>แวบอ้างว่าเป็นบุคคลอื่นหรือให้ข้อมูลเท็จ</li>
                           <li>ละเมิดสิทธิ์ทางปัญญาของผู้อื่น</li>
                         </ul>
                       </div>
@@ -303,7 +303,7 @@ export default function TermsOfServicePage() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-2">4.4 เครื่องหมายการค้า:</h3>
                     <p className="text-muted-foreground">
-                      "NextHealTH Sandbox" และโลโก้ เป็นทรัพย์สินของผู้ให้บริการ
+                      &quot;NextHealTH Sandbox&quot; และโลโก้ เป็นทรัพย์สินของผู้ให้บริการ
                       คุณไม่สามารถใช้โดยไม่ได้รับอนุญาต
                     </p>
                   </div>
