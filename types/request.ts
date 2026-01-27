@@ -13,6 +13,7 @@ export type RequestStatus = PrismaRequestStatus;
 
 // ✅ สร้าง runtime values สำหรับใช้ใน components
 export const REQUEST_TYPE_VALUES: Record<RequestType, RequestType> = {
+  PAGE: 'PAGE',
   CALCULATOR: 'CALCULATOR',
   FORM: 'FORM',
   WORKFLOW: 'WORKFLOW',
@@ -87,6 +88,12 @@ export const REQUEST_TYPE_INFO: Record<RequestType, {
   icon: string;
   description: string;
 }> = {
+  PAGE: {
+    label: 'Page',
+    labelTh: 'เพจแสดงข้อมูล',
+    icon: 'FileText',
+    description: 'หน้าเพจที่แสดงข้อมูลต่าง ๆ',
+  },
   CALCULATOR: {
     label: 'Calculator',
     labelTh: 'เครื่องคำนวณ',

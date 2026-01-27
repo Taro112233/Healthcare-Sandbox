@@ -11,6 +11,7 @@ import {
   GitBranch,
   Brain,
   HelpCircle,
+  Globe,
 } from 'lucide-react';
 
 interface TypeBadgeProps {
@@ -21,6 +22,7 @@ interface TypeBadgeProps {
 }
 
 const typeIcons: Record<RequestType, React.ReactNode> = {
+  PAGE: <Globe className="w-3 h-3" />,
   CALCULATOR: <Calculator className="w-3 h-3" />,
   FORM: <FileText className="w-3 h-3" />,
   WORKFLOW: <GitBranch className="w-3 h-3" />,
@@ -29,6 +31,7 @@ const typeIcons: Record<RequestType, React.ReactNode> = {
 };
 
 const typeColors: Record<RequestType, string> = {
+  PAGE: 'bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800',
   CALCULATOR: 'bg-violet-100 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800',
   FORM: 'bg-sky-100 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800',
   WORKFLOW: 'bg-amber-100 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',

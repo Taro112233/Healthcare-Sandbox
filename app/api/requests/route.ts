@@ -22,7 +22,7 @@ const CreateRequestSchema = z.object({
   painPoint: z.string().min(10).max(5000),
   currentWorkflow: z.string().min(10).max(5000),
   expectedTechHelp: z.string().min(10).max(5000),
-  requestType: z.enum(['CALCULATOR', 'FORM', 'WORKFLOW', 'DECISION_AID', 'OTHER']),
+  requestType: z.enum(['PAGE', 'CALCULATOR', 'FORM', 'WORKFLOW', 'DECISION_AID', 'OTHER']),
   attachmentUrls: z.array(z.object({
     filename: z.string(),
     fileType: z.string(),

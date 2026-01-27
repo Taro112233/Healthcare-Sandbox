@@ -37,6 +37,7 @@ import {
   AlertCircle,
   Workflow,
   Lightbulb,
+  Globe,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -67,6 +68,7 @@ interface FormErrors {
 }
 
 const typeIcons: Record<RequestType, React.ReactNode> = {
+  PAGE: <Globe className="w-4 h-4" />,
   CALCULATOR: <Calculator className="w-4 h-4" />,
   FORM: <FileText className="w-4 h-4" />,
   WORKFLOW: <GitBranch className="w-4 h-4" />,
