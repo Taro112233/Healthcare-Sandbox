@@ -78,8 +78,8 @@ export default function PrivacyPolicyPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-content-secondary">
-                    นโยบายความเป็นส่วนตัว ("นโยบาย") นี้อธิบายว่า NextHealTH Sandbox ("เรา", "ผู้ให้บริการ")
-                    เก็บรวบรวม ใช้ เปิดเผย และคุ้มครองข้อมูลส่วนบุคคลของคุณ ("ผู้ใช้", "คุณ") อย่างไร
+                    นโยบายความเป็นส่วนตัว (&quot;นโยบาย&quot;) นี้อธิบายว่า NextHealTH Sandbox (&quot;เรา&quot;, &quot;ผู้ให้บริการ&quot;)
+                    เก็บรวบรวม ใช้ เปิดเผย และคุ้มครองข้อมูลส่วนบุคคลของคุณ (&quot;ผู้ใช้&quot;, &quot;คุณ&quot;) อย่างไร
                   </p>
 
                   <div>
@@ -687,7 +687,7 @@ export default function PrivacyPolicyPage() {
                   <div>
                     <h3 className="font-semibold text-content-primary mb-2">8.1 Cookies คืออะไร?</h3>
                     <p className="text-content-secondary">
-                      Cookies คือไฟล์ข้อความขนาดเล็กที่เว็บไซต์จัดเก็บบนอุปกรณ์ของคุณ
+                      Cookies คือไฟล์ข้อความขนาดเล็กที่เว็บไซต์จัดเก็บบบนอุปกรณ์ของคุณ
                       เพื่อจดจำข้อมูลบางอย่างเกี่ยวกับการเยี่ยมชมของคุณ
                     </p>
                   </div>
@@ -809,7 +809,7 @@ export default function PrivacyPolicyPage() {
                     โดยจะแจ้งให้ทราบผ่านช่องทางดังต่อไปนี้:
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-content-secondary ml-4">
-                    <li>ประกาศบนแพลตฟอร์ม (อัปเดต "วันที่มีผลบังคับใช้")</li>
+                    <li>ประกาศบนแพลตฟอร์ม (อัปเดต &quot;วันที่มีผลบังคับใช้&quot;)</li>
                     <li>อีเมลแจ้งผู้ใช้ (กรณีเปลี่ยนแปลงสำคัญ)</li>
                   </ul>
                   <p className="text-content-secondary">

@@ -93,8 +93,8 @@ export function GuideDialog() {
                     <div>
                       <p className="font-medium text-foreground mb-1.5">ตัวอย่าง:</p>
                       <p className="text-muted-foreground leading-relaxed">
-                        "ต้องคำนวณ Vancomycin dose ตาม eGFR ของผู้ป่วยทุกครั้ง ซึ่งต้องเปิดดูสูตร Cockcroft-Gault 
-                        แล้วคำนวณด้วยเครื่องคิดเลข ใช้เวลาประมาณ 5-10 นาทีต่อครั้ง และบางครั้งก็คำนวณผิด"
+                        &quot;ต้องคำนวณ Vancomycin dose ตาม eGFR ของผู้ป่วยทุกครั้ง ซึ่งต้องเปิดดูสูตร Cockcroft-Gault 
+                        แล้วคำนวณด้วยเครื่องคิดเลข ใช้เวลาประมาณ 5-10 นาทีต่อครั้ง และบางครั้งก็คำนวณผิด&quot;
                       </p>
                     </div>
                   </div>
@@ -154,8 +154,8 @@ export function GuideDialog() {
                     <div>
                       <p className="font-medium text-foreground mb-1.5">ตัวอย่าง:</p>
                       <p className="text-muted-foreground leading-relaxed">
-                        "อยากได้เครื่องคำนวณที่กรอกน้ำหนัก อายุ เพศ กับค่า Creatinine แล้วแสดง dose ที่แนะนำทันที 
-                        โดยรองรับยาหลายชนิดที่ใช้บ่อย เช่น Vancomycin, Gentamicin, Acyclovir"
+                        &quot;อยากได้เครื่องคำนวณที่กรอกน้ำหนัก อายุ เพศ กับค่า Creatinine แล้วแสดง dose ที่แนะนำทันที 
+                        โดยรองรับยาหลายชนิดที่ใช้บ่อย เช่น Vancomycin, Gentamicin, Acyclovir&quot;
                       </p>
                     </div>
                   </div>
