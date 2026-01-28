@@ -36,7 +36,7 @@ export function RequestFilters({
         value={status} 
         onValueChange={(value) => onStatusChange(value as RequestStatus | 'ALL')}
       >
-        <SelectTrigger className="w-full sm:w-45 bg-background">
+        <SelectTrigger className="w-full sm:w-45 bg-surface-primary">
           <SelectValue placeholder="เลือกสถานะ" />
         </SelectTrigger>
         <SelectContent>
@@ -59,7 +59,7 @@ export function RequestFilters({
         value={type} 
         onValueChange={(value) => onTypeChange(value as RequestType | 'ALL')}
       >
-        <SelectTrigger className="w-full sm:w-45 bg-background">
+        <SelectTrigger className="w-full sm:w-45 bg-surface-primary">
           <SelectValue placeholder="เลือกประเภท" />
         </SelectTrigger>
         <SelectContent>

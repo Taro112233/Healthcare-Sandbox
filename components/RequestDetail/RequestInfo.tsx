@@ -168,7 +168,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
   return (
     <div className="space-y-6 min-w-0">
       {/* Header Card */}
-      <Card className="bg-card border-border w-full overflow-hidden">
+      <Card className="bg-card border-border-primary w-full overflow-hidden">
         <CardContent className="pt-6 pb-6">
           {/* Top Row - Type Badge (Left) and Status Badge (Right) */}
           <div className="flex items-start justify-between gap-2 mb-4 flex-wrap">
@@ -178,8 +178,8 @@ export function RequestInfo({ request }: RequestInfoProps) {
 
           {/* Department - With proper text wrapping */}
           <div className="mb-4 min-w-0">
-            <h1 className="text-lg sm:text-xl font-bold text-foreground flex items-start gap-2">
-              <Building2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <h1 className="text-lg sm:text-xl font-bold text-content-primary flex items-start gap-2">
+              <Building2 className="w-5 h-5 text-interactive-primary shrink-0 mt-0.5" />
               <span className="wrap-break-words min-w-0 flex-1">{request.department}</span>
             </h1>
           </div>
@@ -190,11 +190,11 @@ export function RequestInfo({ request }: RequestInfoProps) {
             {request.user && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group self-start">
+                  <button className="flex items-center gap-2 text-sm text-content-secondary hover:text-content-primary transition-colors group self-start">
                     <Avatar className="h-6 w-6 shrink-0">
                       {/* ✅ เพิ่ม AvatarImage component */}
                       {userImage && <AvatarImage src={userImage} alt={getUserDisplayName(request.user)} />}
-                      <AvatarFallback className="text-xs bg-muted text-foreground group-hover:bg-muted-foreground/20 transition-colors">
+                      <AvatarFallback className="text-xs bg-surface-secondary text-content-primary group-hover:bg-surface-interactive transition-colors">
                         {getUserInitials(request.user)}
                       </AvatarFallback>
                     </Avatar>
@@ -210,30 +210,30 @@ export function RequestInfo({ request }: RequestInfoProps) {
                       <Avatar className="h-12 w-12 shrink-0">
                         {/* ✅ เพิ่ม AvatarImage component */}
                         {userImage && <AvatarImage src={userImage} alt={getUserFullName(request.user)} />}
-                        <AvatarFallback className="text-lg bg-primary/10 text-primary font-semibold">
+                        <AvatarFallback className="text-lg bg-interactive-primary/10 text-interactive-primary font-semibold">
                           {getUserInitials(request.user)}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-foreground truncate">
+                        <p className="font-semibold text-content-primary truncate">
                           {getUserFullName(request.user)}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-content-secondary">
                           ผู้ส่งคำขอ
                         </p>
                       </div>
                     </div>
 
                     {/* Divider */}
-                    <div className="border-t border-border" />
+                    <div className="border-t border-border-primary" />
 
                     {/* User Details */}
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <User className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                        <User className="w-4 h-4 text-content-secondary shrink-0 mt-0.5" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs text-muted-foreground">ชื่อ-นามสกุล</p>
-                          <p className="text-sm text-foreground font-medium wrap-break-words">
+                          <p className="text-xs text-content-secondary">ชื่อ-นามสกุล</p>
+                          <p className="text-sm text-content-primary font-medium wrap-break-words">
                             {getUserFullName(request.user)}
                           </p>
                         </div>
@@ -241,10 +241,10 @@ export function RequestInfo({ request }: RequestInfoProps) {
 
                       {userEmail && (
                         <div className="flex items-start gap-3">
-                          <Mail className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                          <Mail className="w-4 h-4 text-content-secondary shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs text-muted-foreground">อีเมล</p>
-                            <p className="text-sm text-foreground break-all">
+                            <p className="text-xs text-content-secondary">อีเมล</p>
+                            <p className="text-sm text-content-primary break-all">
                               {userEmail}
                             </p>
                           </div>
@@ -253,10 +253,10 @@ export function RequestInfo({ request }: RequestInfoProps) {
 
                       {userPhone && (
                         <div className="flex items-start gap-3">
-                          <Phone className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                          <Phone className="w-4 h-4 text-content-secondary shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs text-muted-foreground">เบอร์โทร</p>
-                            <p className="text-sm text-foreground wrap-break-words">
+                            <p className="text-xs text-content-secondary">เบอร์โทร</p>
+                            <p className="text-sm text-content-primary wrap-break-words">
                               {userPhone}
                             </p>
                           </div>
@@ -269,7 +269,7 @@ export function RequestInfo({ request }: RequestInfoProps) {
             )}
 
             {/* Right - Date, Comments, Files */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground sm:justify-end">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-content-secondary sm:justify-end">
               <div className="flex items-center gap-1.5 min-w-0">
                 <Calendar className="w-4 h-4 shrink-0" />
                 <span className="truncate">{formatDate(request.createdAt)}</span>
@@ -292,9 +292,9 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Pain Point Card - Red */}
-      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400 bg-card w-full overflow-hidden">
+      <Card className="border-l-4 border-l-alert-error-border bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg sm:text-xl font-bold text-red-700 dark:text-red-400 flex items-start gap-2">
+          <CardTitle className="text-lg sm:text-xl font-bold text-alert-error-text flex items-start gap-2">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="wrap-break-words">Pain Point หน้างาน</span>
           </CardTitle>
@@ -305,9 +305,9 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Current Workflow Card - Blue */}
-      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400 bg-card w-full overflow-hidden">
+      <Card className="border-l-4 border-l-alert-info-border bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg sm:text-xl font-bold text-blue-700 dark:text-blue-400 flex items-start gap-2">
+          <CardTitle className="text-lg sm:text-xl font-bold text-alert-info-text flex items-start gap-2">
             <Workflow className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="wrap-break-words">ขั้นตอนการทำงานปัจจุบัน</span>
           </CardTitle>
@@ -318,9 +318,9 @@ export function RequestInfo({ request }: RequestInfoProps) {
       </Card>
 
       {/* Expected Tech Help Card - Green */}
-      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400 bg-card w-full overflow-hidden">
+      <Card className="border-l-4 border-l-alert-success-border bg-card w-full overflow-hidden">
         <CardHeader className="pb-4">
-          <CardTitle className="text-lg sm:text-xl font-bold text-green-700 dark:text-green-400 flex items-start gap-2">
+          <CardTitle className="text-lg sm:text-xl font-bold text-alert-success-text flex items-start gap-2">
             <Lightbulb className="w-5 h-5 shrink-0 mt-0.5" />
             <span className="wrap-break-words">สิ่งที่ต้องการให้ Tech ช่วย</span>
           </CardTitle>

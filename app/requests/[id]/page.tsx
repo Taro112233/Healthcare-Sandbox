@@ -19,7 +19,7 @@ interface PageProps {
 function RequestDetailSkeleton() {
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
@@ -87,7 +87,7 @@ function RequestDetailSkeleton() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {[1, 2].map((i) => (
-                    <div key={i} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg min-w-0">
+                    <div key={i} className="flex items-start gap-3 p-3 bg-surface-secondary rounded-lg min-w-0">
                       <Skeleton className="w-16 h-16 rounded shrink-0" />
                       <div className="flex-1 space-y-2 min-w-0">
                         <Skeleton className="h-4 w-full max-w-50" />
@@ -112,7 +112,7 @@ function RequestDetailSkeleton() {
             className="lg:sticky lg:top-6 lg:self-start min-w-0"
           >
             <Card className="h-150 bg-card w-full">
-              <CardHeader className="pb-3 border-b border-border">
+              <CardHeader className="pb-3 border-b border-border-primary">
                 <Skeleton className="h-5 w-32" />
               </CardHeader>
               <CardContent className="p-4 space-y-3">
@@ -168,7 +168,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         transition={{ duration: 0.3 }}
         className="relative min-h-screen overflow-x-hidden"
       >
-        <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -177,7 +177,7 @@ export default function RequestDetailPage({ params }: PageProps) {
             transition={{ duration: 0.4, delay: 0.1 }}
           >
             <EmptyState
-              icon={<AlertCircle className="w-16 h-16 text-red-400" />}
+              icon={<AlertCircle className="w-16 h-16 text-alert-error-icon" />}
               title="เกิดข้อผิดพลาด"
               description={error}
               actionLabel="กลับหน้าหลัก"
@@ -197,7 +197,7 @@ export default function RequestDetailPage({ params }: PageProps) {
         transition={{ duration: 0.3 }}
         className="relative min-h-screen overflow-x-hidden"
       >
-        <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
@@ -206,7 +206,7 @@ export default function RequestDetailPage({ params }: PageProps) {
             transition={{ duration: 0.4, delay: 0.1 }}
           >
             <EmptyState
-              icon={<AlertCircle className="w-16 h-16 text-muted-foreground" />}
+              icon={<AlertCircle className="w-16 h-16 text-content-secondary" />}
               title="ไม่พบคำขอ"
               description="คำขอที่คุณต้องการอาจถูกลบหรือคุณไม่มีสิทธิ์เข้าถึง"
               actionLabel="กลับหน้าหลัก"
@@ -225,7 +225,7 @@ export default function RequestDetailPage({ params }: PageProps) {
       transition={{ duration: 0.3 }}
       className="relative min-h-screen overflow-x-hidden"
     >
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div

@@ -36,16 +36,16 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
       <div className="mb-4">
-        {icon || <FileQuestion className="w-16 h-16 text-muted-foreground" />}
+        {icon || <FileQuestion className="w-16 h-16 text-content-secondary" />}
       </div>
-      <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold text-content-primary mb-2">{title}</h3>
       {description && (
-        <p className="text-muted-foreground max-w-md mb-6">{description}</p>
+        <p className="text-content-secondary max-w-md mb-6">{description}</p>
       )}
       {resolvedAction && (
         resolvedAction.href ? (
           <Link href={resolvedAction.href}>
-            <Button className="bg-teal-600 hover:bg-teal-700">
+            <Button className="gradient-brand-semantic hover:opacity-90">
               <Plus className="w-4 h-4 mr-2" />
               {resolvedAction.label}
             </Button>
@@ -53,7 +53,7 @@ export function EmptyState({
         ) : resolvedAction.onClick ? (
           <Button 
             onClick={resolvedAction.onClick}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="gradient-brand-semantic hover:opacity-90"
           >
             <Plus className="w-4 h-4 mr-2" />
             {resolvedAction.label}

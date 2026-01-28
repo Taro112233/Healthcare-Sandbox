@@ -31,12 +31,12 @@ const typeIcons: Record<RequestType, React.ReactNode> = {
 };
 
 const typeColors: Record<RequestType, string> = {
-  PAGE: 'bg-teal-100 dark:bg-teal-950/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800',
-  CALCULATOR: 'bg-violet-100 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800',
-  FORM: 'bg-sky-100 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800',
-  WORKFLOW: 'bg-amber-100 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800',
-  DECISION_AID: 'bg-rose-100 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800',
-  OTHER: 'bg-slate-100 dark:bg-slate-950/30 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800',
+  PAGE: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
+  CALCULATOR: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
+  FORM: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
+  WORKFLOW: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
+  DECISION_AID: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
+  OTHER: 'bg-alert-info-bg text-alert-info-text border-alert-info-border',
 };
 
 export function TypeBadge({ type, size = 'md', showIcon = true, variant = 'default' }: TypeBadgeProps) {

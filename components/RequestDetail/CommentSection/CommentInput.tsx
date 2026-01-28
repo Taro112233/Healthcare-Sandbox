@@ -72,7 +72,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
         {/* ✅ Admin: Status Selector (ซ้าย) */}
         {isAdmin && (
           <div className="flex items-center gap-2">
-            <RefreshCw className="w-4 h-4 text-muted-foreground" />
+            <RefreshCw className="w-4 h-4 text-content-secondary" />
             <Select 
               value={newStatus} 
               onValueChange={(value) => setNewStatus(value as RequestStatus)}
@@ -88,7 +88,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
                       <div className={`w-2 h-2 rounded-full ${REQUEST_STATUS_INFO[status].color}`} />
                       {REQUEST_STATUS_INFO[status].labelTh}
                       {status === currentStatus && (
-                        <span className="text-xs text-muted-foreground">(ปัจจุบัน)</span>
+                        <span className="text-xs text-content-secondary">(ปัจจุบัน)</span>
                       )}
                     </div>
                   </SelectItem>
@@ -106,7 +106,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
           type="submit" 
           size="sm"
           disabled={!content.trim() || isSubmitting}
-          className={hasStatusChanged && isAdmin ? 'bg-blue-600 hover:bg-blue-700' : ''}
+          className={hasStatusChanged && isAdmin ? 'bg-alert-info-icon hover:opacity-90' : ''}
         >
           {isSubmitting ? (
             <>

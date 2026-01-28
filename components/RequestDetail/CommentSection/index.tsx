@@ -115,8 +115,8 @@ export function CommentSection({
   return (
     <Card className="flex flex-col h-150">
       {/* Header - Fixed */}
-      <CardHeader className="pb-3 border-b border-border shrink-0">
-        <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
+      <CardHeader className="pb-3 border-b border-border-primary shrink-0">
+        <CardTitle className="text-base font-medium text-content-primary flex items-center gap-2">
           <MessageSquare className="w-4 h-4" />
           ความคิดเห็น ({comments.length})
         </CardTitle>
@@ -125,7 +125,7 @@ export function CommentSection({
       <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
         {/* Error Display - Fixed */}
         {error && (
-          <div className="px-4 py-3 text-center text-red-500 text-sm bg-red-50 dark:bg-red-950/20 border-b border-border">
+          <div className="px-4 py-3 text-center text-alert-error-text text-sm bg-alert-error-bg border-b border-border-primary">
             {error}
           </div>
         )}
@@ -144,7 +144,7 @@ export function CommentSection({
 
         {/* Comment Input - Fixed ด้านล่าง */}
         {canComment && (
-          <div className="px-4 py-3 border-t border-border bg-card shrink-0">
+          <div className="px-4 py-3 border-t border-border-primary bg-card shrink-0">
             <CommentInput
               user={user}
               currentStatus={currentStatus}

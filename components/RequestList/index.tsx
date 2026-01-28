@@ -85,7 +85,7 @@ export function RequestList({
     <div className="space-y-4 w-full min-w-0">
       {/* Header with Filters */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+        <h2 className="text-xl font-semibold text-content-primary">{title}</h2>
         
         {showFilters && onStatusChange && onTypeChange && (
           <RequestFilters
@@ -102,7 +102,7 @@ export function RequestList({
         <Card>
           <CardContent className="py-8">
             <EmptyState
-              icon={<FileText className="w-16 h-16 text-muted-foreground" />}
+              icon={<FileText className="w-16 h-16 text-content-secondary" />}
               title={emptyTitle}
               description={emptyDescription}
               actionLabel={emptyActionLabel}

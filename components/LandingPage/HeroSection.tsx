@@ -1,3 +1,4 @@
+// components/LandingPage/HeroSection.tsx
 'use client';
 
 import React, { useState, useRef } from 'react';

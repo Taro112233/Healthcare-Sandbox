@@ -111,20 +111,20 @@ export function CookieConsent() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border-primary shadow-2xl"
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 {/* Content */}
                 <div className="flex-1 flex items-start gap-3">
-                  <Cookie className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <Cookie className="w-5 h-5 text-interactive-primary shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm text-foreground mb-1">
+                    <p className="text-sm text-content-primary mb-1">
                       เราใช้คุกกี้บนเว็บไซต์เพื่อเพิ่มประสบการณ์การใช้งานที่ดีขึ้น 
                       การยอมรับหมายถึงคุณยินยอมให้เราใช้คุกกี้ดังกล่าว{' '}
                       <Link 
                         href="/privacy-policy" 
-                        className="text-primary hover:underline font-medium"
+                        className="text-interactive-primary hover:underline font-medium"
                         target="_blank"
                       >
                         นโยบายความเป็นส่วนตัว
@@ -148,7 +148,7 @@ export function CookieConsent() {
                   <Button
                     size="sm"
                     onClick={handleAcceptAll}
-                    className="flex-1 md:flex-none bg-teal-600 hover:bg-teal-700"
+                    className="flex-1 md:flex-none gradient-brand-semantic hover:opacity-90"
                   >
                     ยอมรับทั้งหมด
                   </Button>
@@ -157,10 +157,10 @@ export function CookieConsent() {
                 {/* Close Button */}
                 <button
                   onClick={() => setShowBanner(false)}
-                  className="absolute top-2 right-2 md:relative md:top-0 md:right-0 p-1 rounded-full hover:bg-muted transition-colors"
+                  className="absolute top-2 right-2 md:relative md:top-0 md:right-0 p-1 rounded-full hover:bg-surface-interactive transition-colors"
                   aria-label="ปิด"
                 >
-                  <X className="w-5 h-5 text-muted-foreground" />
+                  <X className="w-5 h-5 text-content-secondary" />
                 </button>
               </div>
             </div>
@@ -173,7 +173,7 @@ export function CookieConsent() {
         <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              <Cookie className="w-5 h-5 text-primary" />
+              <Cookie className="w-5 h-5 text-interactive-primary" />
               การตั้งค่าความเป็นส่วนตัว
             </DialogTitle>
             <DialogDescription>
@@ -189,7 +189,7 @@ export function CookieConsent() {
                   <Label className="text-base font-semibold">
                     คุกกี้ที่จำเป็น
                   </Label>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-content-secondary mt-1">
                     คุกกี้เหล่านี้จำเป็นสำหรับการทำงานพื้นฐานของเว็บไซต์ 
                     และไม่สามารถปิดการใช้งานได้
                   </p>
@@ -207,7 +207,7 @@ export function CookieConsent() {
                   <Label className="text-base font-semibold cursor-pointer">
                     คุกกี้เพื่อการใช้งาน
                   </Label>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-content-secondary mt-1">
                     ช่วยเพิ่มฟังก์ชันการทำงานและปรับแต่งประสบการณ์การใช้งาน
                   </p>
                 </div>
@@ -227,7 +227,7 @@ export function CookieConsent() {
                   <Label className="text-base font-semibold cursor-pointer">
                     คุกกี้เพื่อการวิเคราะห์
                   </Label>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-content-secondary mt-1">
                     ช่วยให้เราเข้าใจว่าผู้เข้าชมใช้งานเว็บไซต์อย่างไร เพื่อปรับปรุงประสิทธิภาพ
                   </p>
                 </div>
@@ -247,7 +247,7 @@ export function CookieConsent() {
                   <Label className="text-base font-semibold cursor-pointer">
                     คุกกี้เพื่อการตลาด
                   </Label>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-content-secondary mt-1">
                     ใช้เพื่อแสดงเนื้อหาและโฆษณาที่เกี่ยวข้องกับความสนใจของคุณ
                   </p>
                 </div>
@@ -260,10 +260,10 @@ export function CookieConsent() {
           </div>
 
           {/* Action Button */}
-          <div className="flex justify-end mt-6 pt-6 border-t border-border">
+          <div className="flex justify-end mt-6 pt-6 border-t border-border-primary">
             <Button
               onClick={handleAcceptSelected}
-              className="bg-teal-600 hover:bg-teal-700"
+              className="gradient-brand-semantic hover:opacity-90"
             >
               ยอมรับการตั้งค่า
             </Button>

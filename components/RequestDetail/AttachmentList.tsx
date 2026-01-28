@@ -33,9 +33,9 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
 
   const getFileIcon = (fileType: string) => {
     if (fileType.startsWith('image/')) {
-      return <FileImage className="w-5 h-5 text-blue-500" />;
+      return <FileImage className="w-5 h-5 text-alert-info-icon" />;
     }
-    return <FileText className="w-5 h-5 text-red-500" />;
+    return <FileText className="w-5 h-5 text-alert-error-icon" />;
   };
 
   const isImage = (fileType: string) => fileType.startsWith('image/');
@@ -43,7 +43,7 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-medium text-foreground flex items-center gap-2">
+        <CardTitle className="text-base font-medium text-content-primary flex items-center gap-2">
           <Paperclip className="w-4 h-4" />
           ไฟล์แนบ ({attachments.length})
         </CardTitle>
@@ -53,7 +53,7 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
           {attachments.map((attachment) => (
             <div 
               key={attachment.id}
-              className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg"
+              className="flex items-start gap-3 p-3 bg-surface-secondary rounded-lg"
             >
               {isImage(attachment.fileType) ? (
                 <a 
@@ -67,20 +67,20 @@ export function AttachmentList({ attachments }: AttachmentListProps) {
                     alt={attachment.filename}
                     width={64}
                     height={64}
-                    className="w-16 h-16 object-cover rounded border border-border hover:opacity-80 transition-opacity"
+                    className="w-16 h-16 object-cover rounded border border-border-primary hover:opacity-80 transition-opacity"
                   />
                 </a>
               ) : (
-                <div className="w-16 h-16 flex items-center justify-center bg-card rounded border border-border">
+                <div className="w-16 h-16 flex items-center justify-center bg-card rounded border border-border-primary">
                   {getFileIcon(attachment.fileType)}
                 </div>
               )}
 
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
+                <p className="text-sm font-medium text-content-primary truncate">
                   {attachment.filename}
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-content-secondary">
                   {formatFileSize(attachment.fileSize)}
                 </p>
               </div>

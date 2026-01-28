@@ -26,9 +26,9 @@ export function RequestPagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border w-full">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border-primary w-full">
       {/* Items Count */}
-      <p className="text-sm text-muted-foreground text-center sm:text-left">
+      <p className="text-sm text-content-secondary text-center sm:text-left">
         แสดง {start}-{end} จาก {totalItems} รายการ
       </p>
       
@@ -66,7 +66,7 @@ export function RequestPagination({
                 size="sm"
                 onClick={() => onPageChange(pageNum)}
                 className={`min-w-9 shrink-0 ${
-                  currentPage === pageNum ? 'bg-teal-600 hover:bg-teal-700' : ''
+                  currentPage === pageNum ? 'gradient-brand-semantic hover:opacity-90' : ''
                 }`}
               >
                 {pageNum}

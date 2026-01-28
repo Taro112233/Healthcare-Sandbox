@@ -6,15 +6,15 @@ import { motion } from 'framer-motion';
 import { RequestForm } from '@/components/RequestForm';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { GuideDialog } from '@/components/RequestForm/GuideDialog';
 
 // ✅ Skeleton Component
 function NewRequestSkeleton() {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+    <div className="min-h-screen bg-surface-primary">
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -54,7 +54,7 @@ function NewRequestSkeleton() {
                     <Skeleton className="h-6 w-48" />
                     <Skeleton className="h-4 w-full max-w-md" />
                   </CardHeader>
-                  <CardContent className="space-y-3 pt-0">
+                  <div className="px-6 pb-6 space-y-3">
                     {i === 2 ? (
                       <Skeleton className="h-10 w-full" />
                     ) : (
@@ -63,7 +63,7 @@ function NewRequestSkeleton() {
                         <Skeleton className="h-4 w-24 ml-auto" />
                       </>
                     )}
-                  </CardContent>
+                  </div>
                 </Card>
               </motion.div>
             ))}
@@ -107,9 +107,9 @@ export default function NewRequestPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-background"
+      className="min-h-screen bg-surface-primary"
     >
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
             
       <main className="relative">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -119,14 +119,14 @@ export default function NewRequestPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
             >
-              <Card className="border-l-4 border-l-teal-500 dark:border-l-teal-400">
+              <Card className="border-l-4 border-l-border-interactive">
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <CardTitle className="text-2xl font-bold text-foreground">
+                      <CardTitle className="text-2xl font-bold text-content-primary">
                         ส่งคำขอพัฒนาเครื่องมือ
                       </CardTitle>
-                      <CardDescription className="text-muted-foreground mt-2">
+                      <CardDescription className="text-content-secondary mt-2">
                         อธิบาย pain point และสิ่งที่ต้องการให้ทีมเทคโนโลยีช่วยพัฒนา
                       </CardDescription>
                     </div>

@@ -17,9 +17,9 @@ export default function NotFound() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface-primary relative flex items-center justify-center p-4">
       {/* Background Gradient */}
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <div className="relative w-full max-w-md">
 
@@ -28,7 +28,7 @@ export default function NotFound() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
+          <Card className="shadow-xl border-border-primary bg-card/80 backdrop-blur-sm">
             <CardContent className="pt-6">
               <div className="text-center space-y-6">
                 
@@ -44,8 +44,8 @@ export default function NotFound() {
                   }}
                   className="flex justify-center"
                 >
-                  <div className="w-20 h-20 bg-red-100 dark:bg-red-950/30 rounded-full flex items-center justify-center">
-                    <AlertTriangle className="w-12 h-12 text-red-500 dark:text-red-400" />
+                  <div className="w-20 h-20 bg-alert-error-bg rounded-full flex items-center justify-center border border-alert-error-border">
+                    <AlertTriangle className="w-12 h-12 text-alert-error-icon" />
                   </div>
                 </motion.div>
                 
@@ -56,10 +56,10 @@ export default function NotFound() {
                   transition={{ duration: 0.4, delay: 0.3 }}
                   className="space-y-2"
                 >
-                  <h2 className="text-2xl font-bold text-foreground">
+                  <h2 className="text-2xl font-bold text-content-primary">
                     404 - ไม่พบหน้าที่ต้องการ
                   </h2>
-                  <p className="text-muted-foreground">
+                  <p className="text-content-secondary">
                     ขออภัย หน้าที่คุณกำลังมองหาไม่มีอยู่ในระบบ
                   </p>
                 </motion.div>
@@ -69,12 +69,12 @@ export default function NotFound() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
-                  className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 text-left"
+                  className="bg-alert-warning-bg border border-alert-warning-border rounded-lg p-4 text-left"
                 >
-                  <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">
+                  <h3 className="font-semibold text-alert-warning-text mb-2">
                     สาเหตุที่เป็นไปได้:
                   </h3>
-                  <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
+                  <ul className="text-sm text-alert-warning-text space-y-1">
                     <li>• URL ไม่ถูกต้องหรือพิมพ์ผิด</li>
                     <li>• คำขอถูกลบหรือย้ายไปแล้ว</li>
                     <li>• ลิงก์หมดอายุหรือไม่ถูกต้อง</li>
@@ -90,7 +90,7 @@ export default function NotFound() {
                   className="space-y-3"
                 >
                   <Link href="/" className="block">
-                    <Button className="w-full bg-teal-600 hover:bg-teal-700" size="lg">
+                    <Button className="w-full gradient-brand-semantic hover:opacity-90" size="lg">
                       <Home className="w-4 h-4 mr-2" />
                       กลับไปหน้าหลัก
                     </Button>
@@ -112,7 +112,7 @@ export default function NotFound() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
-                  className="text-sm text-muted-foreground pt-4 border-t border-border"
+                  className="text-sm text-content-secondary pt-4 border-t border-border-primary"
                 >
                   <p>
                     หากคุณคิดว่านี่เป็นข้อผิดพลาด
@@ -130,7 +130,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.7 }}
-          className="text-center mt-8 text-sm text-muted-foreground"
+          className="text-center mt-8 text-sm text-content-secondary"
         >
           <p>NextHealTH Sandbox - Public Health Innovation Sandbox</p>
           <p className="text-xs mt-1">© 2025 - Healthcare Innovation</p>

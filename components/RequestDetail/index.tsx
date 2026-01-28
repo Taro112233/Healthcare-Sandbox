@@ -29,7 +29,7 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
       {/* Main Layout - Responsive Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content - Takes 2 columns on large screens */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-6 min-w-0">
           <RequestInfo request={request} />
 
           {request.attachments && request.attachments.length > 0 && (
@@ -38,7 +38,7 @@ export function RequestDetail({ request, user, onRefresh }: RequestDetailProps) 
         </div>
 
         {/* Sidebar - Comment Section (Sticky on large screens) */}
-        <div className="lg:sticky lg:top-6 lg:self-start">
+        <div className="lg:sticky lg:top-6 lg:self-start min-w-0">
           <CommentSection 
             requestId={request.id}
             user={user}

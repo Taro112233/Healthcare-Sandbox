@@ -18,17 +18,17 @@ export function CommentList({
   if (isLoading && comments.length === 0) {
     return (
       <div className="flex items-center justify-center py-8">
-        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+        <Loader2 className="w-6 h-6 animate-spin text-content-secondary" />
       </div>
     );
   }
 
   if (comments.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
-        <MessageSquare className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50" />
+      <div className="text-center py-8 text-content-secondary">
+        <MessageSquare className="w-12 h-12 mx-auto mb-3 text-content-tertiary" />
         <p className="text-sm">ยังไม่มีความคิดเห็น</p>
-        <p className="text-xs text-muted-foreground/70 mt-1">
+        <p className="text-xs text-content-tertiary mt-1">
           เป็นคนแรกที่แสดงความคิดเห็น!
         </p>
       </div>

@@ -14,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 function DashboardSkeleton() {
   return (
     <div className="relative min-h-screen">
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div 
@@ -75,7 +75,7 @@ function DashboardSkeleton() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.5 }}
-            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border-primary"
           >
             <Skeleton className="h-4 w-32" />
             <div className="flex items-center justify-center sm:justify-end gap-2 flex-wrap">
@@ -165,7 +165,7 @@ export default function DashboardPage() {
       transition={{ duration: 0.3 }}
       className="relative min-h-screen"
     >
-      <div className="fixed inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div

@@ -223,14 +223,14 @@ export function RequestForm() {
             placeholder="เช่น ห้องฉุกเฉิน, OPD อายุรกรรม, หอผู้ป่วยศัลยกรรม, ห้องยา"
             value={formData.department}
             onChange={(e) => handleInputChange('department', e.target.value)}
-            className={errors.department ? 'border-red-500' : ''}
+            className={errors.department ? 'border-alert-error-border' : ''}
             maxLength={200}
           />
           <div className="flex justify-between mt-1">
             {errors.department && (
-              <p className="text-sm text-red-500">{errors.department}</p>
+              <p className="text-sm text-alert-error-text">{errors.department}</p>
             )}
-            <p className="text-xs text-muted-foreground ml-auto">
+            <p className="text-xs text-content-secondary ml-auto">
               {formData.department.length} / 200
             </p>
           </div>
@@ -250,7 +250,7 @@ export function RequestForm() {
             value={formData.requestType}
             onValueChange={(value) => handleInputChange('requestType', value)}
           >
-            <SelectTrigger className={errors.requestType ? 'border-red-500' : ''}>
+            <SelectTrigger className={errors.requestType ? 'border-alert-error-border' : ''}>
               <SelectValue placeholder="เลือกประเภทคำขอ" />
             </SelectTrigger>
             <SelectContent>
@@ -259,22 +259,22 @@ export function RequestForm() {
                   <div className="flex items-center gap-2">
                     {typeIcons[value]}
                     <span>{REQUEST_TYPE_INFO[value].labelTh}</span>
-                    <span className="text-muted-foreground text-xs">- {REQUEST_TYPE_INFO[value].description}</span>
+                    <span className="text-content-secondary text-xs">- {REQUEST_TYPE_INFO[value].description}</span>
                   </div>
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
           {errors.requestType && (
-            <p className="text-sm text-red-500 mt-1">{errors.requestType}</p>
+            <p className="text-sm text-alert-error-text mt-1">{errors.requestType}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Pain Point Card */}
-      <Card className="border-l-4 border-l-red-500 dark:border-l-red-400">
+      <Card className="border-l-4 border-l-alert-error-border">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
+          <CardTitle className="text-xl font-bold text-alert-error-text flex items-center gap-2">
             <AlertCircle className="w-5 h-5" />
             Pain Point หน้างาน
           </CardTitle>
@@ -290,15 +290,15 @@ export function RequestForm() {
             disabled={isSubmitting}
           />
           {errors.painPoint && (
-            <p className="text-sm text-red-500">{errors.painPoint}</p>
+            <p className="text-sm text-alert-error-text">{errors.painPoint}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Current Workflow Card */}
-      <Card className="border-l-4 border-l-blue-500 dark:border-l-blue-400">
+      <Card className="border-l-4 border-l-alert-info-border">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-blue-700 dark:text-blue-400 flex items-center gap-2">
+          <CardTitle className="text-xl font-bold text-alert-info-text flex items-center gap-2">
             <Workflow className="w-5 h-5" />
             ขั้นตอนการทำงานปัจจุบัน
           </CardTitle>
@@ -314,15 +314,15 @@ export function RequestForm() {
             disabled={isSubmitting}
           />
           {errors.currentWorkflow && (
-            <p className="text-sm text-red-500">{errors.currentWorkflow}</p>
+            <p className="text-sm text-alert-error-text">{errors.currentWorkflow}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Expected Tech Help Card */}
-      <Card className="border-l-4 border-l-green-500 dark:border-l-green-400">
+      <Card className="border-l-4 border-l-alert-success-border">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
+          <CardTitle className="text-xl font-bold text-alert-success-text flex items-center gap-2">
             <Lightbulb className="w-5 h-5" />
             สิ่งที่ต้องการให้ Tech ช่วย
           </CardTitle>
@@ -338,7 +338,7 @@ export function RequestForm() {
             disabled={isSubmitting}
           />
           {errors.expectedTechHelp && (
-            <p className="text-sm text-red-500">{errors.expectedTechHelp}</p>
+            <p className="text-sm text-alert-error-text">{errors.expectedTechHelp}</p>
           )}
         </CardContent>
       </Card>
@@ -370,7 +370,7 @@ export function RequestForm() {
                 id="request-policy"
                 checked={acceptedPolicy}
                 onCheckedChange={handlePolicyChange}
-                className={errors.policy ? "border-red-500" : ""}
+                className={errors.policy ? "border-alert-error-border" : ""}
               />
               <Label
                 htmlFor="request-policy"
@@ -380,7 +380,7 @@ export function RequestForm() {
                 <Link
                   href="/request-policy"
                   target="_blank"
-                  className="text-primary hover:underline font-medium"
+                  className="text-interactive-primary hover:underline font-medium"
                 >
                   นโยบายการส่งคำขอพัฒนาเครื่องมือ
                 </Link>
@@ -388,7 +388,7 @@ export function RequestForm() {
             </div>
             
             {errors.policy && (
-              <div className="flex items-center gap-2 text-red-500 text-sm ml-7">
+              <div className="flex items-center gap-2 text-alert-error-text text-sm ml-7">
                 <AlertCircle className="w-4 h-4" />
                 <span>{errors.policy}</span>
               </div>
@@ -417,7 +417,7 @@ export function RequestForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-teal-600 hover:bg-teal-700"
+          className="gradient-brand-semantic hover:opacity-90"
         >
           {isSubmitting ? (
             <>

@@ -107,15 +107,15 @@ export function CommentItem({ comment }: CommentItemProps) {
   const userImage = getUserImage(comment.user);  // ✅ ดึง image
 
   return (
-    <div className="flex gap-3 p-3 hover:bg-muted/50 rounded-lg transition-colors">
+    <div className="flex gap-3 p-3 hover:bg-surface-secondary rounded-lg transition-colors">
       <Avatar className="h-8 w-8 shrink-0">
         {/* ✅ เพิ่ม AvatarImage component */}
         {userImage && <AvatarImage src={userImage} alt={getUserDisplayName(comment.user)} />}
         <AvatarFallback 
           className={`text-xs font-medium ${
             isAdmin 
-              ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
-              : 'bg-muted text-muted-foreground'
+              ? 'bg-alert-info-bg text-alert-info-text' 
+              : 'bg-surface-secondary text-content-secondary'
           }`}
         >
           {getUserInitials(comment.user)}
@@ -124,15 +124,15 @@ export function CommentItem({ comment }: CommentItemProps) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="font-medium text-foreground text-sm">
+          <span className="font-medium text-content-primary text-sm">
             {getUserDisplayName(comment.user)}
           </span>
           
           {isAdmin && (
-            <BadgeCheck className="w-4 h-4 text-blue-500 dark:text-blue-400" />
+            <BadgeCheck className="w-4 h-4 text-alert-info-icon" />
           )}
           
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-content-secondary">
             {getRelativeTime(comment.createdAt)}
           </span>
         </div>
@@ -140,8 +140,8 @@ export function CommentItem({ comment }: CommentItemProps) {
         {/* ✅ ถ้าเป็น STATUS_CHANGE - แสดงการเปลี่ยนสถานะ */}
         {isStatusChange && comment.toStatus && (
           <div className="flex items-center gap-2 mb-2">
-            <RefreshCw className="w-3 h-3 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">เปลี่ยนสถานะเป็น</span>
+            <RefreshCw className="w-3 h-3 text-content-secondary" />
+            <span className="text-sm text-content-secondary">เปลี่ยนสถานะเป็น</span>
             <Badge 
               variant="outline" 
               className={`text-xs ${REQUEST_STATUS_INFO[comment.toStatus].bgColor} ${REQUEST_STATUS_INFO[comment.toStatus].textColor} border-0`}
@@ -151,7 +151,7 @@ export function CommentItem({ comment }: CommentItemProps) {
           </div>
         )}
 
-        <div className="text-sm text-foreground whitespace-pre-wrap wrap-break-words">
+        <div className="text-sm text-content-primary whitespace-pre-wrap wrap-break-words">
           {comment.content}
         </div>
       </div>

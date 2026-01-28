@@ -156,9 +156,9 @@ export function FileUploadSection({
 
   const getFileIcon = (fileType: string) => {
     if (fileType.startsWith('image/')) {
-      return <FileImage className="w-5 h-5 text-blue-500" />;
+      return <FileImage className="w-5 h-5 text-alert-info-icon" />;
     }
-    return <FileText className="w-5 h-5 text-red-500" />;
+    return <FileText className="w-5 h-5 text-alert-error-icon" />;
   };
 
   return (
@@ -167,7 +167,7 @@ export function FileUploadSection({
         <Card
           className={`
             border-2 border-dashed transition-colors cursor-pointer
-            ${isDragging ? 'border-teal-500 bg-teal-500/10' : 'border-border hover:border-muted-foreground/50'}
+            ${isDragging ? 'border-interactive-primary bg-interactive-primary/10' : 'border-border-primary hover:border-content-secondary'}
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
           onDrop={handleDrop}
@@ -190,15 +190,15 @@ export function FileUploadSection({
               className={`cursor-pointer ${disabled ? 'cursor-not-allowed' : ''}`}
             >
               {isUploading ? (
-                <Loader2 className="w-10 h-10 mx-auto mb-3 text-teal-600 animate-spin" />
+                <Loader2 className="w-10 h-10 mx-auto mb-3 text-interactive-primary animate-spin" />
               ) : (
-                <Upload className="w-10 h-10 mx-auto mb-3 text-muted-foreground" />
+                <Upload className="w-10 h-10 mx-auto mb-3 text-content-secondary" />
               )}
               
-              <p className="text-sm font-medium text-foreground mb-1">
+              <p className="text-sm font-medium text-content-primary mb-1">
                 {isUploading ? 'กำลังอัปโหลด...' : 'ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือก'}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-content-secondary">
                 รูปภาพ (JPEG, PNG, GIF, WebP) หรือ PDF - สูงสุด {maxFiles} ไฟล์, แต่ละไฟล์ไม่เกิน {formatFileSize(maxSize)}
               </p>
             </label>
@@ -215,22 +215,22 @@ export function FileUploadSection({
 
       {uploadedFiles.length > 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">
+          <p className="text-sm font-medium text-content-primary">
             ไฟล์ที่อัปโหลด ({uploadedFiles.length}/{maxFiles})
           </p>
           
           <div className="space-y-2">
             {uploadedFiles.map((file, index) => (
-              <Card key={index} className="bg-muted/50">
+              <Card key={index} className="bg-surface-secondary">
                 <CardContent className="py-3 px-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
                       {getFileIcon(file.fileType)}
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-foreground truncate">
+                        <p className="text-sm font-medium text-content-primary truncate">
                           {file.originalFilename}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-content-secondary">
                           {file.fileSizeFormatted}
                         </p>
                       </div>
@@ -242,7 +242,7 @@ export function FileUploadSection({
                       size="sm"
                       onClick={() => onFileRemove(index)}
                       disabled={disabled}
-                      className="text-muted-foreground hover:text-red-600"
+                      className="text-content-secondary hover:text-alert-error-text"
                     >
                       <X className="w-4 h-4" />
                     </Button>

@@ -9,14 +9,14 @@ interface LoadingStateProps {
 
 export function LoadingState({ message = 'กำลังโหลด...', fullScreen = false }: LoadingStateProps) {
   const containerClass = fullScreen 
-    ? 'min-h-screen bg-background flex items-center justify-center'
+    ? 'min-h-screen bg-surface-primary flex items-center justify-center'
     : 'flex items-center justify-center py-12';
 
   return (
     <div className={containerClass}>
       <div className="text-center">
-        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-teal-600" />
-        <p className="text-muted-foreground">{message}</p>
+        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-interactive-primary" />
+        <p className="text-content-secondary">{message}</p>
       </div>
     </div>
   );
