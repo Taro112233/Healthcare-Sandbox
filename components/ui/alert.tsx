@@ -8,15 +8,15 @@ import { AlertCircle, CheckCircle, Info, XCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4",
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
-        info: "border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-200",
-        success: "border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-200",
-        warning: "border-yellow-200 bg-yellow-50 text-yellow-800 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-200",
-        destructive: "border-red-200 bg-red-50 text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200",
+        default: "bg-background text-foreground [&>svg]:text-foreground",
+        info: "border-[var(--color-alert-info-border)] bg-[var(--color-alert-info-bg)] text-[var(--color-alert-info-text)] [&>svg]:text-[var(--color-alert-info-icon)]",
+        success: "border-[var(--color-alert-success-border)] bg-[var(--color-alert-success-bg)] text-[var(--color-alert-success-text)] [&>svg]:text-[var(--color-alert-success-icon)]",
+        warning: "border-[var(--color-alert-warning-border)] bg-[var(--color-alert-warning-bg)] text-[var(--color-alert-warning-text)] [&>svg]:text-[var(--color-alert-warning-icon)]",
+        destructive: "border-[var(--color-alert-error-border)] bg-[var(--color-alert-error-bg)] text-[var(--color-alert-error-text)] [&>svg]:text-[var(--color-alert-error-icon)]",
       },
     },
     defaultVariants: {
@@ -30,7 +30,7 @@ const iconMap = {
   info: Info,
   success: CheckCircle,
   warning: AlertCircle,
-  destructive: XCircle, // Changed from 'error' to 'destructive'
+  destructive: XCircle,
 } as const
 
 export interface AlertProps
@@ -62,28 +62,26 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 )
 Alert.displayName = "Alert"
 
-const AlertTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h5
-    ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
-    {...props}
-  />
-))
+const AlertTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, ...props }, ref) => (
+    <h5
+      ref={ref}
+      className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+      {...props}
+    />
+  )
+)
 AlertTitle.displayName = "AlertTitle"
 
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
-    {...props}
-  />
-))
+const AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("text-sm [&_p]:leading-relaxed", className)}
+      {...props}
+    />
+  )
+)
 AlertDescription.displayName = "AlertDescription"
 
 export { Alert, AlertTitle, AlertDescription }

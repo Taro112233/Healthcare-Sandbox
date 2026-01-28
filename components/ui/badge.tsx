@@ -19,13 +19,13 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
         outline: "text-foreground",
         success:
-          "border-transparent bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+          "border-transparent bg-[var(--color-alert-success-bg)] text-[var(--color-alert-success-text)] hover:opacity-80",
         warning:
-          "border-transparent bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
+          "border-transparent bg-[var(--color-alert-warning-bg)] text-[var(--color-alert-warning-text)] hover:opacity-80",
         error:
-          "border-transparent bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+          "border-transparent bg-[var(--color-alert-error-bg)] text-[var(--color-alert-error-text)] hover:opacity-80",
         info:
-          "border-transparent bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+          "border-transparent bg-[var(--color-alert-info-bg)] text-[var(--color-alert-info-text)] hover:opacity-80",
       },
     },
     defaultVariants: {
@@ -35,11 +35,13 @@ const badgeVariants = cva(
 )
 
 export interface BadgeProps
-  extends Omit<HTMLMotionProps<"div">, keyof VariantProps<typeof badgeVariants>>,
-    VariantProps<typeof badgeVariants> {}
+  extends Omit<HTMLMotionProps<"div">, keyof VariantProps<typeof badgeVariants> | "children">,
+    VariantProps<typeof badgeVariants> {
+  children?: React.ReactNode
+}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, children, ...props }, ref) => {
     return (
       <motion.div
         ref={ref}
@@ -49,7 +51,9 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
         {...props}
-      />
+      >
+        {children}
+      </motion.div>
     )
   }
 )
