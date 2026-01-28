@@ -158,11 +158,6 @@ export function CompactThemeSelector() {
             ))}
           </div>
         </div>
-
-        <div className="text-xs text-content-secondary px-4 py-3 border-t border-border-secondary flex items-center gap-2">
-          <Sparkles className="w-3 h-3" />
-          <span>Medical themes for healthcare professionals</span>
-        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

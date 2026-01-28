@@ -11,7 +11,7 @@ const fadeIn = {
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <motion.div
@@ -25,7 +25,7 @@ export function HeroSection() {
           <motion.h1
             variants={fadeIn}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
+            className="text-5xl md:text-7xl font-bold text-content-primary mb-6 leading-tight"
           >
             About Us
           </motion.h1>
@@ -33,7 +33,7 @@ export function HeroSection() {
           <motion.p
             variants={fadeIn}
             transition={{ delay: 0.3 }}
-            className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            className="text-xl text-content-secondary max-w-3xl mx-auto leading-relaxed"
           >
             เราสร้างพื้นที่ให้คนในโรงพยาบาลส่งไอเดีย
             <br />

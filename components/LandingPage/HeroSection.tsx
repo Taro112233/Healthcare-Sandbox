@@ -37,64 +37,66 @@ const requestTypes = [
     title: 'เว็บเพจ',
     subtitle: 'Web Tool',
     description: 'เครื่องมือออนไลน์สำหรับแสดงข้อมูลทางการแพทย์',
-    bgColor: 'bg-emerald-100 dark:bg-emerald-950/40',
-    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    bgColor: 'bg-alert-success-bg',
+    iconColor: 'text-alert-success-icon',
   },
   {
     icon: Calculator,
     title: 'เครื่องคำนวณ',
     subtitle: 'Calculator',
     description: 'เครื่องคำนวณทางการแพทย์ เช่น BMI, Drug Dosing, Risk Score',
-    bgColor: 'bg-blue-100 dark:bg-blue-950/40',
-    iconColor: 'text-blue-600 dark:text-blue-400',
+    bgColor: 'bg-alert-info-bg',
+    iconColor: 'text-alert-info-icon',
   },
   {
     icon: FileText,
     title: 'แบบฟอร์ม',
     subtitle: 'Form',
     description: 'แบบฟอร์มบันทึกข้อมูล, Checklist, Assessment Form',
-    bgColor: 'bg-sky-100 dark:bg-sky-950/40',
-    iconColor: 'text-sky-600 dark:text-sky-400',
+    bgColor: 'bg-surface-tertiary',
+    iconColor: 'text-interactive-primary',
   },
   {
     icon: GitBranch,
     title: 'ระบบจัดการงาน',
     subtitle: 'Workflow',
     description: 'ระบบจัดการขั้นตอนการทำงาน, Process Automation',
-    bgColor: 'bg-amber-100 dark:bg-amber-950/40',
-    iconColor: 'text-amber-600 dark:text-amber-400',
+    bgColor: 'bg-alert-warning-bg',
+    iconColor: 'text-alert-warning-icon',
   },
   {
     icon: Brain,
     title: 'ช่วยตัดสินใจ',
     subtitle: 'Decision Aid',
     description: 'เครื่องมือช่วยตัดสินใจทางคลินิก, Clinical Decision Support',
-    bgColor: 'bg-rose-100 dark:bg-rose-950/40',
-    iconColor: 'text-rose-600 dark:text-rose-400',
+    bgColor: 'bg-alert-error-bg',
+    iconColor: 'text-alert-error-icon',
   },
   {
     icon: Sparkles,
     title: 'อื่นๆ',
     subtitle: 'Other',
     description: 'เครื่องมือดิจิทัลทางการแพทย์รูปแบบอื่น ๆ',
-    bgColor: 'bg-slate-100 dark:bg-slate-900/50',
-    iconColor: 'text-slate-600 dark:text-slate-400',
+    bgColor: 'bg-surface-secondary',
+    iconColor: 'text-content-tertiary',
   }
 ];
 
 export function HeroSection() {
   const [, setApi] = useState<CarouselApi>();
-  const laserGradient = `radial-gradient(1200px circle at 35% 50%, #10b981 0%, #059669 20%, #064e3b 45%, transparent 100%)`;
 
   const autoplayRef = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-32 bg-white dark:bg-slate-950">
+    <section className="relative overflow-hidden py-20 md:py-32 bg-surface-primary">
+      {/* Dynamic gradient background that adapts to theme */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-25 blur-[100px]"
-        style={{ background: laserGradient }}
+        className="absolute inset-0 pointer-events-none opacity-[0.12] blur-[100px]"
+        style={{ 
+          background: `radial-gradient(1200px circle at 35% 50%, var(--color-brand-primary) 0%, var(--color-brand-secondary) 20%, var(--color-brand-tertiary) 45%, transparent 100%)`
+        }}
       />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,7 +107,7 @@ export function HeroSection() {
           className="text-center"
         >
           <motion.div variants={fadeIn} className="inline-flex mb-8">
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-bold border border-emerald-500/30 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 bg-interactive-primary/10 text-interactive-primary px-4 py-2 rounded-full text-sm font-bold border border-interactive-primary/30 backdrop-blur-md">
               <Sparkles className="w-4 h-4" />
               Public Health Innovation Sandbox
             </div>
@@ -113,21 +115,22 @@ export function HeroSection() {
 
           <motion.div variants={fadeIn} className="relative mb-8">
             <h1 className="text-5xl md:text-7xl font-black tracking-tight inline-block relative leading-[1.1]">
-              <span className="text-slate-900 dark:text-white">
+              <span className="text-content-primary">
                 NextHealTH Sandbox
               </span>
               
+              {/* Dynamic gradient overlay that adapts to theme */}
               <span 
                 className="absolute inset-0 pointer-events-none select-none text-transparent bg-clip-text z-10"
                 style={{ 
                   WebkitBackgroundClip: 'text',
-                  backgroundImage: laserGradient,
+                  backgroundImage: `radial-gradient(1200px circle at 35% 50%, var(--color-brand-primary) 0%, var(--color-brand-secondary) 20%, var(--color-brand-tertiary) 45%, transparent 100%)`,
                 }}
               >
                 NextHealTH Sandbox
               </span>
 
-              {/* ✅ Single Sharp Glint - Optimized for Performance */}
+              {/* Sharp Glint Effect */}
               <motion.span 
                 initial={{ backgroundPosition: '-20% 0' }}
                 animate={{ backgroundPosition: '120% 0' }}
@@ -162,7 +165,7 @@ export function HeroSection() {
 
           <motion.p
             variants={fadeIn}
-            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-content-secondary mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             แพลตฟอร์มสำหรับทดลองแนวคิดและนวัตกรรมด้านสาธารณสุข 
             <br />
@@ -171,13 +174,13 @@ export function HeroSection() {
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <Link href="/requests/new">
-              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 shadow-xl shadow-emerald-600/20 dark:shadow-emerald-900/40 transition-all duration-300">
+              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto gradient-brand-semantic hover:opacity-90 shadow-xl shadow-glow-semantic transition-all duration-300">
                 <Send className="w-5 h-5 mr-2" />
                 ส่งคำขอใหม่
               </Button>
             </Link>
             <Link href="/dashboard">
-              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-emerald-200 dark:border-emerald-800/60 backdrop-blur-sm hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-300">
+              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-border-primary backdrop-blur-sm hover:bg-surface-interactive transition-all duration-300">
                 <List className="w-5 h-5 mr-2" />
                 ดูคำขอของฉัน
               </Button>
@@ -189,7 +192,7 @@ export function HeroSection() {
               <CarouselContent className="-ml-4">
                 {[...requestTypes, ...requestTypes].map((type, index) => (
                   <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <Card className="border-0 shadow-soft-lg hover:shadow-xl transition-all duration-500 group h-full bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl border-t border-white/20 dark:border-white/5">
+                    <Card className="border-0 shadow-elevation-2 hover:shadow-elevation-3 transition-all duration-500 group h-full bg-card backdrop-blur-xl border-t border-border-subtle">
                       <CardHeader className="pb-4 text-left">
                         <CardTitle className="flex items-center gap-4">
                           <div className={`w-12 h-12 ${type.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
@@ -197,14 +200,14 @@ export function HeroSection() {
                           </div>
                           <div>
                             <div className="text-base font-bold">{type.title}</div>
-                            <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-black opacity-60">
+                            <div className="text-[10px] uppercase tracking-widest text-content-tertiary font-black opacity-60">
                               {type.subtitle}
                             </div>
                           </div>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="pt-0 text-left">
-                        <p className="text-muted-foreground text-sm leading-relaxed">{type.description}</p>
+                        <p className="text-content-secondary text-sm leading-relaxed">{type.description}</p>
                       </CardContent>
                     </Card>
                   </CarouselItem>

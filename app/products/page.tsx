@@ -3,7 +3,7 @@
 
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link'; // เพิ่มการ Import Link
+import Link from 'next/link';
 import productsData from '@/data/products.json';
 import { ArrowRight, Send } from 'lucide-react';
 
@@ -38,7 +38,7 @@ export default function ProductsPage() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-br from-teal-500/10 via-emerald-500/10 to-cyan-500/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <motion.div
@@ -50,14 +50,14 @@ export default function ProductsPage() {
 
             <motion.h1
               variants={fadeIn}
-              className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight"
+              className="text-5xl md:text-7xl font-bold text-content-primary mb-6 leading-tight"
             >
               Products
             </motion.h1>
 
             <motion.p
               variants={fadeIn}
-              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl text-content-secondary mb-8 max-w-3xl mx-auto leading-relaxed"
             >
               เครื่องมือที่เราทำจริง ใช้จริง แก้ปัญหาจริง
             </motion.p>
@@ -87,7 +87,7 @@ export default function ProductsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-linear-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+      <section className="py-20 px-4 gradient-brand-semantic text-white">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -100,23 +100,22 @@ export default function ProductsPage() {
           </motion.h2>
           <motion.p
             variants={fadeIn}
-            className="text-xl mb-8 text-teal-100 dark:text-teal-200"
+            className="text-xl mb-8 text-white/90"
           >
             ส่งคำขอพัฒนาเครื่องมือของคุณได้เลย
           </motion.p>
 
           <motion.div variants={fadeIn}>
-            {/* แก้ไขจาก <a> เป็น <Link> เพื่อประสิทธิภาพการนำทางที่ดีขึ้น */}
             <Link
               href="/requests/new"
-              className="inline-flex items-center gap-2 bg-white text-teal-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
+              className="inline-flex items-center gap-2 bg-white text-interactive-primary hover:bg-surface-tertiary px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
               <Send className="w-5 h-5" />
               ส่งคำขอใหม่
             </Link>
           </motion.div>
 
-          <motion.div variants={fadeIn} className="text-teal-100 dark:text-teal-200 mt-8">
+          <motion.div variants={fadeIn} className="text-white/90 mt-8">
             <p>
               ✨ ฟรี • 🚀 ใช้งานง่าย • 📱 รองรับทุกอุปกรณ์
             </p>
@@ -171,14 +170,13 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         ease: [0.25, 0.1, 0.25, 1]
       }}
     >
-      {/* สำหรับลิงก์ภายนอก (Demo) ยังคงใช้ <a> พร้อม target="_blank" ได้ปกติ */}
       <a
         href={product.demoUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="group block"
       >
-        <div className="relative aspect-16/10 rounded-xl overflow-hidden bg-muted mb-4 border border-border shadow-lg hover:shadow-xl transition-all duration-300">
+        <div className="relative aspect-16/10 rounded-xl overflow-hidden bg-surface-secondary mb-4 border border-border-primary shadow-lg hover:shadow-xl transition-all duration-300">
           <video
             ref={videoRef}
             src={product.videoSrc}
@@ -192,7 +190,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/0 to-black/0 group-hover:from-black/80 transition-all duration-300" />
 
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-foreground flex items-center gap-2">
+            <div className="bg-surface-primary/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-content-primary flex items-center gap-2">
               ดูตัวอย่าง
               <ArrowRight className="w-4 h-4" />
             </div>
@@ -200,7 +198,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         </div>
 
         <div className="space-y-3">
-          <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-200 leading-tight">
+          <h2 className="text-xl md:text-2xl font-bold text-content-primary group-hover:text-interactive-primary transition-colors duration-200 leading-tight">
             {product.title}
           </h2>
 
@@ -208,14 +206,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             {product.tags.map((tag, i) => (
               <span
                 key={i}
-                className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-muted text-muted-foreground border border-border rounded-full"
+                className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-surface-secondary text-content-secondary border border-border-secondary rounded-full"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-content-secondary leading-relaxed">
             {product.description}
           </p>
         </div>

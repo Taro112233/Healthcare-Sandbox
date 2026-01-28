@@ -18,10 +18,7 @@ interface Product {
 }
 
 export function ProductShowcaseSection() {
-  // ดึงข้อมูลจาก JSON แทนการ hardcode
   const products: Product[] = productsData.products;
-  
-  // แสดงเฉพาะ 3 รายการแรก สำหรับ landing page
   const featuredProducts = products.slice(0, 3);
 
   return (
@@ -42,7 +39,7 @@ export function ProductShowcaseSection() {
           </motion.h2>
           <motion.p
             variants={fadeIn}
-            className="text-xl text-gray-400 max-w-3xl mx-auto"
+            className="text-xl text-content-tertiary max-w-3xl mx-auto"
           >
             พัฒนาจากคำขอจริง ใช้งานได้จริง
           </motion.p>
@@ -65,7 +62,7 @@ export function ProductShowcaseSection() {
         >
           <Link
             href="/products"
-            className="inline-flex items-center gap-3 text-xl text-teal-400 hover:text-teal-300 transition-colors group"
+            className="inline-flex items-center gap-3 text-xl text-interactive-primary hover:opacity-80 transition-colors group"
           >
             ดูเครื่องมือทั้งหมด
             <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
@@ -123,16 +120,16 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           {/* Text Content Area */}
           <div className={`space-y-6 lg:col-span-4 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
             <div className="inline-block">
-              <span className="text-teal-400 text-sm font-semibold tracking-wider uppercase">
+              <span className="text-interactive-primary text-sm font-semibold tracking-wider uppercase">
                 {product.tags[0] || 'WEB APP'}
               </span>
             </div>
             
-            <h3 className="text-4xl md:text-5xl font-bold leading-tight group-hover:text-teal-400 transition-colors">
+            <h3 className="text-4xl md:text-5xl font-bold leading-tight group-hover:text-interactive-primary transition-colors">
               {product.title}
             </h3>
 
-            <p className="text-lg text-gray-400 leading-relaxed">
+            <p className="text-lg text-content-tertiary leading-relaxed">
               {product.description}
             </p>
 
@@ -142,7 +139,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 {product.tags.slice(1).map((tag, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-white/5 text-gray-400 border border-white/10 rounded-full"
+                    className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-white/5 text-content-tertiary border border-white/10 rounded-full"
                   >
                     {tag}
                   </span>
@@ -150,8 +147,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               </div>
             )}
 
-            {/* CTA ที่แสดงเฉพาะตอน hover */}
-            <div className="flex items-center gap-3 text-teal-400 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            {/* CTA */}
+            <div className="flex items-center gap-3 text-interactive-primary opacity-0 group-hover:opacity-100 transition-all duration-300">
               <span className="text-lg font-semibold">ดูตัวอย่าง</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </div>
@@ -159,7 +156,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
           {/* Video Showcase Area */}
           <div className={`relative lg:col-span-8 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-            <div className="relative aspect-video lg:aspect-video rounded-4xl overflow-hidden bg-gray-900 shadow-2xl transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-teal-500/10">
+            <div className="relative aspect-video lg:aspect-video rounded-4xl overflow-hidden bg-surface-secondary shadow-2xl transition-all duration-700 group-hover:scale-[1.02] group-hover:shadow-glow-semantic">
               <video
                 ref={videoRef}
                 src={product.videoSrc}
@@ -173,7 +170,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             </div>
 
             {/* Background Glow Effect */}
-            <div className="absolute -inset-8 bg-linear-to-r from-teal-500/5 to-emerald-500/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+            <div className="absolute -inset-8 bg-interactive-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
           </div>
           
         </div>

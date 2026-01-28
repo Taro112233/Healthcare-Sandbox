@@ -14,7 +14,7 @@ interface CTASectionProps {
 
 export function CTASection({ onManualClick }: CTASectionProps) {
   return (
-    <section className="py-20 px-4 bg-linear-to-br from-teal-600 to-emerald-700 dark:from-teal-800 dark:to-emerald-900 text-white">
+    <section className="py-20 px-4 gradient-brand-semantic text-white">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -27,7 +27,7 @@ export function CTASection({ onManualClick }: CTASectionProps) {
         </motion.h2>
         <motion.p
           variants={fadeIn}
-          className="text-xl mb-8 text-teal-100 dark:text-teal-200"
+          className="text-xl mb-8 text-white/90"
         >
           เริ่มส่งคำขอพัฒนาเครื่องมือดิจิทัลของคุณได้เลยวันนี้
         </motion.p>
@@ -39,7 +39,7 @@ export function CTASection({ onManualClick }: CTASectionProps) {
           <Link href="/requests/new">
             <Button
               size="lg"
-              className="text-lg px-8 py-6 w-full sm:w-auto bg-teal-600 hover:bg-teal-700"
+              className="text-lg px-8 py-6 w-full sm:w-auto bg-white text-interactive-primary hover:bg-surface-tertiary transition-colors"
             >
               <Send className="w-5 h-5 mr-2" />
               ส่งคำขอใหม่
@@ -57,7 +57,7 @@ export function CTASection({ onManualClick }: CTASectionProps) {
           </Button>
         </motion.div>
 
-        <motion.div variants={fadeIn} className="text-teal-100 dark:text-teal-200">
+        <motion.div variants={fadeIn} className="text-white/90">
           <p>
             ✨ ระบบพร้อมใช้งานทันที • 🔒 ปลอดภัยด้วย Arcjet Security • 📱
             รองรับทุกอุปกรณ์

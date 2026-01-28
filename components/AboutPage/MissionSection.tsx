@@ -38,7 +38,7 @@ const missions = [
 
 export function MissionSection() {
   return (
-    <section className="py-20 px-4 bg-muted/30">
+    <section className="py-20 px-4 bg-surface-secondary">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial="hidden"
@@ -48,10 +48,10 @@ export function MissionSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-content-primary mb-4">
             ภารกิจของเรา
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-content-secondary max-w-3xl mx-auto">
             เปลี่ยนปัญหาในหน้างานเป็นโอกาสในการเรียนรู้และพัฒนาเครื่องมือดิจิทัล
           </p>
         </motion.div>
@@ -67,18 +67,18 @@ export function MissionSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="relative group"
             >
-              <div className="bg-card border border-border rounded-2xl p-8 h-full transition-all duration-300 hover:shadow-xl hover:border-teal-500/50">
+              <div className="bg-card border border-border-primary rounded-2xl p-8 h-full transition-all duration-300 hover:shadow-xl hover:border-interactive-primary">
                 {/* Icon with gradient background */}
                 <div className={`w-16 h-16 rounded-xl bg-linear-to-br ${mission.color} p-0.5 mb-6`}>
                   <div className="w-full h-full bg-card rounded-xl flex items-center justify-center">
-                    <mission.icon className="w-8 h-8 text-foreground" />
+                    <mission.icon className="w-8 h-8 text-content-primary" />
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold text-foreground mb-3">
+                <h3 className="text-2xl font-bold text-content-primary mb-3">
                   {mission.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-content-secondary leading-relaxed">
                   {mission.description}
                 </p>
 
