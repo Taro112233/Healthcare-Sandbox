@@ -26,7 +26,7 @@ const fadeIn = {
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-surface-primary">
-      <div className="fixed inset-0 bg-gradient-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
+      <div className="fixed inset-0 bg-linear-to-br from-brand-primary/10 via-brand-secondary/10 to-brand-tertiary/10 pointer-events-none" />
 
       <main className="relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
