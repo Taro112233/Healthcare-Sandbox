@@ -6,7 +6,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
 
 // Import all showcase components
 import { AccordionShowcase } from "@/components/ShowcaseComponent/AccordionShowcase"
@@ -166,7 +165,6 @@ export default function ShowcasePage() {
             A comprehensive collection of {allComponents.length} UI components built with Radix UI, Tailwind CSS, and Framer Motion.
           </p>
         </div>
-        <ThemeToggle />
       </div>
 
       {/* Search and Filter */}
