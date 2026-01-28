@@ -29,7 +29,6 @@ import {
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 
-// ✅ Define Better Auth sign up data interface
 interface BetterAuthSignUpData {
   email: string;
   password: string;
@@ -121,7 +120,6 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      // ✅ Type the sign up data properly
       const signUpData: BetterAuthSignUpData = {
         email: formData.email.trim().toLowerCase(),
         password: formData.password,
@@ -168,7 +166,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface-primary p-4">
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
@@ -176,14 +174,14 @@ export default function RegisterPage() {
             href="/"
             className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <div className="w-12 h-12 bg-linear-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 gradient-brand-semantic rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-content-primary">
                 NextHealTH Sandbox
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-content-secondary">
                 Public Health Innovation Sandbox
               </p>
             </div>
@@ -191,7 +189,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Register Form */}
-        <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-border-primary bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">สร้างบัญชี</CardTitle>
             <CardDescription className="text-center">
@@ -200,7 +198,6 @@ export default function RegisterPage() {
           </CardHeader>
 
           <CardContent className="space-y-4">
-            {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
               <div className="space-y-2">
@@ -300,9 +297,9 @@ export default function RegisterPage() {
                     disabled={isLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4 text-muted-foreground" />
+                      <EyeOff className="w-4 h-4 text-content-secondary" />
                     ) : (
-                      <Eye className="w-4 h-4 text-muted-foreground" />
+                      <Eye className="w-4 h-4 text-content-secondary" />
                     )}
                   </Button>
                 </div>
@@ -333,9 +330,9 @@ export default function RegisterPage() {
                     disabled={isLoading}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="w-4 h-4 text-muted-foreground" />
+                      <EyeOff className="w-4 h-4 text-content-secondary" />
                     ) : (
-                      <Eye className="w-4 h-4 text-muted-foreground" />
+                      <Eye className="w-4 h-4 text-content-secondary" />
                     )}
                   </Button>
                 </div>
@@ -349,22 +346,21 @@ export default function RegisterPage() {
               )}
 
               {/* Terms Checkbox */}
-            <TermsCheckbox
-              checked={acceptedTerms}
-              onCheckedChange={(checked) => {
-                setAcceptedTerms(checked);
-                if (checked && errors.terms) {
-                  setErrors({ ...errors, terms: undefined });
-                }
-              }}
-              error={errors.terms}
-            />
-
+              <TermsCheckbox
+                checked={acceptedTerms}
+                onCheckedChange={(checked) => {
+                  setAcceptedTerms(checked);
+                  if (checked && errors.terms) {
+                    setErrors({ ...errors, terms: undefined });
+                  }
+                }}
+                error={errors.terms}
+              />
 
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full h-11 text-base bg-teal-600 hover:bg-teal-700"
+                className="w-full h-11 text-base gradient-brand-semantic hover:opacity-90"
                 disabled={isLoading || !acceptedTerms}
               >
                 {isLoading ? (
@@ -383,11 +379,11 @@ export default function RegisterPage() {
 
             {/* Login link */}
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-content-secondary">
                 มีบัญชีอยู่แล้ว?{" "}
                 <Link
                   href="/login"
-                  className="text-teal-600 hover:text-teal-800 font-medium"
+                  className="text-interactive-primary hover:opacity-80 font-medium"
                 >
                   เข้าสู่ระบบ
                 </Link>
@@ -397,7 +393,7 @@ export default function RegisterPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-muted-foreground">
+        <div className="text-center mt-8 text-sm text-content-secondary">
           <p>NextHealTH Sandbox - Public Health Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>

@@ -1,4 +1,4 @@
-// app/login/page.tsx (OLD Classname)
+// app/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -121,7 +121,6 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // Better Auth handles auto-registration for new Google users
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/dashboard",
@@ -143,7 +142,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center from-teal-500/10 via-emerald-500/10 to-cyan-500/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-surface-primary p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -151,14 +150,14 @@ export default function LoginPage() {
             href="/"
             className="inline-flex items-center gap-3 mb-4 group hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <div className="w-12 h-12 bg-linear-to-br from-teal-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 gradient-brand-semantic rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
               <Stethoscope className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-content-primary">
                 NextHealTH Sandbox
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-content-secondary">
                 Public Health Innovation Sandbox
               </p>
             </div>
@@ -166,7 +165,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Form */}
-        <Card className="shadow-xl border-border bg-card/80 backdrop-blur-sm">
+        <Card className="shadow-xl border-border-primary bg-card/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-xl text-center">เข้าสู่ระบบ</CardTitle>
             <CardDescription className="text-center">
@@ -197,7 +196,7 @@ export default function LoginPage() {
                 <Separator className="w-full" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">
+                <span className="bg-card px-2 text-content-secondary">
                   หรือใช้อีเมล
                 </span>
               </div>
@@ -245,9 +244,9 @@ export default function LoginPage() {
                     disabled={isLoading || isGoogleLoading}
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4 text-muted-foreground" />
+                      <EyeOff className="w-4 h-4 text-content-secondary" />
                     ) : (
-                      <Eye className="w-4 h-4 text-muted-foreground" />
+                      <Eye className="w-4 h-4 text-content-secondary" />
                     )}
                   </Button>
                 </div>
@@ -262,7 +261,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full h-11 text-base bg-teal-600 hover:bg-teal-700"
+                className="w-full h-11 text-base gradient-brand-semantic hover:opacity-90"
                 disabled={isLoading || isGoogleLoading}
               >
                 {isLoading ? (
@@ -277,11 +276,11 @@ export default function LoginPage() {
             </form>
 
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-content-secondary">
                 ยังไม่มีบัญชี?{" "}
                 <Link
                   href="/register"
-                  className="text-teal-600 hover:text-teal-800 font-medium"
+                  className="text-interactive-primary hover:opacity-80 font-medium"
                 >
                   สร้างบัญชี
                 </Link>
@@ -291,7 +290,7 @@ export default function LoginPage() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-muted-foreground">
+        <div className="text-center mt-8 text-sm text-content-secondary">
           <p>NextHealTH Sandbox - Public Health Innovation Sandbox</p>
           <p>© 2025 - Educational & Experimental Use Only</p>
         </div>
