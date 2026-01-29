@@ -28,9 +28,6 @@ export function CommentList({
       <div className="text-center py-8 text-content-secondary">
         <MessageSquare className="w-12 h-12 mx-auto mb-3 text-content-tertiary" />
         <p className="text-sm">ยังไม่มีความคิดเห็น</p>
-        <p className="text-xs text-content-tertiary mt-1">
-          เป็นคนแรกที่แสดงความคิดเห็น!
-        </p>
       </div>
     );
   }

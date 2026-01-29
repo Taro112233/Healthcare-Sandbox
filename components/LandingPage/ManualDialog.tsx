@@ -160,7 +160,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
                     อยู่ในการทดสอบ (In Testing)
                   </h4>
                   <p className="text-xs text-content-secondary">
-                    ทดลองใช้งานและรับ Feedback เพื่อปรับปรุง
+                    ทีมกำลังทดสอบความแม่นยำและความปลอดภัยของเครื่องมือ
                   </p>
                 </div>
               </div>
