@@ -17,8 +17,8 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 
-const COOKIE_CONSENT_KEY = 'hlab-cookie-consent';
-const COOKIE_PREFERENCES_KEY = 'hlab-cookie-preferences';
+const COOKIE_CONSENT_KEY = 'nexthealth-cookie-consent';
+const COOKIE_PREFERENCES_KEY = 'nexthealth-cookie-preferences';
 
 interface CookiePreferences {
   necessary: boolean;
