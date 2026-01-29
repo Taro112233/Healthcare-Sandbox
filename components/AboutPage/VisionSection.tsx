@@ -32,7 +32,7 @@ const highlights = [
 
 export function VisionSection() {
   return (
-    <section className="py-20 px-4 bg-surface-secondary">
+    <section className="py-12 md:py-20 px-4 bg-surface-secondary">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial="hidden"
@@ -40,12 +40,12 @@ export function VisionSection() {
           viewport={{ once: true }}
           variants={fadeIn}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-content-primary mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-content-primary mb-4">
             วิสัยทัศน์
           </h2>
-          <p className="text-xl text-content-secondary max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-content-secondary max-w-3xl mx-auto">
             สร้างพื้นที่ทดลองพัฒนาเครื่องมือดิจิทัลสำหรับบุคลากรทางการแพทย์
           </p>
         </motion.div>
@@ -57,36 +57,36 @@ export function VisionSection() {
           viewport={{ once: true }}
           variants={fadeIn}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-12"
+          className="mb-8 md:mb-12"
         >
-          <div className="relative overflow-hidden gradient-brand-semantic rounded-2xl p-8 md:p-12 text-white">
+          <div className="relative overflow-hidden gradient-brand-semantic rounded-2xl p-6 sm:p-8 md:p-12 text-white">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
             
             <div className="relative z-10">
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8" />
+              <div className="flex items-center justify-center gap-3 mb-4 md:mb-6">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                   5 ปีข้างหน้า
                 </h3>
               </div>
               
-              <p className="text-xl text-white/95 leading-relaxed text-center max-w-4xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-white/95 leading-relaxed text-center max-w-4xl mx-auto">
                 เราหวังว่า NextHealTH Sandbox จะเป็นแพลตฟอร์มที่บุคลากรทางการแพทย์นึกถึง
                 เมื่อต้องการลองทำเครื่องมือดิจิทัลเพื่อแก้ปัญหาในหน้างาน
                 <br /><br />
                 และหวังว่าคำขอที่ส่งเข้ามาจะกลายเป็นฐานข้อมูลแนวทางการแก้ปัญหาที่มีคุณค่า
-                สำหรับคนอื่นๆ ที่เจอปัญหาคล้ายกัน
+                สำหรับโรงพยาบาลอื่นๆ ที่เจอปัญหาคล้ายกัน
               </p>
             </div>
           </div>
         </motion.div>
 
         {/* Highlight Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {highlights.map((item, index) => (
             <motion.div
               key={item.title}
@@ -97,18 +97,18 @@ export function VisionSection() {
               transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
               className="relative group"
             >
-              <div className="bg-card border border-border-primary rounded-2xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:border-interactive-primary hover:-translate-y-1">
+              <div className="bg-card border border-border-primary rounded-2xl p-5 md:p-6 h-full transition-all duration-300 hover:shadow-xl hover:border-interactive-primary hover:-translate-y-1">
                 {/* Icon with gradient */}
-                <div className={`w-14 h-14 rounded-xl bg-linear-to-br ${item.color} p-0.5 mb-4`}>
+                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-linear-to-br ${item.color} p-0.5 mb-3 md:mb-4`}>
                   <div className="w-full h-full bg-card rounded-xl flex items-center justify-center">
-                    <item.icon className="w-7 h-7 text-content-primary" />
+                    <item.icon className="w-6 h-6 md:w-7 md:h-7 text-content-primary" />
                   </div>
                 </div>
 
-                <h4 className="text-lg font-bold text-content-primary mb-2">
+                <h4 className="text-base sm:text-lg font-bold text-content-primary mb-2">
                   {item.title}
                 </h4>
-                <p className="text-sm text-content-secondary leading-relaxed">
+                <p className="text-xs sm:text-sm text-content-secondary leading-relaxed">
                   {item.description}
                 </p>
 

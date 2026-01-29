@@ -11,7 +11,7 @@ const fadeIn = {
 
 export function FounderSection() {
   return (
-    <section className="py-20 px-4">
+    <section className="py-12 md:py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
@@ -19,7 +19,7 @@ export function FounderSection() {
           viewport={{ once: true }}
           variants={fadeIn}
           transition={{ duration: 0.6 }}
-          className="grid md:grid-cols-2 gap-12 items-center"
+          className="grid md:grid-cols-2 gap-8 md:gap-12 items-center"
         >
           {/* Left: Image */}
           <motion.div
@@ -46,40 +46,40 @@ export function FounderSection() {
           <motion.div
             variants={fadeIn}
             transition={{ delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
           >
             <div>
-              <h2 className="text-4xl font-bold text-content-primary mb-2">
+              <h2 className="text-3xl sm:text-4xl font-bold text-content-primary mb-2">
                 นสภ.ธนธัช ธำรงโสตถิสกุล
               </h2>
-              <p className="text-xl text-interactive-primary font-medium">
+              <p className="text-lg sm:text-xl text-interactive-primary font-medium">
                 Founder & Developer
               </p>
             </div>
 
             <div className="relative">
-              <blockquote className="text-lg text-content-secondary leading-relaxed pl-6 border-l-4 border-interactive-primary">
+              <blockquote className="text-sm sm:text-base md:text-lg text-content-secondary leading-relaxed pl-4 md:pl-6 border-l-4 border-interactive-primary">
                 &ldquo;ผมเชื่อว่าการมีระบบที่ดีหรือเทคโนโลยีที่ช่วยอำนวยความสะดวกให้กับคนทำงานในสายงานนี้ 
                 จะช่วยให้เขาได้มีเวลาพักผ่อนที่เพิ่มขึ้น และทำให้มีประสิทธิภาพในการดูแลผู้ป่วยที่มากขึ้น
                 <br /><br />
                 NextHealTH Sandbox คือพื้นที่ที่ให้โอกาสได้เริ่มไอเดียหรือแนวคิดใหม่ๆ 
                 โดยเริ่มจากทำให้มันเกิดขึ้นจริงก่อนเป็นอันดับแรก ไม่สนว่ามันจะเวิร์กมั้ย 
-                ถ้ามีคนต้องการมัน เราก็จะจัดให้&rdquo;
+                ถ้ามีคนต้องการมัน เราก็จะทำให้เต็มที่&rdquo;
               </blockquote>
             </div>
 
-            <div className="space-y-4 pt-4">
+            <div className="space-y-3 md:space-y-4 pt-2 md:pt-4">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
-                <p className="text-content-secondary">
-                  <strong className="text-content-primary">นิสิตเภสัชศาสตร์ที่เขียนโปรแกรมได้</strong> — 
+                <p className="text-sm sm:text-base text-content-secondary">
+                  <strong className="text-content-primary">Pharmacist & Full-Stack Developer</strong> — 
                   เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยีเพื่อพัฒนาระบบสาธารณสุขให้ดีขึ้น
                 </p>
               </div>
               
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
-                <p className="text-content-secondary">
+                <p className="text-sm sm:text-base text-content-secondary">
                   <strong className="text-content-primary">Healthcare Systems Builder</strong> — 
                   ฝึกงานในโรงพยาบาลหลายแห่งตลอด 1 ปี เห็นปัญหาจริงที่สามารถแก้ได้ด้วยเทคโนโลยี
                 </p>
@@ -87,9 +87,9 @@ export function FounderSection() {
               
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
-                <p className="text-content-secondary">
+                <p className="text-sm sm:text-base text-content-secondary">
                   <strong className="text-content-primary">Problem Solver</strong> — 
-                  สร้างแพลตฟอร์มให้คนที่ไม่มีโอกาสพัฒนาเครื่องมือเองได้มีโอกาสเสนอและลองทำจริง
+                  สร้างแพลตฟอร์มให้ทุกโรงพยาบาลเข้าถึงโอกาสในการพัฒนาเครื่องมือดิจิทัล
                 </p>
               </div>
             </div>
