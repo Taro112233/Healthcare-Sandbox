@@ -160,8 +160,8 @@ export default function ShowcasePage() {
       {/* Header */}
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-4xl font-bold mb-2">UI Component Showcase</h1>
-          <p className="text-lg text-muted-foreground">
+          <h1 className="text-4xl font-bold mb-2 text-content-primary">UI Component Showcase</h1>
+          <p className="text-lg text-content-secondary">
             A comprehensive collection of {allComponents.length} UI components built with Radix UI, Tailwind CSS, and Framer Motion.
           </p>
         </div>
@@ -170,7 +170,7 @@ export default function ShowcasePage() {
       {/* Search and Filter */}
       <div className="mb-6 flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-content-secondary" />
           <Input
             placeholder="Search components..."
             value={search}
@@ -195,7 +195,7 @@ export default function ShowcasePage() {
       {/* Component Grid */}
       {filteredComponents.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">No components found matching your search.</p>
+          <p className="text-content-secondary">No components found matching your search.</p>
         </div>
       ) : (
         <div className="space-y-12">
@@ -207,7 +207,7 @@ export default function ShowcasePage() {
               <section 
                 key={componentName} 
                 id={componentName.toLowerCase()}
-                className="border rounded-lg p-6 bg-card scroll-mt-8"
+                className="border border-border-primary rounded-lg p-6 bg-card scroll-mt-8"
               >
                 <ShowcaseComponent />
               </section>
@@ -218,8 +218,8 @@ export default function ShowcasePage() {
 
       {/* Quick Navigation */}
       <div className="fixed bottom-4 right-4 hidden lg:block">
-        <div className="bg-background border rounded-lg shadow-lg p-4 max-h-[400px] overflow-hidden">
-          <p className="text-sm font-medium mb-2">Quick Navigation</p>
+        <div className="bg-surface-primary border border-border-primary rounded-lg shadow-lg p-4 max-h-[400px] overflow-hidden">
+          <p className="text-sm font-medium mb-2 text-content-primary">Quick Navigation</p>
           <ScrollArea className="h-[300px]">
             <div className="space-y-1">
               {filteredComponents.map((name) => (
@@ -227,7 +227,7 @@ export default function ShowcasePage() {
                   key={name}
                   href={`#${name.toLowerCase()}`}
                   onClick={(e) => handleNavClick(e, name.toLowerCase())}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
+                  className="block text-sm text-content-secondary hover:text-content-primary transition-colors py-1"
                 >
                   {name}
                 </a>

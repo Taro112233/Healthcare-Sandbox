@@ -26,16 +26,13 @@ Directory structure:
     │   │   ├── auth/
     │   │   │   └── [...all]/
     │   │   │       └── route.ts
-    │   │   ├── requests/
-    │   │   │   ├── route.ts
-    │   │   │   ├── [id]/
-    │   │   │   │   ├── route.ts
-    │   │   │   │   └── comments/
-    │   │   │   │       └── route.ts
-    │   │   │   └── upload/
-    │   │   │       └── route.ts
-    │   │   └── security/
-    │   │       └── monitoring/
+    │   │   └── requests/
+    │   │       ├── route.ts
+    │   │       ├── [id]/
+    │   │       │   ├── route.ts
+    │   │       │   └── comments/
+    │   │       │       └── route.ts
+    │   │       └── upload/
     │   │           └── route.ts
     │   ├── dashboard/
     │   │   └── page.tsx
@@ -59,8 +56,7 @@ Directory structure:
     │   └── terms-of-service/
     │       └── page.tsx
     ├── components/
-    │   ├── theme-provider.tsx
-    │   ├── theme-toggle.tsx
+    │   ├── AuthGuard.tsx
     │   ├── AboutPage/
     │   │   ├── FounderSection.tsx
     │   │   ├── HeroSection.tsx
@@ -76,11 +72,6 @@ Directory structure:
     │   │   ├── HeroSection.tsx
     │   │   ├── ManualDialog.tsx
     │   │   └── ProductShowcaseSection.tsx
-    │   ├── ProfileForm/
-    │   │   ├── BasicInfoSection.tsx
-    │   │   ├── ConfirmDialog.tsx
-    │   │   ├── index.tsx
-    │   │   └── PasswordSection.tsx
     │   ├── providers/
     │   │   └── AuthProvider.tsx
     │   ├── RequestDetail/
@@ -94,6 +85,7 @@ Directory structure:
     │   │       └── index.tsx
     │   ├── RequestForm/
     │   │   ├── FileUploadSection.tsx
+    │   │   ├── GuideDialog.tsx
     │   │   └── index.tsx
     │   ├── RequestList/
     │   │   ├── index.tsx
@@ -219,6 +211,8 @@ Directory structure:
     │   │       └── index.tsx
     │   ├── TermsCheckbox/
     │   │   └── index.tsx
+    │   ├── theme/
+    │   │   └── CompactThemeSelector.tsx
     │   └── ui/
     │       ├── accordion.tsx
     │       ├── alert-dialog.tsx
@@ -283,7 +277,8 @@ Directory structure:
     │   ├── use-theme-transition.ts
     │   ├── useComments.ts
     │   ├── useCurrentUser.ts
-    │   └── useRequests.ts
+    │   ├── useRequests.ts
+    │   └── useTheme.ts
     ├── lib/
     │   ├── auth-client.ts
     │   ├── auth.ts
@@ -291,10 +286,10 @@ Directory structure:
     │   ├── file-upload.ts
     │   ├── file-validation.ts
     │   ├── prisma.ts
-    │   ├── reserved-routes.ts
     │   ├── rich-text-utils.ts
     │   ├── role-helpers.ts
     │   ├── security-logger.ts
+    │   ├── theme-manager.ts
     │   └── utils.ts
     ├── prisma/
     │   ├── schema.prisma

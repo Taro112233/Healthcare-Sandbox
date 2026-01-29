@@ -1,4 +1,13 @@
 // lib/theme-manager.ts
+"use client"; // จำเป็นหากใช้ใน Next.js App Router
+
+import { 
+  Stethoscope, 
+  Syringe, 
+  Leaf, 
+  Microscope, 
+  type LucideIcon 
+} from "lucide-react";
 
 export type ThemeId = "medical" | "clinical" | "wellness" | "research";
 export type ThemeMode = "light" | "dark";
@@ -8,7 +17,7 @@ export interface Theme {
   name: string;
   description: string;
   colors: [string, string];
-  preview: string;
+  preview: LucideIcon; // เปลี่ยนจาก emoji string เป็น LucideIcon component
   accent: string;
 }
 
@@ -18,7 +27,7 @@ export const MEDICAL_THEMES: Theme[] = [
     name: "Medical Teal",
     description: "Professional medical teal",
     colors: ["oklch(0.65 0.15 200)", "oklch(0.70 0.15 190)"],
-    preview: "🏥",
+    preview: Stethoscope,
     accent: "oklch(0.65 0.15 200)",
   },
   {
@@ -26,7 +35,7 @@ export const MEDICAL_THEMES: Theme[] = [
     name: "Clinical Blue",
     description: "Hospital standard blue",
     colors: ["oklch(0.60 0.18 250)", "oklch(0.55 0.20 240)"],
-    preview: "💉",
+    preview: Syringe,
     accent: "oklch(0.60 0.18 250)",
   },
   {
@@ -34,7 +43,7 @@ export const MEDICAL_THEMES: Theme[] = [
     name: "Wellness Green",
     description: "Healing green vibes",
     colors: ["oklch(0.60 0.15 158)", "oklch(0.50 0.18 165)"],
-    preview: "🌿",
+    preview: Leaf,
     accent: "oklch(0.60 0.15 158)",
   },
   {
@@ -42,12 +51,14 @@ export const MEDICAL_THEMES: Theme[] = [
     name: "Research Purple",
     description: "Scientific purple",
     colors: ["oklch(0.65 0.20 300)", "oklch(0.70 0.18 290)"],
-    preview: "🔬",
+    preview: Microscope,
     accent: "oklch(0.65 0.20 300)",
   },
 ];
 
 export function applyTheme(themeId: ThemeId, mode: ThemeMode): void {
+  if (typeof window === "undefined") return;
+
   const fullTheme = `${themeId}-${mode}`;
   document.documentElement.setAttribute("data-theme", fullTheme);
 
@@ -55,10 +66,10 @@ export function applyTheme(themeId: ThemeId, mode: ThemeMode): void {
   localStorage.setItem("nexthealth-theme", themeId);
   localStorage.setItem("nexthealth-mode", mode);
 
-  // Smooth transition
-  document.documentElement.style.transition =
-    "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
-  setTimeout(() => {
+  // Smooth transition logic
+  document.documentElement.style.transition = "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)";
+  
+  const timer = setTimeout(() => {
     document.documentElement.style.transition = "";
   }, 400);
 }
@@ -68,14 +79,12 @@ export function getInitialTheme(): { theme: ThemeId; mode: ThemeMode } {
     return { theme: "medical", mode: "dark" };
   }
 
-  const savedTheme =
-    (localStorage.getItem("nexthealth-theme") as ThemeId) || "medical";
+  const savedTheme = localStorage.getItem("nexthealth-theme") as ThemeId;
+  const validTheme = MEDICAL_THEMES.find(t => t.id === savedTheme) ? savedTheme : "medical";
+  
   const savedMode = localStorage.getItem("nexthealth-mode") as ThemeMode;
-
-  const systemPrefersDark = window.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const mode = savedMode || (systemPrefersDark ? "dark" : "light");
 
-  return { theme: savedTheme, mode };
+  return { theme: validTheme, mode };
 }
