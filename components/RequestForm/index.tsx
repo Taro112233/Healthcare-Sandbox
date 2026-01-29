@@ -220,7 +220,7 @@ export function RequestForm() {
         </CardHeader>
         <CardContent>
           <Input
-            placeholder="เช่น ห้องฉุกเฉิน, OPD อายุรกรรม, หอผู้ป่วยศัลยกรรม, ห้องยา"
+            placeholder="เช่น ห้องยานอก โรงพยาบาลสู่สวรรค์"
             value={formData.department}
             onChange={(e) => handleInputChange('department', e.target.value)}
             className={errors.department ? 'border-alert-error-border' : ''}
@@ -276,17 +276,16 @@ export function RequestForm() {
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-alert-error-text flex items-center gap-2">
             <AlertCircle className="w-5 h-5" />
-            Pain Point หน้างาน
+            Pain Point
           </CardTitle>
           <CardDescription>
-            อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน (รองรับการจัดรูปแบบข้อความ)
+            อธิบายปัญหาที่คุณพบในการทำงานปัจจุบัน
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 pt-0">
           <RichTextEditor
             content={formData.painPoint}
             onChange={(content) => handleInputChange('painPoint', content)}
-            placeholder="เช่น ต้องคำนวณ dose ยาด้วยมือทุกครั้ง ซึ่งใช้เวลานานและเสี่ยงต่อการผิดพลาด..."
             disabled={isSubmitting}
           />
           {errors.painPoint && (
@@ -310,7 +309,6 @@ export function RequestForm() {
           <RichTextEditor
             content={formData.currentWorkflow}
             onChange={(content) => handleInputChange('currentWorkflow', content)}
-            placeholder="เช่น 1. ดูน้ำหนักผู้ป่วยจาก chart 2. หาสูตรคำนวณจากหนังสือ 3. คำนวณด้วยเครื่องคิดเลข..."
             disabled={isSubmitting}
           />
           {errors.currentWorkflow && (
@@ -334,7 +332,6 @@ export function RequestForm() {
           <RichTextEditor
             content={formData.expectedTechHelp}
             onChange={(content) => handleInputChange('expectedTechHelp', content)}
-            placeholder="เช่น อยากได้เครื่องคำนวณที่ใส่น้ำหนักแล้วแสดง dose ทันที รองรับยาหลายชนิด..."
             disabled={isSubmitting}
           />
           {errors.expectedTechHelp && (
