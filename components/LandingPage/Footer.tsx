@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Stethoscope, Mail, FileText, Shield, HelpCircle, Users } from 'lucide-react';
+import { Stethoscope, Shield, HelpCircle } from 'lucide-react';
 
 export function Footer() {
   return (

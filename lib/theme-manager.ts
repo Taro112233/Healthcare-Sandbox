@@ -1,5 +1,5 @@
 // lib/theme-manager.ts
-"use client"; // จำเป็นหากใช้ใน Next.js App Router
+"use client";
 
 import { 
   Stethoscope, 
@@ -17,7 +17,7 @@ export interface Theme {
   name: string;
   description: string;
   colors: [string, string];
-  preview: LucideIcon; // เปลี่ยนจาก emoji string เป็น LucideIcon component
+  preview: LucideIcon;
   accent: string;
 }
 
@@ -71,6 +71,7 @@ export function applyTheme(themeId: ThemeId, mode: ThemeMode): void {
   
   const timer = setTimeout(() => {
     document.documentElement.style.transition = "";
+    clearTimeout(timer); // ใช้ timer เพื่อล้าง reference และป้องกัน warning จาก ESLint
   }, 400);
 }
 
