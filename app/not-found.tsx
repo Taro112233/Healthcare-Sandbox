@@ -76,8 +76,6 @@ export default function NotFound() {
                   </h3>
                   <ul className="text-sm text-alert-warning-text space-y-1">
                     <li>• URL ไม่ถูกต้องหรือพิมพ์ผิด</li>
-                    <li>• คำขอถูกลบหรือย้ายไปแล้ว</li>
-                    <li>• ลิงก์หมดอายุหรือไม่ถูกต้อง</li>
                     <li>• คุณไม่มีสิทธิ์เข้าถึงหน้านี้</li>
                   </ul>
                 </motion.div>
@@ -117,7 +115,13 @@ export default function NotFound() {
                   <p>
                     หากคุณคิดว่านี่เป็นข้อผิดพลาด
                     <br />
-                    กรุณาติดต่อผู้ดูแลระบบ
+                    กรุณา
+                    <Link 
+                      href="/about" 
+                      className="text-interactive-primary hover:underline font-medium mx-1"
+                    >
+                      ติดต่อผู้ดูแลระบบ
+                    </Link>
                   </p>
                 </motion.div>
               </div>
