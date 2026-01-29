@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Quote } from 'lucide-react';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -59,10 +58,13 @@ export function FounderSection() {
             </div>
 
             <div className="relative">
-              <Quote className="absolute -top-2 -left-2 w-8 h-8 text-interactive-primary/20" />
               <blockquote className="text-lg text-content-secondary leading-relaxed pl-6 border-l-4 border-interactive-primary">
-                &ldquo;ผมเชื่อว่าเทคโนโลยีควรช่วยแก้ปัญหาจริงในหน้างาน ไม่ใช่สร้างภาระเพิ่ม 
-                NextHealTH Sandbox เกิดจากประสบการณ์การทำงานเป็นเภสัชกร และเห็นปัญหาที่ต้องแก้ด้วยมือทุกวัน&rdquo;
+                &ldquo;ผมเชื่อว่าการมีระบบที่ดีหรือเทคโนโลยีที่ช่วยอำนวยความสะดวกให้กับคนทำงานในสายงานนี้ 
+                จะช่วยให้เขาได้มีเวลาพักผ่อนที่เพิ่มขึ้น และทำให้มีประสิทธิภาพในการดูแลผู้ป่วยที่มากขึ้น
+                <br /><br />
+                NextHealTH Sandbox คือพื้นที่ที่ให้โอกาสได้เริ่มไอเดียหรือแนวคิดใหม่ๆ 
+                โดยเริ่มจากทำให้มันเกิดขึ้นจริงก่อนเป็นอันดับแรก ไม่สนว่ามันจะเวิร์กมั้ย 
+                ถ้ามีคนต้องการมัน เราก็จะจัดให้&rdquo;
               </blockquote>
             </div>
 
@@ -70,8 +72,8 @@ export function FounderSection() {
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
                 <p className="text-content-secondary">
-                  <strong className="text-content-primary">Pharmacist & Full-Stack Developer</strong> — 
-                  เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยี
+                  <strong className="text-content-primary">นิสิตเภสัชศาสตร์ที่เขียนโปรแกรมได้</strong> — 
+                  เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยีเพื่อพัฒนาระบบสาธารณสุขให้ดีขึ้น
                 </p>
               </div>
               
@@ -79,7 +81,7 @@ export function FounderSection() {
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
                 <p className="text-content-secondary">
                   <strong className="text-content-primary">Healthcare Systems Builder</strong> — 
-                  พัฒนาระบบโรงพยาบาลและเครื่องมือดิจิทัลที่ใช้งานจริง
+                  ฝึกงานในโรงพยาบาลหลายแห่งตลอด 1 ปี เห็นปัญหาจริงที่สามารถแก้ได้ด้วยเทคโนโลยี
                 </p>
               </div>
               
@@ -87,7 +89,7 @@ export function FounderSection() {
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
                 <p className="text-content-secondary">
                   <strong className="text-content-primary">Problem Solver</strong> — 
-                  มุ่งเน้นแก้ pain point จริงด้วยเทคโนโลยีที่เข้าถึงได้
+                  สร้างแพลตฟอร์มให้คนที่ไม่มีโอกาสพัฒนาเครื่องมือเองได้มีโอกาสเสนอและลองทำจริง
                 </p>
               </div>
             </div>

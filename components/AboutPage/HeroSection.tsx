@@ -35,9 +35,9 @@ export function HeroSection() {
             transition={{ delay: 0.3 }}
             className="text-xl text-content-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            เราสร้างพื้นที่ให้คนในโรงพยาบาลส่งไอเดีย
+            เราสร้างพื้นที่ให้บุคลากรทางการแพทย์ส่งไอเดียและปัญหาที่เจอจริง
             <br />
-            แล้วทดลองพัฒนาเป็นเครื่องมือดิจิทัลที่ใช้ได้จริง
+            แล้วทดลองพัฒนาเป็นเครื่องมือดิจิทัลที่ใช้งานได้จริง
           </motion.p>
         </motion.div>
       </div>
