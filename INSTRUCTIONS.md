@@ -5,7 +5,6 @@
 **HealthTech Sandbox** เป็นแพลตฟอร์ม Sandbox สำหรับรับและพัฒนา Technology Requests จากบุคลากรทางการแพทย์
 
 **หลักการสำคัญ:**
-- ไม่ใช้ข้อมูลผู้ป่วยจริง
 - ไม่รับประกันการพัฒนา
 - เน้น educational และ experimental
 - Admin เป็น gatekeeper หลัก
