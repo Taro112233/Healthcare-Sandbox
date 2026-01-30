@@ -26,7 +26,7 @@ const statusIcons: Record<RequestStatus, React.ReactNode> = {
   IN_DEVELOPMENT: <Code className="w-3 h-3" />,
   IN_TESTING: <TestTube className="w-3 h-3" />,
   COMPLETED: <CheckCircle className="w-3 h-3" />,
-  BEYOND_CAPACITY: <XCircle className="w-3 h-3" />,
+  OUT_OF_SCOPE: <XCircle className="w-3 h-3" />,
 };
 
 export function StatusBadge({ status, size = 'md', showIcon = true }: StatusBadgeProps) {

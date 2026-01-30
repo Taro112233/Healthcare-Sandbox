@@ -150,7 +150,7 @@ enum RequestStatus {
   IN_DEVELOPMENT = "อยู่ในการพัฒนา",
   IN_TESTING = "อยู่ในการทดสอบ",
   COMPLETED = "สำเร็จ",
-  BEYOND_CAPACITY = "เกินความสามารถ"
+  OUT_OF_SCOPE = "อยู่นอกขอบเขต"
 }
 ```
 

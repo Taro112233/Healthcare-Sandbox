@@ -55,7 +55,7 @@ export function CommentInput({ user, currentStatus, onSubmit, isSubmitting }: Co
     'IN_DEVELOPMENT',
     'IN_TESTING',
     'COMPLETED',
-    'BEYOND_CAPACITY',
+    'OUT_OF_SCOPE',
   ];
 
   return (

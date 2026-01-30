@@ -211,7 +211,7 @@ export default function RequestPolicyPage() {
                     <Info className="h-4 w-4 text-alert-info-icon" />
                     <AlertDescription className="text-alert-info-text">
                       <strong>หมายเหตุ:</strong> ระยะเวลาเป็นเพียงประมาณการ และขึ้นกับความซับซ้อนของคำขอ
-                      ทีมพัฒนาสามารถเปลี่ยนสถานะเป็น &quot;เกินความสามารถ (Beyond Capacity)&quot; ได้หากคำขอซับซ้อนเกินไป
+                      ทีมพัฒนาสามารถเปลี่ยนสถานะเป็น &quot;อยู่นอกขอบเขต (Out of Scope)&quot; ได้หากคำขอซับซ้อนเกินไป
                     </AlertDescription>
                   </Alert>
                 </CardContent>

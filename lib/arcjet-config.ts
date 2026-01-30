@@ -4,6 +4,34 @@
 import arcjet, { detectBot, shield, tokenBucket, slidingWindow } from "@arcjet/next";
 import { NextRequest } from "next/server";
 
+// ===== TYPE DEFINITIONS =====
+
+/**
+ * Arcjet decision result type
+ * Based on @arcjet/next types
+ */
+interface ArcjetReason {
+  isRateLimit?: () => boolean;
+  isBot?: () => boolean;
+  isShield?: () => boolean;
+  resetTime?: number;
+  max?: number;
+  remaining?: number;
+}
+
+interface ArcjetResult {
+  reason?: ArcjetReason;
+  max?: number;
+  remaining?: number;
+  resetTime?: number;
+}
+
+interface ArcjetDecision {
+  isDenied: () => boolean;
+  reason: ArcjetReason;
+  results: ArcjetResult[];
+}
+
 // ===== ARCJET INSTANCES =====
 
 /**
@@ -108,9 +136,9 @@ export function getClientIP(request: NextRequest): string {
   // 3. Try request.ip (exists in runtime but not in types)
   // This is available in Vercel Edge runtime and local dev
   try {
-    const reqAny = request as any;
-    if (reqAny.ip && typeof reqAny.ip === "string") {
-      return reqAny.ip;
+    const reqWithIP = request as NextRequest & { ip?: string };
+    if (reqWithIP.ip && typeof reqWithIP.ip === "string") {
+      return reqWithIP.ip;
     }
   } catch {
     // Ignore if property doesn't exist
@@ -123,35 +151,35 @@ export function getClientIP(request: NextRequest): string {
 /**
  * Check Arcjet decision and return standardized error response
  */
-export function handleArcjetDecision(decision: any) {
+export function handleArcjetDecision(decision: ArcjetDecision) {
   if (decision.isDenied()) {
-    if (decision.reason.isRateLimit()) {
+    if (decision.reason.isRateLimit?.()) {
       return {
         error: "Too many requests. Please try again later.",
-        code: "RATE_LIMIT_EXCEEDED",
+        code: "RATE_LIMIT_EXCEEDED" as const,
         retryAfter: decision.reason.resetTime
           ? Math.ceil((decision.reason.resetTime - Date.now()) / 1000)
           : 60,
       };
     }
 
-    if (decision.reason.isBot()) {
+    if (decision.reason.isBot?.()) {
       return {
         error: "Automated requests are not allowed",
-        code: "BOT_DETECTED",
+        code: "BOT_DETECTED" as const,
       };
     }
 
-    if (decision.reason.isShield()) {
+    if (decision.reason.isShield?.()) {
       return {
         error: "Request blocked for security reasons",
-        code: "SECURITY_VIOLATION",
+        code: "SECURITY_VIOLATION" as const,
       };
     }
 
     return {
       error: "Access denied",
-      code: "ACCESS_DENIED",
+      code: "ACCESS_DENIED" as const,
     };
   }
 
@@ -161,16 +189,16 @@ export function handleArcjetDecision(decision: any) {
 /**
  * Get rate limit information from Arcjet decision
  */
-export function getRateLimitInfo(decision: any) {
-  const rateLimit = decision.results.find((r: any) => 
-    r.reason?.isRateLimit?.() || r.reason?.max
+export function getRateLimitInfo(decision: ArcjetDecision) {
+  const rateLimit = decision.results.find((r: ArcjetResult) => 
+    r.reason?.isRateLimit?.() || r.reason?.max !== undefined
   );
 
   if (!rateLimit) return null;
 
   return {
-    limit: rateLimit.reason?.max || rateLimit.max,
-    remaining: rateLimit.reason?.remaining || rateLimit.remaining,
-    reset: rateLimit.reason?.resetTime || rateLimit.resetTime,
+    limit: rateLimit.reason?.max ?? rateLimit.max ?? 0,
+    remaining: rateLimit.reason?.remaining ?? rateLimit.remaining ?? 0,
+    reset: rateLimit.reason?.resetTime ?? rateLimit.resetTime,
   };
 }

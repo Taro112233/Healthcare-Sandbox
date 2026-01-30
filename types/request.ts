@@ -27,7 +27,7 @@ export const REQUEST_STATUS_VALUES: Record<RequestStatus, RequestStatus> = {
   IN_DEVELOPMENT: 'IN_DEVELOPMENT',
   IN_TESTING: 'IN_TESTING',
   COMPLETED: 'COMPLETED',
-  BEYOND_CAPACITY: 'BEYOND_CAPACITY',
+  OUT_OF_SCOPE: 'OUT_OF_SCOPE',
 };
 
 // ===== STATUS DISPLAY INFO =====
@@ -73,12 +73,12 @@ export const REQUEST_STATUS_INFO: Record<RequestStatus, {
     bgColor: 'bg-green-100',
     textColor: 'text-green-800',
   },
-  BEYOND_CAPACITY: {
-    label: 'Beyond Capacity',
-    labelTh: 'เกินความสามารถ',
-    color: 'bg-gray-500',
-    bgColor: 'bg-gray-100',
-    textColor: 'text-gray-800',
+  OUT_OF_SCOPE: {
+    label: 'Out of Scope',
+    labelTh: 'อยู่นอกขอบเขต',
+    color: 'bg-red-500',
+    bgColor: 'bg-red-100',
+    textColor: 'text-red-800',
   },
 };
 
@@ -227,7 +227,7 @@ export interface RequestStats {
   pending: number;
   inDevelopment: number;
   completed: number;
-  beyondCapacity: number;
+  outOfScope: number;
   byType: Record<RequestType, number>;
 }
 

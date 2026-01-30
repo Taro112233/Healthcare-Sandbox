@@ -25,7 +25,7 @@ const CreateCommentSchema = z.object({
     'IN_DEVELOPMENT',
     'IN_TESTING',
     'COMPLETED',
-    'BEYOND_CAPACITY',
+    'OUT_OF_SCOPE',
   ]).optional(),
   toStatus: z.enum([
     'PENDING_REVIEW',
@@ -33,7 +33,7 @@ const CreateCommentSchema = z.object({
     'IN_DEVELOPMENT',
     'IN_TESTING',
     'COMPLETED',
-    'BEYOND_CAPACITY',
+    'OUT_OF_SCOPE',
   ]).optional(),
 });
 

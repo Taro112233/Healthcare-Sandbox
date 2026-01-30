@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-01-30T18:21:19.319Z
+// Last generated: 2026-01-30T19:23:46.239Z
 // HealthTech Sandbox
 
 generator client {
@@ -258,5 +258,5 @@ enum RequestStatus {
   IN_DEVELOPMENT
   IN_TESTING
   COMPLETED
-  BEYOND_CAPACITY
+  OUT_OF_SCOPE
 }
