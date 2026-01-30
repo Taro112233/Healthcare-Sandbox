@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
+import { arcjetAPI, handleArcjetDecision, getRateLimitInfo, getClientIP } from '@/lib/arcjet-config';
+import { logSecurityEvent } from '@/lib/security-logger';
 
 // ✅ Define Better Auth User interface
 interface BetterAuthUser {
@@ -115,6 +117,39 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // ===== ARCJET PROTECTION =====
+    const decision = await arcjetAPI.protect(request, { requested: 2 });
+    
+    // Log security events
+    if (decision.isDenied()) {
+      logSecurityEvent({
+        type: decision.reason.isBot() ? "bot_blocked" : "rate_limit",
+        ip: getClientIP(request),
+        path: "/api/requests",
+        userAgent: request.headers.get("user-agent") || undefined,
+        details: {
+          reason: decision.reason,
+          isBot: decision.reason.isBot?.(),
+          isRateLimit: decision.reason.isRateLimit?.(),
+        },
+      });
+    }
+    
+    // Handle denial
+    const arcjetError = handleArcjetDecision(decision);
+    if (arcjetError) {
+      return NextResponse.json(
+        { success: false, error: arcjetError.error, code: arcjetError.code },
+        { 
+          status: arcjetError.code === "RATE_LIMIT_EXCEEDED" ? 429 : 403,
+          headers: arcjetError.retryAfter 
+            ? { "Retry-After": arcjetError.retryAfter.toString() }
+            : undefined,
+        }
+      );
+    }
+    
+    // ===== AUTHENTICATION =====
     const session = await auth.api.getSession({
       headers: request.headers,
     });
@@ -126,6 +161,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    // ===== VALIDATION =====
     const body = await request.json();
     const validation = CreateRequestSchema.safeParse(body);
     
@@ -145,6 +181,7 @@ export async function POST(request: NextRequest) {
     
     const { department, painPoint, currentWorkflow, expectedTechHelp, requestType, attachmentUrls } = validation.data;
     
+    // ===== CREATE REQUEST =====
     const newRequest = await prisma.$transaction(async (tx) => {
       const created = await tx.request.create({
         data: {
@@ -194,7 +231,9 @@ export async function POST(request: NextRequest) {
     
     console.log(`✅ Request created: ${newRequest?.id} by user: ${session.user.id}`);
     
-    return NextResponse.json(
+    // ===== RESPONSE WITH RATE LIMIT HEADERS =====
+    const rateLimitInfo = getRateLimitInfo(decision);
+    const response = NextResponse.json(
       {
         success: true,
         data: newRequest,
@@ -202,6 +241,16 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
+    
+    if (rateLimitInfo) {
+      response.headers.set("X-RateLimit-Limit", rateLimitInfo.limit.toString());
+      response.headers.set("X-RateLimit-Remaining", rateLimitInfo.remaining.toString());
+      if (rateLimitInfo.reset) {
+        response.headers.set("X-RateLimit-Reset", rateLimitInfo.reset.toString());
+      }
+    }
+    
+    return response;
     
   } catch (error) {
     console.error('Create request error:', error);

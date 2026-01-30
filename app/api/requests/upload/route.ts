@@ -8,6 +8,8 @@ import {
   MAX_FILES_PER_REQUEST,
   getUploadConstraints,
 } from '@/lib/file-validation';
+import { arcjetUpload, handleArcjetDecision, getRateLimitInfo, getClientIP } from '@/lib/arcjet-config';
+import { logSecurityEvent } from '@/lib/security-logger';
 
 interface UploadedFile {
   filename: string;
@@ -38,6 +40,43 @@ interface UploadResponse {
 
 export async function POST(request: NextRequest): Promise<NextResponse<UploadResponse>> {
   try {
+    // ===== ARCJET PROTECTION (Stricter for uploads) =====
+    const decision = await arcjetUpload.protect(request, { requested: 1 });
+    
+    // Log security events
+    if (decision.isDenied()) {
+      logSecurityEvent({
+        type: decision.reason.isBot() ? "bot_blocked" : "rate_limit",
+        ip: getClientIP(request),
+        path: "/api/requests/upload",
+        userAgent: request.headers.get("user-agent") || undefined,
+        details: {
+          reason: decision.reason,
+          isBot: decision.reason.isBot?.(),
+          isRateLimit: decision.reason.isRateLimit?.(),
+        },
+      });
+    }
+    
+    // Handle denial
+    const arcjetError = handleArcjetDecision(decision);
+    if (arcjetError) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: arcjetError.error, 
+          constraints: getUploadConstraints(),
+        },
+        { 
+          status: arcjetError.code === "RATE_LIMIT_EXCEEDED" ? 429 : 403,
+          headers: arcjetError.retryAfter 
+            ? { "Retry-After": arcjetError.retryAfter.toString() }
+            : undefined,
+        }
+      );
+    }
+    
+    // ===== AUTHENTICATION =====
     const session = await auth.api.getSession({
       headers: request.headers,
     });
@@ -53,6 +92,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
+    // ===== FORM DATA VALIDATION =====
     let formData: FormData;
     try {
       formData = await request.formData();
@@ -105,6 +145,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       );
     }
     
+    // ===== FILE UPLOAD =====
     const { put } = await import('@vercel/blob');
     
     const uploadResults = await Promise.all(
@@ -144,6 +185,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
       })
     );
     
+    // ===== PROCESS RESULTS =====
     const uploaded: UploadedFile[] = [];
     const failed: FailedUpload[] = [];
     
@@ -169,7 +211,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
     
     console.log(`✅ Uploaded ${uploaded.length}/${files.length} files by user: ${session.user.id}`);
     
-    return NextResponse.json({
+    // ===== RESPONSE WITH RATE LIMIT HEADERS =====
+    const rateLimitInfo = getRateLimitInfo(decision);
+    const response = NextResponse.json({
       success: true,
       data: {
         uploaded,
@@ -178,6 +222,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<UploadRes
         totalFailed: failed.length,
       },
     });
+    
+    if (rateLimitInfo) {
+      response.headers.set("X-RateLimit-Limit", rateLimitInfo.limit.toString());
+      response.headers.set("X-RateLimit-Remaining", rateLimitInfo.remaining.toString());
+      if (rateLimitInfo.reset) {
+        response.headers.set("X-RateLimit-Reset", rateLimitInfo.reset.toString());
+      }
+    }
+    
+    return response;
     
   } catch (error) {
     console.error('File upload error:', error);
