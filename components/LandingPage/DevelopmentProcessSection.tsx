@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Clock, Eye, Code, TestTube, CheckCircle2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 15 },
@@ -28,15 +29,16 @@ const processSteps = [
     title: 'รอตรวจสอบ',
     description: 'ทีมตรวจสอบความเป็นไปได้',
     details: [
-      'ระยะเวลา: 1-3 วันทำการ',
       'ตรวจสอบความชัดเจนและประเมินความเป็นไปได้ทางเทคนิค',
       'พิจารณาลำดับความสำคัญและวางแผนทรัพยากร',
+      'ระยะเวลา: 1-3 วันทำการ',
     ],
-    bgColor: 'bg-alert-warning-bg',
+    bgColor: 'bg-alert-warning-bg/80',
+    iconBgColor: 'bg-alert-warning-bg',
     iconColor: 'text-alert-warning-icon',
-    borderColor: 'border-alert-warning-border',
-    glowColor: 'shadow-elevation-2',
-    activeBorder: 'border-alert-warning-border',
+    ringColor: 'ring-alert-warning-border/50',
+    activeRing: 'ring-alert-warning-border',
+    hoverBg: 'hover:bg-alert-warning-bg/60',
   },
   {
     id: 'step-2',
@@ -44,15 +46,16 @@ const processSteps = [
     title: 'อยู่ในการพิจารณา',
     description: 'วิเคราะห์ความต้องการเชิงลึก',
     details: [
-      'ระยะเวลา: 3-5 วันทำการ',
       'ประชุมสรุป Pain Point และ Workflow ร่วมกับผู้ขอ',
       'ออกแบบโซลูชันและประเมินระยะเวลาส่งมอบ',
+      'ระยะเวลา: 3-5 วันทำการ',
     ],
-    bgColor: 'bg-alert-info-bg',
+    bgColor: 'bg-alert-info-bg/80',
+    iconBgColor: 'bg-alert-info-bg',
     iconColor: 'text-alert-info-icon',
-    borderColor: 'border-alert-info-border',
-    glowColor: 'shadow-elevation-2',
-    activeBorder: 'border-alert-info-border',
+    ringColor: 'ring-alert-info-border/50',
+    activeRing: 'ring-alert-info-border',
+    hoverBg: 'hover:bg-alert-info-bg/60',
   },
   {
     id: 'step-3',
@@ -60,15 +63,16 @@ const processSteps = [
     title: 'อยู่ในการพัฒนา',
     description: 'ทีมพัฒนาสร้างเครื่องมือดิจิทัล',
     details: [
+      'พัฒนา UI/UX ให้ตรงตามความต้องการ',
+      'เขียนโค้ดและฟังก์ชันการทำงานต่างๆ',
       'ระยะเวลา: 1-4 สัปดาห์',
-      'เขียนโค้ดและพัฒนา UI/UX ให้ตรงตามโจทย์',
-      'ทดสอบภายใน (Internal QA) และปรับปรุงตามรอบ',
     ],
-    bgColor: 'bg-surface-tertiary',
+    bgColor: 'bg-interactive-primary/10',
+    iconBgColor: 'bg-interactive-primary/20',
     iconColor: 'text-interactive-primary',
-    borderColor: 'border-border-primary',
-    glowColor: 'shadow-elevation-2',
-    activeBorder: 'border-interactive-primary',
+    ringColor: 'ring-interactive-primary/40',
+    activeRing: 'ring-interactive-primary',
+    hoverBg: 'hover:bg-interactive-primary/15',
   },
   {
     id: 'step-4',
@@ -76,15 +80,16 @@ const processSteps = [
     title: 'อยู่ในการทดสอบ',
     description: 'ทดลองใช้และเก็บ Feedback',
     details: [
-      'ระยะเวลา: 3-7 วัน',
-      'ส่งลิงก์ Beta ให้ผู้ขอทดสอบใช้งานจริง',
+      'ทดสอบความปลอดภัยและความถูกต้องของเครื่องมือ',
       'แก้ไขข้อผิดพลาด (Bugs) และปรับปรุงประสิทธิภาพ',
+      'ระยะเวลา: 3-7 วัน',
     ],
-    bgColor: 'bg-alert-error-bg',
+    bgColor: 'bg-alert-error-bg/80',
+    iconBgColor: 'bg-alert-error-bg',
     iconColor: 'text-alert-error-icon',
-    borderColor: 'border-alert-error-border',
-    glowColor: 'shadow-elevation-2',
-    activeBorder: 'border-alert-error-border',
+    ringColor: 'ring-alert-error-border/50',
+    activeRing: 'ring-alert-error-border',
+    hoverBg: 'hover:bg-alert-error-bg/60',
   },
   {
     id: 'step-5',
@@ -96,11 +101,12 @@ const processSteps = [
       'แชร์คู่มือการใช้งานและสนับสนุนหลังการส่งมอบ',
       'ติดตามผลลัพธ์การใช้งานจริง',
     ],
-    bgColor: 'bg-alert-success-bg',
+    bgColor: 'bg-alert-success-bg/80',
+    iconBgColor: 'bg-alert-success-bg',
     iconColor: 'text-alert-success-icon',
-    borderColor: 'border-alert-success-border',
-    glowColor: 'shadow-elevation-2',
-    activeBorder: 'border-alert-success-border',
+    ringColor: 'ring-alert-success-border/50',
+    activeRing: 'ring-alert-success-border',
+    hoverBg: 'hover:bg-alert-success-bg/60',
   },
 ];
 
@@ -125,7 +131,7 @@ export function DevelopmentProcessSection() {
   };
 
   return (
-    <section className="py-24 px-4 bg-surface-secondary">
+    <section className="py-24 px-4 bg-surface-primary">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial="hidden"
@@ -148,18 +154,23 @@ export function DevelopmentProcessSection() {
               <motion.div key={step.id} variants={fadeIn}>
                 <AccordionItem
                   value={step.id}
-                  className={`border-2 rounded-2xl overflow-hidden bg-card transition-all duration-500 ${
+                  className={cn(
+                    "ring-[3px] rounded-2xl overflow-hidden transition-all duration-500",
+                    step.bgColor,
                     activeStep === index 
-                      ? `${step.borderColor} ${step.activeBorder} ${step.glowColor} scale-[1.02] shadow-xl` 
-                      : 'border-transparent opacity-70 grayscale-[0.3]'
-                  }`}
+                      ? `${step.activeRing} shadow-elevation-3 scale-[1.02]` 
+                      : `${step.ringColor} opacity-70`,
+                    step.hoverBg
+                  )}
                 >
                   <AccordionTrigger className="px-6 py-5 hover:no-underline group">
                     <div className="flex items-center gap-5 w-full">
-                      <div className={`w-14 h-14 ${step.bgColor} rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 ${
+                      <div className={cn(
+                        "w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500",
+                        step.iconBgColor,
                         activeStep === index ? 'scale-110 shadow-inner' : 'group-hover:scale-105'
-                      }`}>
-                        <step.icon className={`w-7 h-7 ${step.iconColor}`} />
+                      )}>
+                        <step.icon className={cn("w-7 h-7", step.iconColor)} />
                       </div>
                       <div className="flex-1 text-left">
                         <h3 className="text-xl font-bold text-content-primary mb-1 tracking-tight">{step.title}</h3>
@@ -172,7 +183,7 @@ export function DevelopmentProcessSection() {
                       <ul className="space-y-3">
                         {step.details.map((detail, idx) => (
                           <li key={idx} className="flex items-start gap-3 text-[15px] text-content-secondary">
-                            <div className={`w-2 h-2 rounded-full ${step.iconColor} mt-2 shrink-0`} />
+                            <div className={cn("w-2 h-2 rounded-full mt-2 shrink-0", step.iconColor)} />
                             <span>{detail}</span>
                           </li>
                         ))}
