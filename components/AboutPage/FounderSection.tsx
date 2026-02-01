@@ -73,7 +73,7 @@ export function FounderSection() {
               <div className="flex items-start gap-3 min-w-0">
                 <div className="w-2 h-2 rounded-full bg-interactive-primary mt-2 shrink-0" />
                 <p className="text-sm sm:text-base text-content-secondary min-w-0 wrap-break-word">
-                  <strong className="text-content-primary">Pharmacist & Full-Stack Developer</strong> — 
+                  <strong className="text-content-primary">Pharmacy Student & Full-Stack Developer</strong> — 
                   เชื่อมโยงความรู้ทางการแพทย์กับเทคโนโลยีเพื่อพัฒนาระบบสาธารณสุขให้ดีขึ้น
                 </p>
               </div>
