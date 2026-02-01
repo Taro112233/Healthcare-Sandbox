@@ -76,7 +76,7 @@ export function ManualDialog({ open, onOpenChange }: ManualDialogProps) {
                   1. กรอกข้อมูลคำขอ
                 </h4>
                 <ul className="text-xs space-y-1 text-content-secondary">
-                  <li>• ระบุหน่วยงานที่ขอ</li>
+                  <li>• ระบุหน่วยงานของคุณ</li>
                   <li>• เลือกประเภทเครื่องมือ</li>
                   <li>• อธิบาย Pain Point หน้างาน</li>
                   <li>• อธิบายขั้นตอนการทำงานปัจจุบัน</li>

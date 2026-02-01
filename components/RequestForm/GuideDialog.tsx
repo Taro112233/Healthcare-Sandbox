@@ -221,7 +221,7 @@ export function GuideDialog() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-semibold text-content-primary mb-2">
-                    🏥 หน่วยงานที่ขอ
+                    🏥 หน่วยงานของคุณ
                   </h3>
                   <div className="bg-surface-secondary rounded-lg p-3 text-sm text-content-primary">
                     ห้องยานอก โรงพยาบาลสู่สวรรค์

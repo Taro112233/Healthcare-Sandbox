@@ -1,14 +1,6 @@
 {
   "products": [
     {
-      "id": "rxdrugstore",
-      "title": "Rxdrugstore",
-      "description": "แหล่งเรียนรู้ผลิตภัณฑ์ในร้านยาสำหรับนักศึกษาเภสัช",
-      "tags": ["EDUCATION", "WEB PAGE", "2025"],
-      "videoSrc": "/products/rxdrugstore.mp4",
-      "demoUrl": "https://rxdrugstore.vercel.app/"
-    },
-    {
       "id": "substock-demo",
       "title": "Substock Management System",
       "description": "ระบบจัดการสต็อกยาสำหรับโรงพยาบาลขนาดเล็กถึงกลาง",
@@ -31,6 +23,14 @@
       "tags": ["ASSESSMENT", "WEB APP", "2025"],
       "videoSrc": "/products/qdengachecker.mp4",
       "demoUrl": "https://qdengachecker.vercel.app/"
+    },
+    {
+      "id": "rxdrugstore",
+      "title": "Rxdrugstore",
+      "description": "แหล่งเรียนรู้ผลิตภัณฑ์ในร้านยาสำหรับนักศึกษาเภสัช",
+      "tags": ["EDUCATION", "WEB PAGE", "2025"],
+      "videoSrc": "/products/rxdrugstore.mp4",
+      "demoUrl": "https://rxdrugstore.vercel.app/"
     },
     {
       "id": "crcl-udh",

@@ -212,7 +212,7 @@ export function RequestForm() {
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Building2 className="w-5 h-5" />
-            หน่วยงานที่ขอ
+            หน่วยงานของคุณ
           </CardTitle>
           <CardDescription>
             ระบุชื่อหน่วยงาน/แผนก ที่ต้องการเครื่องมือนี้

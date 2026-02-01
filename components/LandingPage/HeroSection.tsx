@@ -168,9 +168,7 @@ export function HeroSection() {
             variants={fadeIn}
             className="text-lg md:text-xl text-content-secondary mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            แพลตฟอร์มสำหรับทดลองแนวคิดและนวัตกรรมด้านสาธารณสุข 
-            <br />
-            จาก pain point หน้างานสู่ digital solution
+            แพลตฟอร์มสำหรับส่งคำขอพัฒนาแนวคิดและนวัตกรรมด้านสาธารณสุข
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">

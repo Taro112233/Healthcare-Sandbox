@@ -1,6 +1,6 @@
 // This file is auto-generated. Do not edit manually.
 // Edit files in prisma/schemas/ directory instead.
-// Last generated: 2026-02-01T12:46:41.141Z
+// Last generated: 2026-02-01T14:28:39.271Z
 // HealthTech Sandbox
 
 generator client {
