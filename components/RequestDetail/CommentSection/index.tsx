@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CommentInput } from './CommentInput';
 import { CommentList } from './CommentList';
 import { useComments } from '@/hooks/useComments';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Bell } from 'lucide-react';
 import { RequestStatus } from '@/types/request';
 
 interface CommentSectionUser {
@@ -48,7 +48,7 @@ export function CommentSection({
     if (!scrollRef.current) return false;
     
     const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-    const isAtBottom = scrollHeight - scrollTop - clientHeight < 100; // threshold 100px
+    const isAtBottom = scrollHeight - scrollTop - clientHeight < 100;
     
     return isAtBottom;
   };
@@ -66,9 +66,6 @@ export function CommentSection({
     const isNewComment = comments.length > previousCommentsLength.current;
     const isAtBottom = checkIfAtBottom();
 
-    // Scroll เฉพาะเมื่อ:
-    // 1. มี comment ใหม่ + user อยู่ด้านล่างอยู่แล้ว
-    // 2. หรือเป็นการโหลดครั้งแรก (previousLength = 0)
     if ((isNewComment && (shouldAutoScroll || isAtBottom)) || previousCommentsLength.current === 0) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
@@ -90,7 +87,6 @@ export function CommentSection({
     toStatus?: RequestStatus
   ): Promise<boolean> => {
     try {
-      // ✅ บังคับ scroll ลงล่างเมื่อส่ง comment
       setShouldAutoScroll(true);
       
       await addComment(content, currentStatus, toStatus);
@@ -99,7 +95,6 @@ export function CommentSection({
         onRefresh();
       }
       
-      // ✅ Ensure scroll หลังส่ง
       setTimeout(() => {
         if (scrollRef.current) {
           scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -116,10 +111,20 @@ export function CommentSection({
     <Card className="flex flex-col h-150">
       {/* Header - Fixed */}
       <CardHeader className="pb-3 border-b border-border-primary shrink-0">
-        <CardTitle className="text-base font-medium text-content-primary flex items-center gap-2">
-          <MessageSquare className="w-4 h-4" />
-          ความคิดเห็น ({comments.length})
-        </CardTitle>
+        <div className="space-y-2">
+          <CardTitle className="text-base font-medium text-content-primary flex items-center gap-2">
+            <MessageSquare className="w-4 h-4" />
+            ความคิดเห็น ({comments.length})
+          </CardTitle>
+          
+          {/* ✅ ข้อความเตือนให้ติดตามความคืบหน้า */}
+          <div className="flex items-start gap-2 px-3 py-2 bg-alert-info-bg border border-alert-info-border rounded-lg">
+            <Bell className="w-4 h-4 text-alert-info-icon shrink-0 mt-0.5" />
+            <p className="text-xs text-alert-info-text leading-relaxed">
+              โปรดเข้ามาติดตามความคืบหน้าของโปรเจคเป็นระยะ ๆ เพื่อรับการอัปเดตและตอบคำถามจากทีมพัฒนา
+            </p>
+          </div>
+        </div>
       </CardHeader>
       
       <CardContent className="flex flex-col flex-1 p-0 overflow-hidden">
