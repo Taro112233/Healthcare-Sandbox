@@ -3,7 +3,8 @@
 
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import productsData from '@/data/products.json';
 import { ArrowRight, Send } from 'lucide-react';
 
@@ -32,7 +33,17 @@ const staggerContainer = {
 };
 
 export default function ProductsPage() {
+  const router = useRouter();
+  const { user } = useCurrentUser();
   const products: Product[] = productsData.products;
+
+  const handleNewRequest = () => {
+    if (!user) {
+      router.push('/login');
+    } else {
+      router.push('/requests/new');
+    }
+  };
 
   return (
     <>
@@ -106,13 +117,13 @@ export default function ProductsPage() {
           </motion.p>
 
           <motion.div variants={fadeIn}>
-            <Link
-              href="/requests/new"
+            <button
+              onClick={handleNewRequest}
               className="inline-flex items-center gap-2 bg-white text-interactive-primary hover:bg-surface-tertiary px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
             >
               <Send className="w-5 h-5" />
               ส่งคำขอใหม่
-            </Link>
+            </button>
           </motion.div>
 
           <motion.div variants={fadeIn} className="text-white/90 mt-8">

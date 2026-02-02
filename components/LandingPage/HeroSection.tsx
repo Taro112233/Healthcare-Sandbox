@@ -4,6 +4,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/carousel';
 import { Sparkles, Calculator, FileText, GitBranch, Brain, Send, LayoutDashboard, List } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 const fadeIn: Variants = {
   hidden: { opacity: 0, y: 15 },
@@ -84,11 +86,29 @@ const requestTypes = [
 ];
 
 export function HeroSection() {
+  const router = useRouter();
+  const { user } = useCurrentUser();
   const [, setApi] = useState<CarouselApi>();
 
   const autoplayRef = useRef(
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
+
+  const handleNewRequest = () => {
+    if (!user) {
+      router.push('/login');
+    } else {
+      router.push('/requests/new');
+    }
+  };
+
+  const handleDashboard = () => {
+    if (!user) {
+      router.push('/login');
+    } else {
+      router.push('/dashboard');
+    }
+  };
 
   return (
     <section className="relative overflow-hidden py-20 md:py-32 bg-surface-primary">
@@ -172,18 +192,23 @@ export function HeroSection() {
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-            <Link href="/requests/new">
-              <Button size="lg" className="text-lg px-10 py-7 w-full sm:w-auto gradient-brand-semantic hover:opacity-90 shadow-xl shadow-glow-semantic transition-all duration-300">
-                <Send className="w-5 h-5 mr-2" />
-                ส่งคำขอใหม่
-              </Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button size="lg" variant="outline" className="text-lg px-10 py-7 w-full sm:w-auto border-border-primary backdrop-blur-sm hover:bg-surface-interactive transition-all duration-300">
-                <List className="w-5 h-5 mr-2" />
-                ดูคำขอของฉัน
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              className="text-lg px-10 py-7 w-full sm:w-auto gradient-brand-semantic hover:opacity-90 shadow-xl shadow-glow-semantic transition-all duration-300"
+              onClick={handleNewRequest}
+            >
+              <Send className="w-5 h-5 mr-2" />
+              ส่งคำขอใหม่
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-10 py-7 w-full sm:w-auto border-border-primary backdrop-blur-sm hover:bg-surface-interactive transition-all duration-300"
+              onClick={handleDashboard}
+            >
+              <List className="w-5 h-5 mr-2" />
+              ดูคำขอของฉัน
+            </Button>
           </motion.div>
 
           <motion.div variants={fadeIn}>

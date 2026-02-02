@@ -3,7 +3,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Send } from 'lucide-react';
 import { fadeIn, staggerContainer } from './animations';
@@ -13,6 +14,17 @@ interface CTASectionProps {
 }
 
 export function CTASection({ onManualClick }: CTASectionProps) {
+  const router = useRouter();
+  const { user } = useCurrentUser();
+
+  const handleNewRequest = () => {
+    if (!user) {
+      router.push('/login');
+    } else {
+      router.push('/requests/new');
+    }
+  };
+
   return (
     <section className="py-20 px-4 gradient-brand-semantic text-white">
       <motion.div
@@ -36,15 +48,14 @@ export function CTASection({ onManualClick }: CTASectionProps) {
           variants={fadeIn}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
         >
-          <Link href="/requests/new">
-            <Button
-              size="lg"
-              className="text-lg px-8 py-6 w-full sm:w-auto bg-white text-interactive-primary hover:bg-surface-tertiary transition-colors"
-            >
-              <Send className="w-5 h-5 mr-2" />
-              ส่งคำขอใหม่
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            className="text-lg px-8 py-6 w-full sm:w-auto bg-white text-interactive-primary hover:bg-surface-tertiary transition-colors"
+            onClick={handleNewRequest}
+          >
+            <Send className="w-5 h-5 mr-2" />
+            ส่งคำขอใหม่
+          </Button>
 
           <Button
             size="lg"
