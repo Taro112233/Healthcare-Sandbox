@@ -26,6 +26,10 @@ Directory structure:
     │   │   ├── auth/
     │   │   │   └── [...all]/
     │   │   │       └── route.ts
+    │   │   ├── profile/
+    │   │   │   ├── route.ts
+    │   │   │   └── avatar/
+    │   │   │       └── route.ts
     │   │   └── requests/
     │   │       ├── route.ts
     │   │       ├── [id]/
@@ -41,6 +45,8 @@ Directory structure:
     │   ├── privacy-policy/
     │   │   └── page.tsx
     │   ├── products/
+    │   │   └── page.tsx
+    │   ├── profile/
     │   │   └── page.tsx
     │   ├── register/
     │   │   └── page.tsx
@@ -72,6 +78,12 @@ Directory structure:
     │   │   ├── HeroSection.tsx
     │   │   ├── ManualDialog.tsx
     │   │   └── ProductShowcaseSection.tsx
+    │   ├── ProfilePage/
+    │   │   ├── AccountSection.tsx
+    │   │   ├── index.tsx
+    │   │   ├── PersonalInfoSection.tsx
+    │   │   ├── ProfileHeader.tsx
+    │   │   └── ProfileSkeleton.tsx
     │   ├── providers/
     │   │   └── AuthProvider.tsx
     │   ├── RequestDetail/
@@ -277,9 +289,11 @@ Directory structure:
     │   ├── use-theme-transition.ts
     │   ├── useComments.ts
     │   ├── useCurrentUser.ts
+    │   ├── useProfile.ts
     │   ├── useRequests.ts
     │   └── useTheme.ts
     ├── lib/
+    │   ├── arcjet-config.ts
     │   ├── auth-client.ts
     │   ├── auth.ts
     │   ├── config.ts
