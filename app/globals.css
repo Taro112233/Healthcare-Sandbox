@@ -6,33 +6,31 @@
 /* 🏥 Medical Teal Theme (Default) - DARK MODE DEFAULT */
 @theme {
   /* ===== RAW THEME COLORS (OKLCH) ===== */
-  /* Core Background Colors */
-  --color-background: oklch(0.15 0.02 200); /* Deep medical teal-black */
-  --color-foreground: oklch(0.88 0.02 200); /* Soft white */
-  --color-card: oklch(0.18 0.02 200); /* Card background */
-  --color-card-foreground: oklch(0.88 0.02 200); /* Card text */
-  --color-popover: oklch(0.18 0.02 200); /* Popover background */
-  --color-popover-foreground: oklch(0.88 0.02 200); /* Popover text */
+  /* Core Background Colors - Pure Gray-Black for Dark Mode */
+  --color-background: oklch(0.15 0 0); /* Pure dark background */
+  --color-foreground: oklch(0.95 0 0); /* Pure white text */
+  --color-card: oklch(0.18 0 0); /* Pure gray card background */
+  --color-card-foreground: oklch(0.95 0 0); /* Pure white card text */
+  --color-popover: oklch(0.18 0 0); /* Pure gray popover background */
+  --color-popover-foreground: oklch(0.95 0 0); /* Pure white popover text */
 
-  /* Brand Colors - Medical Teal Spectrum */
+  /* Brand Colors - Medical Teal Spectrum (only for interactive elements) */
   --color-primary: oklch(0.65 0.15 200); /* Vibrant medical teal */
-  --color-primary-foreground: oklch(0.15 0.02 200); /* Dark text on primary */
-  --color-secondary: oklch(0.22 0.02 200); /* Dark secondary teal */
-  --color-secondary-foreground: oklch(
-    0.88 0.02 200
-  ); /* Light text on secondary */
+  --color-primary-foreground: oklch(0.98 0 0); /* Pure white on primary */
+  --color-secondary: oklch(0.25 0 0); /* Pure dark gray */
+  --color-secondary-foreground: oklch(0.95 0 0); /* Pure white text */
 
-  /* UI State Colors */
-  --color-muted: oklch(0.22 0.02 200); /* Muted teal background */
-  --color-muted-foreground: oklch(0.68 0.02 200); /* Better mid-tone */
-  --color-accent: oklch(0.25 0.03 200); /* Accent teal background */
-  --color-accent-foreground: oklch(0.88 0.02 200); /* Accent text */
+  /* UI State Colors - Pure Gray */
+  --color-muted: oklch(0.25 0 0); /* Pure gray muted background */
+  --color-muted-foreground: oklch(0.65 0 0); /* Mid-tone gray text */
+  --color-accent: oklch(0.28 0 0); /* Pure gray accent background */
+  --color-accent-foreground: oklch(0.95 0 0); /* Pure white accent text */
 
   /* System Colors */
   --color-destructive: oklch(0.55 0.22 25); /* Modern red */
-  --color-destructive-foreground: oklch(0.98 0 0); /* White on red */
-  --color-border: oklch(0.28 0.02 200); /* Subtle teal borders */
-  --color-input: oklch(0.22 0.02 200); /* Input teal backgrounds */
+  --color-destructive-foreground: oklch(0.98 0 0); /* Pure white on red */
+  --color-border: oklch(0.30 0 0); /* Pure gray borders */
+  --color-input: oklch(0.25 0 0); /* Pure gray input backgrounds */
   --color-ring: oklch(0.65 0.15 200); /* Teal focus rings */
 
   /* ===== TIER 2: GLOBAL SEMANTIC TOKENS ===== */
@@ -44,37 +42,33 @@
 
   /* ===== TIER 3: CONTEXTUAL SEMANTIC TOKENS ===== */
 
-  /* Content (Text) Colors */
-  --color-content-primary: oklch(0.85 0.02 200); /* Soft off-white */
-  --color-content-secondary: oklch(0.65 0.02 200); /* Better secondary text */
-  --color-content-tertiary: oklch(0.58 0.02 200); /* Subtle text */
-  --color-content-inverse: oklch(0.15 0.02 200); /* Text on light backgrounds */
-  --color-content-disabled: oklch(0.48 0.01 200); /* Disabled text */
+  /* Content (Text) Colors - Pure Gray Scale */
+  --color-content-primary: oklch(0.92 0 0); /* Bright white */
+  --color-content-secondary: oklch(0.65 0 0); /* Mid gray */
+  --color-content-tertiary: oklch(0.55 0 0); /* Darker gray */
+  --color-content-inverse: oklch(0.15 0 0); /* Dark text on light */
+  --color-content-disabled: oklch(0.45 0 0); /* Disabled text */
 
-  /* Surface (Background) Colors */
+  /* Surface (Background) Colors - Pure Gray Scale */
   --color-surface-primary: var(--color-background); /* Main app background */
   --color-surface-secondary: var(--color-card); /* Card/panel backgrounds */
-  --color-surface-tertiary: oklch(0.2 0.02 200); /* Elevated surfaces */
-  --color-surface-interactive: oklch(0.25 0.03 200); /* Hover backgrounds */
-  --color-surface-overlay: oklch(0.18 0.02 200 / 0.95); /* Modal overlays */
+  --color-surface-tertiary: oklch(0.22 0 0); /* Elevated surfaces */
+  --color-surface-interactive: oklch(0.28 0 0); /* Hover backgrounds */
+  --color-surface-overlay: oklch(0.18 0 0 / 0.95); /* Modal overlays */
 
   /* Interactive Element Colors */
   --color-interactive-primary: var(--color-brand-primary); /* Primary buttons */
   --color-interactive-primary-hover: oklch(0.7 0.15 200); /* Primary hover */
   --color-interactive-secondary: var(--color-secondary); /* Secondary buttons */
-  --color-interactive-secondary-hover: oklch(
-    0.28 0.02 200
-  ); /* Secondary hover */
-  --color-interactive-disabled: oklch(0.32 0.02 200); /* Disabled buttons */
+  --color-interactive-secondary-hover: oklch(0.30 0 0); /* Secondary hover */
+  --color-interactive-disabled: oklch(0.35 0 0); /* Disabled buttons */
 
-  /* Border Colors */
-  --color-border-primary: oklch(0.3 0.02 200); /* More visible borders */
-  --color-border-secondary: oklch(0.35 0.02 200); /* Subtle borders */
-  --color-border-interactive: var(
-    --color-brand-primary
-  ); /* Focus/hover borders */
+  /* Border Colors - Pure Gray Scale */
+  --color-border-primary: oklch(0.32 0 0); /* More visible borders */
+  --color-border-secondary: oklch(0.38 0 0); /* Subtle borders */
+  --color-border-interactive: var(--color-brand-primary); /* Focus/hover borders */
   --color-border-glass: oklch(0.65 0.15 200 / 0.2); /* Glass morphism borders */
-  --color-border-subtle: oklch(0.32 0.02 200); /* Very subtle borders */
+  --color-border-subtle: oklch(0.35 0 0); /* Very subtle borders */
 
   /* ===== SEMANTIC SPACING TOKENS ===== */
   --spacing-compact: 0.5rem;
@@ -89,18 +83,18 @@
   --radius-extra-large-semantic: 1rem;
 
   /* ===== SEMANTIC SHADOWS WITH BRAND GLOW ===== */
-  --shadow-elevation-1: 0 2px 8px oklch(0.1 0.02 200 / 0.2);
-  --shadow-elevation-2: 0 4px 16px oklch(0.1 0.02 200 / 0.3);
-  --shadow-elevation-3: 0 8px 24px oklch(0.1 0.02 200 / 0.4);
-  --shadow-elevation-4: 0 16px 40px oklch(0.1 0.02 200 / 0.5);
+  --shadow-elevation-1: 0 2px 8px oklch(0.1 0 0 / 0.3);
+  --shadow-elevation-2: 0 4px 16px oklch(0.1 0 0 / 0.4);
+  --shadow-elevation-3: 0 8px 24px oklch(0.1 0 0 / 0.5);
+  --shadow-elevation-4: 0 16px 40px oklch(0.1 0 0 / 0.6);
   --shadow-glow-semantic: 0 0 50px oklch(0.65 0.15 200 / 0.15);
   --shadow-glow-strong-semantic: 0 0 80px oklch(0.65 0.15 200 / 0.25);
 
   /* ===== SEMANTIC GLASS MORPHISM ===== */
-  --glass-bg-semantic: oklch(0.18 0.02 200 / 0.8);
-  --glass-bg-strong-semantic: oklch(0.18 0.02 200 / 0.95);
+  --glass-bg-semantic: oklch(0.18 0 0 / 0.8);
+  --glass-bg-strong-semantic: oklch(0.18 0 0 / 0.95);
   --glass-border-semantic: var(--color-border-glass);
-  --glass-border-subtle-semantic: oklch(0.88 0.02 200 / 0.08);
+  --glass-border-subtle-semantic: oklch(0.92 0 0 / 0.08);
 
   /* ===== SEMANTIC GRADIENTS ===== */
   --gradient-brand-semantic: linear-gradient(
@@ -114,23 +108,23 @@
   --backdrop-blur-strong: 30px;
 
   /* ===== ALERT SEMANTIC COLORS (DARK MODE DEFAULT) ===== */
-  /* Success Alert Colors */
-  --color-alert-success-bg: oklch(0.22 0.04 158);
+  /* Success Alert Colors - Pure Gray-Black Base */
+  --color-alert-success-bg: oklch(0.20 0.04 158);
   --color-alert-success-border: oklch(0.52 0.15 158 / 0.4);
   --color-alert-success-text: oklch(0.85 0.05 158);
   --color-alert-success-icon: oklch(0.65 0.15 158);
 
-  --color-alert-warning-bg: oklch(0.22 0.05 85);
+  --color-alert-warning-bg: oklch(0.20 0.05 85);
   --color-alert-warning-border: oklch(0.65 0.18 85 / 0.4);
   --color-alert-warning-text: oklch(0.85 0.06 85);
   --color-alert-warning-icon: oklch(0.65 0.18 85);
 
-  --color-alert-error-bg: oklch(0.2 0.06 25);
+  --color-alert-error-bg: oklch(0.18 0.06 25);
   --color-alert-error-border: oklch(0.6 0.22 25 / 0.4);
   --color-alert-error-text: oklch(0.85 0.05 25);
   --color-alert-error-icon: oklch(0.65 0.22 25);
 
-  --color-alert-info-bg: oklch(0.2 0.05 250);
+  --color-alert-info-bg: oklch(0.18 0.05 250);
   --color-alert-info-border: oklch(0.6 0.18 250 / 0.4);
   --color-alert-info-text: oklch(0.85 0.05 250);
   --color-alert-info-icon: oklch(0.65 0.18 250);
@@ -329,13 +323,13 @@
     overflow-wrap: break-word;
   }
 
-  /* Modern scrollbar - Semantic */
+  /* Modern scrollbar - Pure Gray for Dark Mode */
   ::-webkit-scrollbar {
     width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-surface-secondary);
+    background: oklch(0.18 0 0);
   }
 
   ::-webkit-scrollbar-thumb {

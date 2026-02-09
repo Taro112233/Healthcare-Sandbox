@@ -37,7 +37,7 @@ export default function RootLayout({
                 
                 // Determine mode (default to light for medical apps)
                 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const mode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+                const mode = savedMode || 'light';
                 
                 // Apply theme immediately to prevent flash
                 const fullTheme = savedTheme + '-' + mode;
