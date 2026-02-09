@@ -218,9 +218,9 @@ export default function ShowcasePage() {
 
       {/* Quick Navigation */}
       <div className="fixed bottom-4 right-4 hidden lg:block">
-        <div className="bg-surface-primary border border-border-primary rounded-lg shadow-lg p-4 max-h-[400px] overflow-hidden">
+        <div className="bg-surface-primary border border-border-primary rounded-lg shadow-lg p-4 max-h-100 overflow-hidden">
           <p className="text-sm font-medium mb-2 text-content-primary">Quick Navigation</p>
-          <ScrollArea className="h-[300px]">
+          <ScrollArea className="h-75">
             <div className="space-y-1">
               {filteredComponents.map((name) => (
                 <a
