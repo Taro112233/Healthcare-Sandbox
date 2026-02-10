@@ -3,7 +3,6 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, Variants } from 'framer-motion';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';

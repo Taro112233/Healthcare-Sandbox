@@ -38,6 +38,7 @@ import {
   Workflow,
   Lightbulb,
   Globe,
+  Clock,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -399,7 +400,20 @@ export function RequestForm() {
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>{submitError}</AlertDescription>
         </Alert>
-      )} 
+      )}
+
+      {/* ⚠️ Exam Announcement Banner */}
+      <div className="flex items-start gap-3 p-4 bg-alert-warning-bg border border-alert-warning-border rounded-lg">
+        <Clock className="w-5 h-5 text-alert-warning-icon shrink-0 mt-0.5" />
+        <div className="flex-1 space-y-1">
+          <p className="text-sm font-medium text-alert-warning-text">
+            ประกาศสำคัญ: ช่วงเตรียมสอบใบประกอบวิชาชีพ
+          </p>
+          <p className="text-sm text-alert-warning-text leading-relaxed">
+            ผู้พัฒนาจำเป็นต้องแบ่งเวลาไปเตรียมตัวสอบ อาจทำให้ทุกขั้นตอนใช้เวลานานขึ้นกว่าปกติ ต้องขออภัยไว้ล่วงหน้าครับ
+          </p>
+        </div>
+      </div>
 
       {/* Submit Buttons */}
       <div className="flex justify-end gap-3">
