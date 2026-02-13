@@ -4,7 +4,7 @@
       "id": "substock-demo",
       "title": "Substock Management System",
       "description": "ระบบจัดการสต็อกยาสำหรับโรงพยาบาลขนาดเล็กถึงกลาง",
-      "tags": ["MANAGEMENT", "WEB APP", "2025"],
+      "tags": ["Desktop", "Tablet", "Phone"],
       "videoSrc": "/products/substock-demo.mp4",
       "demoUrl": "https://substock-demo.vercel.app/"
     },
@@ -12,7 +12,7 @@
       "id": "respiratory-clinic-demo",
       "title": "Respiratory Clinic Management System",
       "description": "ระบบบันทึกการประเมินการใช้ยาผู้ป่วยคลินิกโรคทางเดินหายใจ",
-      "tags": ["CLINICAL", "WEB APP", "2025"],
+      "tags": ["Desktop", "Tablet"],
       "videoSrc": "/products/respiratory-clinic-demo.mp4",
       "demoUrl": "https://respiratory-clinic-demo.vercel.app/"
     },
@@ -20,7 +20,7 @@
       "id": "qdengachecker",
       "title": "Dengue Risk Assessment Form",
       "description": "แบบประเมินความเสี่ยงในการเป็นไข้เลือดออก",
-      "tags": ["ASSESSMENT", "WEB APP", "2025"],
+      "tags": ["Desktop", "Tablet", "Phone"],
       "videoSrc": "/products/qdengachecker.mp4",
       "demoUrl": "https://qdengachecker.vercel.app/"
     },
@@ -28,7 +28,7 @@
       "id": "rxdrugstore",
       "title": "Rxdrugstore",
       "description": "แหล่งเรียนรู้ผลิตภัณฑ์ในร้านยาสำหรับนักศึกษาเภสัช",
-      "tags": ["EDUCATION", "WEB PAGE", "2025"],
+      "tags": ["Desktop", "Tablet", "Phone"],
       "videoSrc": "/products/rxdrugstore.mp4",
       "demoUrl": "https://rxdrugstore.vercel.app/"
     },
@@ -36,7 +36,7 @@
       "id": "crcl-udh",
       "title": "CrCl Calculator with adjusted dose suggestion",
       "description": "เครื่องมือคำนวณค่า Creatinine Clearance พร้อมคำแนะนำการปรับขนาดยา",
-      "tags": ["CALCULATOR", "WEB APP", "2025"],
+      "tags": ["Desktop", "Tablet", "Phone"],
       "videoSrc": "/products/crcl-udh.mp4",
       "demoUrl": "https://crcl-udh.vercel.app/"
     }
