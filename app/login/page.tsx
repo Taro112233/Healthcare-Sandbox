@@ -22,6 +22,7 @@ import {
   EyeOff,
   AlertTriangle,
   Stethoscope,
+  LogIn,
 } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -270,7 +271,10 @@ export default function LoginPage() {
                     กำลังเข้าสู่ระบบ...
                   </>
                 ) : (
-                  "เข้าสู่ระบบด้วยอีเมล"
+                  <>
+                    <LogIn className="w-4 h-4 mr-2" />
+                    เข้าสู่ระบบ
+                  </>
                 )}
               </Button>
             </form>

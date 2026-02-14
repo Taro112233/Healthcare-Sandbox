@@ -75,12 +75,12 @@ export function ProductShowcaseSection() {
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  
+
   const isEven = index % 2 === 0;
 
   useEffect(() => {
     if (!videoRef.current) return;
-    
+
     const video = videoRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
@@ -104,27 +104,21 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ 
+      transition={{
         duration: 0.8,
         ease: [0.25, 0.1, 0.25, 1]
       }}
     >
-      <a 
+      <a
         href={product.demoUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="group block"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-          
+
           {/* Text Content Area */}
           <div className={`space-y-6 lg:col-span-4 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
-            <div className="inline-block">
-              <span className="text-interactive-primary text-sm font-semibold tracking-wider uppercase">
-                {product.tags[0] || 'WEB APP'}
-              </span>
-            </div>
-            
             <h3 className="text-4xl md:text-5xl font-bold leading-tight group-hover:text-interactive-primary transition-colors">
               {product.title}
             </h3>
@@ -134,9 +128,9 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             </p>
 
             {/* Tags Display */}
-            {product.tags.length > 1 && (
+            {product.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {product.tags.slice(1).map((tag, i) => (
+                {product.tags.map((tag, i) => (
                   <span
                     key={i}
                     className="inline-flex items-center px-3 py-1 text-xs font-medium uppercase tracking-wide bg-white/5 text-content-tertiary border border-white/10 rounded-full"
@@ -165,14 +159,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 playsInline
                 className="w-full h-full object-cover"
               />
-              
+
               <div className="absolute inset-0 bg-linear-to-tr from-black/40 via-transparent to-white/5" />
             </div>
 
             {/* Background Glow Effect */}
             <div className="absolute -inset-8 bg-interactive-primary/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
           </div>
-          
+
         </div>
       </a>
     </motion.div>
