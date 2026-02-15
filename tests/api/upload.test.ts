@@ -38,7 +38,6 @@ vi.mock('@vercel/blob', () => ({
 }))
 
 // ===== MOCK: file-validation =====
-// Override only for specific tests via vi.mocked inside each case
 vi.mock('@/lib/file-validation', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/file-validation')>()
   return {
@@ -50,6 +49,13 @@ vi.mock('@/lib/file-validation', async (importOriginal) => {
     }),
   }
 })
+
+// ===== Default Arcjet allow decision =====
+const allowedDecision = {
+  isDenied: () => false,
+  reason: { isRateLimit: () => false, isBot: () => false },
+  results: [],
+}
 
 // ===== GET /api/requests/upload =====
 
@@ -70,7 +76,15 @@ describe('GET /api/requests/upload', () => {
 // ===== POST /api/requests/upload =====
 
 describe('POST /api/requests/upload', () => {
-  beforeEach(() => vi.clearAllMocks())
+  beforeEach(async () => {
+    vi.clearAllMocks()
+    // Always reset arcjet to allow after clearAllMocks wipes the default
+    vi.mocked(arcjetUpload.protect).mockResolvedValue(allowedDecision as never)
+    vi.mocked(handleArcjetDecision).mockReturnValue(null)
+    // Reset blob put to succeed by default
+    const { put } = await import('@vercel/blob')
+    vi.mocked(put).mockResolvedValue({ url: 'https://blob.vercel.com/test.jpg' } as never)
+  })
 
   it('returns 401 when no session', async () => {
     mockNoSession()

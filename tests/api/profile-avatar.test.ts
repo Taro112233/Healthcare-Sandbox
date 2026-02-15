@@ -69,7 +69,15 @@ const mockUpdatedUser = {
 // ===== POST /api/profile/avatar =====
 
 describe('POST /api/profile/avatar', () => {
-  beforeEach(() => vi.clearAllMocks())
+  beforeEach(async () => {
+    vi.clearAllMocks()
+    // Reset blob put to succeed by default after clearAllMocks wipes it
+    const { put } = await import('@vercel/blob')
+    vi.mocked(put).mockResolvedValue({ url: 'https://blob.vercel.com/avatars/user-123/avatar.jpeg' } as never)
+    // Reset validateFile to pass by default
+    const { validateFile } = await import('@/lib/file-validation')
+    vi.mocked(validateFile).mockReturnValue({ isValid: true })
+  })
 
   it('returns 401 when no session', async () => {
     mockNoSession()
